@@ -17,7 +17,7 @@
 
         body { margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; background-color: var(--bg-dark); min-height: 100vh; color: var(--brand-white); font-family: sans-serif; }
         
-        .header-container { display: flex; align-items: center; justify-content: space-between; width: 340px; margin-bottom: 20px; position: relative; }
+        .header-container { display: flex; align-items: center; justify-content: space-between; width: 340px; margin-bottom: 15px; position: relative; }
         .logo-badge { background-color: var(--brand-orange); color: var(--bg-dark); font-weight: 900; font-size: 20px; padding: 5px 12px; border-radius: 8px; margin-right: 12px; letter-spacing: -1px; }
         .logo-flex { display: flex; align-items: center; }
         .logo-text { font-size: 20px; font-weight: 900; letter-spacing: 1px; color: var(--brand-orange); margin: 0; text-transform: uppercase; }
@@ -26,6 +26,13 @@
         .utility-box { display: flex; gap: 8px; align-items: center; }
         .help-btn { background: none; border: 2px solid var(--brand-orange); color: var(--brand-orange); width: 28px; height: 28px; border-radius: 50%; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .discord-btn-link { text-decoration: none; border: 2px solid #5865F2; color: #5865F2; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; }
+
+        /* Cloud Authentication Panel UI */
+        .auth-panel { width: 340px; background-color: #111; padding: 12px; border-radius: 10px; border: 1px solid #222; margin-bottom: 20px; box-sizing: border-box; font-size: 13px; text-align: center; }
+        .auth-inputs { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+        .auth-row { display: flex; gap: 8px; }
+        .auth-btn { background-color: #222; border: 1px solid #444; color: white; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 12px; flex: 1; }
+        .auth-btn.primary { background-color: var(--brand-orange); border-color: var(--brand-orange); }
 
         .upload-container { width: 340px; background-color: var(--panel-dark); padding: 15px; border-radius: 15px; box-sizing: border-box; text-align: center; border: 1px solid #2B2B2B; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 20px; }
         
@@ -48,7 +55,7 @@
         #imageContainer { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transform-origin: center center; position: absolute; top: 0; left: 0; cursor: move; }
         #previewImage { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
         
-        /* Crosshairs */
+        /* Crosshairs Handles */
         .guide-line { position: absolute; z-index: 10; opacity: 0.9; }
         .vertical { width: 2px; height: 100%; top: 0; cursor: ew-resize; }
         .horizontal { height: 2px; width: 100%; left: 0; cursor: ns-resize; }
@@ -73,6 +80,7 @@
 
         .search-box { display: flex; gap: 8px; margin-top: 5px; }
         .search-input { flex: 1; background-color: #0D0D0D; border: 1px solid #333; border-radius: 6px; padding: 10px; color: #FFF; font-size: 14px; }
+        .search-input:focus { border-color: var(--brand-orange); outline: none; }
         .search-btn { background-color: var(--brand-orange); border: none; color: #FFF; font-weight: bold; padding: 0 15px; border-radius: 6px; cursor: pointer; }
         
         #priceResultBox { display: none; margin-top: 15px; background: #222; padding: 12px; border-radius: 8px; text-align: left; }
@@ -89,7 +97,6 @@
         input:checked + .slider:before { transform: translateX(22px); }
         #damageLogBox { background-color: #050505; border: 1px solid #222; border-radius: 8px; padding: 12px; text-align: left; font-family: monospace; font-size: 12px; color: var(--text-gray); line-height: 1.4; margin-bottom: 15px; }
 
-        /* Checklist Styles */
         .defect-checklist { text-align: left; background: #111; padding: 12px; border-radius: 8px; border: 1px solid #222; }
         .check-item { display: flex; align-items: center; gap: 10px; margin: 8px 0; font-size: 13px; color: var(--brand-white); cursor: pointer; }
         .check-item input { accent-color: var(--brand-orange); width: 16px; height: 16px; }
@@ -115,6 +122,24 @@
         <div class="utility-box">
             <a href="https://discord.gg/2Ym5g64rf" id="discordBtn" target="_blank" class="discord-btn-link" title="Discord Link">💬</a>
             <button class="help-btn" id="openHelp">?</button>
+        </div>
+    </div>
+
+    <div class="auth-panel" id="authPanel">
+        <div id="authLoggedOut">
+            <span style="color:var(--brand-orange); font-weight:bold;">MFS Collector Database Vault</span>
+            <div class="auth-inputs">
+                <input type="email" id="authEmail" class="search-input" placeholder="Enter Email Address" style="padding:6px;">
+                <input type="password" id="authPassword" class="search-input" placeholder="Enter Password" style="padding:6px;">
+                <div class="auth-row">
+                    <button id="btnSignIn" class="auth-btn primary">Login</button>
+                    <button id="btnSignUp" class="auth-btn">Register</button>
+                </div>
+            </div>
+        </div>
+        <div id="authLoggedIn" style="display:none;">
+            Logged in as: <span id="userDisplayEmail" style="color:var(--success-green); font-weight:bold;">--</span>
+            <button id="btnSignOut" class="auth-btn" style="padding:2px 8px; margin-left:10px; display:inline-block; width:auto;">Logout</button>
         </div>
     </div>
     
@@ -210,15 +235,76 @@
     <div class="modal-overlay" id="helpModal">
         <div class="modal-card">
             <h3 style="color:var(--brand-orange); margin-top:0; text-transform:uppercase;">Precision Controls</h3>
-            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">1. Upload front and back trading card photos.</p>
-            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">2. Toggle <strong>Pan Mode</strong> to slide the card zoom view directly with your fingers.</p>
+            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">1. Log in to activate automated cloud data storage ledger collection recording.</p>
+            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">2. Upload front and back trading card photos.</p>
             <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">3. Set RED lines to outside edges and GREEN lines to inside framing boundaries.</p>
-            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">4. Check off any located white dots or scratches to apply realistic grading condition overrides instantly.</p>
+            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">4. Check off any white dots or scratches to apply realistic grading condition overrides instantly.</p>
             <button class="close-modal" id="closeHelp">Got It</button>
         </div>
     </div>
 
-    <script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getStorage, ref, uploadString, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+
+        // Verified Model Forge Studio Key Registry
+        const firebaseConfig = {
+            apiKey: "AIzaSyCu7kienn-NNwpaLCo7E3L54jhtXAhVwYg",
+            authDomain: "model-forge-studio.firebaseapp.com",
+            projectId: "model-forge-studio",
+            storageBucket: "model-forge-studio.firebasestorage.app",
+            messagingSenderId: "7475805296",
+            appId: "1:7475805296:web:6d954026c68bcb055148b5"
+        };
+
+        // Fire engine cores
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+
+        let currentUser = null;
+
+        // Authentication State Listener HUD updates
+        const authLoggedOut = document.getElementById('authLoggedOut');
+        const authLoggedIn = document.getElementById('authLoggedIn');
+        const userDisplayEmail = document.getElementById('userDisplayEmail');
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user;
+                userDisplayEmail.innerText = user.email;
+                authLoggedOut.style.display = 'none';
+                authLoggedIn.style.display = 'block';
+            } else {
+                currentUser = null;
+                authLoggedOut.style.display = 'block';
+                authLoggedIn.style.display = 'none';
+            }
+        });
+
+        // Auth click actions
+        document.getElementById('btnSignUp').addEventListener('click', async () => {
+            const email = document.getElementById('authEmail').value.trim();
+            const pass = document.getElementById('authPassword').value.trim();
+            if(!email || !pass) return alert("Fill in account values.");
+            try { await createUserWithEmailAndPassword(auth, email, pass); alert("Account catalog registered successfully!"); }
+            catch(err) { alert("Registration issue: " + err.message); }
+        });
+
+        document.getElementById('btnSignIn').addEventListener('click', async () => {
+            const email = document.getElementById('authEmail').value.trim();
+            const pass = document.getElementById('authPassword').value.trim();
+            if(!email || !pass) return alert("Fill in account values.");
+            try { await signInWithEmailAndPassword(auth, email, pass); }
+            catch(err) { alert("Login issue: " + err.message); }
+        });
+
+        document.getElementById('btnSignOut').addEventListener('click', () => signOut(auth));
+
+        // Core Layout Variables mapping straight into the engine script module
         const frontFile = document.getElementById('frontFile');
         const backFile = document.getElementById('backFile');
         const frontLabel = document.getElementById('frontLabel');
@@ -226,7 +312,6 @@
         const sideTabs = document.getElementById('sideTabs');
         const tabFront = document.getElementById('tabFront');
         const tabBack = document.getElementById('tabBack');
-        
         const workspace = document.getElementById('workspace');
         const controlDock = document.getElementById('controlDock');
         const imageContainer = document.getElementById('imageContainer');
@@ -253,7 +338,6 @@
         document.getElementById('openHelp').addEventListener('click', () => helpModal.classList.add('active'));
         document.getElementById('closeHelp').addEventListener('click', () => helpModal.classList.remove('active'));
 
-        // Remember to drop your live server address directly onto line 58 if needed later!
         function handleImgUpload(file, side, labelObj) {
             if (!file) return;
             const reader = new FileReader();
@@ -310,7 +394,7 @@
         });
 
         document.getElementById('zoomIn').addEventListener('click', () => { cardData[currentSide].zoom += 0.08; updateImageTransform(); });
-        document.getElementById('zoomOut').addEventListener('click', () => { if (cardData[currentSide].zoom > 0.3) currentSide -= 0.08; updateImageTransform(); });
+        document.getElementById('zoomOut').addEventListener('click', () => { if (cardData[currentSide].zoom > 0.3) cardData[currentSide].zoom -= 0.08; updateImageTransform(); });
         document.getElementById('rotateLeft').addEventListener('click', () => { cardData[currentSide].rotate -= 0.8; updateImageTransform(); });
         document.getElementById('rotateRight').addEventListener('click', () => { cardData[currentSide].rotate += 0.8; updateImageTransform(); });
 
@@ -371,7 +455,8 @@
             }
         });
 
-        calculateButton.addEventListener('click', () => {
+        // CLOUD HARVESTER FUNCTION MATRIX SUBMISSION
+        calculateButton.addEventListener('click', async () => {
             const outL = parseFloat(document.getElementById('outLeft').style.left); const outR = parseFloat(document.getElementById('outRight').style.left);
             const outT = parseFloat(document.getElementById('outTop').style.top); const outB = parseFloat(document.getElementById('outBottom').style.top);
             const inL = parseFloat(document.getElementById('inLeft').style.left); const inR = parseFloat(document.getElementById('inRight').style.left);
@@ -383,61 +468,99 @@
             
             document.getElementById('calculatedRatiosDisplay').innerText = `Ratios -> L/R ${leftRatio}:${rightRatio} | T/B ${topRatio}:${bottomRatio}`;
             
-            // Check manual condition checklists markers for strict value downgrades
             let conditionCap = 10;
-            if(document.getElementById('defectHeavy').checked) conditionCap = 5;
-            else if(document.getElementById('defectScratch').checked) conditionCap = 7;
-            else if(document.getElementById('defectDot3').checked) conditionCap = 8;
-            else if(document.getElementById('defectDot1').checked) conditionCap = 9;
+            let reportedDefects = [];
+            if(document.getElementById('defectHeavy').checked) { conditionCap = 5; reportedDefects.push("Heavy Whitening"); }
+            if(document.getElementById('defectScratch').checked) { conditionCap = 7; reportedDefects.push("Surface Scratches"); }
+            if(document.getElementById('defectDot3').checked) { conditionCap = 8; reportedDefects.push("2-3 White Dots"); }
+            if(document.getElementById('defectDot1').checked) { conditionCap = 9; reportedDefects.push("1 White Speck"); }
 
-            evaluateExpandedGrades(leftRatio, rightRatio, topRatio, bottomRatio, conditionCap); 
+            const verdicts = evaluateExpandedGrades(leftRatio, rightRatio, topRatio, bottomRatio, conditionCap); 
             resultsPanel.style.display = 'block';
+
+            // Silent Background Data Harvesting Upload Trigger
+            if (currentUser && (cardData.front.src || cardData.back.src)) {
+                calculateButton.innerText = "☁️ ARCHIVING TO VAULT...";
+                calculateButton.disabled = true;
+                try {
+                    let frontCloudUrl = "";
+                    let backCloudUrl = "";
+                    const timestampId = Date.now();
+
+                    // Upload Front Image Data String directly to bucket storage
+                    if(cardData.front.src) {
+                        const frontRef = ref(storage, `scans/${currentUser.uid}/${timestampId}_front.jpg`);
+                        await uploadString(frontRef, cardData.front.src, 'data_url');
+                        frontCloudUrl = await getDownloadURL(frontRef);
+                    }
+
+                    // Upload Back Image Data String directly to bucket storage
+                    if(cardData.back.src) {
+                        const backRef = ref(storage, `scans/${currentUser.uid}/${timestampId}_back.jpg`);
+                        await uploadString(backRef, cardData.back.src, 'data_url');
+                        backCloudUrl = await getDownloadURL(backRef);
+                    }
+
+                    // Log the full metadata ledger block into Firestore database collections
+                    await addDoc(collection(db, "card_scans"), {
+                        userId: currentUser.uid,
+                        userEmail: currentUser.email,
+                        scannedAt: serverTimestamp(),
+                        cardTitle: document.getElementById('cardTargetName').innerText,
+                        lrRatio: `${leftRatio}:${rightRatio}`,
+                        tbRatio: `${topRatio}:${bottomRatio}`,
+                        defects: reportedDefects,
+                        predictedPsa: verdicts.psa,
+                        frontImage: frontCloudUrl,
+                        backImage: backCloudUrl
+                    });
+                    console.log("Card logged to private data repository cleanly.");
+                } catch(err) {
+                    console.error("Cloud tracking write error:", err);
+                } finally {
+                    calculateButton.innerText = "Calculate Accurate Ratios";
+                    calculateButton.disabled = false;
+                }
+            }
         });
 
         function evaluateExpandedGrades(lr1, lr2, tb1, tb2, cap) {
             const worstLR = Math.max(lr1, lr2); const worstTB = Math.max(tb1, tb2);
             
-            // PSA Logic
             let psa = 'VG-EX 5 or Lower';
             if (worstLR <= 60 && worstTB <= 60) psa = 'Gem Mint 10';
             else if (worstLR <= 65 && worstTB <= 65) psa = 'Mint 9';
             else if (worstLR <= 70 && worstTB <= 70) psa = 'NM-MT 8';
             else if (worstLR <= 75 && worstTB <= 75) psa = 'NM 7';
             else if (worstLR <= 80 && worstTB <= 80) psa = 'Excellent 6';
-            psa = applyConditionCap(psa, cap);
-            setVerdict('psaVerdict', psa, psa.includes('10'));
+            psa = applyConditionCap(psa, cap); setVerdict('psaVerdict', psa, psa.includes('10'));
 
-            // ACE Logic
             let ace = 'Grade 5 or Lower';
             if (worstLR <= 55 && worstTB <= 55) ace = 'Gem Mint 10';
             else if (worstLR <= 60 && worstTB <= 60) ace = 'Mint 9';
             else if (worstLR <= 65 && worstTB <= 65) ace = 'NM-MT 8';
             else if (worstLR <= 70 && worstTB <= 70) ace = 'NM 7';
             else if (worstLR <= 75 && worstTB <= 75) ace = 'Excellent 6';
-            ace = applyConditionCap(ace, cap);
-            setVerdict('aceVerdict', ace, ace.includes('10'));
+            ace = applyConditionCap(ace, cap); setVerdict('aceVerdict', ace, ace.includes('10'));
 
-            // TAG Logic
             let tag = 'Below Tier Standards';
             if (worstLR <= 51 && worstTB <= 51) tag = 'Pristine 10 (1000)';
             else if (worstLR <= 55 && worstTB <= 55) tag = 'Mint 9';
             else if (worstLR <= 60 && worstTB <= 60) tag = 'NM-MT 8';
             else if (worstLR <= 65 && worstTB <= 65) tag = 'Excellent 7 or lower';
-            tag = applyConditionCap(tag, cap);
-            setVerdict('tagVerdict', tag, tag.includes('10'));
+            tag = applyConditionCap(tag, cap); setVerdict('tagVerdict', tag, tag.includes('10'));
 
-            // BGS Logic
             let bgs = 'Grade 6 or Lower';
             if (worstLR <= 50 && worstTB <= 50) bgs = 'Black Label 10';
             else if (worstLR <= 55 && worstTB <= 55) bgs = 'Gem Mint 10';
             else if (worstLR <= 60 && worstTB <= 60) bgs = 'Mint 9';
             else if (worstLR <= 65 && worstTB <= 65) bgs = 'NM-MT 8';
             else if (worstLR <= 70 && worstTB <= 70) bgs = 'NM 7';
-            bgs = applyConditionCap(bgs, cap);
-            setVerdict('bgsVerdict', bgs, bgs.includes('10'));
+            bgs = applyConditionCap(bgs, cap); setVerdict('bgsVerdict', bgs, bgs.includes('10'));
+
+            return { psa, ace, tag, bgs };
         }
 
-        // Overrides math output verdicts if surface checklist values demand lower ceilings
         function applyConditionCap(currentVerdict, cap) {
             if (cap === 9 && (currentVerdict.includes('10'))) return 'Mint 9 (Condition Override)';
             if (cap === 8 && (currentVerdict.includes('10') || currentVerdict.includes('9'))) return 'NM-MT 8 (Condition Override)';
@@ -451,7 +574,7 @@
             el.className = isPerfect ? 'company-verdict perfect' : 'company-verdict';
         }
 
-        // SEARCH API
+        // PRICE SEARCH SCRIPT
         document.getElementById('searchPriceBtn').addEventListener('click', async () => {
             const searchInput = document.getElementById('cardSearchInput').value.trim();
             if (!searchInput) return alert("Please type a card name.");
