@@ -314,6 +314,11 @@
         const binderStatusMessage = document.getElementById('binderStatusMessage');
         const binderGridWrapper = document.getElementById('binderGridWrapper');
         const ocrStatusLog = document.getElementById('ocrStatusLog');
+        const helpModal = document.getElementById('helpModal');
+
+        // Help Modal Listeners Wireup
+        document.getElementById('openHelp').addEventListener('click', () => helpModal.classList.add('active'));
+        document.getElementById('closeHelp').addEventListener('click', () => helpModal.classList.remove('active'));
 
         modeBtnScanner.addEventListener('click', () => {
             modeBtnScanner.classList.add('active'); modeBtnBinder.classList.remove('active');
@@ -457,7 +462,6 @@
                     labelObj.innerText = side === 'front' ? "✓ Front Saved" : "✓ Back Saved"; labelObj.classList.add('has-file');
                     sideTabs.style.display = "flex"; workspace.style.display = 'block'; controlDock.style.display = 'flex'; calculateButton.style.display = 'block';
                     
-                    // Reset positions cleanly
                     cardData[side].zoom = 1.0; cardData[side].rotate = 0; cardData[side].x = 0; cardData[side].y = 0;
                     switchSide(side);
 
@@ -521,12 +525,11 @@
             }
         }
 
-        // PRICE SEARCH SYSTEM TRIGGER WITH 5 SECOND TIMEOUT PROTECTION LINKED
+        // PRICE SEARCH SYSTEM TRIGGER
         async function triggerAutomatedPriceSearch(queryText) {
             const searchButton = document.getElementById('searchPriceBtn');
             searchButton.innerText = "..."; searchButton.disabled = true;
 
-            // Setup 5 Second network drop boundary safety wall
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 5000);
 
@@ -561,7 +564,7 @@
                     document.getElementById('priceMarket').innerText = marketPrice; document.getElementById('priceLow').innerText = lowPrice;
                     const ebayQuery = encodeURIComponent(`${cardName} ${matchedCard.number} ${matchedCard.set.name}`); document.getElementById('ebayLink').href = `https://www.ebay.co.uk/sch/i.html?_nkw=${ebayQuery}&LH_Sold=1&LH_Complete=1`;
                     document.getElementById('priceResultBox').style.display = "block";
-                    ocrStatusLog.style.display = "none"; // Close banner cleanly on hit success
+                    ocrStatusLog.style.display = "none"; 
                 } else {
                     throw new Error("No registry matches found.");
                 }
@@ -629,7 +632,7 @@
             else { previewImage.style.filter = "none"; }
         });
 
-        // CALCULATION MASTER DISPATCH WITH REPAIRED DEDUCTIONS PARSING PIPELINE
+        // CALCULATION DISPATCH
         calculateButton.addEventListener('click', async () => {
             const outL = parseFloat(document.getElementById('outLeft').style.left); const outR = parseFloat(document.getElementById('outRight').style.left);
             const outT = parseFloat(document.getElementById('outTop').style.top); const outB = parseFloat(document.getElementById('outBottom').style.top);
