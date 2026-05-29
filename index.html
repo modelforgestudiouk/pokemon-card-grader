@@ -3,42 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Model Forge Studio - Pre-Grader</title>
+    <title>Model Forge Studio - Advanced Pre-Grader</title>
     <style>
-        body { margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; background-color: #121212; min-height: 100vh; color: #FFF; font-family: sans-serif; }
-        h2 { font-size: 22px; font-weight: bold; margin-bottom: 5px; color: #FF0055; }
-        .subtitle { color: #AAA; margin-bottom: 20px; font-size: 14px; }
-        .upload-container { width: 340px; background-color: #1E1E1E; padding: 15px; border-radius: 15px; box-sizing: border-box; text-align: center; border: 2px dashed #333; }
-        #fileInput { display: none; }
-        .custom-button { background-color: #FF0055; color: #FFF; border: none; padding: 12px 25px; border-radius: 30px; font-size: 15px; font-weight: bold; cursor: pointer; display: inline-block; margin: 10px 0; }
-        #calculateButton { background-color: #00FFCC; color: #121212; display: none; width: 100%; margin-top: 15px; }
+        /* Model Forge Studio Brand Theme Configuration */
+        :root {
+            --bg-dark: #0D0D0D;
+            --panel-dark: #1A1A1A;
+            --brand-orange: #FF5500;
+            --brand-white: #FFFFFF;
+            --text-gray: #A6A6A6;
+            --success-green: #00FFCC;
+        }
+
+        body { margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; background-color: var(--bg-dark); min-height: 100vh; color: var(--brand-white); font-family: sans-serif; }
         
-        /* Interactive Cropping Workspace Zone */
-        #workspace { position: relative; width: 300px; height: 420px; margin: 15px auto; display: none; background-color: #000; border-radius: 8px; overflow: hidden; }
+        /* Branded Header Layout */
+        .header-container { display: flex; align-items: center; justify-content: space-between; width: 340px; margin-bottom: 20px; position: relative; }
+        .logo-text { font-size: 22px; font-weight: 900; letter-spacing: 1px; color: var(--brand-orange); margin: 0; text-transform: uppercase; }
+        .logo-sub { font-size: 12px; color: var(--brand-white); font-weight: 300; letter-spacing: 2px; text-transform: uppercase; margin-top: -2px; }
+        
+        /* Smooth Help Popup Trigger Button */
+        .help-btn { background: none; border: 2px solid var(--brand-orange); color: var(--brand-orange); width: 28px; height: 28px; border-radius: 50%; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; }
+        .help-btn:hover { background-color: var(--brand-orange); color: var(--bg-dark); }
+
+        .upload-container { width: 340px; background-color: var(--panel-dark); padding: 15px; border-radius: 15px; box-sizing: border-box; text-align: center; border: 1px solid #2B2B2B; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        #fileInput { display: none; }
+        
+        .custom-button { background-color: var(--brand-orange); color: var(--brand-white); border: none; padding: 12px 25px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; display: inline-block; margin: 10px 0; width: 100%; box-sizing: border-box; text-transform: uppercase; letter-spacing: 1px; transition: background 0.2s; }
+        .custom-button:hover { background-color: #E04B00; }
+        #calculateButton { background-color: var(--brand-white); color: var(--bg-dark); display: none; margin-top: 15px; }
+        
+        /* Advanced 8-Line Workspace Configuration Matrix */
+        #workspace { position: relative; width: 310px; height: 430px; margin: 15px auto; display: none; background-color: #000; border-radius: 8px; overflow: hidden; border: 1px solid #333; }
         #previewImage { width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
         
-        /* Draggable Guide Lines Overlay */
-        .guide-line { position: absolute; background-color: rgba(0, 255, 204, 0.6); z-index: 10; }
+        /* Interactive Crosshairs CSS System */
+        .guide-line { position: absolute; z-index: 10; opacity: 0.85; }
         .vertical { width: 2px; height: 100%; top: 0; cursor: ew-resize; }
         .horizontal { height: 2px; width: 100%; left: 0; cursor: ns-resize; }
         
-        /* Visual adjustments anchors */
-        .vertical::after { content: ''; position: absolute; left: -10px; top: 50%; width: 22px; height: 22px; background: #00FFCC; border-radius: 50%; transform: translateY(-50%); }
-        .horizontal::after { content: ''; position: absolute; top: -10px; left: 50%; width: 22px; height: 22px; background: #00FFCC; border-radius: 50%; transform: translateX(-50%); }
+        /* Structural Outer Border Alignment Handles (Red Team) */
+        .outer-line { background-color: #FF2222; }
+        .outer-line.vertical::after { content: ''; position: absolute; left: -9px; top: 30%; width: 20px; height: 20px; background: #FF2222; border: 2px solid #FFF; border-radius: 50%; }
+        .outer-line.horizontal::after { content: ''; position: absolute; top: -9px; left: 30%; width: 20px; height: 20px; background: #FF2222; border: 2px solid #FFF; border-radius: 50%; }
 
-        /* Multi-Company Breakdown Dashboard Display Panel */
-        #resultsPanel { margin-top: 20px; padding: 15px; background-color: #1E1E1E; border-radius: 10px; width: 340px; box-sizing: border-box; display: none; }
-        .metric-title { font-size: 18px; color: #00FFCC; font-weight: bold; margin: 0 0 15px 0; border-bottom: 1px solid #333; padding-bottom: 5px; }
-        .company-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #252525; }
-        .company-name { font-weight: bold; color: #FFF; }
-        .company-verdict { color: #FF0055; font-weight: bold; }
-        .perfect { color: #00FFCC !important; }
+        /* Internal Artwork Framing Border Handles (Green Team) */
+        .inner-line { background-color: var(--success-green); }
+        .inner-line.vertical::after { content: ''; position: absolute; left: -9px; top: 70%; width: 20px; height: 20px; background: var(--success-green); border: 2px solid #FFF; border-radius: 50%; }
+        .inner-line.horizontal::after { content: ''; position: absolute; top: -9px; left: 70%; width: 20px; height: 20px; background: var(--success-green); border: 2px solid #FFF; border-radius: 50%; }
+
+        /* Scoring Summary Dashboards */
+        #resultsPanel { margin-top: 20px; padding: 15px; background-color: var(--panel-dark); border-radius: 10px; width: 340px; box-sizing: border-box; display: none; border: 1px solid #2B2B2B; }
+        .metric-title { font-size: 16px; color: var(--brand-orange); font-weight: bold; margin: 0 0 15px 0; border-bottom: 1px solid #333; padding-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .company-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #252525; font-size: 14px; }
+        .company-name { font-weight: bold; color: var(--text-gray); }
+        .company-verdict { color: var(--brand-white); font-weight: bold; }
+        .perfect { color: var(--success-green) !important; }
+
+        /* Smooth Instruction Modal Popup Styles */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .modal-card { background-color: var(--panel-dark); border: 2px solid var(--brand-orange); padding: 25px; border-radius: 15px; width: 290px; color: var(--brand-white); position: relative; transform: scale(0.9); transition: transform 0.3s ease; }
+        .modal-overlay.active .modal-card { transform: scale(1); }
+        .modal-title { font-size: 18px; font-weight: bold; color: var(--brand-orange); margin-top: 0; margin-bottom: 15px; text-transform: uppercase; }
+        .modal-steps { text-align: left; padding-left: 20px; margin: 0; font-size: 14px; color: var(--text-gray); line-height: 1.6; }
+        .modal-steps li { margin-bottom: 10px; }
+        .close-modal { background-color: var(--brand-orange); color: white; border: none; padding: 8px 15px; border-radius: 5px; font-weight: bold; margin-top: 15px; float: right; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <h2>Model Forge Studio</h2>
-    <div class="subtitle">Card Pre-Centering Tool v2.0</div>
+    <div class="header-container">
+        <div>
+            <div class="logo-text">Model Forge</div>
+            <div class="logo-sub">Studio Pre-Grader</div>
+        </div>
+        <button class="help-btn" id="openHelp">?</button>
+    </div>
     
     <div class="upload-container">
         <label for="fileInput" class="custom-button">Upload Card Image</label>
@@ -46,22 +87,40 @@
         
         <div id="workspace">
             <img id="previewImage" alt="Card Workspace">
-            <div id="lineLeft" class="guide-line vertical" style="left: 25%;"></div>
-            <div id="lineRight" class="guide-line vertical" style="left: 75%;"></div>
-            <div id="lineTop" class="guide-line horizontal" style="top: 20%;"></div>
-            <div id="lineBottom" class="guide-line horizontal" style="top: 80%;"></div>
+            
+            <div id="outLeft" class="guide-line vertical outer-line" style="left: 10%;"></div>
+            <div id="outRight" class="guide-line vertical outer-line" style="left: 90%;"></div>
+            <div id="outTop" class="guide-line horizontal outer-line" style="top: 10%;"></div>
+            <div id="outBottom" class="guide-line horizontal outer-line" style="top: 90%;"></div>
+            
+            <div id="inLeft" class="guide-line vertical inner-line" style="left: 20%;"></div>
+            <div id="inRight" class="guide-line vertical inner-line" style="left: 80%;"></div>
+            <div id="inTop" class="guide-line horizontal inner-line" style="top: 20%;"></div>
+            <div id="inBottom" class="guide-line horizontal inner-line" style="top: 80%;"></div>
         </div>
         
         <button id="calculateButton" class="custom-button">Calculate Accurate Ratios</button>
     </div>
 
     <div id="resultsPanel">
-        <div class="metric-title" id="calculatedRatiosDisplay">Measured: L/R 50:50 | T/B 50:50</div>
-        
-        <div class="company-row"><span class="company-name">PSA Standard:</span><span id="psaVerdict" class="company-verdict">Evaluating...</span></div>
-        <div class="company-row"><span class="company-name">ACE Grading:</span><span id="aceVerdict" class="company-verdict">Evaluating...</span></div>
-        <div class="company-row"><span class="company-name">TAG Grading:</span><span id="tagVerdict" class="company-verdict">Evaluating...</span></div>
-        <div class="company-row"><span class="company-name">BGS (Beckett):</span><span id="bgsVerdict" class="company-verdict">Evaluating...</span></div>
+        <div class="metric-title" id="calculatedRatiosDisplay">Calculated Ratios</div>
+        <div class="company-row"><span class="company-name">PSA Grading Standard:</span><span id="psaVerdict" class="company-verdict">Evaluating...</span></div>
+        <div class="company-row"><span class="company-name">ACE Grading Standard:</span><span id="aceVerdict" class="company-verdict">Evaluating...</span></div>
+        <div class="company-row"><span class="company-name">TAG Analytics Engine:</span><span id="tagVerdict" class="company-verdict">Evaluating...</span></div>
+        <div class="company-row"><span class="company-name">BGS (Beckett Standards):</span><span id="bgsVerdict" class="company-verdict">Evaluating...</span></div>
+    </div>
+
+    <div class="modal-overlay" id="helpModal">
+        <div class="modal-card">
+            <div class="modal-title">How to Align & Pregrade</div>
+            <ol class="modal-steps">
+                <li>Upload an upright, flat picture of your trading card.</li>
+                <li>Drag the <strong><span style="color:#FF2222;">4 RED lines</span></strong> to line up perfectly with the absolute <strong>outside edges</strong> of the physical card.</li>
+                <li>Drag the <strong><span style="color:var(--success-green);">4 GREEN lines</span></strong> to line up with the <strong>inside border edge</strong> of the yellow artwork frame.</li>
+                <li>Tap <strong>Calculate Accurate Ratios</strong> to see your multi-company alignment grading score predictions instantly!</li>
+            </ol>
+            <button class="close-modal" id="closeHelp">Got It</button>
+        </div>
     </div>
 
     <script>
@@ -70,9 +129,13 @@
         const previewImage = document.getElementById('previewImage');
         const calculateButton = document.getElementById('calculateButton');
         const resultsPanel = document.getElementById('resultsPanel');
+        const helpModal = document.getElementById('helpModal');
         
-        // Setup line dragging variables
         let activeLine = null;
+
+        // Modal Open/Close Controls
+        document.getElementById('openHelp').addEventListener('click', () => helpModal.classList.add('active'));
+        document.getElementById('closeHelp').addEventListener('click', () => helpModal.classList.remove('active'));
 
         fileInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
@@ -84,7 +147,7 @@
             }
         });
 
-        // Add drag functionality to the crosshair lines
+        // Initialize Touch & Drag Configurations
         document.querySelectorAll('.guide-line').forEach(line => {
             line.addEventListener('mousedown', (e) => activeLine = line);
             line.addEventListener('touchstart', (e) => activeLine = line, {passive: true});
@@ -92,7 +155,6 @@
 
         window.addEventListener('mouseup', () => activeLine = null);
         window.addEventListener('touchend', () => activeLine = null);
-
         window.addEventListener('mousemove', handleMove);
         window.addEventListener('touchmove', handleMove, {passive: false});
 
@@ -114,29 +176,34 @@
         }
 
         calculateButton.addEventListener('click', () => {
-            // Get current crosshair alignment percentage splits from user input positions
-            const leftPos = parseFloat(document.getElementById('lineLeft').style.left);
-            const rightPos = parseFloat(document.getElementById('lineRight').style.left);
-            const topPos = parseFloat(document.getElementById('lineTop').style.top);
-            const bottomPos = parseFloat(document.getElementById('lineBottom').style.top);
+            // Retrieve line values
+            const outL = parseFloat(document.getElementById('outLeft').style.left);
+            const outR = parseFloat(document.getElementById('outRight').style.left);
+            const outT = parseFloat(document.getElementById('outTop').style.top);
+            const outB = parseFloat(document.getElementById('outBottom').style.top);
 
-            // Calculate precise mathematical spacing splits
-            const leftBorder = leftPos;
-            const rightBorder = 100 - rightPos;
-            const lrTotal = leftBorder + rightBorder;
-            const leftRatio = Math.round((leftBorder / lrTotal) * 100);
+            const inL = parseFloat(document.getElementById('inLeft').style.left);
+            const inR = parseFloat(document.getElementById('inRight').style.left);
+            const inT = parseFloat(document.getElementById('inTop').style.top);
+            const inB = parseFloat(document.getElementById('inBottom').style.top);
+
+            // Calculate widths (Outer Edge to Inner Edge Frame boundary checks)
+            const leftWidth = inL - outL;
+            const rightWidth = outR - inR;
+            const topWidth = inT - outT;
+            const bottomWidth = outB - inB;
+
+            // Compute percentage ratios
+            const lrTotal = leftWidth + rightWidth;
+            const leftRatio = Math.round((leftWidth / lrTotal) * 100);
             const rightRatio = 100 - leftRatio;
 
-            const topBorder = topPos;
-            const bottomBorder = 100 - bottomPos;
-            const tbTotal = topBorder + bottomBorder;
-            const topRatio = Math.round((topBorder / tbTotal) * 100);
+            const tbTotal = topWidth + bottomWidth;
+            const topRatio = Math.round((topWidth / tbTotal) * 100);
             const bottomRatio = 100 - topRatio;
 
-            // Display raw measurements
-            document.getElementById('calculatedRatiosDisplay').innerText = `Measured: L/R ${leftRatio}:${rightRatio} | T/B ${topRatio}:${bottomRatio}`;
-
-            // Process and output multi-company strict rules grading matrices
+            // Output data dashboard metrics
+            document.getElementById('calculatedRatiosDisplay').innerText = `L/R Ratio: ${leftRatio}:${rightRatio} | T/B Ratio: ${topRatio}:${bottomRatio}`;
             evaluateGrades(leftRatio, rightRatio, topRatio, bottomRatio);
             resultsPanel.style.display = 'block';
         });
@@ -145,53 +212,32 @@
             const worstLR = Math.max(lr1, lr2);
             const worstTB = Math.max(tb1, tb2);
 
-            // 1. PSA Criteria (Allows 60/40 front centering for a PSA 10 Gem Mint)
-            if (worstLR <= 60 && worstTB <= 60) {
-                setVerdict('psaVerdict', 'Gem Mint 10', true);
-            } else if (worstLR <= 65 && worstTB <= 65) {
-                setVerdict('psaVerdict', 'Mint 9', false);
-            } else {
-                setVerdict('psaVerdict', 'Grade 8 or Lower', false);
-            }
+            // PSA Parameters
+            if (worstLR <= 60 && worstTB <= 60) setVerdict('psaVerdict', 'Gem Mint 10', true);
+            else if (worstLR <= 65 && worstTB <= 65) setVerdict('psaVerdict', 'Mint 9', false);
+            else setVerdict('psaVerdict', 'Grade 8 or Lower', false);
 
-            // 2. ACE Grading Criteria (Strict UK Standard - Expects 55/45 or better for a 10)
-            if (worstLR <= 55 && worstTB <= 55) {
-                setVerdict('aceVerdict', 'Gem Mint 10', true);
-            } else if (worstLR <= 60 && worstTB <= 60) {
-                setVerdict('aceVerdict', 'Mint 9', false);
-            } else {
-                setVerdict('aceVerdict', 'Grade 8 or Lower', false);
-            }
+            // ACE Parameters
+            if (worstLR <= 55 && worstTB <= 55) setVerdict('aceVerdict', 'Gem Mint 10', true);
+            else if (worstLR <= 60 && worstTB <= 60) setVerdict('aceVerdict', 'Mint 9', false);
+            else setVerdict('aceVerdict', 'Grade 8 or Lower', false);
 
-            // 3. TAG Grading Criteria (Extremely Strict Laser Metric Analytics - Requires 50/50 split)
-            if (worstLR <= 51 && worstTB <= 51) {
-                setVerdict('tagVerdict', 'Pristine 10 (1000)', true);
-            } else if (worstLR <= 55 && worstTB <= 55) {
-                setVerdict('tagVerdict', 'Mint 9', false);
-            } else {
-                setVerdict('tagVerdict', 'Grade 8 or Lower', false);
-            }
+            // TAG Parameters
+            if (worstLR <= 51 && worstTB <= 51) setVerdict('tagVerdict', 'Pristine 10 (1000)', true);
+            else if (worstLR <= 55 && worstTB <= 55) setVerdict('tagVerdict', 'Mint 9', false);
+            else setVerdict('tagVerdict', 'Grade 8 or Lower', false);
 
-            // 4. BGS Criteria (Requires 50/50 for a Black Label, allows 55/45 for Quad 10 Gem Mint)
-            if (worstLR <= 50 && worstTB <= 50) {
-                setVerdict('bgsVerdict', 'Black Label Perfect 10', true);
-            } else if (worstLR <= 55 && worstTB <= 55) {
-                setVerdict('bgsVerdict', 'Gem Mint 10', true);
-            } else if (worstLR <= 60 && worstTB <= 60) {
-                setVerdict('bgsVerdict', 'Mint 9', false);
-            } else {
-                setVerdict('bgsVerdict', 'Grade 8 or Lower', false);
-            }
+            // BGS Parameters
+            if (worstLR <= 50 && worstTB <= 50) setVerdict('bgsVerdict', 'Black Label 10', true);
+            else if (worstLR <= 55 && worstTB <= 55) setVerdict('bgsVerdict', 'Gem Mint 10', true);
+            else if (worstLR <= 60 && worstTB <= 60) setVerdict('bgsVerdict', 'Mint 9', false);
+            else setVerdict('bgsVerdict', 'Grade 8 or Lower', false);
         }
 
         function setVerdict(id, text, isPerfect) {
             const el = document.getElementById(id);
             el.innerText = text;
-            if (isPerfect) {
-                el.className = 'company-verdict perfect';
-            } else {
-                el.className = 'company-verdict';
-            }
+            el.className = isPerfect ? 'company-verdict perfect' : 'company-verdict';
         }
     </script>
 </body>
