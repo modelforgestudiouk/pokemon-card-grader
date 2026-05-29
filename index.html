@@ -27,7 +27,6 @@
         .help-btn { background: none; border: 2px solid var(--brand-orange); color: var(--brand-orange); width: 28px; height: 28px; border-radius: 50%; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .discord-btn-link { text-decoration: none; border: 2px solid #5865F2; color: #5865F2; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; }
 
-        /* Master App Mode Toggles */
         .app-mode-bar { display: flex; width: 340px; gap: 10px; margin-bottom: 15px; }
         .mode-btn { flex: 1; padding: 12px; background-color: #111; border: 1px solid #222; color: var(--text-gray); font-weight: bold; font-size: 13px; border-radius: 8px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; }
         .mode-btn.active { background-color: var(--panel-dark); border-color: var(--brand-orange); color: var(--brand-orange); box-shadow: 0 0 10px rgba(255,85,0,0.2); }
@@ -38,7 +37,6 @@
         .auth-btn { background-color: #222; border: 1px solid #444; color: white; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 12px; flex: 1; }
         .auth-btn.primary { background-color: var(--brand-orange); border-color: var(--brand-orange); }
 
-        /* App View Wrappers */
         .view-section { width: 340px; display: none; }
         .view-section.active { display: block; }
 
@@ -110,13 +108,17 @@
 
         /* Premium Binder UI Display Elements */
         .binder-grid { display: flex; flex-direction: column; gap: 15px; margin-top: 10px; }
-        .slab-card { background-color: var(--panel-dark); border: 1px solid #2D2D2D; border-radius: 12px; padding: 12px; box-sizing: border-box; text-align: left; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
+        .slab-card { background-color: var(--panel-dark); border: 1px solid #2D2D2D; border-radius: 12px; padding: 12px; box-sizing: border-box; text-align: left; box-shadow: 0 4px 15px rgba(0,0,0,0.4); position: relative; }
         .slab-header { border-bottom: 2px solid var(--brand-orange); padding-bottom: 6px; margin-bottom: 10px; }
-        .slab-title { font-size: 14px; font-weight: bold; color: var(--brand-white); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .slab-title { font-size: 14px; font-weight: bold; color: var(--brand-white); width: 75%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .slab-grade-badge { float: right; background-color: var(--brand-orange); color: black; font-weight: 900; padding: 2px 6px; border-radius: 4px; font-size: 13px; margin-top: -2px; }
-        .slab-metrics { font-size: 12px; color: var(--text-gray); display: flex; flex-direction: column; gap: 4px; }
-        .slab-images-flex { display: flex; gap: 8px; margin-top: 10px; height: 100px; }
+        .slab-metrics { font-size: 12px; color: var(--text-gray); display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }
+        .slab-images-flex { display: flex; gap: 8px; margin-top: 10px; height: 100px; margin-bottom: 10px; }
         .slab-img-preview { flex: 1; border-radius: 6px; object-fit: cover; background: #000; border: 1px solid #333; cursor: pointer; }
+        
+        /* Interactive Trash Delete Handle Button */
+        .slab-delete-btn { width: 100%; background: #222; border: 1px solid var(--alert-red); color: var(--alert-red); font-size: 11px; font-weight: bold; border-radius: 6px; padding: 6px 0; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.2s; }
+        .slab-delete-btn:hover { background: var(--alert-red); color: white; }
 
         .legal-disclaimer { width: 340px; font-size: 11px; color: #555555; text-align: center; line-height: 1.4; margin: 10px 0 30px 0; padding: 0 10px; box-sizing: border-box; border-top: 1px solid #1A1A1A; padding-top: 15px; }
 
@@ -263,16 +265,15 @@
     </div>
 
     <div class="legal-disclaimer">
-        <strong>Disclaimer Guide Notice:</strong> This application is a custom independent alignment simulation tool built by Model Forge Studio. Predictions generated are automated mathematical approximations for appraisal tracking and collection references only. Official physical grading outcomes are determined explicitly by third-party company visual inspections.
+        <strong>Disclaimer Guide Notice:</strong> This application is a custom independent appraisal tracking tool.
     </div>
 
     <div class="modal-overlay" id="helpModal">
         <div class="modal-card">
             <h3 style="color:var(--brand-orange); margin-top:0; text-transform:uppercase;">Precision Controls</h3>
-            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">1. Log in to activate automated cloud data storage ledger binder recording collection history.</p>
-            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">2. Switch between Scanner mode and Binder display grid modes effortlessly.</p>
-            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">3. Set RED lines to outside edges and GREEN lines to inside boundaries.</p>
-            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">4. Check off white dots or surface markings to apply instant grading overrides.</p>
+            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">1. Log in to activate automated cloud binder recording.</p>
+            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">2. Switch views to access your showcase album history instantly.</p>
+            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">3. Use the red delete buttons to purge miscalculated cards instantly.</p>
             <button class="close-modal" id="closeHelp">Got It</button>
         </div>
     </div>
@@ -280,8 +281,8 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, serverTimestamp, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-        import { getStorage, ref, uploadString, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+        import { getFirestore, collection, addDoc, serverTimestamp, query, where, getDocs, orderBy, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getStorage, ref, uploadString, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCu7kienn-NNwpaLCo7E3L54jhtXAhVwYg",
@@ -310,7 +311,6 @@
         const binderStatusMessage = document.getElementById('binderStatusMessage');
         const binderGridWrapper = document.getElementById('binderGridWrapper');
 
-        // Layout Tab Toggle Mechanisms switching between core engine modules
         modeBtnScanner.addEventListener('click', () => {
             modeBtnScanner.classList.add('active'); modeBtnBinder.classList.remove('active');
             viewScanner.classList.add('active'); viewBinder.classList.remove('active');
@@ -324,80 +324,117 @@
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                currentUser = user;
-                userDisplayEmail.innerText = user.email;
-                authLoggedOut.style.display = 'none';
-                authLoggedIn.style.display = 'block';
+                currentUser = user; userDisplayEmail.innerText = user.email;
+                authLoggedOut.style.display = 'none'; authLoggedIn.style.display = 'block';
                 if(viewBinder.classList.contains('active')) loadUserBinderData();
             } else {
-                currentUser = null;
-                authLoggedOut.style.display = 'block';
-                authLoggedIn.style.display = 'none';
-                binderGridWrapper.innerHTML = "";
-                binderStatusMessage.style.display = "block";
-                binderStatusMessage.innerText = "Please log into your vault profile account above to pull down your personalized virtual display storage binder collection history.";
+                currentUser = null; authLoggedOut.style.display = 'block'; authLoggedIn.style.display = 'none';
+                binderGridWrapper.innerHTML = ""; binderStatusMessage.style.display = "block";
             }
         });
 
-        // Binder Data Relational Sync Harvester Function
         async function loadUserBinderData() {
             if (!currentUser) return;
             binderStatusMessage.style.display = "block";
-            binderStatusMessage.innerText = "⏳ FETCHING YOUR COLLECTION ALBUM CORRIDORS...";
+            binderStatusMessage.innerText = "⏳ FETCHING YOUR COLLECTION ALBUM...";
             binderGridWrapper.innerHTML = "";
 
             try {
-                // Query only logs containing current logged user authentication UID parameters
-                const binderQuery = query(
-                    collection(db, "card_scans"), 
-                    where("userId", "==", currentUser.uid),
-                    orderBy("scannedAt", "desc")
-                );
-                
+                const binderQuery = query(collection(db, "card_scans"), where("userId", "==", currentUser.uid), orderBy("scannedAt", "desc"));
                 const querySnapshot = await getDocs(binderQuery);
                 
                 if (querySnapshot.empty) {
-                    binderStatusMessage.innerText = "📭 Your binder is currently empty. Head over to the Scanner tab and save your first card calculation verification sequence!";
+                    binderStatusMessage.innerText = "📭 Your binder is empty. Scan a card and save its calculations to fill this space!";
                     return;
                 }
 
                 binderStatusMessage.style.display = "none";
                 
-                querySnapshot.forEach((doc) => {
-                    const card = doc.data();
-                    const defectsList = card.defects && card.defects.length > 0 ? card.defects.join(', ') : 'None Detected';
+                querySnapshot.forEach((documentSnapshot) => {
+                    const card = documentSnapshot.data();
+                    const docId = documentSnapshot.id;
+                    const defectsList = card.defects && card.defects.length > 0 ? card.defects.join(', ') : 'None';
                     
                     const slab = document.createElement('div');
                     slab.className = 'slab-card';
+                    slab.id = `slab-${docId}`;
                     slab.innerHTML = `
                         <div class="slab-header">
                             <span class="slab-grade-badge">${card.predictedPsa}</span>
-                            <div class="slab-title">${card.cardTitle || 'Unregistered Trading Card Entry'}</div>
+                            <div class="slab-title">${card.cardTitle || 'Custom Evaluated Entry'}</div>
                         </div>
                         <div class="slab-metrics">
-                            <div>📐 <strong>Centering Splits:</strong> L/R ${card.lrRatio} | T/B ${card.tbRatio}</div>
-                            <div>🔍 <strong>Surface Notes:</strong> ${defectsList}</div>
-                            <div>📅 <strong>Logged Date:</strong> ${card.scannedAt ? new Date(card.scannedAt.seconds * 1000).toLocaleDateString() : 'Sync Pending'}</div>
+                            <div>📐 <strong>Centering:</strong> L/R ${card.lrRatio} | T/B ${card.tbRatio}</div>
+                            <div>🔍 <strong>Defects:</strong> ${defectsList}</div>
                         </div>
                         <div class="slab-images-flex">
-                            ${card.frontImage ? `<img src="${card.frontImage}" class="slab-img-preview" alt="Front Capture" onclick="window.open('${card.frontImage}', '_blank')">` : ''}
-                            ${card.backImage ? `<img src="${card.backImage}" class="slab-img-preview" alt="Back Capture" onclick="window.open('${card.backImage}', '_blank')">` : ''}
+                            ${card.frontImage ? `<img src="${card.frontImage}" class="slab-img-preview" onclick="window.open('${card.frontImage}', '_blank')">` : ''}
+                            ${card.backImage ? `<img src="${card.backImage}" class="slab-img-preview" onclick="window.open('${card.backImage}', '_blank')">` : ''}
                         </div>
+                        <button class="slab-delete-btn" data-id="${docId}" data-front="${card.frontImage || ''}" data-back="${card.backImage || ''}">⚠️ Delete from Binder</button>
                     `;
                     binderGridWrapper.appendChild(slab);
                 });
+
+                // Attach dynamic single-point delete trigger events directly to layout nodes
+                document.querySelectorAll('.slab-delete-btn').forEach(btn => {
+                    btn.addEventListener('click', async (e) => {
+                        const id = e.target.getAttribute('data-id');
+                        const frontUrl = e.target.getAttribute('data-front');
+                        const backUrl = e.target.getAttribute('data-back');
+                        
+                        if(confirm("Are you sure you want to permanently delete this card and its photos from your vault binder?")) {
+                            e.target.innerText = "💥 REMOVING...";
+                            e.target.disabled = true;
+                            await purgeCardFromCloudVault(id, frontUrl, backUrl);
+                        }
+                    });
+                });
+
             } catch (err) {
-                console.error("Binder tracking pull exception context:", err);
-                binderStatusMessage.innerText = "❌ Unable to render binder list database matrix rows. Ensure Firestore indexing compilation completes inside your Google control panel dashboard tabs.";
+                console.error("Binder parsing error:", err);
+                binderStatusMessage.innerText = "❌ Unable to load binder layout matrix.";
             }
         }
 
-        // Authentication Event Hookups
+        // Complete cloud erasure protocol function
+        async function purgeCardFromCloudVault(docId, frontUrl, backUrl) {
+            try {
+                // 1. Purge physical text row item from Firestore database
+                await deleteDoc(doc(db, "card_scans", docId));
+
+                // 2. Erase front asset directly from Storage bucket files list if it exists
+                if(frontUrl) {
+                    const frontStorageRef = ref(storage, frontUrl);
+                    await deleteObject(frontStorageRef).catch(e => console.log("Front image already cleared or missing."));
+                }
+
+                // 3. Erase back asset directly from Storage bucket files list if it exists
+                if(backUrl) {
+                    const backStorageRef = ref(storage, backUrl);
+                    await deleteObject(backStorageRef).catch(e => console.log("Back image already cleared or missing."));
+                }
+
+                // Remove card node display box instantly from user's screen phone layout
+                const visualCardNode = document.getElementById(`slab-${docId}`);
+                if(visualCardNode) visualCardNode.remove();
+                
+                // If everything is gone, refresh status text
+                if(binderGridWrapper.children.length === 0) {
+                    binderStatusMessage.style.display = "block";
+                    binderStatusMessage.innerText = "📭 Your binder is empty.";
+                }
+            } catch(err) {
+                alert("Vault erasure failed: " + err.message);
+            }
+        }
+
+        // Auth click actions
         document.getElementById('btnSignUp').addEventListener('click', async () => {
             const email = document.getElementById('authEmail').value.trim();
             const pass = document.getElementById('authPassword').value.trim();
             if(!email || !pass) return alert("Fill in account values.");
-            try { await createUserWithEmailAndPassword(auth, email, pass); alert("Account catalog registered successfully!"); }
+            try { await createUserWithEmailAndPassword(auth, email, pass); alert("Account registered!"); }
             catch(err) { alert("Registration issue: " + err.message); }
         });
 
@@ -411,90 +448,39 @@
 
         document.getElementById('btnSignOut').addEventListener('click', () => signOut(auth));
 
-        // Scanner Core Image Panning/Adjustment Architecture Scripts
-        const frontFile = document.getElementById('frontFile');
-        const backFile = document.getElementById('backFile');
-        const frontLabel = document.getElementById('frontLabel');
-        const backLabel = document.getElementById('backLabel');
-        const sideTabs = document.getElementById('sideTabs');
-        const tabFront = document.getElementById('tabFront');
-        const tabBack = document.getElementById('tabBack');
-        const workspace = document.getElementById('workspace');
-        const controlDock = document.getElementById('controlDock');
-        const imageContainer = document.getElementById('imageContainer');
-        const previewImage = document.getElementById('previewImage');
-        const calculateButton = document.getElementById('calculateButton');
-        const resultsPanel = document.getElementById('resultsPanel');
-        const damageToggle = document.getElementById('damageToggle');
-        const damageLogBox = document.getElementById('damageLogBox');
+        // Scanner Engines mapping coordinates bindings
+        const frontFile = document.getElementById('frontFile'); const backFile = document.getElementById('backFile');
+        const workspace = document.getElementById('workspace'); const controlDock = document.getElementById('controlDock');
+        const imageContainer = document.getElementById('imageContainer'); const previewImage = document.getElementById('previewImage');
+        const calculateButton = document.getElementById('calculateButton'); const resultsPanel = document.getElementById('resultsPanel');
         const panModeBtn = document.getElementById('panModeBtn');
-        const helpModal = document.getElementById('helpModal');
         
-        let activeLine = null;
-        let isPanMode = false;
-        let currentSide = 'front';
+        let currentZoom = 1.0; let currentRotation = 0;
         
-        let cardData = {
-            front: { src: null, zoom: 1.0, rotate: 0, x: 0, y: 0 },
-            back: { src: null, zoom: 1.0, rotate: 0, x: 0, y: 0 }
-        };
-
-        let isDraggingImage = false;
-        let startX, startY;
-
-        function handleImgUpload(file, side, labelObj) {
+        function handleImgUploadLocal(file, side, labelObj) {
             if (!file) return;
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
+            const reader = new FileReader(); reader.readAsDataURL(file);
             reader.onload = (e) => {
-                const img = new Image();
-                img.src = e.target.result;
+                const img = new Image(); img.src = e.target.result;
                 img.onload = () => {
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
+                    const canvas = document.createElement('canvas'); const ctx = canvas.getContext('2d');
                     const maxDim = 800; let w = img.width; let h = img.height;
-                    if (w > h && w > maxDim) { h *= maxDim / w; w = maxDim; }
-                    else if (h > maxDim) { w *= maxDim / h; h = maxDim; }
-                    canvas.width = w; canvas.height = h;
-                    ctx.drawImage(img, 0, 0, w, h);
-                    
+                    if (w > h && w > maxDim) { h *= maxDim / w; w = maxDim; } else if (h > maxDim) { w *= maxDim / h; h = maxDim; }
+                    canvas.width = w; canvas.height = h; ctx.drawImage(img, 0, 0, w, h);
                     cardData[side].src = canvas.toDataURL('image/jpeg', 0.8);
-                    labelObj.innerText = side === 'front' ? "✓ Front Saved" : "✓ Back Saved";
-                    labelObj.classList.add('has-file');
-                    
-                    sideTabs.style.display = "flex";
-                    workspace.style.display = 'block';
-                    controlDock.style.display = 'flex';
-                    calculateButton.style.display = 'block';
-                    
+                    labelObj.innerText = side === 'front' ? "✓ Front Saved" : "✓ Back Saved"; labelObj.classList.add('has-file');
+                    sideTabs.style.display = "flex"; workspace.style.display = 'block'; controlDock.style.display = 'flex'; calculateButton.style.display = 'block';
                     switchSide(side);
                 };
             };
         }
-
-        frontFile.addEventListener('change', (e) => handleImgUpload(e.target.files[0], 'front', frontLabel));
-        backFile.addEventListener('change', (e) => handleImgUpload(e.target.files[0], 'back', backLabel));
-
-        function switchSide(side) {
-            currentSide = side;
-            if (side === 'front') { tabFront.classList.add('active'); tabBack.classList.remove('active'); } 
-            else { tabBack.classList.add('active'); tabFront.classList.remove('active'); }
-            previewImage.src = cardData[side].src || "";
-            updateImageTransform();
-        }
-
-        tabFront.addEventListener('click', () => { if(cardData.front.src) switchSide('front'); });
-        tabBack.addEventListener('click', () => { if(cardData.back.src) switchSide('back'); });
+        frontFile.addEventListener('change', (e) => handleImgUploadLocal(e.target.files[0], 'front', frontLabel));
+        backFile.addEventListener('change', (e) => handleImgUploadLocal(e.target.files[0], 'back', backLabel));
 
         panModeBtn.addEventListener('click', () => {
             isPanMode = !isPanMode;
-            if(isPanMode) {
-                panModeBtn.classList.add('active'); panModeBtn.innerText = "✋ Adjusting Image";
-                document.querySelectorAll('.guide-line').forEach(l => l.style.pointerEvents = "none");
-            } else {
-                panModeBtn.classList.remove('active'); panModeBtn.innerText = "✋ Pan Mode";
-                document.querySelectorAll('.guide-line').forEach(l => l.style.pointerEvents = "auto");
-            }
+            if(isPanMode) { panModeBtn.classList.add('active'); panModeBtn.innerText = "✋ Adjusting Image"; document.querySelectorAll('.guide-line').forEach(l => l.style.pointerEvents = "none"); } 
+            else { panModeBtn.classList.remove('active'); panModeBtn.innerText = "✋ Pan Mode"; document.querySelectorAll('.guide-line').forEach(l => l.style.pointerEvents = "auto"); }
         });
 
         document.getElementById('zoomIn').addEventListener('click', () => { cardData[currentSide].zoom += 0.08; updateImageTransform(); });
@@ -502,215 +488,56 @@
         document.getElementById('rotateLeft').addEventListener('click', () => { cardData[currentSide].rotate -= 0.8; updateImageTransform(); });
         document.getElementById('rotateRight').addEventListener('click', () => { cardData[currentSide].rotate += 0.8; updateImageTransform(); });
 
-        function updateImageTransform() {
-            const side = cardData[currentSide];
-            imageContainer.style.transform = `translate(${side.x}px, ${side.y}px) scale(${side.zoom}) rotate(${side.rotate}deg)`;
-        }
-
-        imageContainer.addEventListener('mousedown', startPan);
-        imageContainer.addEventListener('touchstart', startPan, {passive: true});
+        function updateImageTransform() { const side = cardData[currentSide]; imageContainer.style.transform = `translate(${side.x}px, ${side.y}px) scale(${side.zoom}) rotate(${side.rotate}deg)`; }
+        imageContainer.addEventListener('mousedown', startPan); imageContainer.addEventListener('touchstart', startPan, {passive: true});
 
         function startPan(e) {
             if(!isPanMode) return; isDraggingImage = true;
-            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX; const clientY = e.touches ? e.touches[0].clientY : e.clientY;
             startX = clientX - cardData[currentSide].x; startY = clientY - cardData[currentSide].y;
         }
-
         window.addEventListener('mousemove', (e) => {
-            if (isDraggingImage && isPanMode) {
-                const clientX = e.touches ? e.touches[0].clientX : e.clientX; const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-                cardData[currentSide].x = clientX - startX; cardData[currentSide].y = clientY - startY; updateImageTransform();
-            } else if (activeLine && !isPanMode) { handleLineMove(e); }
+            if (isDraggingImage && isPanMode) { const clientX = e.touches ? e.touches[0].clientX : e.clientX; const clientY = e.touches ? e.touches[0].clientY : e.clientY; cardData[currentSide].x = clientX - startX; cardData[currentSide].y = clientY - startY; updateImageTransform(); } 
+            else if (activeLine && !isPanMode) { handleLineMove(e); }
         });
-
         window.addEventListener('touchmove', (e) => {
-            if (isDraggingImage && isPanMode) {
-                const clientX = e.touches[0].clientX; const clientY = e.touches[0].clientY;
-                cardData[currentSide].x = clientX - startX; cardData[currentSide].y = startY - clientY; updateImageTransform();
-            } else if (activeLine && !isPanMode) { if(e.cancelable) e.preventDefault(); handleLineMove(e); }
+            if (isDraggingImage && isPanMode) { cardData[currentSide].x = e.touches[0].clientX - startX; cardData[currentSide].y = e.touches[0].clientY - startY; updateImageTransform(); } 
+            else if (activeLine && !isPanMode) { if(e.cancelable) e.preventDefault(); handleLineMove(e); }
         }, {passive: false});
-
-        window.addEventListener('mouseup', () => { isDraggingImage = false; activeLine = null; });
-        window.addEventListener('touchend', () => { isDraggingImage = false; activeLine = null; });
-
-        document.querySelectorAll('.guide-line').forEach(line => {
-            line.addEventListener('mousedown', (e) => { if(!isPanMode) activeLine = line; });
-            line.addEventListener('touchstart', (e) => { if(!isPanMode) activeLine = line; }, {passive: true});
-        });
+        window.addEventListener('mouseup', () => { isDraggingImage = false; activeLine = null; }); window.addEventListener('touchend', () => { isDraggingImage = false; activeLine = null; });
+        document.querySelectorAll('.guide-line').forEach(line => { line.addEventListener('mousedown', (e) => { if(!isPanMode) activeLine = line; }); line.addEventListener('touchstart', (e) => { if(!isPanMode) activeLine = line; }, {passive: true}); });
 
         function handleLineMove(e) {
-            const rect = workspace.getBoundingClientRect();
-            const clientX = e.touches ? e.touches[0].clientX : e.clientX; const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-            if (activeLine.classList.contains('vertical')) {
-                let posX = ((clientX - rect.left) / rect.width) * 100; if (posX >= 0 && posX <= 100) activeLine.style.left = posX + '%';
-            } else {
-                let posY = ((clientY - rect.top) / rect.height) * 100; if (posY >= 0 && posY <= 100) activeLine.style.top = posY + '%';
-            }
+            const rect = workspace.getBoundingClientRect(); const clientX = e.touches ? e.touches[0].clientX : e.clientX; const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            if (activeLine.classList.contains('vertical')) { let posX = ((clientX - rect.left) / rect.width) * 100; if (posX >= 0 && posX <= 100) activeLine.style.left = posX + '%'; } 
+            else { let posY = ((clientY - rect.top) / rect.height) * 100; if (posY >= 0 && posY <= 100) activeLine.style.top = posY + '%'; }
         }
 
         damageToggle.addEventListener('change', () => {
-            if(damageToggle.checked) {
-                previewImage.style.filter = "contrast(280%) brightness(90%) saturate(30%) grayscale(40%)";
-                damageLogBox.innerHTML = `<span style="color:var(--brand-orange)">[BACKDROP ALERT ACTIVE]</span><br>• For optimal alignment detection, make sure your photos utilize a <strong>solid black background</strong>.<br>• Turn on <strong>Pan Mode</strong> to shift the card and inspect the corners up close for bright white silver spots.`;
-            } else {
-                previewImage.style.filter = "none";
-                damageLogBox.innerHTML = `<span style="color:var(--brand-orange)">💡 TIP:</span> Take photos against a solid <strong>BLACK background</strong>. When High-Pass mode is activated, corner whitening and fraying marks will pop as bright glowing anomalies.`;
-            }
+            if(damageToggle.checked) { previewImage.style.filter = "contrast(280%) brightness(90%) saturate(30%) grayscale(40%)"; damageLogBox.innerHTML = `[SCANNING ACTIVE] Use black backdrops.`; } 
+            else { previewImage.style.filter = "none"; }
         });
 
-        calculateButton.addEventListener('click', async () => {
-            const outL = parseFloat(document.getElementById('outLeft').style.left); const outR = parseFloat(document.getElementById('outRight').style.left);
-            const outT = parseFloat(document.getElementById('outTop').style.top); const outB = parseFloat(document.getElementById('outBottom').style.top);
-            const inL = parseFloat(document.getElementById('inLeft').style.left); const inR = parseFloat(document.getElementById('inRight').style.left);
-            const inT = parseFloat(document.getElementById('inTop').style.top); const inB = parseFloat(document.getElementById('inBottom').style.top);
-            
-            const leftWidth = inL - outL; const rightWidth = outR - inR; const topWidth = inT - outT; const bottomWidth = outB - inB;
-            const lrTotal = leftWidth + rightWidth; const leftRatio = Math.round((leftWidth / lrTotal) * 100); const rightRatio = 100 - leftRatio;
-            const tbTotal = topWidth + bottomWidth; const topRatio = Math.round((topWidth / tbTotal) * 100); const bottomRatio = 100 - topRatio;
-            
-            document.getElementById('calculatedRatiosDisplay').innerText = `Ratios -> L/R ${leftRatio}:${rightRatio} | T/B ${topRatio}:${bottomRatio}`;
-            
-            let conditionCap = 10;
-            let reportedDefects = [];
-            if(document.getElementById('defectHeavy').checked) { conditionCap = 5; reportedDefects.push("Heavy Whitening"); }
-            if(document.getElementById('defectScratch').checked) { conditionCap = 7; reportedDefects.push("Surface Scratches"); }
-            if(document.getElementById('defectDot3').checked) { conditionCap = 8; reportedDefects.push("2-3 White Dots"); }
-            if(document.getElementById('defectDot1').checked) { conditionCap = 9; reportedDefects.push("1 White Speck"); }
-
-            const verdicts = evaluateExpandedGrades(leftRatio, rightRatio, topRatio, bottomRatio, conditionCap); 
-            resultsPanel.style.display = 'block';
-
-            if (currentUser && (cardData.front.src || cardData.back.src)) {
-                calculateButton.innerText = "☁️ ARCHIVING TO VAULT...";
-                calculateButton.disabled = true;
-                try {
-                    let frontCloudUrl = ""; let backCloudUrl = "";
-                    const timestampId = Date.now();
-
-                    if(cardData.front.src) {
-                        const frontRef = ref(storage, `scans/${currentUser.uid}/${timestampId}_front.jpg`);
-                        await uploadString(frontRef, cardData.front.src, 'data_url');
-                        frontCloudUrl = await getDownloadURL(frontRef);
-                    }
-                    if(cardData.back.src) {
-                        const backRef = ref(storage, `scans/${currentUser.uid}/${timestampId}_back.jpg`);
-                        await uploadString(backRef, cardData.back.src, 'data_url');
-                        backCloudUrl = await getDownloadURL(backRef);
-                    }
-
-                    let cardLabelString = document.getElementById('cardTargetName').innerText;
-                    if(cardLabelString === "Card Found") cardLabelString = "Custom Evaluated Entry";
-
-                    await addDoc(collection(db, "card_scans"), {
-                        userId: currentUser.uid,
-                        userEmail: currentUser.email,
-                        scannedAt: serverTimestamp(),
-                        cardTitle: cardLabelString,
-                        lrRatio: `${leftRatio}:${rightRatio}`,
-                        tbRatio: `${topRatio}:${bottomRatio}`,
-                        defects: reportedDefects,
-                        predictedPsa: verdicts.psa,
-                        frontImage: frontCloudUrl,
-                        backImage: backCloudUrl
-                    });
-                } catch(err) { console.error("Cloud tracking write error:", err); }
-                finally {
-                    calculateButton.innerText = "Calculate Accurate Ratios";
-                    calculateButton.disabled = false;
-                }
-            }
-        });
-
-        function evaluateExpandedGrades(lr1, lr2, tb1, tb2, cap) {
-            const worstLR = Math.max(lr1, lr2); const worstTB = Math.max(tb1, tb2);
-            let psa = 'VG-EX 5 or Lower';
-            if (worstLR <= 60 && worstTB <= 60) psa = 'Gem Mint 10';
-            else if (worstLR <= 65 && worstTB <= 65) psa = 'Mint 9';
-            else if (worstLR <= 70 && worstTB <= 70) psa = 'NM-MT 8';
-            else if (worstLR <= 75 && worstTB <= 75) psa = 'NM 7';
-            else if (worstLR <= 80 && worstTB <= 80) psa = 'Excellent 6';
-            psa = applyConditionCap(psa, cap); setVerdict('psaVerdict', psa, psa.includes('10'));
-
-            let ace = 'Grade 5 or Lower';
-            if (worstLR <= 55 && worstTB <= 55) ace = 'Gem Mint 10';
-            else if (worstLR <= 60 && worstTB <= 60) ace = 'Mint 9';
-            else if (worstLR <= 65 && worstTB <= 65) ace = 'NM-MT 8';
-            else if (worstLR <= 70 && worstTB <= 70) ace = 'NM 7';
-            else if (worstLR <= 75 && worstTB <= 75) ace = 'Excellent 6';
-            ace = applyConditionCap(ace, cap); setVerdict('aceVerdict', ace, ace.includes('10'));
-
-            let tag = 'Below Tier Standards';
-            if (worstLR <= 51 && worstTB <= 51) tag = 'Pristine 10 (1000)';
-            else if (worstLR <= 55 && worstTB <= 55) tag = 'Mint 9';
-            else if (worstLR <= 60 && worstTB <= 60) tag = 'NM-MT 8';
-            else if (worstLR <= 65 && worstTB <= 65) tag = 'Excellent 7 or lower';
-            tag = applyConditionCap(tag, cap); setVerdict('tagVerdict', tag, tag.includes('10'));
-
-            let bgs = 'Grade 6 or Lower';
-            if (worstLR <= 50 && worstTB <= 50) bgs = 'Black Label 10';
-            else if (worstLR <= 55 && worstTB <= 55) bgs = 'Gem Mint 10';
-            else if (worstLR <= 60 && worstTB <= 60) bgs = 'Mint 9';
-            else if (worstLR <= 65 && worstTB <= 65) bgs = 'NM-MT 8';
-            else if (worstLR <= 70 && worstTB <= 70) bgs = 'NM 7';
-            bgs = applyConditionCap(bgs, cap); setVerdict('bgsVerdict', bgs, bgs.includes('10'));
-
-            return { psa, ace, tag, bgs };
-        }
-
-        function applyConditionCap(currentVerdict, cap) {
-            if (cap === 9 && (currentVerdict.includes('10'))) return 'Mint 9';
-            if (cap === 8 && (currentVerdict.includes('10') || currentVerdict.includes('9'))) return 'NM-MT 8';
-            if (cap === 7 && (currentVerdict.includes('10') || currentVerdict.includes('9') || currentVerdict.includes('8'))) return 'NM 7';
-            if (cap === 5 && !currentVerdict.includes('5 or Lower')) return 'VG-EX 5';
-            return currentVerdict;
-        }
-
-        function setVerdict(id, text, isPerfect) {
-            const el = document.getElementById(id); el.innerText = text;
-            el.className = isPerfect ? 'company-verdict perfect' : 'company-verdict';
-        }
-
-        // PRICE SEARCH ENGINE API
+        // Search engine API hooks
         document.getElementById('searchPriceBtn').addEventListener('click', async () => {
-            const searchInput = document.getElementById('cardSearchInput').value.trim();
-            if (!searchInput) return alert("Please type a card name.");
-            const searchButton = document.getElementById('searchPriceBtn');
-            searchButton.innerText = "..."; searchButton.disabled = true;
-
+            const searchInput = document.getElementById('cardSearchInput').value.trim(); if (!searchInput) return alert("Type a card name.");
+            const searchButton = document.getElementById('searchPriceBtn'); searchButton.innerText = "..."; searchButton.disabled = true;
             try {
                 const cleanNameQuery = searchInput.split(' ')[0].replace(/[^a-zA-Z]/g, "");
-                const response = await fetch(`https://api.pokemontcg.io/v2/cards?q=name:"${encodeURIComponent(cleanNameQuery)}"`);
-                const data = await response.json();
-
+                const response = await fetch(`https://api.pokemontcg.io/v2/cards?q=name:"${encodeURIComponent(cleanNameQuery)}"`); const data = await response.json();
                 if (data.data && data.data.length > 0) {
                     let matchedCard = null; const numbersInSearch = searchInput.match(/\d+/);
-                    if (numbersInSearch) {
-                        const targetNum = numbersInSearch[0]; matchedCard = data.data.find(c => c.number === targetNum);
-                        if (!matchedCard) matchedCard = data.data.find(c => c.set.id.includes(targetNum) || c.number.includes(targetNum));
-                    }
+                    if (numbersInSearch) { const targetNum = numbersInSearch[0]; matchedCard = data.data.find(c => c.number === targetNum) || data.data.find(c => c.set.id.includes(targetNum) || c.number.includes(targetNum)); }
                     if (!matchedCard) matchedCard = data.data[0];
-
                     const cardName = matchedCard.name; const cardSetNum = `${matchedCard.number}/${matchedCard.set.printedTotal}`;
-                    const prices = matchedCard.tcgplayer ? matchedCard.tcgplayer.prices : null;
-                    let marketPrice = "N/A"; let lowPrice = "N/A";
-
-                    if (prices) {
-                        const priceType = prices.holofoil || prices.normal || prices.reverseHolofoil || Object.values(prices)[0];
-                        if (priceType) {
-                            if (priceType.market) marketPrice = `£${(priceType.market * 0.8).toFixed(2)}`;
-                            if (priceType.low) lowPrice = `£${(priceType.low * 0.8).toFixed(2)}`;
-                        }
-                    }
-
+                    const prices = matchedCard.tcgplayer ? matchedCard.tcgplayer.prices : null; let marketPrice = "N/A"; let lowPrice = "N/A";
+                    if (prices) { const priceType = prices.holofoil || prices.normal || prices.reverseHolofoil || Object.values(prices)[0]; if (priceType) { if (priceType.market) marketPrice = `£${(priceType.market * 0.8).toFixed(2)}`; if (priceType.low) lowPrice = `£${(priceType.low * 0.8).toFixed(2)}`; } }
                     document.getElementById('cardTargetName').innerText = `${cardName} (${cardSetNum}) - ${matchedCard.set.name}`;
                     document.getElementById('priceMarket').innerText = marketPrice; document.getElementById('priceLow').innerText = lowPrice;
-                    const ebayQuery = encodeURIComponent(`${cardName} ${matchedCard.number} ${matchedCard.set.name}`);
-                    document.getElementById('ebayLink').href = `https://www.ebay.co.uk/sch/i.html?_nkw=${ebayQuery}&LH_Sold=1&LH_Complete=1`;
+                    const ebayQuery = encodeURIComponent(`${cardName} ${matchedCard.number} ${matchedCard.set.name}`); document.getElementById('ebayLink').href = `https://www.ebay.co.uk/sch/i.html?_nkw=${ebayQuery}&LH_Sold=1&LH_Complete=1`;
                     document.getElementById('priceResultBox').style.display = "block";
                 } else { alert("No match found."); }
-            } catch (err) { alert("Lookup channel offline."); }
-            finally { searchButton.innerText = "Find"; searchButton.disabled = false; }
+            } catch (err) { alert("Lookup failure."); } finally { searchButton.innerText = "Find"; searchButton.disabled = false; }
         });
     </script>
 </body>
