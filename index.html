@@ -16,10 +16,10 @@
 
         body { margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; background-color: var(--bg-dark); min-height: 100vh; color: var(--brand-white); font-family: sans-serif; }
         
-        /* Branded Header Layout with Logo Support */
+        /* Branded Pure CSS Text Header - No Broken Image Links Needed */
         .header-container { display: flex; align-items: center; justify-content: space-between; width: 340px; margin-bottom: 20px; position: relative; }
-        .logo-box { display: flex; align-items: center; gap: 10px; }
-        .brand-logo { width: 45px; height: 45px; object-fit: contain; display: none; } /* Changes to block when URL added */
+        .logo-badge { background-color: var(--brand-orange); color: var(--bg-dark); font-weight: 900; font-size: 20px; padding: 5px 12px; border-radius: 8px; margin-right: 12px; letter-spacing: -1px; }
+        .logo-flex { display: flex; align-items: center; }
         .logo-text { font-size: 20px; font-weight: 900; letter-spacing: 1px; color: var(--brand-orange); margin: 0; text-transform: uppercase; }
         .logo-sub { font-size: 11px; color: var(--brand-white); font-weight: 300; letter-spacing: 2px; text-transform: uppercase; margin-top: -2px; }
         
@@ -34,22 +34,22 @@
         #controlDock { display: none; justify-content: space-between; margin-top: 10px; background: #222; padding: 8px; border-radius: 8px; }
         .dock-btn { background: none; border: 1px solid var(--brand-orange); color: var(--brand-white); padding: 6px 12px; border-radius: 5px; font-size: 12px; font-weight: bold; cursor: pointer; }
 
-        /* Smooth High-Performance Workspace */
+        /* Performance Optimized Framing Box */
         #workspace { position: relative; width: 310px; height: 430px; margin: 15px auto; display: none; background-color: #000; border-radius: 8px; overflow: hidden; border: 1px solid #333; }
         #imageContainer { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transform-origin: center center; }
         #previewImage { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
         
-        /* Crosshairs Base System */
+        /* Centered Adjustment Handles Configuration */
         .guide-line { position: absolute; z-index: 10; opacity: 0.9; }
         .vertical { width: 2px; height: 100%; top: 0; cursor: ew-resize; }
         .horizontal { height: 2px; width: 100%; left: 0; cursor: ns-resize; }
         
-        /* Red Line Handles */
+        /* Red Lines */
         .outer-line { background-color: #FF2222; }
         .outer-line.vertical::after { content: ''; position: absolute; left: -11px; top: 50%; width: 24px; height: 24px; background: #FF2222; border: 2px solid #FFF; border-radius: 50%; transform: translateY(-50%); }
         .outer-line.horizontal::after { content: ''; position: absolute; top: -11px; left: 50%; width: 24px; height: 24px; background: #FF2222; border: 2px solid #FFF; border-radius: 50%; transform: translateX(-50%); }
 
-        /* Green Line Handles */
+        /* Green Lines */
         .inner-line { background-color: var(--success-green); }
         #inLeft.vertical::after { content: ''; position: absolute; left: -11px; top: 35%; width: 24px; height: 24px; background: var(--success-green); border: 2px solid #FFF; border-radius: 50%; transform: translateY(-50%); }
         #inRight.vertical::after { content: ''; position: absolute; left: -11px; top: 65%; width: 24px; height: 24px; background: var(--success-green); border: 2px solid #FFF; border-radius: 50%; transform: translateY(-50%); }
@@ -73,8 +73,8 @@
 <body>
 
     <div class="header-container">
-        <div class="logo-box">
-            <img src="https://ibb.co/5xLCyBCf" id="companyLogo" class="brand-logo" alt="Logo">
+        <div class="logo-flex">
+            <div class="logo-badge">MF</div>
             <div>
                 <div class="logo-text">Model Forge</div>
                 <div class="logo-sub">Studio Pre-Grader</div>
@@ -123,7 +123,7 @@
 
     <div class="modal-overlay" id="helpModal">
         <div class="modal-card">
-            <h3 style="color:var(--brand-orange); margin-top:0;">Precision Controls Manual</h3>
+            <h3 style="color:var(--brand-orange); margin-top:0; text-transform:uppercase;">Precision Controls</h3>
             <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">1. Upload your trading card photo.</p>
             <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">2. Use the <strong>Zoom</strong> and <strong>Tilt</strong> buttons to straighten the card inside the box.</p>
             <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">3. Slide the <span style="color:#FF2222;"><strong>RED knobs</strong></span> to the outer edges of the card.</p>
@@ -141,70 +141,40 @@
         const calculateButton = document.getElementById('calculateButton');
         const resultsPanel = document.getElementById('resultsPanel');
         const helpModal = document.getElementById('helpModal');
-        const logoImg = document.getElementById('companyLogo');
         
         let activeLine = null;
         let currentZoom = 1.0;
         let currentRotation = 0;
 
-        // Auto-display logo if valid link is pasted
-        if(logoImg.getAttribute('src') !== "PASTE_YOUR_IMAGE_LINK_HERE" && logoImg.getAttribute('src') !== "") {
-            logoImg.style.display = "block";
-        }
-
         document.getElementById('openHelp').addEventListener('click', () => helpModal.classList.add('active'));
         document.getElementById('closeHelp').addEventListener('click', () => helpModal.classList.remove('active'));
 
-        // Background High-Resolution Optimization Compressor Engine
+        // Lightweight URL-based processing bypasses heavy canvas memory allocation bottlenecks
         fileInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
             if (!file) return;
 
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = (event) => {
-                const img = new Image();
-                img.src = event.target.result;
-                img.onload = () => {
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
-                    
-                    // Force downscale threshold to keep mobile hardware lightning fast
-                    const maxCoord = 1000;
-                    let width = img.width;
-                    let height = img.height;
-
-                    if (width > height && width > maxCoord) {
-                        height *= maxCoord / width;
-                        width = maxCoord;
-                    } else if (height > maxCoord) {
-                        width *= maxCoord / height;
-                        height = maxCoord;
-                    }
-
-                    canvas.width = width;
-                    canvas.height = height;
-                    ctx.drawImage(img, 0, 0, width, height);
-                    
-                    // Set smooth compressed layout view
-                    previewImage.src = canvas.toDataURL('image/jpeg', 0.85);
-                    
-                    currentZoom = 1.0;
-                    currentRotation = 0;
-                    updateImageTransform();
-                    
-                    workspace.style.display = 'block';
-                    controlDock.style.display = 'flex';
-                    calculateButton.style.display = 'block';
-                    resultsPanel.style.display = 'none';
-                };
-            };
+            // Direct URL allocation bypasses canvas limitations on high-res camera structures
+            if (previewImage.src) {
+                URL.revokeObjectURL(previewImage.src);
+            }
+            
+            previewImage.src = URL.createObjectURL(file);
+            
+            currentZoom = 1.0;
+            currentRotation = 0;
+            updateImageTransform();
+            
+            workspace.style.display = 'block';
+            controlDock.style.display = 'flex';
+            calculateButton.style.display = 'block';
+            resultsPanel.style.display = 'none';
         });
 
-        document.getElementById('zoomIn').addEventListener('click', () => { currentZoom += 0.05; updateImageTransform(); });
-        document.getElementById('zoomOut').addEventListener('click', () => { if (currentZoom > 0.5) currentZoom -= 0.05; updateImageTransform(); });
-        document.getElementById('rotateLeft').addEventListener('click', () => { currentRotation -= 0.5; updateImageTransform(); });
-        document.getElementById('rotateRight').addEventListener('click', () => { currentRotation += 0.5; updateImageTransform(); });
+        document.getElementById('zoomIn').addEventListener('click', () => { currentZoom += 0.08; updateImageTransform(); });
+        document.getElementById('zoomOut').addEventListener('click', () => { if (currentZoom > 0.3) currentZoom -= 0.08; updateImageTransform(); });
+        document.getElementById('rotateLeft').addEventListener('click', () => { currentRotation -= 0.8; updateImageTransform(); });
+        document.getElementById('rotateRight').addEventListener('click', () => { currentRotation += 0.8; updateImageTransform(); });
 
         function updateImageTransform() {
             imageContainer.style.transform = `scale(${currentZoom}) rotate(${currentRotation}deg)`;
