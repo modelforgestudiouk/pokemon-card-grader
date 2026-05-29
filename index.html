@@ -23,11 +23,14 @@
         .logo-text { font-size: 20px; font-weight: 900; letter-spacing: 1px; color: var(--brand-orange); margin: 0; text-transform: uppercase; }
         .logo-sub { font-size: 11px; color: var(--brand-white); font-weight: 300; letter-spacing: 2px; text-transform: uppercase; margin-top: -2px; }
         
+        /* Action Menu Utilities */
+        .utility-box { display: flex; gap: 8px; align-items: center; }
         .help-btn { background: none; border: 2px solid var(--brand-orange); color: var(--brand-orange); width: 28px; height: 28px; border-radius: 50%; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .discord-btn-link { text-decoration: none; border: 2px solid #5865F2; color: #5865F2; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; transition: all 0.2s; }
+        .discord-btn-link:hover { background-color: #5865F2; color: #FFF; }
 
         .upload-container { width: 340px; background-color: var(--panel-dark); padding: 15px; border-radius: 15px; box-sizing: border-box; text-align: center; border: 1px solid #2B2B2B; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 20px; }
         
-        /* Dual-Sided Layout Buttons */
         .side-tabs { display: flex; gap: 10px; margin-bottom: 15px; }
         .tab-btn { flex: 1; padding: 10px; background: #222; border: 1px solid #333; color: var(--text-gray); font-weight: bold; border-radius: 6px; cursor: pointer; text-transform: uppercase; font-size: 13px; }
         .tab-btn.active { background: var(--brand-orange); color: white; border-color: var(--brand-orange); }
@@ -44,12 +47,10 @@
         .dock-btn.active { background: var(--brand-orange); }
 
         #workspace { position: relative; width: 310px; height: 430px; margin: 15px auto; display: none; background-color: #000; border-radius: 8px; overflow: hidden; border: 1px solid #333; }
-        
-        /* Drag and Move Layer Configuration */
         #imageContainer { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transform-origin: center center; position: absolute; top: 0; left: 0; cursor: move; }
         #previewImage { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
         
-        /* Crosshairs */
+        /* Crosshairs Handles */
         .guide-line { position: absolute; z-index: 10; opacity: 0.9; }
         .vertical { width: 2px; height: 100%; top: 0; cursor: ew-resize; }
         .horizontal { height: 2px; width: 100%; left: 0; cursor: ns-resize; }
@@ -91,6 +92,12 @@
         #damageLogBox { background-color: #050505; border: 1px solid #222; border-radius: 8px; padding: 12px; text-align: left; font-family: monospace; font-size: 12px; color: var(--text-gray); line-height: 1.4; }
 
         .legal-disclaimer { width: 340px; font-size: 11px; color: #555555; text-align: center; line-height: 1.4; margin: 10px 0 30px 0; padding: 0 10px; box-sizing: border-box; border-top: 1px solid #1A1A1A; padding-top: 15px; }
+
+        /* Help Modal Framework Overlay */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .modal-card { background-color: var(--panel-dark); border: 2px solid var(--brand-orange); padding: 25px; border-radius: 15px; width: 290px; color: var(--brand-white); }
+        .close-modal { background-color: var(--brand-orange); color: white; border: none; padding: 8px 15px; border-radius: 5px; font-weight: bold; margin-top: 15px; float: right; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -103,7 +110,10 @@
                 <div class="logo-sub">Studio Pre-Grader</div>
             </div>
         </div>
-        <button class="help-btn" id="openHelp">?</button>
+        <div class="utility-box">
+            <a href="PASTE_YOUR_DISCORD_LINK_HERE" target="_blank" class="discord-btn-link" title="Discord Link">💬</a>
+            <button class="help-btn" id="openHelp">?</button>
+        </div>
     </div>
     
     <div class="upload-container">
@@ -187,6 +197,17 @@
         <strong>Disclaimer Guide Notice:</strong> This application is a custom independent alignment simulation tool built by Model Forge Studio. Predictions generated are automated mathematical approximations for appraisal tracking and collection references only. Official physical grading outcomes are determined explicitly by third-party company visual inspections.
     </div>
 
+    <div class="modal-overlay" id="helpModal">
+        <div class="modal-card">
+            <h3 style="color:var(--brand-orange); margin-top:0; text-transform:uppercase;">Precision Controls</h3>
+            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">1. Upload front and back trading card photos.</p>
+            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">2. Toggle <strong>Pan Mode</strong> to slide the card zoom view directly with your fingers.</p>
+            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">3. Set RED lines to outside edges and GREEN lines to inside framing boundaries.</p>
+            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">4. Query the Price Index tracker below to display real-time values instantly.</p>
+            <button class="close-modal" id="closeHelp">Got It</button>
+        </div>
+    </div>
+
     <script>
         const frontFile = document.getElementById('frontFile');
         const backFile = document.getElementById('backFile');
@@ -205,22 +226,24 @@
         const damageToggle = document.getElementById('damageToggle');
         const damageLogBox = document.getElementById('damageLogBox');
         const panModeBtn = document.getElementById('panModeBtn');
+        const helpModal = document.getElementById('helpModal');
         
         let activeLine = null;
         let isPanMode = false;
-        
-        // Storage configuration slots for both faces
         let currentSide = 'front';
+        
         let cardData = {
             front: { src: null, zoom: 1.0, rotate: 0, x: 0, y: 0 },
             back: { src: null, zoom: 1.0, rotate: 0, x: 0, y: 0 }
         };
 
-        // Panning position values
         let isDraggingImage = false;
         let startX, startY;
 
-        // Image loading logic handlers
+        // Active Event Listeners explicitly repairing modal overlay triggers
+        document.getElementById('openHelp').addEventListener('click', () => helpModal.classList.add('active'));
+        document.getElementById('closeHelp').addEventListener('click', () => helpModal.classList.remove('active'));
+
         function handleImgUpload(file, side, labelObj) {
             if (!file) return;
             const reader = new FileReader();
@@ -256,11 +279,8 @@
 
         function switchSide(side) {
             currentSide = side;
-            if (side === 'front') {
-                tabFront.classList.add('active'); tabBack.classList.remove('active');
-            } else {
-                tabBack.classList.add('active'); tabFront.classList.remove('active');
-            }
+            if (side === 'front') { tabFront.classList.add('active'); tabBack.classList.remove('active'); } 
+            else { tabBack.classList.add('active'); tabFront.classList.remove('active'); }
             previewImage.src = cardData[side].src || "";
             updateImageTransform();
         }
@@ -268,65 +288,49 @@
         tabFront.addEventListener('click', () => { if(cardData.front.src) switchSide('front'); });
         tabBack.addEventListener('click', () => { if(cardData.back.src) switchSide('back'); });
 
-        // Pan Mode Button Toggle Switcher
         panModeBtn.addEventListener('click', () => {
             isPanMode = !isPanMode;
             if(isPanMode) {
-                panModeBtn.classList.add('active');
-                panModeBtn.innerText = "✋ Adjusting Image";
+                panModeBtn.classList.add('active'); panModeBtn.innerText = "✋ Adjusting Image";
                 document.querySelectorAll('.guide-line').forEach(l => l.style.pointerEvents = "none");
             } else {
-                panModeBtn.classList.remove('active');
-                panModeBtn.innerText = "✋ Pan Mode";
+                panModeBtn.classList.remove('active'); panModeBtn.innerText = "✋ Pan Mode";
                 document.querySelectorAll('.guide-line').forEach(l => l.style.pointerEvents = "auto");
             }
         });
 
-        // Zoom & Rotate adjustment bindings
         document.getElementById('zoomIn').addEventListener('click', () => { cardData[currentSide].zoom += 0.08; updateImageTransform(); });
         document.getElementById('zoomOut').addEventListener('click', () => { if (cardData[currentSide].zoom > 0.3) cardData[currentSide].zoom -= 0.08; updateImageTransform(); });
         document.getElementById('rotateLeft').addEventListener('click', () => { cardData[currentSide].rotate -= 0.8; updateImageTransform(); });
-        document.getElementById('rotateRight').addEventListener('click', () => { currentRotation = cardData[currentSide].rotate += 0.8; updateImageTransform(); });
+        document.getElementById('rotateRight').addEventListener('click', () => { cardData[currentSide].rotate += 0.8; updateImageTransform(); });
 
         function updateImageTransform() {
             const side = cardData[currentSide];
             imageContainer.style.transform = `translate(${side.x}px, ${side.y}px) scale(${side.zoom}) rotate(${side.rotate}deg)`;
         }
 
-        // Mouse & Touch events handler mapping for Panning and Sliding lines
         imageContainer.addEventListener('mousedown', startPan);
         imageContainer.addEventListener('touchstart', startPan, {passive: true});
 
         function startPan(e) {
-            if(!isPanMode) return;
-            isDraggingImage = true;
+            if(!isPanMode) return; isDraggingImage = true;
             const clientX = e.touches ? e.touches[0].clientX : e.clientX;
             const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-            startX = clientX - cardData[currentSide].x;
-            startY = clientY - cardData[currentSide].y;
+            startX = clientX - cardData[currentSide].x; startY = clientY - cardData[currentSide].y;
         }
 
         window.addEventListener('mousemove', (e) => {
             if (isDraggingImage && isPanMode) {
-                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-                cardData[currentSide].x = clientX - startX;
-                cardData[currentSide].y = clientY - startY;
-                updateImageTransform();
-            } else if (activeLine && !isPanMode) {
-                handleLineMove(e);
-            }
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX; const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                cardData[currentSide].x = clientX - startX; cardData[currentSide].y = clientY - startY; updateImageTransform();
+            } else if (activeLine && !isPanMode) { handleLineMove(e); }
         });
 
         window.addEventListener('touchmove', (e) => {
             if (isDraggingImage && isPanMode) {
                 const clientX = e.touches[0].clientX; const clientY = e.touches[0].clientY;
-                cardData[currentSide].x = clientX - startX; cardData[currentSide].y = clientY - startY;
-                updateImageTransform();
-            } else if (activeLine && !isPanMode) {
-                if(e.cancelable) e.preventDefault();
-                handleLineMove(e);
-            }
+                cardData[currentSide].x = clientX - startX; cardData[currentSide].y = clientY - startY; updateImageTransform();
+            } else if (activeLine && !isPanMode) { if(e.cancelable) e.preventDefault(); handleLineMove(e); }
         }, {passive: false});
 
         window.addEventListener('mouseup', () => { isDraggingImage = false; activeLine = null; });
@@ -339,19 +343,14 @@
 
         function handleLineMove(e) {
             const rect = workspace.getBoundingClientRect();
-            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX; const clientY = e.touches ? e.touches[0].clientY : e.clientY;
             if (activeLine.classList.contains('vertical')) {
-                let posX = ((clientX - rect.left) / rect.width) * 100;
-                if (posX >= 0 && posX <= 100) activeLine.style.left = posX + '%';
+                let posX = ((clientX - rect.left) / rect.width) * 100; if (posX >= 0 && posX <= 100) activeLine.style.left = posX + '%';
             } else {
-                let posY = ((clientY - rect.top) / rect.height) * 100;
-                if (posY >= 0 && posY <= 100) activeLine.style.top = posY + '%';
+                let posY = ((clientY - rect.top) / rect.height) * 100; if (posY >= 0 && posY <= 100) activeLine.style.top = posY + '%';
             }
         }
 
-        // Contrast high pass trigger update rules
         damageToggle.addEventListener('change', () => {
             if(damageToggle.checked) {
                 previewImage.style.filter = "contrast(280%) brightness(90%) saturate(30%) grayscale(40%)";
@@ -363,24 +362,15 @@
         });
 
         calculateButton.addEventListener('click', () => {
-            const outL = parseFloat(document.getElementById('outLeft').style.left);
-            const outR = parseFloat(document.getElementById('outRight').style.left);
-            const outT = parseFloat(document.getElementById('outTop').style.top);
-            const outB = parseFloat(document.getElementById('outBottom').style.top);
-            const inL = parseFloat(document.getElementById('inLeft').style.left);
-            const inR = parseFloat(document.getElementById('inRight').style.left);
-            const inT = parseFloat(document.getElementById('inTop').style.top);
-            const inB = parseFloat(document.getElementById('inBottom').style.top);
-
-            const leftWidth = inL - outL; const rightWidth = outR - inR;
-            const topWidth = inT - outT; const bottomWidth = outB - inB;
-
+            const outL = parseFloat(document.getElementById('outLeft').style.left); const outR = parseFloat(document.getElementById('outRight').style.left);
+            const outT = parseFloat(document.getElementById('outTop').style.top); const outB = parseFloat(document.getElementById('outBottom').style.top);
+            const inL = parseFloat(document.getElementById('inLeft').style.left); const inR = parseFloat(document.getElementById('inRight').style.left);
+            const inT = parseFloat(document.getElementById('inTop').style.top); const inB = parseFloat(document.getElementById('inBottom').style.top);
+            const leftWidth = inL - outL; const rightWidth = outR - inR; const topWidth = inT - outT; const bottomWidth = outB - inB;
             const lrTotal = leftWidth + rightWidth; const leftRatio = Math.round((leftWidth / lrTotal) * 100); const rightRatio = 100 - leftRatio;
             const tbTotal = topWidth + bottomWidth; const topRatio = Math.round((topWidth / tbTotal) * 100); const bottomRatio = 100 - topRatio;
-
             document.getElementById('calculatedRatiosDisplay').innerText = `Current Workspace View: L/R ${leftRatio}:${rightRatio} | T/B ${topRatio}:${bottomRatio}`;
-            evaluateExpandedGrades(leftRatio, rightRatio, topRatio, bottomRatio);
-            resultsPanel.style.display = 'block';
+            evaluateExpandedGrades(leftRatio, rightRatio, topRatio, bottomRatio); resultsPanel.style.display = 'block';
         });
 
         function evaluateExpandedGrades(lr1, lr2, tb1, tb2) {
@@ -413,9 +403,6 @@
             else setVerdict('bgsVerdict', 'Grade 6 or Lower', false);
         }
 
-        document.getElementById('openHelp').addEventListener('click', () => helpModal.classList.add('active'));
-        document.getElementById('closeHelp').addEventListener('click', () => helpModal.classList.remove('active'));
-
         function setVerdict(id, text, isPerfect) {
             const el = document.getElementById(id); el.innerText = text;
             el.className = isPerfect ? 'company-verdict perfect' : 'company-verdict';
@@ -434,17 +421,14 @@
                 const data = await response.json();
 
                 if (data.data && data.data.length > 0) {
-                    let matchedCard = null;
-                    const numbersInSearch = searchInput.match(/\d+/);
+                    let matchedCard = null; const numbersInSearch = searchInput.match(/\d+/);
                     if (numbersInSearch) {
-                        const targetNum = numbersInSearch[0];
-                        matchedCard = data.data.find(c => c.number === targetNum);
+                        const targetNum = numbersInSearch[0]; matchedCard = data.data.find(c => c.number === targetNum);
                         if (!matchedCard) matchedCard = data.data.find(c => c.set.id.includes(targetNum) || c.number.includes(targetNum));
                     }
                     if (!matchedCard) matchedCard = data.data[0];
 
-                    const cardName = matchedCard.name;
-                    const cardSetNum = `${matchedCard.number}/${matchedCard.set.printedTotal}`;
+                    const cardName = matchedCard.name; const cardSetNum = `${matchedCard.number}/${matchedCard.set.printedTotal}`;
                     const prices = matchedCard.tcgplayer ? matchedCard.tcgplayer.prices : null;
                     let marketPrice = "N/A"; let lowPrice = "N/A";
 
@@ -457,19 +441,13 @@
                     }
 
                     document.getElementById('cardTargetName').innerText = `${cardName} (${cardSetNum}) - ${matchedCard.set.name}`;
-                    document.getElementById('priceMarket').innerText = marketPrice;
-                    document.getElementById('priceLow').innerText = lowPrice;
+                    document.getElementById('priceMarket').innerText = marketPrice; document.getElementById('priceLow').innerText = lowPrice;
                     const ebayQuery = encodeURIComponent(`${cardName} ${matchedCard.number} ${matchedCard.set.name}`);
                     document.getElementById('ebayLink').href = `https://www.ebay.co.uk/sch/i.html?_nkw=${ebayQuery}&LH_Sold=1&LH_Complete=1`;
                     document.getElementById('priceResultBox').style.display = "block";
-                } else {
-                    alert("No match found.");
-                }
-            } catch (err) {
-                alert("Lookup channel offline.");
-            } finally {
-                searchButton.innerText = "Find"; searchButton.disabled = false;
-            }
+                } else { alert("No match found."); }
+            } catch (err) { alert("Lookup channel offline."); }
+            finally { searchButton.innerText = "Find"; searchButton.disabled = false; }
         });
     </script>
 </body>
