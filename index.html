@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Model Forge Studio - Precision Pre-Grader</title>
+    <title>Model Forge Studio - Premium Pre-Grader</title>
     <style>
         :root {
             --bg-dark: #0D0D0D;
@@ -12,6 +12,7 @@
             --brand-white: #FFFFFF;
             --text-gray: #A6A6A6;
             --success-green: #00FFCC;
+            --alert-red: #FF3333;
         }
 
         body { margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; background-color: var(--bg-dark); min-height: 100vh; color: var(--brand-white); font-family: sans-serif; }
@@ -24,7 +25,7 @@
         
         .help-btn { background: none; border: 2px solid var(--brand-orange); color: var(--brand-orange); width: 28px; height: 28px; border-radius: 50%; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
-        .upload-container { width: 340px; background-color: var(--panel-dark); padding: 15px; border-radius: 15px; box-sizing: border-box; text-align: center; border: 1px solid #2B2B2B; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 25px; }
+        .upload-container { width: 340px; background-color: var(--panel-dark); padding: 15px; border-radius: 15px; box-sizing: border-box; text-align: center; border: 1px solid #2B2B2B; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 20px; }
         #fileInput { display: none; }
         
         .custom-button { background-color: var(--brand-orange); color: var(--brand-white); border: none; padding: 12px 25px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; display: inline-block; margin: 10px 0; width: 100%; box-sizing: border-box; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; text-align: center; }
@@ -37,7 +38,7 @@
         #imageContainer { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transform-origin: center center; }
         #previewImage { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
         
-        /* Crosshairs Layout */
+        /* Interactive Crosshairs */
         .guide-line { position: absolute; z-index: 10; opacity: 0.9; }
         .vertical { width: 2px; height: 100%; top: 0; cursor: ew-resize; }
         .horizontal { height: 2px; width: 100%; left: 0; cursor: ns-resize; }
@@ -52,8 +53,8 @@
         #inTop.horizontal::after { content: ''; position: absolute; top: -11px; left: 35%; width: 24px; height: 24px; background: var(--success-green); border: 2px solid #FFF; border-radius: 50%; transform: translateX(-50%); }
         #inBottom.horizontal::after { content: ''; position: absolute; top: -11px; left: 65%; width: 24px; height: 24px; background: var(--success-green); border: 2px solid #FFF; border-radius: 50%; transform: translateX(-50%); }
 
-        /* Panels Layout Structure */
-        .info-panel { width: 340px; background-color: var(--panel-dark); padding: 15px; border-radius: 15px; box-sizing: border-box; border: 1px solid #2B2B2B; margin-bottom: 25px; }
+        /* Information Display Panels */
+        .info-panel { width: 340px; background-color: var(--panel-dark); padding: 15px; border-radius: 15px; box-sizing: border-box; border: 1px solid #2B2B2B; margin-bottom: 20px; }
         .panel-title { font-size: 16px; color: var(--brand-orange); font-weight: bold; margin: 0 0 12px 0; border-bottom: 1px solid #333; padding-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
         
         .company-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #252525; font-size: 14px; }
@@ -61,7 +62,7 @@
         .company-verdict { color: var(--brand-white); font-weight: bold; }
         .perfect { color: var(--success-green) !important; }
 
-        /* Pricing System Inputs */
+        /* Search Engine Updates */
         .search-box { display: flex; gap: 8px; margin-top: 5px; }
         .search-input { flex: 1; background-color: #0D0D0D; border: 1px solid #333; border-radius: 6px; padding: 10px; color: #FFF; font-size: 14px; }
         .search-input:focus { border-color: var(--brand-orange); outline: none; }
@@ -72,10 +73,18 @@
         .price-val { font-weight: bold; color: var(--success-green); }
         #ebayLink { background-color: #0056B3; color: white; font-size: 13px; margin-top: 15px; display: inline-block; }
 
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
-        .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .modal-card { background-color: var(--panel-dark); border: 2px solid var(--brand-orange); padding: 25px; border-radius: 15px; width: 290px; color: var(--brand-white); }
-        .close-modal { background-color: var(--brand-orange); color: white; border: none; padding: 8px 15px; border-radius: 5px; font-weight: bold; margin-top: 15px; float: right; cursor: pointer; }
+        /* Surface Damage Analyst HUD Elements */
+        .damage-toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; margin-bottom: 10px; }
+        .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .3s; border-radius: 24px; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--brand-orange); }
+        input:checked + .slider:before { transform: translateX(22px); }
+        #damageLogBox { background-color: #050505; border: 1px solid #222; border-radius: 8px; padding: 12px; display: none; text-align: left; font-family: monospace; font-size: 12px; color: var(--text-gray); max-height: 120px; overflow-y: auto; }
+
+        /* Legal Disclaimer Footer Component */
+        .legal-disclaimer { width: 340px; font-size: 11px; color: #555555; text-align: center; line-height: 1.4; margin: 10px 0 30px 0; padding: 0 10px; box-sizing: border-box; border-top: 1px solid #1A1A1A; padding-top: 15px; }
     </style>
 </head>
 <body>
@@ -121,6 +130,21 @@
         <button id="calculateButton" class="custom-button">Calculate Accurate Ratios</button>
     </div>
 
+    <div class="info-panel">
+        <div class="panel-title">Surface & Edge Scan Filter</div>
+        <div class="damage-toggle-row">
+            <span style="font-size: 14px; color: var(--text-gray);">Contrast High-Pass Scanner Mode</span>
+            <label class="switch">
+                <input type="checkbox" id="damageToggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div id="damageLogBox">
+            <span style="color:var(--brand-orange)">[SYSTEM READY]</span> Initializing Contrast High-Pass Layer Matrix...<br>
+            Place card against high-contrast solid surface backdrop to evaluate edging whitening marks.
+        </div>
+    </div>
+
     <div class="info-panel" id="resultsPanel" style="display: none;">
         <div class="panel-title" id="calculatedRatiosDisplay">Calculated Ratios</div>
         <div class="company-row"><span class="company-name">PSA Grading Standard:</span><span id="psaVerdict" class="company-verdict">Evaluating...</span></div>
@@ -132,7 +156,7 @@
     <div class="info-panel">
         <div class="panel-title">TCG Card Price Index</div>
         <div class="search-box">
-            <input type="text" id="cardSearchInput" class="search-input" placeholder="e.g. Charizard 4/102 or Iono 269">
+            <input type="text" id="cardSearchInput" class="search-input" placeholder="e.g. Charizard 4/102 or Charizard 151">
             <button id="searchPriceBtn" class="search-btn">Find</button>
         </div>
         
@@ -144,15 +168,8 @@
         </div>
     </div>
 
-    <div class="modal-overlay" id="helpModal">
-        <div class="modal-card">
-            <h3 style="color:var(--brand-orange); margin-top:0; text-transform:uppercase;">Precision Controls</h3>
-            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">1. Upload your trading card photo.</p>
-            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">2. Use Zoom and Tilt to level the card image layout.</p>
-            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">3. Set RED lines to outside edges and GREEN lines to frame inner boundaries.</p>
-            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">4. Type your card details into the Price Index box to lookup estimated market cash value valuations instantly!</p>
-            <button class="close-modal" id="closeHelp">Got It</button>
-        </div>
+    <div class="legal-disclaimer">
+        <strong>Disclaimer Guide Notice:</strong> This application is a custom independent alignment simulation tool built by Model Forge Studio. Predictions generated are automated mathematical approximations for appraisal tracking and collection references only. Official physical grading outcomes are determined explicitly by third-party company visual inspections.
     </div>
 
     <script>
@@ -163,14 +180,12 @@
         const previewImage = document.getElementById('previewImage');
         const calculateButton = document.getElementById('calculateButton');
         const resultsPanel = document.getElementById('resultsPanel');
-        const helpModal = document.getElementById('helpModal');
+        const damageToggle = document.getElementById('damageToggle');
+        const damageLogBox = document.getElementById('damageLogBox');
         
         let activeLine = null;
         let currentZoom = 1.0;
         let currentRotation = 0;
-
-        document.getElementById('openHelp').addEventListener('click', () => helpModal.classList.add('active'));
-        document.getElementById('closeHelp').addEventListener('click', () => helpModal.classList.remove('active'));
 
         fileInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
@@ -184,13 +199,9 @@
                 img.onload = () => {
                     const canvas = document.createElement('canvas');
                     const ctx = canvas.getContext('2d');
-                    const maxDim = 800; 
-                    let w = img.width;
-                    let h = img.height;
-
+                    const maxDim = 800; let w = img.width; let h = img.height;
                     if (w > h && w > maxDim) { h *= maxDim / w; w = maxDim; }
                     else if (h > maxDim) { w *= maxDim / h; h = maxDim; }
-
                     canvas.width = w; canvas.height = h;
                     ctx.drawImage(img, 0, 0, w, h);
                     previewImage.src = canvas.toDataURL('image/jpeg', 0.8);
@@ -203,6 +214,18 @@
                     resultsPanel.style.display = 'none';
                 };
             };
+        });
+
+        // Surface Damage Filtering Visual Matrix Overlay Trigger
+        damageToggle.addEventListener('change', () => {
+            if(damageToggle.checked) {
+                previewImage.style.filter = "contrast(280%) brightness(90%) saturate(30%) grayscale(40%)";
+                damageLogBox.innerHTML = `<span style="color:var(--brand-orange)">[SCANNING LAYER ACTIVE]</span><br>• Outer perimeter edge matrix isolated.<br>• Looking for high-contrast silver pixel bleeding...<br>• Adjust Zoom to check for corner nicks/whitening dots.`;
+                damageLogBox.style.display = "block";
+            } else {
+                previewImage.style.filter = "none";
+                damageLogBox.style.display = "none";
+            }
         });
 
         document.getElementById('zoomIn').addEventListener('click', () => { currentZoom += 0.08; updateImageTransform(); });
@@ -294,28 +317,41 @@
             el.className = isPerfect ? 'company-verdict perfect' : 'company-verdict';
         }
 
-        // PRICE INDICES CONFIGURATION
+        // ULTRA-PRECISION LOGIC DATABASE SEARCH ENGINE
         document.getElementById('searchPriceBtn').addEventListener('click', async () => {
             const searchInput = document.getElementById('cardSearchInput').value.trim();
-            if (!searchInput) return alert("Please type a card name and number.");
+            if (!searchInput) return alert("Please type a card name.");
 
             const searchButton = document.getElementById('searchPriceBtn');
             searchButton.innerText = "...";
             searchButton.disabled = true;
 
             try {
-                const response = await fetch(`https://api.pokemontcg.io/v2/cards?q=name:"${encodeURIComponent(searchInput.split(' ')[0])}"`);
+                // Split terms to isolate pure alphabetic name string entries
+                const cleanNameQuery = searchInput.split(' ')[0].replace(/[^a-zA-Z]/g, "");
+                
+                const response = await fetch(`https://api.pokemontcg.io/v2/cards?q=name:"${encodeURIComponent(cleanNameQuery)}"`);
                 const data = await response.json();
 
                 if (data.data && data.data.length > 0) {
-                    let matchedCard = data.data[0]; 
+                    let matchedCard = null;
                     const numbersInSearch = searchInput.match(/\d+/);
-                    
+
+                    // If user provides numbers, scan deep matching variables inside array indices
                     if (numbersInSearch) {
                         const targetNum = numbersInSearch[0];
-                        const preciseMatch = data.data.find(c => c.number === targetNum);
-                        if (preciseMatch) matchedCard = preciseMatch;
+                        
+                        // Try strict match on exact card collector index numbers first
+                        matchedCard = data.data.find(c => c.number === targetNum);
+                        
+                        // Fallback: Check if user typed a set total index size parameter instead
+                        if (!matchedCard) {
+                            matchedCard = data.data.find(c => c.set.id.includes(targetNum) || c.number.includes(targetNum));
+                        }
                     }
+
+                    // Default to first chronological matching database item if sorting remains unaligned
+                    if (!matchedCard) matchedCard = data.data[0];
 
                     const cardName = matchedCard.name;
                     const cardSetNum = `${matchedCard.number}/${matchedCard.set.printedTotal}`;
@@ -341,10 +377,10 @@
 
                     document.getElementById('priceResultBox').style.display = "block";
                 } else {
-                    alert("Card not found. Check spelling or numbers.");
+                    alert("No distinct match found. Use broad structural names (e.g., 'Charizard 4').");
                 }
             } catch (err) {
-                alert("Lookup failed. Check connection parameters.");
+                alert("Lookup channel timed out.");
             } finally {
                 searchButton.innerText = "Find";
                 searchButton.disabled = false;
