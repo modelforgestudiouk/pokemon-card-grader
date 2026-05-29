@@ -3,93 +3,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokémon Card Pre-Grader</title>
+    <title>Model Forge Studio - Pre-Grader</title>
     <style>
         body { margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; background-color: #121212; min-height: 100vh; color: #FFF; font-family: sans-serif; }
-        h2 { font-size: 22px; font-weight: bold; margin-bottom: 20px; text-align: center; }
-        .upload-container { width: 320px; background-color: #1E1E1E; padding: 20px; border-radius: 15px; box-sizing: border-box; text-align: center; border: 2px dashed #555; }
+        h2 { font-size: 22px; font-weight: bold; margin-bottom: 5px; color: #FF0055; }
+        .subtitle { color: #AAA; margin-bottom: 20px; font-size: 14px; }
+        .upload-container { width: 340px; background-color: #1E1E1E; padding: 15px; border-radius: 15px; box-sizing: border-box; text-align: center; border: 2px dashed #333; }
         #fileInput { display: none; }
-        .custom-button { background-color: #FF0055; color: #FFF; border: none; padding: 15px 30px; border-radius: 30px; font-size: 16px; font-weight: bold; cursor: pointer; display: inline-block; margin-top: 10px; }
-        #scanButton { background-color: #00FFCC; color: #121212; display: none; margin-top: 20px; }
-        #scanButton:disabled { background-color: #555; color: #AAA; }
-        #preview { width: 100%; max-height: 300px; object-fit: contain; margin-top: 15px; display: none; border-radius: 10px; }
-        #resultsPanel { margin-top: 20px; padding: 15px; background-color: #2a2a2a; border-radius: 10px; width: 320px; box-sizing: border-box; }
-        .resultLine { color: #AAA; font-size: 16px; margin: 0 0 5px 0; }
-        #verdictText { color: #00FFCC; font-size: 16px; font-weight: bold; margin: 5px 0 0 0; }
+        .custom-button { background-color: #FF0055; color: #FFF; border: none; padding: 12px 25px; border-radius: 30px; font-size: 15px; font-weight: bold; cursor: pointer; display: inline-block; margin: 10px 0; }
+        #calculateButton { background-color: #00FFCC; color: #121212; display: none; width: 100%; margin-top: 15px; }
+        
+        /* Interactive Cropping Workspace Zone */
+        #workspace { position: relative; width: 300px; height: 420px; margin: 15px auto; display: none; background-color: #000; border-radius: 8px; overflow: hidden; }
+        #previewImage { width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+        
+        /* Draggable Guide Lines Overlay */
+        .guide-line { position: absolute; background-color: rgba(0, 255, 204, 0.6); z-index: 10; }
+        .vertical { width: 2px; height: 100%; top: 0; cursor: ew-resize; }
+        .horizontal { height: 2px; width: 100%; left: 0; cursor: ns-resize; }
+        
+        /* Visual adjustments anchors */
+        .vertical::after { content: ''; position: absolute; left: -10px; top: 50%; width: 22px; height: 22px; background: #00FFCC; border-radius: 50%; transform: translateY(-50%); }
+        .horizontal::after { content: ''; position: absolute; top: -10px; left: 50%; width: 22px; height: 22px; background: #00FFCC; border-radius: 50%; transform: translateX(-50%); }
+
+        /* Multi-Company Breakdown Dashboard Display Panel */
+        #resultsPanel { margin-top: 20px; padding: 15px; background-color: #1E1E1E; border-radius: 10px; width: 340px; box-sizing: border-box; display: none; }
+        .metric-title { font-size: 18px; color: #00FFCC; font-weight: bold; margin: 0 0 15px 0; border-bottom: 1px solid #333; padding-bottom: 5px; }
+        .company-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #252525; }
+        .company-name { font-weight: bold; color: #FFF; }
+        .company-verdict { color: #FF0055; font-weight: bold; }
+        .perfect { color: #00FFCC !important; }
     </style>
 </head>
 <body>
 
-    <h2>Pokémon Card Pre-Grader</h2>
+    <h2>Model Forge Studio</h2>
+    <div class="subtitle">Card Pre-Centering Tool v2.0</div>
     
     <div class="upload-container">
-        <p style="margin-top:0; color:#AAA;">Select a card photo from your library or take a fresh picture:</p>
-        
-        <label for="fileInput" class="custom-button">Choose / Take Photo</label>
+        <label for="fileInput" class="custom-button">Upload Card Image</label>
         <input type="file" id="fileInput" accept="image/*">
         
-        <img id="preview" alt="Card Preview">
-        <button id="scanButton" class="custom-button">Analyze Uploaded Card</button>
+        <div id="workspace">
+            <img id="previewImage" alt="Card Workspace">
+            <div id="lineLeft" class="guide-line vertical" style="left: 25%;"></div>
+            <div id="lineRight" class="guide-line vertical" style="left: 75%;"></div>
+            <div id="lineTop" class="guide-line horizontal" style="top: 20%;"></div>
+            <div id="lineBottom" class="guide-line horizontal" style="top: 80%;"></div>
+        </div>
+        
+        <button id="calculateButton" class="custom-button">Calculate Accurate Ratios</button>
     </div>
 
-    <div id="resultsPanel" style="display: none;">
-        <p class="resultLine" id="lrLine">L/R Centering: </p>
-        <p class="resultLine" id="tbLine">T/B Centering: </p>
-        <p id="verdictText">Verdict: </p>
+    <div id="resultsPanel">
+        <div class="metric-title" id="calculatedRatiosDisplay">Measured: L/R 50:50 | T/B 50:50</div>
+        
+        <div class="company-row"><span class="company-name">PSA Standard:</span><span id="psaVerdict" class="company-verdict">Evaluating...</span></div>
+        <div class="company-row"><span class="company-name">ACE Grading:</span><span id="aceVerdict" class="company-verdict">Evaluating...</span></div>
+        <div class="company-row"><span class="company-name">TAG Grading:</span><span id="tagVerdict" class="company-verdict">Evaluating...</span></div>
+        <div class="company-row"><span class="company-name">BGS (Beckett):</span><span id="bgsVerdict" class="company-verdict">Evaluating...</span></div>
     </div>
 
     <script>
         const fileInput = document.getElementById('fileInput');
-        const preview = document.getElementById('preview');
-        const scanButton = document.getElementById('scanButton');
+        const workspace = document.getElementById('workspace');
+        const previewImage = document.getElementById('previewImage');
+        const calculateButton = document.getElementById('calculateButton');
         const resultsPanel = document.getElementById('resultsPanel');
-        const lrLine = document.getElementById('lrLine');
-        const tbLine = document.getElementById('tbLine');
-        const verdictText = document.getElementById('verdictText');
+        
+        // Setup line dragging variables
+        let activeLine = null;
 
-        // Show image preview when user selects or takes a photo
         fileInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
             if (file) {
-                preview.src = URL.createObjectURL(file);
-                preview.style.display = 'block';
-                scanButton.style.display = 'inline-block';
+                previewImage.src = URL.createObjectURL(file);
+                workspace.style.display = 'block';
+                calculateButton.style.display = 'block';
                 resultsPanel.style.display = 'none';
             }
         });
 
-        scanButton.addEventListener('click', async () => {
-            const file = fileInput.files[0];
-            if (!file) return;
-
-            scanButton.disabled = true;
-            scanButton.innerText = "Analyzing Centering...";
-
-            let dataForm = new FormData();
-            dataForm.append('file', file);
-
-            try {
-                const response = await fetch('https://grading-api-xpcf.onrender.com/analyze', {
-                    method: 'POST',
-                    body: dataForm
-                });
-
-                if (!response.ok) throw new Error("Server communication breakdown");
-
-                const jsonOutput = await response.json();
-                
-                lrLine.innerText = `L/R Centering: ${jsonOutput.left_right_ratio || 'N/A'}`;
-                tbLine.innerText = `T/B Centering: ${jsonOutput.top_bottom_ratio || 'N/A'}`;
-                verdictText.innerText = `Verdict: ${jsonOutput.verdict || 'Error'}`;
-                resultsPanel.style.display = 'block';
-
-            } catch (error) {
-                alert("Upload failed. Your internet browser cut the data stream.");
-            } finally {
-                scanButton.disabled = false;
-                scanButton.innerText = "Analyze Uploaded Card";
-            }
+        // Add drag functionality to the crosshair lines
+        document.querySelectorAll('.guide-line').forEach(line => {
+            line.addEventListener('mousedown', (e) => activeLine = line);
+            line.addEventListener('touchstart', (e) => activeLine = line, {passive: true});
         });
+
+        window.addEventListener('mouseup', () => activeLine = null);
+        window.addEventListener('touchend', () => activeLine = null);
+
+        window.addEventListener('mousemove', handleMove);
+        window.addEventListener('touchmove', handleMove, {passive: false});
+
+        function handleMove(e) {
+            if (!activeLine) return;
+            if (e.cancelable) e.preventDefault();
+            
+            const rect = workspace.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+            if (activeLine.classList.contains('vertical')) {
+                let posX = ((clientX - rect.left) / rect.width) * 100;
+                if (posX >= 0 && posX <= 100) activeLine.style.left = posX + '%';
+            } else {
+                let posY = ((clientY - rect.top) / rect.height) * 100;
+                if (posY >= 0 && posY <= 100) activeLine.style.top = posY + '%';
+            }
+        }
+
+        calculateButton.addEventListener('click', () => {
+            // Get current crosshair alignment percentage splits from user input positions
+            const leftPos = parseFloat(document.getElementById('lineLeft').style.left);
+            const rightPos = parseFloat(document.getElementById('lineRight').style.left);
+            const topPos = parseFloat(document.getElementById('lineTop').style.top);
+            const bottomPos = parseFloat(document.getElementById('lineBottom').style.top);
+
+            // Calculate precise mathematical spacing splits
+            const leftBorder = leftPos;
+            const rightBorder = 100 - rightPos;
+            const lrTotal = leftBorder + rightBorder;
+            const leftRatio = Math.round((leftBorder / lrTotal) * 100);
+            const rightRatio = 100 - leftRatio;
+
+            const topBorder = topPos;
+            const bottomBorder = 100 - bottomPos;
+            const tbTotal = topBorder + bottomBorder;
+            const topRatio = Math.round((topBorder / tbTotal) * 100);
+            const bottomRatio = 100 - topRatio;
+
+            // Display raw measurements
+            document.getElementById('calculatedRatiosDisplay').innerText = `Measured: L/R ${leftRatio}:${rightRatio} | T/B ${topRatio}:${bottomRatio}`;
+
+            // Process and output multi-company strict rules grading matrices
+            evaluateGrades(leftRatio, rightRatio, topRatio, bottomRatio);
+            resultsPanel.style.display = 'block';
+        });
+
+        function evaluateGrades(lr1, lr2, tb1, tb2) {
+            const worstLR = Math.max(lr1, lr2);
+            const worstTB = Math.max(tb1, tb2);
+
+            // 1. PSA Criteria (Allows 60/40 front centering for a PSA 10 Gem Mint)
+            if (worstLR <= 60 && worstTB <= 60) {
+                setVerdict('psaVerdict', 'Gem Mint 10', true);
+            } else if (worstLR <= 65 && worstTB <= 65) {
+                setVerdict('psaVerdict', 'Mint 9', false);
+            } else {
+                setVerdict('psaVerdict', 'Grade 8 or Lower', false);
+            }
+
+            // 2. ACE Grading Criteria (Strict UK Standard - Expects 55/45 or better for a 10)
+            if (worstLR <= 55 && worstTB <= 55) {
+                setVerdict('aceVerdict', 'Gem Mint 10', true);
+            } else if (worstLR <= 60 && worstTB <= 60) {
+                setVerdict('aceVerdict', 'Mint 9', false);
+            } else {
+                setVerdict('aceVerdict', 'Grade 8 or Lower', false);
+            }
+
+            // 3. TAG Grading Criteria (Extremely Strict Laser Metric Analytics - Requires 50/50 split)
+            if (worstLR <= 51 && worstTB <= 51) {
+                setVerdict('tagVerdict', 'Pristine 10 (1000)', true);
+            } else if (worstLR <= 55 && worstTB <= 55) {
+                setVerdict('tagVerdict', 'Mint 9', false);
+            } else {
+                setVerdict('tagVerdict', 'Grade 8 or Lower', false);
+            }
+
+            // 4. BGS Criteria (Requires 50/50 for a Black Label, allows 55/45 for Quad 10 Gem Mint)
+            if (worstLR <= 50 && worstTB <= 50) {
+                setVerdict('bgsVerdict', 'Black Label Perfect 10', true);
+            } else if (worstLR <= 55 && worstTB <= 55) {
+                setVerdict('bgsVerdict', 'Gem Mint 10', true);
+            } else if (worstLR <= 60 && worstTB <= 60) {
+                setVerdict('bgsVerdict', 'Mint 9', false);
+            } else {
+                setVerdict('bgsVerdict', 'Grade 8 or Lower', false);
+            }
+        }
+
+        function setVerdict(id, text, isPerfect) {
+            const el = document.getElementById(id);
+            el.innerText = text;
+            if (isPerfect) {
+                el.className = 'company-verdict perfect';
+            } else {
+                el.className = 'company-verdict';
+            }
+        }
     </script>
 </body>
 </html>
