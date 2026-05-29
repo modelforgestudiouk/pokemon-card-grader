@@ -24,10 +24,10 @@
         
         .help-btn { background: none; border: 2px solid var(--brand-orange); color: var(--brand-orange); width: 28px; height: 28px; border-radius: 50%; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
-        .upload-container { width: 340px; background-color: var(--panel-dark); padding: 15px; border-radius: 15px; box-sizing: border-box; text-align: center; border: 1px solid #2B2B2B; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .upload-container { width: 340px; background-color: var(--panel-dark); padding: 15px; border-radius: 15px; box-sizing: border-box; text-align: center; border: 1px solid #2B2B2B; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 15px; }
         #fileInput { display: none; }
         
-        .custom-button { background-color: var(--brand-orange); color: var(--brand-white); border: none; padding: 12px 25px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; display: inline-block; margin: 10px 0; width: 100%; box-sizing: border-box; text-transform: uppercase; letter-spacing: 1px; }
+        .custom-button { background-color: var(--brand-orange); color: var(--brand-white); border: none; padding: 12px 25px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; display: inline-block; margin: 10px 0; width: 100%; box-sizing: border-box; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; text-align: center; }
         #calculateButton { background-color: var(--brand-white); color: var(--bg-dark); display: none; margin-top: 15px; }
         
         #controlDock { display: none; justify-content: space-between; margin-top: 10px; background: #222; padding: 8px; border-radius: 8px; }
@@ -37,34 +37,45 @@
         #imageContainer { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transform-origin: center center; }
         #previewImage { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
         
-        /* Crosshairs Handles Layout */
+        /* Crosshairs Layout */
         .guide-line { position: absolute; z-index: 10; opacity: 0.9; }
         .vertical { width: 2px; height: 100%; top: 0; cursor: ew-resize; }
         .horizontal { height: 2px; width: 100%; left: 0; cursor: ns-resize; }
         
-        /* Red Lines */
         .outer-line { background-color: #FF2222; }
         .outer-line.vertical::after { content: ''; position: absolute; left: -11px; top: 50%; width: 24px; height: 24px; background: #FF2222; border: 2px solid #FFF; border-radius: 50%; transform: translateY(-50%); }
         .outer-line.horizontal::after { content: ''; position: absolute; top: -11px; left: 50%; width: 24px; height: 24px; background: #FF2222; border: 2px solid #FFF; border-radius: 50%; transform: translateX(-50%); }
 
-        /* Green Lines */
         .inner-line { background-color: var(--success-green); }
         #inLeft.vertical::after { content: ''; position: absolute; left: -11px; top: 35%; width: 24px; height: 24px; background: var(--success-green); border: 2px solid #FFF; border-radius: 50%; transform: translateY(-50%); }
         #inRight.vertical::after { content: ''; position: absolute; left: -11px; top: 65%; width: 24px; height: 24px; background: var(--success-green); border: 2px solid #FFF; border-radius: 50%; transform: translateY(-50%); }
         #inTop.horizontal::after { content: ''; position: absolute; top: -11px; left: 35%; width: 24px; height: 24px; background: var(--success-green); border: 2px solid #FFF; border-radius: 50%; transform: translateX(-50%); }
         #inBottom.horizontal::after { content: ''; position: absolute; top: -11px; left: 65%; width: 24px; height: 24px; background: var(--success-green); border: 2px solid #FFF; border-radius: 50%; transform: translateX(-50%); }
 
-        #resultsPanel { margin-top: 20px; padding: 15px; background-color: var(--panel-dark); border-radius: 10px; width: 340px; box-sizing: border-box; display: none; border: 1px solid #2B2B2B; }
-        .metric-title { font-size: 16px; color: var(--brand-orange); font-weight: bold; margin: 0 0 15px 0; border-bottom: 1px solid #333; padding-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        /* Panels System Layout */
+        .info-panel { width: 340px; background-color: var(--panel-dark); padding: 15px; border-radius: 15px; box-sizing: border-box; border: 1px solid #2B2B2B; margin-bottom: 15px; }
+        .panel-title { font-size: 16px; color: var(--brand-orange); font-weight: bold; margin: 0 0 12px 0; border-bottom: 1px solid #333; padding-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        /* Grading Scores Styles */
         .company-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #252525; font-size: 14px; }
         .company-name { font-weight: bold; color: var(--text-gray); }
         .company-verdict { color: var(--brand-white); font-weight: bold; }
         .perfect { color: var(--success-green) !important; }
 
+        /* Pricing Tool Interface Elements */
+        .search-box { display: flex; gap: 8px; margin-top: 5px; }
+        .search-input { flex: 1; background-color: #0D0D0D; border: 1px solid #333; border-radius: 6px; padding: 10px; color: #FFF; font-size: 14px; }
+        .search-input:focus { border-color: var(--brand-orange); outline: none; }
+        .search-btn { background-color: var(--brand-orange); border: none; color: #FFF; font-weight: bold; padding: 0 15px; border-radius: 6px; cursor: pointer; }
+        
+        #priceResultBox { display: none; margin-top: 15px; background: #222; padding: 12px; border-radius: 8px; text-align: left; }
+        .price-line { font-size: 14px; margin: 6px 0; color: var(--brand-white); }
+        .price-val { font-weight: bold; color: var(--success-green); }
+        #ebayLink { background-color: #0056B3; color: white; font-size: 13px; margin-top: 10px; }
+
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .modal-card { background-color: var(--panel-dark); border: 2px solid var(--brand-orange); padding: 25px; border-radius: 15px; width: 290px; color: var(--brand-white); transform: scale(0.9); transition: transform 0.3s ease; }
-        .modal-overlay.active .modal-card { transform: scale(1); }
+        .modal-card { background-color: var(--panel-dark); border: 2px solid var(--brand-orange); padding: 25px; border-radius: 15px; width: 290px; color: var(--brand-white); }
         .close-modal { background-color: var(--brand-orange); color: white; border: none; padding: 8px 15px; border-radius: 5px; font-weight: bold; margin-top: 15px; float: right; cursor: pointer; }
     </style>
 </head>
@@ -109,192 +120,3 @@
         </div>
         
         <button id="calculateButton" class="custom-button">Calculate Accurate Ratios</button>
-    </div>
-
-    <div id="resultsPanel">
-        <div class="metric-title" id="calculatedRatiosDisplay">Calculated Ratios</div>
-        <div class="company-row"><span class="company-name">PSA Grading Standard:</span><span id="psaVerdict" class="company-verdict">Evaluating...</span></div>
-        <div class="company-row"><span class="company-name">ACE Grading Standard:</span><span id="aceVerdict" class="company-verdict">Evaluating...</span></div>
-        <div class="company-row"><span class="company-name">TAG Analytics Engine:</span><span id="tagVerdict" class="company-verdict">Evaluating...</span></div>
-        <div class="company-row"><span class="company-name">BGS (Beckett Standards):</span><span id="bgsVerdict" class="company-verdict">Evaluating...</span></div>
-    </div>
-
-    <div class="modal-overlay" id="helpModal">
-        <div class="modal-card">
-            <h3 style="color:var(--brand-orange); margin-top:0; text-transform:uppercase;">Precision Controls</h3>
-            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">1. Upload your trading card photo.</p>
-            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">2. Use the <strong>Zoom</strong> and <strong>Tilt</strong> buttons to straighten the card inside the box.</p>
-            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">3. Slide the <span style="color:#FF2222;"><strong>RED knobs</strong></span> to the outer edges of the card.</p>
-            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">4. Slide the <span style="color:var(--success-green);"><strong>GREEN knobs</strong></span> to the inner frame border edges.</p>
-            <button class="close-modal" id="closeHelp">Got It</button>
-        </div>
-    </div>
-
-    <script>
-        const fileInput = document.getElementById('fileInput');
-        const workspace = document.getElementById('workspace');
-        const controlDock = document.getElementById('controlDock');
-        const imageContainer = document.getElementById('imageContainer');
-        const previewImage = document.getElementById('previewImage');
-        const calculateButton = document.getElementById('calculateButton');
-        const resultsPanel = document.getElementById('resultsPanel');
-        const helpModal = document.getElementById('helpModal');
-        
-        let activeLine = null;
-        let currentZoom = 1.0;
-        let currentRotation = 0;
-
-        document.getElementById('openHelp').addEventListener('click', () => helpModal.classList.add('active'));
-        document.getElementById('closeHelp').addEventListener('click', () => helpModal.classList.remove('active'));
-
-        fileInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = (event) => {
-                const img = new Image();
-                img.src = event.target.result;
-                img.onload = () => {
-                    // Safe hardware rendering canvas setup
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
-                    
-                    // Fixed bounding box locks maximum rendering memory space
-                    const maxDim = 800; 
-                    let w = img.width;
-                    let h = img.height;
-
-                    if (w > h && w > maxDim) {
-                        h *= maxDim / w;
-                        w = maxDim;
-                    } else if (h > maxDim) {
-                        w *= maxDim / h;
-                        h = maxDim;
-                    }
-
-                    canvas.width = w;
-                    canvas.height = h;
-                    ctx.drawImage(img, 0, 0, w, h);
-                    
-                    // Compressed clean layout view guarantees lag-free rendering
-                    previewImage.src = canvas.toDataURL('image/jpeg', 0.8);
-                    
-                    currentZoom = 1.0;
-                    currentRotation = 0;
-                    updateImageTransform();
-                    
-                    workspace.style.display = 'block';
-                    controlDock.style.display = 'flex';
-                    calculateButton.style.display = 'block';
-                    resultsPanel.style.display = 'none';
-                };
-            };
-        });
-
-        document.getElementById('zoomIn').addEventListener('click', () => { currentZoom += 0.08; updateImageTransform(); });
-        document.getElementById('zoomOut').addEventListener('click', () => { if (currentZoom > 0.3) currentZoom -= 0.08; updateImageTransform(); });
-        document.getElementById('rotateLeft').addEventListener('click', () => { currentRotation -= 0.8; updateImageTransform(); });
-        document.getElementById('rotateRight').addEventListener('click', () => { currentRotation += 0.8; updateImageTransform(); });
-
-        function updateImageTransform() {
-            imageContainer.style.transform = `scale(${currentZoom}) rotate(${currentRotation}deg)`;
-        }
-
-        document.querySelectorAll('.guide-line').forEach(line => {
-            line.addEventListener('mousedown', (e) => activeLine = line);
-            line.addEventListener('touchstart', (e) => activeLine = line, {passive: true});
-        });
-
-        window.addEventListener('mouseup', () => activeLine = null);
-        window.addEventListener('touchend', () => activeLine = null);
-        window.addEventListener('mousemove', handleMove);
-        window.addEventListener('touchmove', handleMove, {passive: false});
-
-        function handleMove(e) {
-            if (!activeLine) return;
-            if (e.cancelable) e.preventDefault();
-            
-            const rect = workspace.getBoundingClientRect();
-            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-
-            if (activeLine.classList.contains('vertical')) {
-                let posX = ((clientX - rect.left) / rect.width) * 100;
-                if (posX >= 0 && posX <= 100) activeLine.style.left = posX + '%';
-            } else {
-                let posY = ((clientY - rect.top) / rect.height) * 100;
-                if (posY >= 0 && posY <= 100) activeLine.style.top = posY + '%';
-            }
-        }
-
-        calculateButton.addEventListener('click', () => {
-            const outL = parseFloat(document.getElementById('outLeft').style.left);
-            const outR = parseFloat(document.getElementById('outRight').style.left);
-            const outT = parseFloat(document.getElementById('outTop').style.top);
-            const outB = parseFloat(document.getElementById('outBottom').style.top);
-
-            const inL = parseFloat(document.getElementById('inLeft').style.left);
-            const inR = parseFloat(document.getElementById('inRight').style.left);
-            const inT = parseFloat(document.getElementById('inTop').style.top);
-            const inB = parseFloat(document.getElementById('inBottom').style.top);
-
-            const leftWidth = inL - outL;
-            const rightWidth = outR - inR;
-            const topWidth = inT - outT;
-            const bottomWidth = outB - inB;
-
-            const lrTotal = leftWidth + rightWidth;
-            const leftRatio = Math.round((leftWidth / lrTotal) * 100);
-            const rightRatio = 100 - leftRatio;
-
-            const tbTotal = topWidth + bottomWidth;
-            const topRatio = Math.round((topWidth / tbTotal) * 100);
-            const bottomRatio = 100 - topRatio;
-
-            document.getElementById('calculatedRatiosDisplay').innerText = `L/R Ratio: ${leftRatio}:${rightRatio} | T/B Ratio: ${topRatio}:${bottomRatio}`;
-            evaluateExpandedGrades(leftRatio, rightRatio, topRatio, bottomRatio);
-            resultsPanel.style.display = 'block';
-        });
-
-        function evaluateExpandedGrades(lr1, lr2, tb1, tb2) {
-            const worstLR = Math.max(lr1, lr2);
-            const worstTB = Math.max(tb1, tb2);
-
-            if (worstLR <= 60 && worstTB <= 60) setVerdict('psaVerdict', 'Gem Mint 10', true);
-            else if (worstLR <= 65 && worstTB <= 65) setVerdict('psaVerdict', 'Mint 9', false);
-            else if (worstLR <= 70 && worstTB <= 70) setVerdict('psaVerdict', 'NM-MT 8', false);
-            else if (worstLR <= 75 && worstTB <= 75) setVerdict('psaVerdict', 'NM 7', false);
-            else if (worstLR <= 80 && worstTB <= 80) setVerdict('psaVerdict', 'Excellent 6', false);
-            else setVerdict('psaVerdict', 'VG-EX 5 or Lower', false);
-
-            if (worstLR <= 55 && worstTB <= 55) setVerdict('aceVerdict', 'Gem Mint 10', true);
-            else if (worstLR <= 60 && worstTB <= 60) setVerdict('aceVerdict', 'Mint 9', false);
-            else if (worstLR <= 65 && worstTB <= 65) setVerdict('aceVerdict', 'NM-MT 8', false);
-            else if (worstLR <= 70 && worstTB <= 70) setVerdict('aceVerdict', 'NM 7', false);
-            else if (worstLR <= 75 && worstTB <= 75) setVerdict('aceVerdict', 'Excellent 6', false);
-            else setVerdict('aceVerdict', 'Grade 5 or Lower', false);
-
-            if (worstLR <= 51 && worstTB <= 51) setVerdict('tagVerdict', 'Pristine 10 (1000)', true);
-            else if (worstLR <= 55 && worstTB <= 55) setVerdict('tagVerdict', 'Mint 9', false);
-            else if (worstLR <= 60 && worstTB <= 60) setVerdict('tagVerdict', 'NM-MT 8', false);
-            else if (worstLR <= 65 && worstTB <= 65) setVerdict('tagVerdict', 'Excellent 7 or lower', false);
-            else setVerdict('tagVerdict', 'Below Tier Standards', false);
-
-            if (worstLR <= 50 && worstTB <= 50) setVerdict('bgsVerdict', 'Black Label 10', true);
-            else if (worstLR <= 55 && worstTB <= 55) setVerdict('bgsVerdict', 'Gem Mint 10', true);
-            else if (worstLR <= 60 && worstTB <= 60) setVerdict('bgsVerdict', 'Mint 9', false);
-            else if (worstLR <= 65 && worstTB <= 65) setVerdict('bgsVerdict', 'NM-MT 8', false);
-            else if (worstLR <= 70 && worstTB <= 70) setVerdict('bgsVerdict', 'NM 7', false);
-            else setVerdict('bgsVerdict', 'Grade 6 or Lower', false);
-        }
-
-        function setVerdict(id, text, isPerfect) {
-            const el = document.getElementById(id);
-            el.innerText = text;
-            el.className = isPerfect ? 'company-verdict perfect' : 'company-verdict';
-        }
-    </script>
-</body>
-</html>
