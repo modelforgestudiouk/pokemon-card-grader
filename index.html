@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Model Forge Studio - Advanced Pre-Grader</title>
     <style>
-        /* Model Forge Studio Brand Theme Configuration */
         :root {
             --bg-dark: #0D0D0D;
             --panel-dark: #1A1A1A;
@@ -17,42 +16,40 @@
 
         body { margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; background-color: var(--bg-dark); min-height: 100vh; color: var(--brand-white); font-family: sans-serif; }
         
-        /* Branded Header Layout */
         .header-container { display: flex; align-items: center; justify-content: space-between; width: 340px; margin-bottom: 20px; position: relative; }
         .logo-text { font-size: 22px; font-weight: 900; letter-spacing: 1px; color: var(--brand-orange); margin: 0; text-transform: uppercase; }
         .logo-sub { font-size: 12px; color: var(--brand-white); font-weight: 300; letter-spacing: 2px; text-transform: uppercase; margin-top: -2px; }
         
-        /* Smooth Help Popup Trigger Button */
-        .help-btn { background: none; border: 2px solid var(--brand-orange); color: var(--brand-orange); width: 28px; height: 28px; border-radius: 50%; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; }
-        .help-btn:hover { background-color: var(--brand-orange); color: var(--bg-dark); }
+        .help-btn { background: none; border: 2px solid var(--brand-orange); color: var(--brand-orange); width: 28px; height: 28px; border-radius: 50%; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
         .upload-container { width: 340px; background-color: var(--panel-dark); padding: 15px; border-radius: 15px; box-sizing: border-box; text-align: center; border: 1px solid #2B2B2B; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         #fileInput { display: none; }
         
-        .custom-button { background-color: var(--brand-orange); color: var(--brand-white); border: none; padding: 12px 25px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; display: inline-block; margin: 10px 0; width: 100%; box-sizing: border-box; text-transform: uppercase; letter-spacing: 1px; transition: background 0.2s; }
-        .custom-button:hover { background-color: #E04B00; }
+        .custom-button { background-color: var(--brand-orange); color: var(--brand-white); border: none; padding: 12px 25px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; display: inline-block; margin: 10px 0; width: 100%; box-sizing: border-box; text-transform: uppercase; letter-spacing: 1px; }
         #calculateButton { background-color: var(--brand-white); color: var(--bg-dark); display: none; margin-top: 15px; }
         
-        /* Advanced 8-Line Workspace Configuration Matrix */
+        /* Auto-Zoom / Cover Framing Workspace */
         #workspace { position: relative; width: 310px; height: 430px; margin: 15px auto; display: none; background-color: #000; border-radius: 8px; overflow: hidden; border: 1px solid #333; }
-        #previewImage { width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+        #previewImage { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
         
-        /* Interactive Crosshairs CSS System */
-        .guide-line { position: absolute; z-index: 10; opacity: 0.85; }
+        /* Crosshairs Base System */
+        .guide-line { position: absolute; z-index: 10; opacity: 0.9; }
         .vertical { width: 2px; height: 100%; top: 0; cursor: ew-resize; }
         .horizontal { height: 2px; width: 100%; left: 0; cursor: ns-resize; }
         
-        /* Structural Outer Border Alignment Handles (Red Team) */
+        /* Centered Adjustment Handles Configuration */
+        /* Outer Border Red Lines - Handles centered exactly at 50% */
         .outer-line { background-color: #FF2222; }
-        .outer-line.vertical::after { content: ''; position: absolute; left: -9px; top: 30%; width: 20px; height: 20px; background: #FF2222; border: 2px solid #FFF; border-radius: 50%; }
-        .outer-line.horizontal::after { content: ''; position: absolute; top: -9px; left: 30%; width: 20px; height: 20px; background: #FF2222; border: 2px solid #FFF; border-radius: 50%; }
+        .outer-line.vertical::after { content: ''; position: absolute; left: -11px; top: 50%; width: 24px; height: 24px; background: #FF2222; border: 2px solid #FFF; border-radius: 50%; transform: translateY(-50%); box-shadow: 0 2px 6px rgba(0,0,0,0.4); }
+        .outer-line.horizontal::after { content: ''; position: absolute; top: -11px; left: 50%; width: 24px; height: 24px; background: #FF2222; border: 2px solid #FFF; border-radius: 50%; transform: translateX(-50%); box-shadow: 0 2px 6px rgba(0,0,0,0.4); }
 
-        /* Internal Artwork Framing Border Handles (Green Team) */
+        /* Inner Frame Green Lines - Handles split offset (35% / 65%) to prevent any overlap */
         .inner-line { background-color: var(--success-green); }
-        .inner-line.vertical::after { content: ''; position: absolute; left: -9px; top: 70%; width: 20px; height: 20px; background: var(--success-green); border: 2px solid #FFF; border-radius: 50%; }
-        .inner-line.horizontal::after { content: ''; position: absolute; top: -9px; left: 70%; width: 20px; height: 20px; background: var(--success-green); border: 2px solid #FFF; border-radius: 50%; }
+        #inLeft.vertical::after { content: ''; position: absolute; left: -11px; top: 35%; width: 24px; height: 24px; background: var(--success-green); border: 2px solid #FFF; border-radius: 50%; transform: translateY(-50%); box-shadow: 0 2px 6px rgba(0,0,0,0.4); }
+        #inRight.vertical::after { content: ''; position: absolute; left: -11px; top: 65%; width: 24px; height: 24px; background: var(--success-green); border: 2px solid #FFF; border-radius: 50%; transform: translateY(-50%); box-shadow: 0 2px 6px rgba(0,0,0,0.4); }
+        #inTop.horizontal::after { content: ''; position: absolute; top: -11px; left: 35%; width: 24px; height: 24px; background: var(--success-green); border: 2px solid #FFF; border-radius: 50%; transform: translateX(-50%); box-shadow: 0 2px 6px rgba(0,0,0,0.4); }
+        #inBottom.horizontal::after { content: ''; position: absolute; top: -11px; left: 65%; width: 24px; height: 24px; background: var(--success-green); border: 2px solid #FFF; border-radius: 50%; transform: translateX(-50%); box-shadow: 0 2px 6px rgba(0,0,0,0.4); }
 
-        /* Scoring Summary Dashboards */
         #resultsPanel { margin-top: 20px; padding: 15px; background-color: var(--panel-dark); border-radius: 10px; width: 340px; box-sizing: border-box; display: none; border: 1px solid #2B2B2B; }
         .metric-title { font-size: 16px; color: var(--brand-orange); font-weight: bold; margin: 0 0 15px 0; border-bottom: 1px solid #333; padding-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
         .company-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #252525; font-size: 14px; }
@@ -60,7 +57,6 @@
         .company-verdict { color: var(--brand-white); font-weight: bold; }
         .perfect { color: var(--success-green) !important; }
 
-        /* Smooth Instruction Modal Popup Styles */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
         .modal-card { background-color: var(--panel-dark); border: 2px solid var(--brand-orange); padding: 25px; border-radius: 15px; width: 290px; color: var(--brand-white); position: relative; transform: scale(0.9); transition: transform 0.3s ease; }
@@ -114,10 +110,10 @@
         <div class="modal-card">
             <div class="modal-title">How to Align & Pregrade</div>
             <ol class="modal-steps">
-                <li>Upload an upright, flat picture of your trading card.</li>
-                <li>Drag the <strong><span style="color:#FF2222;">4 RED lines</span></strong> to line up perfectly with the absolute <strong>outside edges</strong> of the physical card.</li>
-                <li>Drag the <strong><span style="color:var(--success-green);">4 GREEN lines</span></strong> to line up with the <strong>inside border edge</strong> of the yellow artwork frame.</li>
-                <li>Tap <strong>Calculate Accurate Ratios</strong> to see your multi-company alignment grading score predictions instantly!</li>
+                <li>Upload a clear photo of your trading card.</li>
+                <li>Drag the <strong><span style="color:#FF2222;">RED lines</span></strong> using the center round knobs to the absolute <strong>outside edges</strong> of the card.</li>
+                <li>Drag the <strong><span style="color:var(--success-green);">GREEN lines</span></strong> using their round knobs to the <strong>inside frame edges</strong> of the artwork border.</li>
+                <li>Tap <strong>Calculate Accurate Ratios</strong> to view your multi-company grading score predictions instantly!</li>
             </ol>
             <button class="close-modal" id="closeHelp">Got It</button>
         </div>
@@ -133,7 +129,6 @@
         
         let activeLine = null;
 
-        // Modal Open/Close Controls
         document.getElementById('openHelp').addEventListener('click', () => helpModal.classList.add('active'));
         document.getElementById('closeHelp').addEventListener('click', () => helpModal.classList.remove('active'));
 
@@ -147,7 +142,6 @@
             }
         });
 
-        // Initialize Touch & Drag Configurations
         document.querySelectorAll('.guide-line').forEach(line => {
             line.addEventListener('mousedown', (e) => activeLine = line);
             line.addEventListener('touchstart', (e) => activeLine = line, {passive: true});
@@ -176,7 +170,6 @@
         }
 
         calculateButton.addEventListener('click', () => {
-            // Retrieve line values
             const outL = parseFloat(document.getElementById('outLeft').style.left);
             const outR = parseFloat(document.getElementById('outRight').style.left);
             const outT = parseFloat(document.getElementById('outTop').style.top);
@@ -187,13 +180,11 @@
             const inT = parseFloat(document.getElementById('inTop').style.top);
             const inB = parseFloat(document.getElementById('inBottom').style.top);
 
-            // Calculate widths (Outer Edge to Inner Edge Frame boundary checks)
             const leftWidth = inL - outL;
             const rightWidth = outR - inR;
             const topWidth = inT - outT;
             const bottomWidth = outB - inB;
 
-            // Compute percentage ratios
             const lrTotal = leftWidth + rightWidth;
             const leftRatio = Math.round((leftWidth / lrTotal) * 100);
             const rightRatio = 100 - leftRatio;
@@ -202,7 +193,6 @@
             const topRatio = Math.round((topWidth / tbTotal) * 100);
             const bottomRatio = 100 - topRatio;
 
-            // Output data dashboard metrics
             document.getElementById('calculatedRatiosDisplay').innerText = `L/R Ratio: ${leftRatio}:${rightRatio} | T/B Ratio: ${topRatio}:${bottomRatio}`;
             evaluateGrades(leftRatio, rightRatio, topRatio, bottomRatio);
             resultsPanel.style.display = 'block';
@@ -212,22 +202,18 @@
             const worstLR = Math.max(lr1, lr2);
             const worstTB = Math.max(tb1, tb2);
 
-            // PSA Parameters
             if (worstLR <= 60 && worstTB <= 60) setVerdict('psaVerdict', 'Gem Mint 10', true);
             else if (worstLR <= 65 && worstTB <= 65) setVerdict('psaVerdict', 'Mint 9', false);
             else setVerdict('psaVerdict', 'Grade 8 or Lower', false);
 
-            // ACE Parameters
             if (worstLR <= 55 && worstTB <= 55) setVerdict('aceVerdict', 'Gem Mint 10', true);
             else if (worstLR <= 60 && worstTB <= 60) setVerdict('aceVerdict', 'Mint 9', false);
             else setVerdict('aceVerdict', 'Grade 8 or Lower', false);
 
-            // TAG Parameters
             if (worstLR <= 51 && worstTB <= 51) setVerdict('tagVerdict', 'Pristine 10 (1000)', true);
             else if (worstLR <= 55 && worstTB <= 55) setVerdict('tagVerdict', 'Mint 9', false);
             else setVerdict('tagVerdict', 'Grade 8 or Lower', false);
 
-            // BGS Parameters
             if (worstLR <= 50 && worstTB <= 50) setVerdict('bgsVerdict', 'Black Label 10', true);
             else if (worstLR <= 55 && worstTB <= 55) setVerdict('bgsVerdict', 'Gem Mint 10', true);
             else if (worstLR <= 60 && worstTB <= 60) setVerdict('bgsVerdict', 'Mint 9', false);
