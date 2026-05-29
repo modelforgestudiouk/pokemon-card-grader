@@ -27,12 +27,20 @@
         .help-btn { background: none; border: 2px solid var(--brand-orange); color: var(--brand-orange); width: 28px; height: 28px; border-radius: 50%; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .discord-btn-link { text-decoration: none; border: 2px solid #5865F2; color: #5865F2; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; }
 
-        /* Cloud Authentication Panel UI */
+        /* Master App Mode Toggles */
+        .app-mode-bar { display: flex; width: 340px; gap: 10px; margin-bottom: 15px; }
+        .mode-btn { flex: 1; padding: 12px; background-color: #111; border: 1px solid #222; color: var(--text-gray); font-weight: bold; font-size: 13px; border-radius: 8px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; }
+        .mode-btn.active { background-color: var(--panel-dark); border-color: var(--brand-orange); color: var(--brand-orange); box-shadow: 0 0 10px rgba(255,85,0,0.2); }
+
         .auth-panel { width: 340px; background-color: #111; padding: 12px; border-radius: 10px; border: 1px solid #222; margin-bottom: 20px; box-sizing: border-box; font-size: 13px; text-align: center; }
         .auth-inputs { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
         .auth-row { display: flex; gap: 8px; }
         .auth-btn { background-color: #222; border: 1px solid #444; color: white; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 12px; flex: 1; }
         .auth-btn.primary { background-color: var(--brand-orange); border-color: var(--brand-orange); }
+
+        /* App View Wrappers */
+        .view-section { width: 340px; display: none; }
+        .view-section.active { display: block; }
 
         .upload-container { width: 340px; background-color: var(--panel-dark); padding: 15px; border-radius: 15px; box-sizing: border-box; text-align: center; border: 1px solid #2B2B2B; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 20px; }
         
@@ -70,7 +78,7 @@
         #inTop.horizontal::after { content: ''; position: absolute; top: -11px; left: 35%; width: 24px; height: 24px; background: var(--success-green); border: 2px solid #FFF; border-radius: 50%; transform: translateX(-50%); }
         #inBottom.horizontal::after { content: ''; position: absolute; top: -11px; left: 65%; width: 24px; height: 24px; background: var(--success-green); border: 2px solid #FFF; border-radius: 50%; transform: translateX(-50%); }
 
-        .info-panel { width: 340px; background-color: var(--panel-dark); padding: 15px; border-radius: 15px; box-sizing: border-box; border: 1px solid #2B2B2B; margin-bottom: 20px; }
+        .info-panel { width: 100%; background-color: var(--panel-dark); padding: 15px; border-radius: 15px; box-sizing: border-box; border: 1px solid #2B2B2B; margin-bottom: 20px; }
         .panel-title { font-size: 16px; color: var(--brand-orange); font-weight: bold; margin: 0 0 12px 0; border-bottom: 1px solid #333; padding-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
         
         .company-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #252525; font-size: 14px; }
@@ -80,7 +88,6 @@
 
         .search-box { display: flex; gap: 8px; margin-top: 5px; }
         .search-input { flex: 1; background-color: #0D0D0D; border: 1px solid #333; border-radius: 6px; padding: 10px; color: #FFF; font-size: 14px; }
-        .search-input:focus { border-color: var(--brand-orange); outline: none; }
         .search-btn { background-color: var(--brand-orange); border: none; color: #FFF; font-weight: bold; padding: 0 15px; border-radius: 6px; cursor: pointer; }
         
         #priceResultBox { display: none; margin-top: 15px; background: #222; padding: 12px; border-radius: 8px; text-align: left; }
@@ -100,6 +107,16 @@
         .defect-checklist { text-align: left; background: #111; padding: 12px; border-radius: 8px; border: 1px solid #222; }
         .check-item { display: flex; align-items: center; gap: 10px; margin: 8px 0; font-size: 13px; color: var(--brand-white); cursor: pointer; }
         .check-item input { accent-color: var(--brand-orange); width: 16px; height: 16px; }
+
+        /* Premium Binder UI Display Elements */
+        .binder-grid { display: flex; flex-direction: column; gap: 15px; margin-top: 10px; }
+        .slab-card { background-color: var(--panel-dark); border: 1px solid #2D2D2D; border-radius: 12px; padding: 12px; box-sizing: border-box; text-align: left; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
+        .slab-header { border-bottom: 2px solid var(--brand-orange); padding-bottom: 6px; margin-bottom: 10px; }
+        .slab-title { font-size: 14px; font-weight: bold; color: var(--brand-white); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .slab-grade-badge { float: right; background-color: var(--brand-orange); color: black; font-weight: 900; padding: 2px 6px; border-radius: 4px; font-size: 13px; margin-top: -2px; }
+        .slab-metrics { font-size: 12px; color: var(--text-gray); display: flex; flex-direction: column; gap: 4px; }
+        .slab-images-flex { display: flex; gap: 8px; margin-top: 10px; height: 100px; }
+        .slab-img-preview { flex: 1; border-radius: 6px; object-fit: cover; background: #000; border: 1px solid #333; cursor: pointer; }
 
         .legal-disclaimer { width: 340px; font-size: 11px; color: #555555; text-align: center; line-height: 1.4; margin: 10px 0 30px 0; padding: 0 10px; box-sizing: border-box; border-top: 1px solid #1A1A1A; padding-top: 15px; }
 
@@ -142,89 +159,106 @@
             <button id="btnSignOut" class="auth-btn" style="padding:2px 8px; margin-left:10px; display:inline-block; width:auto;">Logout</button>
         </div>
     </div>
-    
-    <div class="upload-container">
-        <div class="upload-row">
-            <label for="frontFile" id="frontLabel" class="file-label">➕ Front Photo</label>
-            <input type="file" id="frontFile" accept="image/*">
-            
-            <label for="backFile" id="backLabel" class="file-label">➕ Back Photo</label>
-            <input type="file" id="backFile" accept="image/*">
-        </div>
 
-        <div class="side-tabs" id="sideTabs" style="display:none; margin-top:10px;">
-            <button class="tab-btn active" id="tabFront">Front Workspace</button>
-            <button class="tab-btn" id="tabBack">Back Workspace</button>
-        </div>
-        
-        <div id="controlDock">
-            <button class="dock-btn" id="zoomIn">🔍 Zoom +</button>
-            <button class="dock-btn" id="zoomOut">🔍 Zoom -</button>
-            <button class="dock-btn" id="rotateLeft">🔄 Tilt L</button>
-            <button class="dock-btn" id="rotateRight">🔄 Tilt R</button>
-            <button class="dock-btn" id="panModeBtn" style="border-color:var(--success-green)">✋ Pan Mode</button>
-        </div>
-        
-        <div id="workspace">
-            <div id="imageContainer">
-                <img id="previewImage" alt="Card Workspace">
+    <div class="app-mode-bar">
+        <button class="mode-btn active" id="modeBtnScanner">Card Scanner</button>
+        <button class="mode-btn" id="modeBtnBinder">My Saved Binder</button>
+    </div>
+
+    <div id="viewScanner" class="view-section active">
+        <div class="upload-container">
+            <div class="upload-row">
+                <label for="frontFile" id="frontLabel" class="file-label">➕ Front Photo</label>
+                <input type="file" id="frontFile" accept="image/*">
+                
+                <label for="backFile" id="backLabel" class="file-label">➕ Back Photo</label>
+                <input type="file" id="backFile" accept="image/*">
+            </div>
+
+            <div class="side-tabs" id="sideTabs" style="display:none; margin-top:10px;">
+                <button class="tab-btn active" id="tabFront">Front Workspace</button>
+                <button class="tab-btn" id="tabBack">Back Workspace</button>
             </div>
             
-            <div id="outLeft" class="guide-line vertical outer-line" style="left: 10%;"></div>
-            <div id="outRight" class="guide-line vertical outer-line" style="left: 90%;"></div>
-            <div id="outTop" class="guide-line horizontal outer-line" style="top: 10%;"></div>
-            <div id="outBottom" class="guide-line horizontal outer-line" style="top: 90%;"></div>
+            <div id="controlDock">
+                <button class="dock-btn" id="zoomIn">🔍 Zoom +</button>
+                <button class="dock-btn" id="zoomOut">🔍 Zoom -</button>
+                <button class="dock-btn" id="rotateLeft">🔄 Tilt L</button>
+                <button class="dock-btn" id="rotateRight">🔄 Tilt R</button>
+                <button class="dock-btn" id="panModeBtn" style="border-color:var(--success-green)">✋ Pan Mode</button>
+            </div>
             
-            <div id="inLeft" class="guide-line vertical inner-line" style="left: 20%;"></div>
-            <div id="inRight" class="guide-line vertical inner-line" style="left: 80%;"></div>
-            <div id="inTop" class="guide-line horizontal inner-line" style="top: 20%;"></div>
-            <div id="inBottom" class="guide-line horizontal inner-line" style="top: 80%;"></div>
+            <div id="workspace">
+                <div id="imageContainer">
+                    <img id="previewImage" alt="Card Workspace">
+                </div>
+                
+                <div id="outLeft" class="guide-line vertical outer-line" style="left: 10%;"></div>
+                <div id="outRight" class="guide-line vertical outer-line" style="left: 90%;"></div>
+                <div id="outTop" class="guide-line horizontal outer-line" style="top: 10%;"></div>
+                <div id="outBottom" class="guide-line horizontal outer-line" style="top: 90%;"></div>
+                
+                <div id="inLeft" class="guide-line vertical inner-line" style="left: 20%;"></div>
+                <div id="inRight" class="guide-line vertical inner-line" style="left: 80%;"></div>
+                <div id="inTop" class="guide-line horizontal inner-line" style="top: 20%;"></div>
+                <div id="inBottom" class="guide-line horizontal inner-line" style="top: 80%;"></div>
+            </div>
+            
+            <button id="calculateButton" class="custom-button">Calculate Accurate Ratios</button>
         </div>
-        
-        <button id="calculateButton" class="custom-button">Calculate Accurate Ratios</button>
+
+        <div class="info-panel">
+            <div class="panel-title">Surface & Edge Scan Filter</div>
+            <div class="damage-toggle-row">
+                <span style="font-size: 14px; color: var(--text-gray);">Contrast High-Pass Scanner Mode</span>
+                <label class="switch">
+                    <input type="checkbox" id="damageToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div id="damageLogBox">
+                <span style="color:var(--brand-orange)">💡 TIP:</span> Take photos against a solid <strong>BLACK background</strong>. When High-Pass mode is activated, corner whitening and fraying marks will pop as bright glowing anomalies.
+            </div>
+
+            <div class="defect-checklist">
+                <div style="font-size:12px; color:var(--brand-orange); font-weight:bold; margin-bottom:8px; text-transform:uppercase;">Select Located White Dots / Wear:</div>
+                <label class="check-item"><input type="checkbox" id="defectDot1"> <span>1 Tiny White Speck / Corner Chip (Max 9)</span></label>
+                <label class="check-item"><input type="checkbox" id="defectDot3"> <span>2-3 White Dots or Edge Silvering (Max 8)</span></label>
+                <label class="check-item"><input type="checkbox" id="defectScratch"> <span>Visible Surface Scratches or Scuffs (Max 7)</span></label>
+                <label class="check-item"><input type="checkbox" id="defectHeavy"> <span>Heavy Whitening / Corner Fraying (Max 5)</span></label>
+            </div>
+        </div>
+
+        <div class="info-panel" id="resultsPanel" style="display: none;">
+            <div class="panel-title" id="calculatedRatiosDisplay">Calculated Ratios</div>
+            <div class="company-row"><span class="company-name">PSA Grading Standard:</span><span id="psaVerdict" class="company-verdict">Evaluating...</span></div>
+            <div class="company-row"><span class="company-name">ACE Grading Standard:</span><span id="aceVerdict" class="company-verdict">Evaluating...</span></div>
+            <div class="company-row"><span class="company-name">TAG Analytics Engine:</span><span id="tagVerdict" class="company-verdict">Evaluating...</span></div>
+            <div class="company-row"><span class="company-name">BGS (Beckett Standards):</span><span id="bgsVerdict" class="company-verdict">Evaluating...</span></div>
+        </div>
+
+        <div class="info-panel">
+            <div class="panel-title">TCG Card Price Index</div>
+            <div class="search-box">
+                <input type="text" id="cardSearchInput" class="search-input" placeholder="e.g. Charizard 4/102 or Charizard 151">
+                <button id="searchPriceBtn" class="search-btn">Find</button>
+            </div>
+            <div id="priceResultBox">
+                <div style="font-weight: bold; color: var(--brand-orange); margin-bottom: 8px;" id="cardTargetName">Card Found</div>
+                <div class="price-line">Avg Market Value: <span id="priceMarket" class="price-val">£--.--</span></div>
+                <div class="price-line">Low Range Estimate: <span id="priceLow" class="price-val">£--.--</span></div>
+                <a id="ebayLink" class="custom-button" target="_blank" href="#">Open eBay Sold Comp Sales</a>
+            </div>
+        </div>
     </div>
 
-    <div class="info-panel">
-        <div class="panel-title">Surface & Edge Scan Filter</div>
-        <div class="damage-toggle-row">
-            <span style="font-size: 14px; color: var(--text-gray);">Contrast High-Pass Scanner Mode</span>
-            <label class="switch">
-                <input type="checkbox" id="damageToggle">
-                <span class="slider"></span>
-            </label>
-        </div>
-        <div id="damageLogBox">
-            <span style="color:var(--brand-orange)">💡 TIP:</span> Take photos against a solid <strong>BLACK background</strong>. When High-Pass mode is activated, corner whitening and fraying marks will pop as bright glowing anomalies.
-        </div>
-
-        <div class="defect-checklist">
-            <div style="font-size:12px; color:var(--brand-orange); font-weight:bold; margin-bottom:8px; text-transform:uppercase;">Select Located White Dots / Wear:</div>
-            <label class="check-item"><input type="checkbox" id="defectDot1"> <span>1 Tiny White Speck / Corner Chip (Max 9)</span></label>
-            <label class="check-item"><input type="checkbox" id="defectDot3"> <span>2-3 White Dots or Edge Silvering (Max 8)</span></label>
-            <label class="check-item"><input type="checkbox" id="defectScratch"> <span>Visible Surface Scratches or Scuffs (Max 7)</span></label>
-            <label class="check-item"><input type="checkbox" id="defectHeavy"> <span>Heavy Whitening / Corner Fraying (Max 5)</span></label>
-        </div>
-    </div>
-
-    <div class="info-panel" id="resultsPanel" style="display: none;">
-        <div class="panel-title" id="calculatedRatiosDisplay">Calculated Ratios</div>
-        <div class="company-row"><span class="company-name">PSA Grading Standard:</span><span id="psaVerdict" class="company-verdict">Evaluating...</span></div>
-        <div class="company-row"><span class="company-name">ACE Grading Standard:</span><span id="aceVerdict" class="company-verdict">Evaluating...</span></div>
-        <div class="company-row"><span class="company-name">TAG Analytics Engine:</span><span id="tagVerdict" class="company-verdict">Evaluating...</span></div>
-        <div class="company-row"><span class="company-name">BGS (Beckett Standards):</span><span id="bgsVerdict" class="company-verdict">Evaluating...</span></div>
-    </div>
-
-    <div class="info-panel">
-        <div class="panel-title">TCG Card Price Index</div>
-        <div class="search-box">
-            <input type="text" id="cardSearchInput" class="search-input" placeholder="e.g. Charizard 4/102 or Charizard 151">
-            <button id="searchPriceBtn" class="search-btn">Find</button>
-        </div>
-        <div id="priceResultBox">
-            <div style="font-weight: bold; color: var(--brand-orange); margin-bottom: 8px;" id="cardTargetName">Card Found</div>
-            <div class="price-line">Avg Market Value: <span id="priceMarket" class="price-val">£--.--</span></div>
-            <div class="price-line">Low Range Estimate: <span id="priceLow" class="price-val">£--.--</span></div>
-            <a id="ebayLink" class="custom-button" target="_blank" href="#">Open eBay Sold Comp Sales</a>
+    <div id="viewBinder" class="view-section">
+        <div class="info-panel">
+            <div class="panel-title">My Digital Showcase Binder</div>
+            <div id="binderStatusMessage" style="font-size: 13px; color: var(--text-gray); text-align: center; padding: 20px 0;">
+                Please log into your vault profile account above to pull down your personalized virtual display storage binder collection history.
+            </div>
+            <div class="binder-grid" id="binderGridWrapper"></div>
         </div>
     </div>
 
@@ -235,10 +269,10 @@
     <div class="modal-overlay" id="helpModal">
         <div class="modal-card">
             <h3 style="color:var(--brand-orange); margin-top:0; text-transform:uppercase;">Precision Controls</h3>
-            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">1. Log in to activate automated cloud data storage ledger collection recording.</p>
-            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">2. Upload front and back trading card photos.</p>
-            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">3. Set RED lines to outside edges and GREEN lines to inside framing boundaries.</p>
-            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">4. Check off any white dots or scratches to apply realistic grading condition overrides instantly.</p>
+            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">1. Log in to activate automated cloud data storage ledger binder recording collection history.</p>
+            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">2. Switch between Scanner mode and Binder display grid modes effortlessly.</p>
+            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">3. Set RED lines to outside edges and GREEN lines to inside boundaries.</p>
+            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">4. Check off white dots or surface markings to apply instant grading overrides.</p>
             <button class="close-modal" id="closeHelp">Got It</button>
         </div>
     </div>
@@ -246,10 +280,9 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, serverTimestamp, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
         import { getStorage, ref, uploadString, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
-        // Verified Model Forge Studio Key Registry
         const firebaseConfig = {
             apiKey: "AIzaSyCu7kienn-NNwpaLCo7E3L54jhtXAhVwYg",
             authDomain: "model-forge-studio.firebaseapp.com",
@@ -259,7 +292,6 @@
             appId: "1:7475805296:web:6d954026c68bcb055148b5"
         };
 
-        // Fire engine cores
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
@@ -267,10 +299,28 @@
 
         let currentUser = null;
 
-        // Authentication State Listener HUD updates
         const authLoggedOut = document.getElementById('authLoggedOut');
         const authLoggedIn = document.getElementById('authLoggedIn');
         const userDisplayEmail = document.getElementById('userDisplayEmail');
+        
+        const modeBtnScanner = document.getElementById('modeBtnScanner');
+        const modeBtnBinder = document.getElementById('modeBtnBinder');
+        const viewScanner = document.getElementById('viewScanner');
+        const viewBinder = document.getElementById('viewBinder');
+        const binderStatusMessage = document.getElementById('binderStatusMessage');
+        const binderGridWrapper = document.getElementById('binderGridWrapper');
+
+        // Layout Tab Toggle Mechanisms switching between core engine modules
+        modeBtnScanner.addEventListener('click', () => {
+            modeBtnScanner.classList.add('active'); modeBtnBinder.classList.remove('active');
+            viewScanner.classList.add('active'); viewBinder.classList.remove('active');
+        });
+
+        modeBtnBinder.addEventListener('click', () => {
+            modeBtnBinder.classList.add('active'); modeBtnScanner.classList.remove('active');
+            viewBinder.classList.add('active'); viewScanner.classList.remove('active');
+            loadUserBinderData();
+        });
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -278,14 +328,71 @@
                 userDisplayEmail.innerText = user.email;
                 authLoggedOut.style.display = 'none';
                 authLoggedIn.style.display = 'block';
+                if(viewBinder.classList.contains('active')) loadUserBinderData();
             } else {
                 currentUser = null;
                 authLoggedOut.style.display = 'block';
                 authLoggedIn.style.display = 'none';
+                binderGridWrapper.innerHTML = "";
+                binderStatusMessage.style.display = "block";
+                binderStatusMessage.innerText = "Please log into your vault profile account above to pull down your personalized virtual display storage binder collection history.";
             }
         });
 
-        // Auth click actions
+        // Binder Data Relational Sync Harvester Function
+        async function loadUserBinderData() {
+            if (!currentUser) return;
+            binderStatusMessage.style.display = "block";
+            binderStatusMessage.innerText = "⏳ FETCHING YOUR COLLECTION ALBUM CORRIDORS...";
+            binderGridWrapper.innerHTML = "";
+
+            try {
+                // Query only logs containing current logged user authentication UID parameters
+                const binderQuery = query(
+                    collection(db, "card_scans"), 
+                    where("userId", "==", currentUser.uid),
+                    orderBy("scannedAt", "desc")
+                );
+                
+                const querySnapshot = await getDocs(binderQuery);
+                
+                if (querySnapshot.empty) {
+                    binderStatusMessage.innerText = "📭 Your binder is currently empty. Head over to the Scanner tab and save your first card calculation verification sequence!";
+                    return;
+                }
+
+                binderStatusMessage.style.display = "none";
+                
+                querySnapshot.forEach((doc) => {
+                    const card = doc.data();
+                    const defectsList = card.defects && card.defects.length > 0 ? card.defects.join(', ') : 'None Detected';
+                    
+                    const slab = document.createElement('div');
+                    slab.className = 'slab-card';
+                    slab.innerHTML = `
+                        <div class="slab-header">
+                            <span class="slab-grade-badge">${card.predictedPsa}</span>
+                            <div class="slab-title">${card.cardTitle || 'Unregistered Trading Card Entry'}</div>
+                        </div>
+                        <div class="slab-metrics">
+                            <div>📐 <strong>Centering Splits:</strong> L/R ${card.lrRatio} | T/B ${card.tbRatio}</div>
+                            <div>🔍 <strong>Surface Notes:</strong> ${defectsList}</div>
+                            <div>📅 <strong>Logged Date:</strong> ${card.scannedAt ? new Date(card.scannedAt.seconds * 1000).toLocaleDateString() : 'Sync Pending'}</div>
+                        </div>
+                        <div class="slab-images-flex">
+                            ${card.frontImage ? `<img src="${card.frontImage}" class="slab-img-preview" alt="Front Capture" onclick="window.open('${card.frontImage}', '_blank')">` : ''}
+                            ${card.backImage ? `<img src="${card.backImage}" class="slab-img-preview" alt="Back Capture" onclick="window.open('${card.backImage}', '_blank')">` : ''}
+                        </div>
+                    `;
+                    binderGridWrapper.appendChild(slab);
+                });
+            } catch (err) {
+                console.error("Binder tracking pull exception context:", err);
+                binderStatusMessage.innerText = "❌ Unable to render binder list database matrix rows. Ensure Firestore indexing compilation completes inside your Google control panel dashboard tabs.";
+            }
+        }
+
+        // Authentication Event Hookups
         document.getElementById('btnSignUp').addEventListener('click', async () => {
             const email = document.getElementById('authEmail').value.trim();
             const pass = document.getElementById('authPassword').value.trim();
@@ -304,7 +411,7 @@
 
         document.getElementById('btnSignOut').addEventListener('click', () => signOut(auth));
 
-        // Core Layout Variables mapping straight into the engine script module
+        // Scanner Core Image Panning/Adjustment Architecture Scripts
         const frontFile = document.getElementById('frontFile');
         const backFile = document.getElementById('backFile');
         const frontLabel = document.getElementById('frontLabel');
@@ -334,9 +441,6 @@
 
         let isDraggingImage = false;
         let startX, startY;
-
-        document.getElementById('openHelp').addEventListener('click', () => helpModal.classList.add('active'));
-        document.getElementById('closeHelp').addEventListener('click', () => helpModal.classList.remove('active'));
 
         function handleImgUpload(file, side, labelObj) {
             if (!file) return;
@@ -423,7 +527,7 @@
         window.addEventListener('touchmove', (e) => {
             if (isDraggingImage && isPanMode) {
                 const clientX = e.touches[0].clientX; const clientY = e.touches[0].clientY;
-                cardData[currentSide].x = clientX - startX; cardData[currentSide].y = clientY - startY; updateImageTransform();
+                cardData[currentSide].x = clientX - startX; cardData[currentSide].y = startY - clientY; updateImageTransform();
             } else if (activeLine && !isPanMode) { if(e.cancelable) e.preventDefault(); handleLineMove(e); }
         }, {passive: false});
 
@@ -455,7 +559,6 @@
             }
         });
 
-        // CLOUD HARVESTER FUNCTION MATRIX SUBMISSION
         calculateButton.addEventListener('click', async () => {
             const outL = parseFloat(document.getElementById('outLeft').style.left); const outR = parseFloat(document.getElementById('outRight').style.left);
             const outT = parseFloat(document.getElementById('outTop').style.top); const outB = parseFloat(document.getElementById('outBottom').style.top);
@@ -478,35 +581,32 @@
             const verdicts = evaluateExpandedGrades(leftRatio, rightRatio, topRatio, bottomRatio, conditionCap); 
             resultsPanel.style.display = 'block';
 
-            // Silent Background Data Harvesting Upload Trigger
             if (currentUser && (cardData.front.src || cardData.back.src)) {
                 calculateButton.innerText = "☁️ ARCHIVING TO VAULT...";
                 calculateButton.disabled = true;
                 try {
-                    let frontCloudUrl = "";
-                    let backCloudUrl = "";
+                    let frontCloudUrl = ""; let backCloudUrl = "";
                     const timestampId = Date.now();
 
-                    // Upload Front Image Data String directly to bucket storage
                     if(cardData.front.src) {
                         const frontRef = ref(storage, `scans/${currentUser.uid}/${timestampId}_front.jpg`);
                         await uploadString(frontRef, cardData.front.src, 'data_url');
                         frontCloudUrl = await getDownloadURL(frontRef);
                     }
-
-                    // Upload Back Image Data String directly to bucket storage
                     if(cardData.back.src) {
                         const backRef = ref(storage, `scans/${currentUser.uid}/${timestampId}_back.jpg`);
                         await uploadString(backRef, cardData.back.src, 'data_url');
                         backCloudUrl = await getDownloadURL(backRef);
                     }
 
-                    // Log the full metadata ledger block into Firestore database collections
+                    let cardLabelString = document.getElementById('cardTargetName').innerText;
+                    if(cardLabelString === "Card Found") cardLabelString = "Custom Evaluated Entry";
+
                     await addDoc(collection(db, "card_scans"), {
                         userId: currentUser.uid,
                         userEmail: currentUser.email,
                         scannedAt: serverTimestamp(),
-                        cardTitle: document.getElementById('cardTargetName').innerText,
+                        cardTitle: cardLabelString,
                         lrRatio: `${leftRatio}:${rightRatio}`,
                         tbRatio: `${topRatio}:${bottomRatio}`,
                         defects: reportedDefects,
@@ -514,10 +614,8 @@
                         frontImage: frontCloudUrl,
                         backImage: backCloudUrl
                     });
-                    console.log("Card logged to private data repository cleanly.");
-                } catch(err) {
-                    console.error("Cloud tracking write error:", err);
-                } finally {
+                } catch(err) { console.error("Cloud tracking write error:", err); }
+                finally {
                     calculateButton.innerText = "Calculate Accurate Ratios";
                     calculateButton.disabled = false;
                 }
@@ -526,7 +624,6 @@
 
         function evaluateExpandedGrades(lr1, lr2, tb1, tb2, cap) {
             const worstLR = Math.max(lr1, lr2); const worstTB = Math.max(tb1, tb2);
-            
             let psa = 'VG-EX 5 or Lower';
             if (worstLR <= 60 && worstTB <= 60) psa = 'Gem Mint 10';
             else if (worstLR <= 65 && worstTB <= 65) psa = 'Mint 9';
@@ -562,10 +659,10 @@
         }
 
         function applyConditionCap(currentVerdict, cap) {
-            if (cap === 9 && (currentVerdict.includes('10'))) return 'Mint 9 (Condition Override)';
-            if (cap === 8 && (currentVerdict.includes('10') || currentVerdict.includes('9'))) return 'NM-MT 8 (Condition Override)';
-            if (cap === 7 && (currentVerdict.includes('10') || currentVerdict.includes('9') || currentVerdict.includes('8'))) return 'NM 7 (Condition Override)';
-            if (cap === 5 && !currentVerdict.includes('5 or Lower')) return 'VG-EX 5 (Condition Override)';
+            if (cap === 9 && (currentVerdict.includes('10'))) return 'Mint 9';
+            if (cap === 8 && (currentVerdict.includes('10') || currentVerdict.includes('9'))) return 'NM-MT 8';
+            if (cap === 7 && (currentVerdict.includes('10') || currentVerdict.includes('9') || currentVerdict.includes('8'))) return 'NM 7';
+            if (cap === 5 && !currentVerdict.includes('5 or Lower')) return 'VG-EX 5';
             return currentVerdict;
         }
 
@@ -574,7 +671,7 @@
             el.className = isPerfect ? 'company-verdict perfect' : 'company-verdict';
         }
 
-        // PRICE SEARCH SCRIPT
+        // PRICE SEARCH ENGINE API
         document.getElementById('searchPriceBtn').addEventListener('click', async () => {
             const searchInput = document.getElementById('cardSearchInput').value.trim();
             if (!searchInput) return alert("Please type a card name.");
