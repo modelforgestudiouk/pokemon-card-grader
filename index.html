@@ -23,11 +23,9 @@
         .logo-text { font-size: 20px; font-weight: 900; letter-spacing: 1px; color: var(--brand-orange); margin: 0; text-transform: uppercase; }
         .logo-sub { font-size: 11px; color: var(--brand-white); font-weight: 300; letter-spacing: 2px; text-transform: uppercase; margin-top: -2px; }
         
-        /* Action Menu Utilities */
         .utility-box { display: flex; gap: 8px; align-items: center; }
         .help-btn { background: none; border: 2px solid var(--brand-orange); color: var(--brand-orange); width: 28px; height: 28px; border-radius: 50%; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .discord-btn-link { text-decoration: none; border: 2px solid #5865F2; color: #5865F2; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; transition: all 0.2s; }
-        .discord-btn-link:hover { background-color: #5865F2; color: #FFF; }
+        .discord-btn-link { text-decoration: none; border: 2px solid #5865F2; color: #5865F2; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; }
 
         .upload-container { width: 340px; background-color: var(--panel-dark); padding: 15px; border-radius: 15px; box-sizing: border-box; text-align: center; border: 1px solid #2B2B2B; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 20px; }
         
@@ -50,7 +48,7 @@
         #imageContainer { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transform-origin: center center; position: absolute; top: 0; left: 0; cursor: move; }
         #previewImage { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
         
-        /* Crosshairs Handles */
+        /* Crosshairs */
         .guide-line { position: absolute; z-index: 10; opacity: 0.9; }
         .vertical { width: 2px; height: 100%; top: 0; cursor: ew-resize; }
         .horizontal { height: 2px; width: 100%; left: 0; cursor: ns-resize; }
@@ -82,18 +80,22 @@
         .price-val { font-weight: bold; color: var(--success-green); }
         #ebayLink { background-color: #0056B3; color: white; font-size: 13px; margin-top: 15px; display: inline-block; }
 
-        .damage-toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; margin-bottom: 10px; }
+        .damage-toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; margin-bottom: 12px; }
         .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .3s; border-radius: 24px; }
         .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; }
         input:checked + .slider { background-color: var(--brand-orange); }
         input:checked + .slider:before { transform: translateX(22px); }
-        #damageLogBox { background-color: #050505; border: 1px solid #222; border-radius: 8px; padding: 12px; text-align: left; font-family: monospace; font-size: 12px; color: var(--text-gray); line-height: 1.4; }
+        #damageLogBox { background-color: #050505; border: 1px solid #222; border-radius: 8px; padding: 12px; text-align: left; font-family: monospace; font-size: 12px; color: var(--text-gray); line-height: 1.4; margin-bottom: 15px; }
+
+        /* Checklist Styles */
+        .defect-checklist { text-align: left; background: #111; padding: 12px; border-radius: 8px; border: 1px solid #222; }
+        .check-item { display: flex; align-items: center; gap: 10px; margin: 8px 0; font-size: 13px; color: var(--brand-white); cursor: pointer; }
+        .check-item input { accent-color: var(--brand-orange); width: 16px; height: 16px; }
 
         .legal-disclaimer { width: 340px; font-size: 11px; color: #555555; text-align: center; line-height: 1.4; margin: 10px 0 30px 0; padding: 0 10px; box-sizing: border-box; border-top: 1px solid #1A1A1A; padding-top: 15px; }
 
-        /* Help Modal Framework Overlay */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
         .modal-card { background-color: var(--panel-dark); border: 2px solid var(--brand-orange); padding: 25px; border-radius: 15px; width: 290px; color: var(--brand-white); }
@@ -111,7 +113,7 @@
             </div>
         </div>
         <div class="utility-box">
-            <a href="https://discord.gg/2Ym5g64rf" target="_blank" class="discord-btn-link" title="Discord Link">💬</a>
+            <a href="https://discord.gg/yourserver" id="discordBtn" target="_blank" class="discord-btn-link" title="Discord Link">💬</a>
             <button class="help-btn" id="openHelp">?</button>
         </div>
     </div>
@@ -169,6 +171,14 @@
         <div id="damageLogBox">
             <span style="color:var(--brand-orange)">💡 TIP:</span> Take photos against a solid <strong>BLACK background</strong>. When High-Pass mode is activated, corner whitening and fraying marks will pop as bright glowing anomalies.
         </div>
+
+        <div class="defect-checklist">
+            <div style="font-size:12px; color:var(--brand-orange); font-weight:bold; margin-bottom:8px; text-transform:uppercase;">Select Located White Dots / Wear:</div>
+            <label class="check-item"><input type="checkbox" id="defectDot1"> <span>1 Tiny White Speck / Corner Chip (Max 9)</span></label>
+            <label class="check-item"><input type="checkbox" id="defectDot3"> <span>2-3 White Dots or Edge Silvering (Max 8)</span></label>
+            <label class="check-item"><input type="checkbox" id="defectScratch"> <span>Visible Surface Scratches or Scuffs (Max 7)</span></label>
+            <label class="check-item"><input type="checkbox" id="defectHeavy"> <span>Heavy Whitening / Corner Fraying (Max 5)</span></label>
+        </div>
     </div>
 
     <div class="info-panel" id="resultsPanel" style="display: none;">
@@ -203,7 +213,7 @@
             <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">1. Upload front and back trading card photos.</p>
             <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">2. Toggle <strong>Pan Mode</strong> to slide the card zoom view directly with your fingers.</p>
             <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">3. Set RED lines to outside edges and GREEN lines to inside framing boundaries.</p>
-            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">4. Query the Price Index tracker below to display real-time values instantly.</p>
+            <p style="font-size:14px; color:var(--text-gray); line-height:1.5;">4. Check off any located white dots or scratches to apply realistic grading condition overrides instantly.</p>
             <button class="close-modal" id="closeHelp">Got It</button>
         </div>
     </div>
@@ -240,10 +250,10 @@
         let isDraggingImage = false;
         let startX, startY;
 
-        // Active Event Listeners explicitly repairing modal overlay triggers
         document.getElementById('openHelp').addEventListener('click', () => helpModal.classList.add('active'));
         document.getElementById('closeHelp').addEventListener('click', () => helpModal.classList.remove('active'));
 
+        // Remember to drop your live server address directly onto line 58 if needed later!
         function handleImgUpload(file, side, labelObj) {
             if (!file) return;
             const reader = new FileReader();
@@ -300,7 +310,7 @@
         });
 
         document.getElementById('zoomIn').addEventListener('click', () => { cardData[currentSide].zoom += 0.08; updateImageTransform(); });
-        document.getElementById('zoomOut').addEventListener('click', () => { if (cardData[currentSide].zoom > 0.3) cardData[currentSide].zoom -= 0.08; updateImageTransform(); });
+        document.getElementById('zoomOut').addEventListener('click', () => { if (cardData[currentSide].zoom > 0.3) currentSide -= 0.08; updateImageTransform(); });
         document.getElementById('rotateLeft').addEventListener('click', () => { cardData[currentSide].rotate -= 0.8; updateImageTransform(); });
         document.getElementById('rotateRight').addEventListener('click', () => { cardData[currentSide].rotate += 0.8; updateImageTransform(); });
 
@@ -366,41 +376,74 @@
             const outT = parseFloat(document.getElementById('outTop').style.top); const outB = parseFloat(document.getElementById('outBottom').style.top);
             const inL = parseFloat(document.getElementById('inLeft').style.left); const inR = parseFloat(document.getElementById('inRight').style.left);
             const inT = parseFloat(document.getElementById('inTop').style.top); const inB = parseFloat(document.getElementById('inBottom').style.top);
+            
             const leftWidth = inL - outL; const rightWidth = outR - inR; const topWidth = inT - outT; const bottomWidth = outB - inB;
             const lrTotal = leftWidth + rightWidth; const leftRatio = Math.round((leftWidth / lrTotal) * 100); const rightRatio = 100 - leftRatio;
             const tbTotal = topWidth + bottomWidth; const topRatio = Math.round((topWidth / tbTotal) * 100); const bottomRatio = 100 - topRatio;
-            document.getElementById('calculatedRatiosDisplay').innerText = `Current Workspace View: L/R ${leftRatio}:${rightRatio} | T/B ${topRatio}:${bottomRatio}`;
-            evaluateExpandedGrades(leftRatio, rightRatio, topRatio, bottomRatio); resultsPanel.style.display = 'block';
+            
+            document.getElementById('calculatedRatiosDisplay').innerText = `Ratios -> L/R ${leftRatio}:${rightRatio} | T/B ${topRatio}:${bottomRatio}`;
+            
+            // Check manual condition checklists markers for strict value downgrades
+            let conditionCap = 10;
+            if(document.getElementById('defectHeavy').checked) conditionCap = 5;
+            else if(document.getElementById('defectScratch').checked) conditionCap = 7;
+            else if(document.getElementById('defectDot3').checked) conditionCap = 8;
+            else if(document.getElementById('defectDot1').checked) conditionCap = 9;
+
+            evaluateExpandedGrades(leftRatio, rightRatio, topRatio, bottomRatio, conditionCap); 
+            resultsPanel.style.display = 'block';
         });
 
-        function evaluateExpandedGrades(lr1, lr2, tb1, tb2) {
+        function evaluateExpandedGrades(lr1, lr2, tb1, tb2, cap) {
             const worstLR = Math.max(lr1, lr2); const worstTB = Math.max(tb1, tb2);
-            if (worstLR <= 60 && worstTB <= 60) setVerdict('psaVerdict', 'Gem Mint 10', true);
-            else if (worstLR <= 65 && worstTB <= 65) setVerdict('psaVerdict', 'Mint 9', false);
-            else if (worstLR <= 70 && worstTB <= 70) setVerdict('psaVerdict', 'NM-MT 8', false);
-            else if (worstLR <= 75 && worstTB <= 75) setVerdict('psaVerdict', 'NM 7', false);
-            else if (worstLR <= 80 && worstTB <= 80) setVerdict('psaVerdict', 'Excellent 6', false);
-            else setVerdict('psaVerdict', 'VG-EX 5 or Lower', false);
+            
+            // PSA Logic
+            let psa = 'VG-EX 5 or Lower';
+            if (worstLR <= 60 && worstTB <= 60) psa = 'Gem Mint 10';
+            else if (worstLR <= 65 && worstTB <= 65) psa = 'Mint 9';
+            else if (worstLR <= 70 && worstTB <= 70) psa = 'NM-MT 8';
+            else if (worstLR <= 75 && worstTB <= 75) psa = 'NM 7';
+            else if (worstLR <= 80 && worstTB <= 80) psa = 'Excellent 6';
+            psa = applyConditionCap(psa, cap);
+            setVerdict('psaVerdict', psa, psa.includes('10'));
 
-            if (worstLR <= 55 && worstTB <= 55) setVerdict('aceVerdict', 'Gem Mint 10', true);
-            else if (worstLR <= 60 && worstTB <= 60) setVerdict('aceVerdict', 'Mint 9', false);
-            else if (worstLR <= 65 && worstTB <= 65) setVerdict('aceVerdict', 'NM-MT 8', false);
-            else if (worstLR <= 70 && worstTB <= 70) setVerdict('aceVerdict', 'NM 7', false);
-            else if (worstLR <= 75 && worstTB <= 75) setVerdict('aceVerdict', 'Excellent 6', false);
-            else setVerdict('aceVerdict', 'Grade 5 or Lower', false);
+            // ACE Logic
+            let ace = 'Grade 5 or Lower';
+            if (worstLR <= 55 && worstTB <= 55) ace = 'Gem Mint 10';
+            else if (worstLR <= 60 && worstTB <= 60) ace = 'Mint 9';
+            else if (worstLR <= 65 && worstTB <= 65) ace = 'NM-MT 8';
+            else if (worstLR <= 70 && worstTB <= 70) ace = 'NM 7';
+            else if (worstLR <= 75 && worstTB <= 75) ace = 'Excellent 6';
+            ace = applyConditionCap(ace, cap);
+            setVerdict('aceVerdict', ace, ace.includes('10'));
 
-            if (worstLR <= 51 && worstTB <= 51) setVerdict('tagVerdict', 'Pristine 10 (1000)', true);
-            else if (worstLR <= 55 && worstTB <= 55) setVerdict('tagVerdict', 'Mint 9', false);
-            else if (worstLR <= 60 && worstTB <= 60) setVerdict('tagVerdict', 'NM-MT 8', false);
-            else if (worstLR <= 65 && worstTB <= 65) setVerdict('tagVerdict', 'Excellent 7 or lower', false);
-            else setVerdict('tagVerdict', 'Below Tier Standards', false);
+            // TAG Logic
+            let tag = 'Below Tier Standards';
+            if (worstLR <= 51 && worstTB <= 51) tag = 'Pristine 10 (1000)';
+            else if (worstLR <= 55 && worstTB <= 55) tag = 'Mint 9';
+            else if (worstLR <= 60 && worstTB <= 60) tag = 'NM-MT 8';
+            else if (worstLR <= 65 && worstTB <= 65) tag = 'Excellent 7 or lower';
+            tag = applyConditionCap(tag, cap);
+            setVerdict('tagVerdict', tag, tag.includes('10'));
 
-            if (worstLR <= 50 && worstTB <= 50) setVerdict('bgsVerdict', 'Black Label 10', true);
-            else if (worstLR <= 55 && worstTB <= 55) setVerdict('bgsVerdict', 'Gem Mint 10', true);
-            else if (worstLR <= 60 && worstTB <= 60) setVerdict('bgsVerdict', 'Mint 9', false);
-            else if (worstLR <= 65 && worstTB <= 65) setVerdict('bgsVerdict', 'NM-MT 8', false);
-            else if (worstLR <= 70 && worstTB <= 70) setVerdict('bgsVerdict', 'NM 7', false);
-            else setVerdict('bgsVerdict', 'Grade 6 or Lower', false);
+            // BGS Logic
+            let bgs = 'Grade 6 or Lower';
+            if (worstLR <= 50 && worstTB <= 50) bgs = 'Black Label 10';
+            else if (worstLR <= 55 && worstTB <= 55) bgs = 'Gem Mint 10';
+            else if (worstLR <= 60 && worstTB <= 60) bgs = 'Mint 9';
+            else if (worstLR <= 65 && worstTB <= 65) bgs = 'NM-MT 8';
+            else if (worstLR <= 70 && worstTB <= 70) bgs = 'NM 7';
+            bgs = applyConditionCap(bgs, cap);
+            setVerdict('bgsVerdict', bgs, bgs.includes('10'));
+        }
+
+        // Overrides math output verdicts if surface checklist values demand lower ceilings
+        function applyConditionCap(currentVerdict, cap) {
+            if (cap === 9 && (currentVerdict.includes('10'))) return 'Mint 9 (Condition Override)';
+            if (cap === 8 && (currentVerdict.includes('10') || currentVerdict.includes('9'))) return 'NM-MT 8 (Condition Override)';
+            if (cap === 7 && (currentVerdict.includes('10') || currentVerdict.includes('9') || currentVerdict.includes('8'))) return 'NM 7 (Condition Override)';
+            if (cap === 5 && !currentVerdict.includes('5 or Lower')) return 'VG-EX 5 (Condition Override)';
+            return currentVerdict;
         }
 
         function setVerdict(id, text, isPerfect) {
@@ -408,7 +451,7 @@
             el.className = isPerfect ? 'company-verdict perfect' : 'company-verdict';
         }
 
-        // PRICE SEARCH SCRIPT
+        // SEARCH API
         document.getElementById('searchPriceBtn').addEventListener('click', async () => {
             const searchInput = document.getElementById('cardSearchInput').value.trim();
             if (!searchInput) return alert("Please type a card name.");
