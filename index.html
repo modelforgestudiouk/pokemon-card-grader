@@ -5,14 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokémon Card Pre-Grader</title>
     <style>
-        body { margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; background-color: #121212; min-height: 100vh; color: #FFF; font-family: sans-serif; padding-top: 40px; }
-        h2 { font-size: 22px; font-weight: bold; margin-bottom: 20px; }
-        #cameraWrapper { position: relative; width: 320px; height: 440px; display: flex; justify-content: center; align-items: center; border-radius: 15px; overflow: hidden; background-color: #000; }
-        video { width: 100%; height: 100%; object-fit: cover; }
-        #cardTargetBox { position: absolute; width: 240px; height: 336px; border: 3px dashed #00FF00; border-radius: 10px; pointer-events: none; }
-        #scanButton { background-color: #FF0055; color: #FFF; border: none; padding: 15px 40px; border-radius: 30px; font-size: 16px; font-weight: bold; margin-top: 25px; cursor: pointer; }
-        #scanButton:disabled { background-color: #555; }
-        #resultsPanel { margin-top: 20px; padding: 15px; background-color: #1E1E1E; border-radius: 10px; width: 320px; box-sizing: border-box; }
+        body { margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; background-color: #121212; min-height: 100vh; color: #FFF; font-family: sans-serif; }
+        h2 { font-size: 22px; font-weight: bold; margin-bottom: 20px; text-align: center; }
+        .upload-container { width: 320px; background-color: #1E1E1E; padding: 20px; border-radius: 15px; box-sizing: border-box; text-align: center; border: 2px dashed #555; }
+        #fileInput { display: none; }
+        .custom-button { background-color: #FF0055; color: #FFF; border: none; padding: 15px 30px; border-radius: 30px; font-size: 16px; font-weight: bold; cursor: pointer; display: inline-block; margin-top: 10px; }
+        #scanButton { background-color: #00FFCC; color: #121212; display: none; margin-top: 20px; }
+        #scanButton:disabled { background-color: #555; color: #AAA; }
+        #preview { width: 100%; max-height: 300px; object-fit: contain; margin-top: 15px; display: none; border-radius: 10px; }
+        #resultsPanel { margin-top: 20px; padding: 15px; background-color: #2a2a2a; border-radius: 10px; width: 320px; box-sizing: border-box; }
         .resultLine { color: #AAA; font-size: 16px; margin: 0 0 5px 0; }
         #verdictText { color: #00FFCC; font-size: 16px; font-weight: bold; margin: 5px 0 0 0; }
     </style>
@@ -21,12 +22,15 @@
 
     <h2>Pokémon Card Pre-Grader</h2>
     
-    <div id="cameraWrapper">
-        <video id="video" autoplay playsinline></video>
-        <div id="cardTargetBox"></div>
+    <div class="upload-container">
+        <p style="margin-top:0; color:#AAA;">Select a card photo from your library or take a fresh picture:</p>
+        
+        <label for="fileInput" class="custom-button">Choose / Take Photo</label>
+        <input type="file" id="fileInput" accept="image/*">
+        
+        <img id="preview" alt="Card Preview">
+        <button id="scanButton" class="custom-button">Analyze Uploaded Card</button>
     </div>
-
-    <button id="scanButton">Snap Alignment Scan</button>
 
     <div id="resultsPanel" style="display: none;">
         <p class="resultLine" id="lrLine">L/R Centering: </p>
@@ -35,82 +39,57 @@
     </div>
 
     <script>
-        const video = document.getElementById('video');
+        const fileInput = document.getElementById('fileInput');
+        const preview = document.getElementById('preview');
         const scanButton = document.getElementById('scanButton');
         const resultsPanel = document.getElementById('resultsPanel');
         const lrLine = document.getElementById('lrLine');
         const tbLine = document.getElementById('tbLine');
         const verdictText = document.getElementById('verdictText');
 
-        async function startCamera() {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ 
-                    video: { facingMode: 'environment', width: 640, height: 480 } 
-                });
-                video.srcObject = stream;
-            } catch (err) {
-                alert("Camera access issue. Please make sure you are using HTTPS and have granted permissions.");
-            }
-        }
-
-        scanButton.addEventListener('click', async () => {
-            scanButton.disabled = true;
-            scanButton.innerText = "Analyzing Alignment...";
-
-            try {
-                const canvas = document.createElement('canvas');
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                
-                canvas.toBlob(async (blob) => {
-                    if (!blob) {
-                        alert("Failed to capture image from camera framework.");
-                        resetButton();
-                        return;
-                    }
-
-                    let dataForm = new FormData();
-                    dataForm.append('file', blob, 'pokemon.jpg');
-
-                    // Standard clean fetch transaction explicitly requesting standard data formatting
-                    fetch('https://grading-api-xpcf.onrender.com/analyze', {
-                        method: 'POST',
-                        mode: 'cors',
-                        body: dataForm
-                    })
-                    .then(async (res) => {
-                        if (!res.ok) {
-                            throw new Error(`Server returned code ${res.status}`);
-                        }
-                        let jsonOutput = await res.json();
-                        
-                        lrLine.innerText = `L/R Centering: ${jsonOutput.left_right_ratio || 'N/A'}`;
-                        tbLine.innerText = `T/B Centering: ${jsonOutput.top_bottom_ratio || 'N/A'}`;
-                        verdictText.innerText = `Verdict: ${jsonOutput.verdict || 'Processing Error'}`;
-                        resultsPanel.style.display = 'block';
-                        resetButton();
-                    })
-                    .catch((err) => {
-                        alert("Browser Security Block: The data packet transfer was interrupted. Checking backend logs.");
-                        resetButton();
-                    });
-
-                }, 'image/jpeg', 0.8);
-
-            } catch (error) {
-                alert("Camera processing failure.");
-                resetButton();
+        // Show image preview when user selects or takes a photo
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                preview.src = URL.createObjectURL(file);
+                preview.style.display = 'block';
+                scanButton.style.display = 'inline-block';
+                resultsPanel.style.display = 'none';
             }
         });
 
-        function resetButton() {
-            scanButton.disabled = false;
-            scanButton.innerText = "Snap Alignment Scan";
-        }
+        scanButton.addEventListener('click', async () => {
+            const file = fileInput.files[0];
+            if (!file) return;
 
-        startCamera();
+            scanButton.disabled = true;
+            scanButton.innerText = "Analyzing Centering...";
+
+            let dataForm = new FormData();
+            dataForm.append('file', file);
+
+            try {
+                const response = await fetch('https://grading-api-xpcf.onrender.com/analyze', {
+                    method: 'POST',
+                    body: dataForm
+                });
+
+                if (!response.ok) throw new Error("Server communication breakdown");
+
+                const jsonOutput = await response.json();
+                
+                lrLine.innerText = `L/R Centering: ${jsonOutput.left_right_ratio || 'N/A'}`;
+                tbLine.innerText = `T/B Centering: ${jsonOutput.top_bottom_ratio || 'N/A'}`;
+                verdictText.innerText = `Verdict: ${jsonOutput.verdict || 'Error'}`;
+                resultsPanel.style.display = 'block';
+
+            } catch (error) {
+                alert("Upload failed. Your internet browser cut the data stream.");
+            } finally {
+                scanButton.disabled = false;
+                scanButton.innerText = "Analyze Uploaded Card";
+            }
+        });
     </script>
 </body>
 </html>
