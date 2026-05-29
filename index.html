@@ -16,7 +16,6 @@
 
         body { margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; background-color: var(--bg-dark); min-height: 100vh; color: var(--brand-white); font-family: sans-serif; }
         
-        /* Branded Pure CSS Text Header - No Broken Image Links Needed */
         .header-container { display: flex; align-items: center; justify-content: space-between; width: 340px; margin-bottom: 20px; position: relative; }
         .logo-badge { background-color: var(--brand-orange); color: var(--bg-dark); font-weight: 900; font-size: 20px; padding: 5px 12px; border-radius: 8px; margin-right: 12px; letter-spacing: -1px; }
         .logo-flex { display: flex; align-items: center; }
@@ -34,12 +33,11 @@
         #controlDock { display: none; justify-content: space-between; margin-top: 10px; background: #222; padding: 8px; border-radius: 8px; }
         .dock-btn { background: none; border: 1px solid var(--brand-orange); color: var(--brand-white); padding: 6px 12px; border-radius: 5px; font-size: 12px; font-weight: bold; cursor: pointer; }
 
-        /* Performance Optimized Framing Box */
         #workspace { position: relative; width: 310px; height: 430px; margin: 15px auto; display: none; background-color: #000; border-radius: 8px; overflow: hidden; border: 1px solid #333; }
         #imageContainer { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transform-origin: center center; }
         #previewImage { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
         
-        /* Centered Adjustment Handles Configuration */
+        /* Crosshairs Handles Layout */
         .guide-line { position: absolute; z-index: 10; opacity: 0.9; }
         .vertical { width: 2px; height: 100%; top: 0; cursor: ew-resize; }
         .horizontal { height: 2px; width: 100%; left: 0; cursor: ns-resize; }
@@ -149,26 +147,50 @@
         document.getElementById('openHelp').addEventListener('click', () => helpModal.classList.add('active'));
         document.getElementById('closeHelp').addEventListener('click', () => helpModal.classList.remove('active'));
 
-        // Lightweight URL-based processing bypasses heavy canvas memory allocation bottlenecks
         fileInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
             if (!file) return;
 
-            // Direct URL allocation bypasses canvas limitations on high-res camera structures
-            if (previewImage.src) {
-                URL.revokeObjectURL(previewImage.src);
-            }
-            
-            previewImage.src = URL.createObjectURL(file);
-            
-            currentZoom = 1.0;
-            currentRotation = 0;
-            updateImageTransform();
-            
-            workspace.style.display = 'block';
-            controlDock.style.display = 'flex';
-            calculateButton.style.display = 'block';
-            resultsPanel.style.display = 'none';
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = (event) => {
+                const img = new Image();
+                img.src = event.target.result;
+                img.onload = () => {
+                    // Safe hardware rendering canvas setup
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    
+                    // Fixed bounding box locks maximum rendering memory space
+                    const maxDim = 800; 
+                    let w = img.width;
+                    let h = img.height;
+
+                    if (w > h && w > maxDim) {
+                        h *= maxDim / w;
+                        w = maxDim;
+                    } else if (h > maxDim) {
+                        w *= maxDim / h;
+                        h = maxDim;
+                    }
+
+                    canvas.width = w;
+                    canvas.height = h;
+                    ctx.drawImage(img, 0, 0, w, h);
+                    
+                    // Compressed clean layout view guarantees lag-free rendering
+                    previewImage.src = canvas.toDataURL('image/jpeg', 0.8);
+                    
+                    currentZoom = 1.0;
+                    currentRotation = 0;
+                    updateImageTransform();
+                    
+                    workspace.style.display = 'block';
+                    controlDock.style.display = 'flex';
+                    calculateButton.style.display = 'block';
+                    resultsPanel.style.display = 'none';
+                };
+            };
         });
 
         document.getElementById('zoomIn').addEventListener('click', () => { currentZoom += 0.08; updateImageTransform(); });
