@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Card Pre-Grader</title>
+    <style>
+        body { margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; backgroundColor: #121212; background-color: #121212; min-height: 100vh; color: #FFF; font-family: sans-serif; padding-top: 40px; }
+        h2 { font-size: 22px; font-weight: bold; margin-bottom: 20px; }
+        #cameraWrapper { position: relative; width: 320px; height: 440px; display: flex; justify-content: center; align-items: center; border-radius: 15px; overflow: hidden; background-color: #000; }
+        video { width: 100%; height: 100%; object-fit: cover; }
+        #cardTargetBox { position: absolute; width: 240px; height: 336px; border: 3px dashed #00FF00; border-radius: 10px; pointer-events: none; }
+        #scanButton { background-color: #FF0055; color: #FFF; border: none; padding: 15px 40px; border-radius: 30px; font-size: 16px; font-weight: bold; margin-top: 25px; cursor: pointer; }
+        #scanButton:disabled { background-color: #555; }
+        #resultsPanel { mt: 20px; margin-top: 20px; padding: 15px; background-color: #1E1E1E; border-radius: 10px; width: 320px; box-sizing: border-box; }
+        .resultLine { color: #AAA; font-size: 16px; margin: 0 0 5px 0; }
+        #verdictText { color: #00FFCC; font-size: 16px; font-weight: bold; margin: 5px 0 0 0; }
+    </style>
+</head>
+<body>
+
+    <h2>Pokémon Card Pre-Grader</h2>
+    
+    <div id="cameraWrapper">
+        <video id="video" autoplay playsinline></video>
+        <div id="cardTargetBox"></div>
+    </div>
+
+    <button id="scanButton">Snap Alignment Scan</button>
+
+    <div id="resultsPanel" style="display: none;">
+        <p class="resultLine" id="lrLine">L/R Centering: </p>
+        <p class="resultLine" id="tbLine">T/B Centering: </p>
+        <p id="verdictText">Verdict: </p>
+    </div>
+
+    <script>
+        const video = document.getElementById('video');
+        const scanButton = document.getElementById('scanButton');
+        const resultsPanel = document.getElementById('resultsPanel');
+        const lrLine = document.getElementById('lrLine');
+        const tbLine = document.getElementById('tbLine');
+        const verdictText = document.getElementById('verdictText');
+
+        // Start phone camera stream automatically
+        async function startCamera() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { facingMode: 'environment', width: 640, height: 480 } 
+                });
+                video.srcObject = stream;
+            } catch (err) {
+                alert("Camera access denied or not found. Please ensure you allow browser permissions.");
+            }
+        }
+
+        scanButton.addEventListener('click', async () => {
+            scanButton.disabled = true;
+            scanButton.innerText = "Analyzing Alignment...";
+
+            try {
+                const canvas = document.createElement('canvas');
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                
+                canvas.toBlob(async (blob) => {
+                    let dataForm = new FormData();
+                    dataForm.append('file', blob, 'pokemon.jpg');
+
+                    // Fires straight to your live Render Python backend
+                    let apiResponse = await fetch('https://grading-api-xpcf.onrender.com/analyze', {
+                        method: 'POST',
+                        body: dataForm
+                    });
+                    
+                    let jsonOutput = await apiResponse.json();
+                    
+                    // Display values on screen
+                    lrLine.innerText = `L/R Centering: ${jsonOutput.left_right_ratio}`;
+                    tbLine.innerText = `T/B Centering: ${jsonOutput.top_bottom_ratio}`;
+                    verdictText.innerText = `Verdict: ${jsonOutput.verdict}`;
+                    resultsPanel.style.display = 'block';
+                    
+                    scanButton.disabled = false;
+                    scanButton.innerText = "Snap Alignment Scan";
+                }, 'image/jpeg', 0.8);
+
+            } catch (error) {
+                alert("Connection Error. Could not process cloud analysis.");
+                scanButton.disabled = false;
+                scanButton.innerText = "Snap Alignment Scan";
+            }
+        });
+
+        startCamera();
+    </script>
+</body>
+</html>
