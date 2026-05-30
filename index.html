@@ -5,84 +5,838 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Model Forge Studio - Elite Pre-Grader</title>
     <style>
-        :root { --bg-dark: #0A0A0C; --panel-dark: #141417; --brand-orange: #FF5500; --brand-white: #FFFFFF; --text-gray: #A6A6A6; --success-green: #00FFCC; --alert-red: #FF3333; --binder-color: #1A365D; }
+        :root {
+            --bg-dark: #0A0A0C;
+            --panel-dark: #141417;
+            --brand-orange: #FF5500;
+            --brand-white: #FFFFFF;
+            --text-gray: #A6A6A6;
+            --success-green: #00FFCC;
+            --alert-red: #FF3333;
+            --gold-glow: 0 0 25px rgba(255, 215, 0, 0.9), inset 0 0 15px rgba(255, 215, 0, 0.5);
+            --binder-color: #1A365D;
+        }
+
         body { margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; background-color: var(--bg-dark); min-height: 100vh; color: var(--brand-white); font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
         
-        .app-mode-bar { display: flex; width: 350px; gap: 10px; margin-bottom: 15px; }
-        .view-section { display: none; width: 350px; }
-        .view-section.active { display: block; }
-        .main-panel { background: var(--panel-dark); padding: 15px; border-radius: 12px; border: 1px solid #222; margin-bottom: 15px; width: 100%; box-sizing: border-box; }
-        .custom-button { width: 100%; padding: 12px; background: var(--brand-orange); color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-top: 10px; }
-        .search-input { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #333; background: #000; color: white; box-sizing: border-box; margin-bottom: 10px; }
+        .header-container { display: flex; align-items: center; justify-content: space-between; width: 350px; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #222; }
+        .logo-badge { background-color: var(--brand-orange); color: var(--bg-dark); font-weight: 900; font-size: 20px; padding: 5px 12px; border-radius: 8px; margin-right: 12px; }
+        .logo-flex { display: flex; align-items: center; }
+        .logo-text { font-size: 20px; font-weight: 900; letter-spacing: 1px; color: var(--brand-orange); margin: 0; text-transform: uppercase; }
+        .logo-sub { font-size: 11px; color: var(--brand-white); font-weight: 300; letter-spacing: 2px; text-transform: uppercase; margin-top: -2px; }
         
-        .binder-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; height: 420px; }
-        .pocket { aspect-ratio: 2.5/3.5; background: #1a1a1c; border: 1px solid #333; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #333; font-weight: bold; }
-        
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; z-index: 100; }
-        .modal-overlay.active { display: flex; }
-        .modal-content { background: var(--panel-dark); padding: 20px; border-radius: 15px; width: 300px; border: 2px solid var(--brand-orange); }
+        .utility-box { display: flex; gap: 8px; align-items: center; }
+        .help-btn { background: none; border: 2px solid var(--brand-orange); color: var(--brand-orange); width: 28px; height: 28px; border-radius: 50%; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .discord-btn-link { text-decoration: none; border: 2px solid #5865F2; color: #5865F2; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; }
 
-        #workspace { position: relative; width: 300px; height: 300px; background: black; margin: 10px auto; border: 1px solid #333; }
-        .guide-line { position: absolute; background: red; z-index: 10; }
+        .app-mode-bar { display: flex; width: 350px; gap: 10px; margin-bottom: 15px; }
+        .mode-btn { flex: 1; padding: 12px; background-color: #111; border: 1px solid #222; color: var(--text-gray); font-weight: bold; font-size: 13px; border-radius: 8px; cursor: pointer; text-transform: uppercase; }
+        .mode-btn.active { background-color: var(--panel-dark); border-color: var(--brand-orange); color: var(--brand-orange); }
+
+        .view-section { width: 350px; display: none; }
+        .view-section.active { display: block; }
+
+        .auth-panel { width: 350px; background-color: #0c0c0c; padding: 12px; border-radius: 10px; border: 1px solid #222; margin-bottom: 20px; box-sizing: border-box; font-size: 13px; text-align: center; }
+        .auth-inputs { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+        .auth-row { display: flex; gap: 8px; }
+        .auth-btn { background-color: #222; border: 1px solid #444; color: white; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 12px; flex: 1; text-transform: uppercase; }
+        .auth-btn.primary { background-color: var(--brand-orange); border-color: var(--brand-orange); }
+
+        .upload-container { width: 100%; background-color: var(--panel-dark); padding: 15px; border-radius: 15px; box-sizing: border-box; text-align: center; border: 1px solid #2B2B2B; margin-bottom: 20px; }
+        .upload-row { display: flex; gap: 10px; }
+        .file-label { flex: 1; background: #222; border: 1px dashed #444; padding: 10px; border-radius: 6px; font-size: 12px; color: var(--text-gray); cursor: pointer; display: inline-block; font-weight: bold; text-transform: uppercase; }
+        .file-label.has-file { border-color: var(--success-green); color: var(--brand-white); }
+        .hidden-file-input { display: none !important; }
+        
+        .side-tabs { display: flex; gap: 10px; margin-bottom: 15px; width: 100%; }
+        .tab-btn { flex: 1; padding: 10px; background: #222; border: 1px solid #333; color: var(--text-gray); font-weight: bold; border-radius: 6px; cursor: pointer; text-transform: uppercase; font-size: 13px; }
+        .tab-btn.active { background: var(--brand-orange); color: white; border-color: var(--brand-orange); }
+        
+        #controlDock { display: none; justify-content: space-between; margin-top: 10px; background: #1a1a1c; padding: 10px; border-radius: 8px; flex-wrap: wrap; gap: 6px; width: 100%; box-sizing: border-box; border: 1px solid #2d2d30; }
+        .dock-btn { background: #111; border: 1px solid var(--brand-orange); color: var(--brand-white); padding: 8px 10px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+        .dock-btn.active { background: var(--brand-orange); color: black; }
+
+        #workspace { position: relative; width: 310px; height: 430px; margin: 15px auto; display: none; background-color: #030304; border-radius: 8px; overflow: hidden; border: 1px solid #333; perspective: 1000px; }
+        #imageContainer { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transform-origin: center center; position: absolute; top: 0; left: 0; cursor: move; }
+        #previewImage { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
+        
+        .guide-line { position: absolute; z-index: 10; opacity: 0.9; }
+        .vertical { width: 3px; height: 100%; top: 0; cursor: ew-resize; }
+        .horizontal { height: 3px; width: 100%; left: 0; cursor: ns-resize; }
+        .outer-line { background-color: #FF2222; }
+        .outer-line::after { content: ''; position: absolute; width: 24px; height: 24px; background: #FF2222; border: 2px solid #FFF; border-radius: 50%; }
+        .vertical.outer-line::after { top: 50%; left: -11px; transform: translateY(-50%); }
+        .horizontal.outer-line::after { left: 50%; top: -11px; transform: translateX(-50%); }
+        .inner-line { background-color: var(--success-green); }
+        .inner-line::after { content: ''; position: absolute; width: 24px; height: 24px; background: var(--success-green); border: 2px solid #FFF; border-radius: 50%; }
+        .vertical.inner-line::after { top: 35%; left: -11px; transform: translateY(-50%); }
+        .horizontal.inner-line::after { left: 35%; top: -11px; transform: translateX(-50%); }
+
+        .damage-dot-marker { position: absolute; width: 16px; height: 16px; background-color: #FF1111; border: 2px solid #FFF; border-radius: 50%; z-index: 22; transform: translate(-50%, -50%); pointer-events: auto; cursor: pointer; box-shadow: 0 0 12px #FF0000; }
+
+        .info-panel { width: 100%; background-color: var(--panel-dark); padding: 15px; border-radius: 15px; box-sizing: border-box; border: 1px solid #2B2B2B; margin-bottom: 20px; }
+        .panel-title { font-size: 16px; color: var(--brand-orange); font-weight: bold; margin: 0 0 12px 0; border-bottom: 1px solid #333; padding-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        .company-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #1c1c1e; font-size: 13px; text-align: left; }
+        .company-name { color: var(--text-gray); }
+        .company-verdict { font-weight: bold; }
+        .perfect { color: #FFD700 !important; text-shadow: 0 0 8px rgba(255,215,0,0.4); }
+        .gold-slab-glow { border: 1px solid #FFD700 !important; box-shadow: var(--gold-glow) !important; }
+
+        .search-box { display: flex; gap: 8px; margin-top: 5px; width: 100%; box-sizing: border-box; }
+        .search-input { flex: 1; background-color: #0D0D0D; border: 1px solid #333; border-radius: 6px; padding: 10px; color: #FFF; font-size: 14px; }
+        .search-btn { background-color: var(--brand-orange); border: none; color: #FFF; font-weight: bold; padding: 0 15px; border-radius: 6px; cursor: pointer; text-transform: uppercase; font-size: 11px; }
+        #priceResultBox { display: none; margin-top: 15px; background: #222; padding: 12px; border-radius: 8px; text-align: left; }
+        .price-line { font-size: 14px; margin: 6px 0; color: var(--brand-white); }
+        .price-val { font-weight: bold; color: var(--success-green); }
+        #ebayLink { background-color: #0056B3; color: white; font-size: 13px; margin-top: 15px; display: inline-block; }
+
+        .damage-toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; margin-bottom: 12px; }
+        .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .3s; border-radius: 24px; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--brand-orange); }
+        input:checked + .slider:before { transform: translateX(22px); }
+        #damageLogBox { background-color: #050505; border: 1px solid #222; border-radius: 8px; padding: 12px; text-align: left; font-family: monospace; font-size: 12px; color: var(--text-gray); line-height: 1.4; margin-bottom: 15px; }
+        .select-dropdown { width: 100%; background-color: #050506; border: 1px solid #333; border-radius: 6px; padding: 10px; color: white; font-size: 13px; margin-top: 5px; }
+
+        #save-ledger-form-block { display: none; background: #0c0c0d; border: 1px solid #222; border-radius: 8px; padding: 12px; margin-top: 12px; text-align: left; }
+        .custom-button { background-color: var(--brand-orange); color: var(--brand-white); border: none; padding: 12px 25px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; display: inline-block; width: 100%; box-sizing: border-box; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; text-align: center; }
+
+        /* REALISTIC 3D SHOWCASE PORTFOLIO TRACK BINDER SYSTEM */
+        #binder-customizer-dropdown-drawer { display: none; background: #111; padding: 15px; border-radius: 10px; border: 1px solid #222; margin-bottom: 15px; text-align: left; }
+        .binder-color-dot { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; display: inline-block; margin-right: 8px; }
+        .binder-color-dot.active { border-color: white; }
+
+        .binder-wrapper-scroller { position: relative; width: 100%; display: flex; justify-content: center; padding: 10px 0; }
+        .binder-outer-skin { position: relative; width: 340px; background-color: var(--binder-color); border-radius: 12px; padding: 12px 12px 12px 24px; box-sizing: border-box; box-shadow: 0 15px 35px rgba(0,0,0,0.6), inset -10px 0 20px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.05); display: flex; }
+        .binder-spine-rings { position: absolute; left: 6px; top: 0; width: 12px; height: 100%; display: flex; flex-direction: column; justify-content: space-around; padding: 25px 0; box-sizing: border-box; z-index: 30; }
+        .binder-ring-metal { width: 10px; height: 24px; border: 3px solid #b0b0b5; border-right: none; border-radius: 12px 0 0 12px; background: transparent; box-shadow: -2px 2px 4px rgba(0,0,0,0.5), inset 1px 1px 2px white; margin-bottom: 30px; }
+
+        .binder-sheet-9-pocket { position: relative; width: 100%; background: #0c0c0e; border-radius: 6px; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 6px; padding: 8px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.1); height: 420px; }
+        .binder-sheet-9-pocket::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 30%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.03) 80%, rgba(255,255,255,0) 100%); pointer-events: none; z-index: 25; border-radius: 6px; }
+
+        .pocket-slot { position: relative; width: 100%; height: 100%; background: #040405; border: 1px dashed rgba(255,255,255,0.04); border-radius: 4px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,0.8); }
+        .pocket-slot.filled { border: 1px solid rgba(255,255,255,0.15); background: #141416; box-shadow: 0 4px 8px rgba(0,0,0,0.5); cursor: pointer; }
+        .pocket-img-render { width: 100%; height: 100%; object-fit: cover; display: block; position: absolute; top:0; left:0; z-index: 5; }
+        .pocket-grade-tab { position: absolute; top: 3px; right: 3px; background: var(--brand-orange); color: black; font-weight: 900; font-size: 8px; padding: 1px 3px; border-radius: 2px; z-index: 10; }
+        .empty-pocket-cross { font-size: 14px; color: rgba(255,255,255,0.03); font-weight: bold; }
+
+        .binder-pagination-dock { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 10px; font-size: 11px; color: var(--text-gray); }
+        .page-arrow-btn { background: #111; border: 1px solid #222; color: white; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+
+        /* THE PREMIUM 3D FLOATING SLAB INSPECTION FRAME POPUP SYSTEM OVERLAY LAYERS */
+        .slab-pullout-frame { background-color: #151518; border: 2px solid var(--brand-orange); border-radius: 16px; padding: 18px; width: 335px; box-sizing: border-box; text-align: left; box-shadow: 0 25px 60px rgba(0,0,0,0.95); }
+        .slab-pullout-title { font-size: 16px; font-weight: bold; border-bottom: 2px solid var(--brand-orange); padding-bottom: 6px; margin-bottom: 12px; text-transform: uppercase; color: white; letter-spacing: 0.5px; }
+        .slab-pullout-workspace-mirror { position: relative; width: 100%; height: 320px; background: #000; border-radius: 8px; border: 1px solid #333; overflow: hidden; margin: 12px 0; }
+        .slab-pullout-input-edit-row { display: flex; gap: 8px; margin: 12px 0; }
+        .slab-pullout-edit-input { flex: 1; background-color: #050506; border: 1px solid #333; border-radius: 6px; padding: 10px; color: white; font-size: 13px; }
+        .slab-pullout-edit-save-btn { background-color: var(--success-green); border: none; color: black; font-weight: bold; padding: 0 14px; border-radius: 6px; cursor: pointer; font-size: 12px; text-transform: uppercase; }
+
+        /* General Modals Sheet Overlays STYLING CLEANED: Locked to pointer-events hidden until requested */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
+        .modal-overlay.active { opacity: 1 !important; pointer-events: auto !important; }
+        .modal-card { background-color: var(--panel-dark); border: 2px solid var(--brand-orange); padding: 25px; border-radius: 18px; width: 320px; color: var(--brand-white); max-height: 85vh; overflow-y: auto; }
+        .modal-card h3 { color: var(--brand-orange); margin-top: 0; text-transform: uppercase; font-weight: 900; }
+        .close-modal-x-btn { background-color: var(--brand-orange); color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 11px; width: 100%; margin-top: 10px; text-align: center; }
+        
+        .legal-disclaimer-footer { width: 350px; font-size: 11px; color: #444; text-align: center; line-height: 1.4; margin: 15px 0; padding-top: 10px; border-top: 1px solid #111; }
     </style>
 </head>
 <body>
-    <div class="app-mode-bar">
-        <button class="custom-button" id="navScanner">Scanner</button>
-        <button class="custom-button" id="navBinder">Binder</button>
-    </div>
-    
-    <div id="viewScanner" class="view-section active">
-        <div class="main-panel">
-            <button id="calcBtn" class="custom-button">📊 Show Potential Grades</button>
-            <div id="results" style="display:none; margin-top:15px;">
-                <p>PSA Predicted: <span id="psa">Gem Mint 10</span></p>
-                <button id="saveBtn" class="custom-button" style="background:#0056B3;">➕ Lock Into Binder</button>
+
+    <div class="header-container">
+        <div class="logo-flex">
+            <div class="logo-badge">MF</div>
+            <div>
+                <div class="logo-text">Model Forge</div>
+                <div class="logo-sub">Studio Pre-Grader</div>
             </div>
         </div>
-        <div class="main-panel">
-            <input type="text" id="searchInput" class="search-input" placeholder="Card Name">
-            <button id="findBtn" class="custom-button" style="background:#444;">Find Price</button>
-            <p id="priceOutput"></p>
+        <div class="utility-box">
+            <a href="https://discord.gg/2Ym5g64rf" id="discordBtn" target="_blank" class="discord-btn-link">💬</a>
+            <button class="help-btn" id="openHelp">?</button>
+        </div>
+    </div>
+
+    <div class="auth-panel" id="authPanel">
+        <div id="authLoggedOut">
+            <span style="color:var(--brand-orange); font-weight:bold; font-size:11px; text-transform:uppercase; letter-spacing:0.5px;">Unlock Profile Database Vault Binder</span>
+            <div class="auth-inputs">
+                <input type="email" id="authEmail" class="search-input" placeholder="Account Email" style="padding:8px;">
+                <input type="password" id="authPassword" class="search-input" placeholder="Password" style="padding:8px;">
+                <div class="auth-row">
+                    <button id="btnSignIn" class="auth-btn primary">Login</button>
+                    <button id="btnSignUp" class="auth-btn">Register</button>
+                </div>
+            </div>
+        </div>
+        <div id="authLoggedIn" style="display:none;">
+            Vault Profile: <span id="userDisplayEmail" style="color:var(--success-green); font-weight:bold;">--</span>
+            <button id="btnSignOut" class="auth-btn" style="padding:2px 8px; margin-left:10px; display:inline-block; width:auto;">Logout</button>
+        </div>
+    </div>
+
+    <div class="app-mode-bar">
+        <button class="mode-btn active" id="navBtnScanner">Card Lab Scanner</button>
+        <button class="mode-btn" id="navBtnBinder">My Showcase Binder</button>
+    </div>
+
+    <div id="viewScanner" class="view-section active">
+        <div class="upload-container">
+            <div id="ocrStatusLog" class="app-status-hud">⚡ VISION ENGINE SYNC ACTIVE...</div>
+            
+            <div class="upload-row">
+                <label for="frontFile" id="frontLabel" class="file-label">📸 Add Front Photo</label>
+                <input type="file" id="frontFile" class="hidden-file-input">
+                
+                <label for="backFile" id="backLabel" class="file-label">📸 Add Back Photo (Optional)</label>
+                <input type="file" id="backFile" class="hidden-file-input">
+            </div>
+
+            <div class="side-tabs" id="sideTabs" style="display:none;">
+                <button class="tab-btn active" id="tabFront">Front Workspace</button>
+                <button class="tab-btn" id="tabBack">Back Workspace</button>
+            </div>
+
+            <div id="controlDock">
+                <button class="dock-btn" id="zoomIn">🔍 Zoom +</button>
+                <button class="dock-btn" id="zoomOut">🔍 Zoom -</button>
+                <button class="dock-btn" id="rotateLeft">🔄 Rotate L</button>
+                <button class="dock-btn" id="rotateRight">🔄 Rotate R</button>
+                <button class="dock-btn" id="leanForward">📐 Lean Fwd</button>
+                <button class="dock-btn" id="leanBackward">📐 Lean Back</button>
+                <button class="dock-btn" id="panModeBtn" style="border-color:var(--success-green)">✋ Pan Mode</button>
+            </div>
+
+            <div id="workspace">
+                <div id="imageContainer">
+                    <img id="previewImage" alt="Lab Workspace Alignment Face">
+                </div>
+                <div id="outLeft" class="guide-line vertical outer-line" style="left: 8%;"></div>
+                <div id="outRight" class="guide-line vertical outer-line" style="left: 92%;"></div>
+                <div id="outTop" class="guide-line horizontal outer-line" style="top: 8%;"></div>
+                <div id="outBottom" class="guide-line horizontal outer-line" style="top: 92%;"></div>
+                
+                <div id="inLeft" class="guide-line vertical inner-line" style="left: 18%;"></div>
+                <div id="inRight" class="guide-line vertical inner-line" style="left: 82%;"></div>
+                <div id="inTop" class="guide-line horizontal inner-line" style="top: 18%;"></div>
+                <div id="inBottom" class="guide-line horizontal inner-line" style="top: 82%;"></div>
+            </div>
+
+            <button id="calculateButton" class="custom-button" style="background:#FFF; color:#000;">📊 Show Potential Grades</button>
+        </div>
+
+        <div class="info-panel">
+            <div class="panel-title">🔍 Surface Condition Mapping Suite</div>
+            <select id="surfaceDropdownMenuController" class="select-dropdown" style="margin-bottom:10px; padding:12px;">
+                <option value="hide">🎛️ Standard Centering Alignment Mode</option>
+                <option value="show">🔴 High-Pass White Dot Mapping Mode</option>
+            </select>
+
+            <div id="damageToggleWorkspaceBlock" style="display:none; margin-top:10px;">
+                <div class="damage-toggle-row">
+                    <span style="font-size: 13px; color: var(--text-gray);">Contrast High-Pass Scanner Mode</span>
+                    <label class="switch">
+                        <input type="checkbox" id="damageToggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div id="damageLogBox">
+                    <span style="color:var(--brand-orange)">🔴 SURFACE POINT MATRIX:</span> Tap any wear mark on the photo box above to drop damage markers. Tap a red dot again to remove it if dropped by mistake!
+                </div>
+                
+                <div class="defect-checklist">
+                    <div style="font-size:11px; color:var(--brand-orange); font-weight:bold; margin-bottom:8px; text-transform:uppercase;">Condition Limit Adjusters:</div>
+                    <label class="check-item"><input type="checkbox" id="defectDot1"> <span>1 Tiny White Speck / Corner Chip (Max 9)</span></label>
+                    <label class="check-item"><input type="checkbox" id="defectDot3"> <span>2-3 White Dots or Edge Silvering (Max 8)</span></label>
+                    <label class="check-item"><input type="checkbox" id="defectScratch"> <span>Visible Surface Scratches or Scuffs (Max 7)</span></label>
+                    <label class="check-item"><input type="checkbox" id="defectHeavy"> <span>Heavy Whitening / Corner Fraying (Max 5)</span></label>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-panel" id="resultsPanel" style="display: none;">
+            <div class="panel-title">Calculated Centering Metrics</div>
+            <div class="company-row" style="justify-content:center; padding:0 0 8px 0;"><span id="ratioDisplayHUD" style="font-family:monospace; font-size:13px; font-weight:bold; color:white;">--</span></div>
+            <div class="company-row"><span class="company-name">PSA Predicted Standard:</span><span id="psaVerdict" class="company-verdict">Evaluating...</span></div>
+            <div class="company-row"><span class="company-name">ACE Technical Scale:</span><span id="aceVerdict" class="company-verdict">Evaluating...</span></div>
+            <div class="company-row"><span class="company-name">TAG Analytics Engine:</span><span id="tagVerdict" class="company-verdict">Evaluating...</span></div>
+            <div class="company-row"><span class="company-name">BGS Subgrade Matrix:</span><span id="bgsVerdict" class="company-verdict">Evaluating...</span></div>
+            
+            <button id="btnUnlockFilingForm" class="custom-button" style="margin-top:15px;">➕ Lock Straight Into My Binder Ledger</button>
+            <div id="save-ledger-form-block">
+                <div style="font-size:11px; color:var(--brand-orange); font-weight:bold; margin:10px 0 6px 0; text-transform:uppercase;">Name This Showcase Entry:</div>
+                <input type="text" id="customCardSaveTitleField" class="search-input" placeholder="e.g. Charizard Base Set 4/102">
+                <button id="btnExecuteBinderFilingCloud" class="custom-button" style="background:#0056B3; margin-top:10px;">☁️ Finalize Vault Archive Sequence</button>
+            </div>
+        </div>
+
+        <div class="info-panel">
+            <div class="panel-title">TCG Card Price Index</div>
+            <div class="search-box">
+                <input type="text" id="cardSearchInput" class="search-input" placeholder="e.g. Charizard 4/102 or Charizard 151">
+                <button id="searchPriceBtn" class="search-btn">Find</button>
+            </div>
+            <div id="priceResultBox">
+                <div style="font-weight: bold; color: var(--brand-orange); margin-bottom: 8px;" id="cardTargetName">Card Found</div>
+                <div class="price-line">Avg Market Value: <span id="priceMarket" class="price-val">£--.--</span></div>
+                <div class="price-line">Low Range Estimate: <span id="priceLow" class="price-val">£--.--</span></div>
+                <a id="ebayLink" class="custom-button" target="_blank" href="#">Open eBay Sold Com Sales</a>
+            </div>
         </div>
     </div>
 
     <div id="viewBinder" class="view-section">
-        <div class="main-panel">
-            <div id="binderGrid" class="binder-grid"></div>
+        <button class="custom-button secondary-btn" id="btnToggleBinderCustomizerMenu" style="margin-bottom:10px;">⚙️ Customise Album View & Settings</button>
+        
+        <div id="binder-customizer-dropdown-drawer">
+            <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin-bottom:6px;">Portfolio Valuation Metric Mode:</div>
+            <select id="pricingModeSelectToggle" class="select-dropdown">
+                <option value="raw">Raw Base Value Index (Ungraded Market)</option>
+                <option value="graded">Graded Multiplier Model (Slab Premium Scale)</option>
+            </select>
+            <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin:12px 0 6px 0;">Live Binder Search Filter:</div>
+            <input type="text" id="binderInternalLiveSearchInput" class="search-input" placeholder="Search card in binder instantly...">
+            <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin:12px 0 6px 0;">Sort Binder Pockets Rows:</div>
+            <select id="binderSortDirectionSelectToggle" class="select-dropdown">
+                <option value="dateDesc">Scanned Date: Newest First</option>
+                <option value="dateAsc">Scanned Date: Oldest First</option>
+                <option value="valDesc">Portfolio Value: Highest First</option>
+                <option value="valAsc">Portfolio Value: Lowest First</option>
+            </select>
+            <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin:12px 0 6px 0;">Choose Cover Color Theme:</div>
+            <div class="binder-color-dot active" style="background:#1A365D;" data-hex="#1A365D"></div>
+            <div class="binder-color-dot" style="background:#7A1C1C;" data-hex="#7A1C1C"></div>
+            <div class="binder-color-dot" style="background:#1C5A35;" data-hex="#1C5A35"></div>
+            <div class="binder-color-dot" style="background:#222222;" data-hex="#222222"></div>
+            <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin:12px 0 6px 0;">Rename Portfolio Album:</div>
+            <input type="text" id="customBinderNameBannerInput" class="search-input" placeholder="Name My Album Binder" style="padding:6px; font-size:12px;">
+        </div>
+
+        <div class="main-panel" style="padding:10px 6px;">
+            <div style="font-size:14px; font-weight:bold; color:var(--brand-orange); margin-bottom:4px;" id="renderBinderTitleHeaderDisplay">Showcase Portfolio Album</div>
+            <div style="font-size:11px; color:var(--text-gray); margin-bottom:12px;">Net Portfolio Album Value worth: <span id="binderPortfolioValuationSumDisplay" style="color:var(--success-green); font-weight:bold;">£0.00</span></div>
+            
+            <div class="binder-wrapper-scroller">
+                <div class="binder-outer-skin" id="binderOuterSkinHull">
+                    <div class="binder-spine-rings">
+                        <div class="binder-ring-metal"></div>
+                        <div class="binder-ring-metal"></div>
+                        <div class="binder-ring-metal"></div>
+                    </div>
+                    <div class="binder-sheet-9-pocket" id="binderGridSheet9SlotPage"></div>
+                </div>
+            </div>
+
+            <div class="binder-pagination-dock">
+                <button class="page-arrow-btn" id="btnBinderPrevPage">◀ Previous</button>
+                <span id="binderPagePaginationTicker">Page 1 of 2</span>
+                <button class="page-arrow-btn" id="btnBinderNextPage">Next ▶</button>
+            </div>
         </div>
     </div>
 
-    <div id="helpModal" class="modal-overlay"><div class="modal-content"><h3>Manual</h3><p>Use the buttons to grade and save.</p><button id="closeHelp" class="custom-button">Got It</button></div></div>
+    <div class="modal-overlay" id="slabDetailModal">
+        <div class="slab-pullout-frame" id="slabPulloutCardNodeBox">
+            <div class="slab-pullout-title" id="modalSlabTitle">Showcase Slab Deck</div>
+            <div style="font-size:12px; color:var(--text-gray); line-height:1.5;" id="modalSlabMetrics">Metrics loading ledger breakdown...</div>
+            
+            <div class="slab-pullout-workspace-mirror" id="modalSlabVisualCanvasMirror">
+                <img id="modalSlabPrimaryImageRenderPath" style="width:100%; height:100%; object-fit:contain;">
+            </div>
+
+            <div class="slab-pullout-input-edit-row">
+                <input type="text" id="editSlabCardTitleInlineInputField" class="slab-pullout-edit-input" placeholder="Change Card Custom Name">
+                <button id="btnSaveSlabTitleEditInline" class="slab-pullout-edit-save-btn">Save</button>
+            </div>
+
+            <button class="custom-button" id="btnPurgeCardDocumentFromBinder" style="background:none; border:1px solid var(--alert-red); color:var(--alert-red); margin-top:5px; font-size:12px; padding:8px;">🗑️ Remove Card From Vault</button>
+            <button class="close-modal-x-btn" id="closeSlabDetailModal">Return to Binder</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="helpModal">
+        <div class="modal-card">
+            <h3>MFS Pre-Grader Manual Guide</h3>
+            <p><strong>1. Vault Profiles:</strong> Sign up at the top bar box to active ledger records historical storage paths.</p>
+            <p><strong>2. 3D Distortion Straighteners:</strong> Use the Lean Forward / Lean Backward button options to tilt your image flatly to make crooked card boundaries completely square!</p>
+            <p><strong>3. Placed Pin damage tracks:</strong> Open White Dot mapping mode to toggle coordinates dropping. Tap onto any scuff to pin it, tap a red node tag again to remove it completely from canvas memory instantly if placed by mistake.</p>
+            <button class="close-modal-x-btn" id="closeHelp">Got It</button>
+        </div>
+    </div>
+
+    <div class="legal-disclaimer-footer">
+        <strong>Calculator Disclaimer Notice:</strong> predictions generated are independent independent appraisals reference reference tracking reference tracking numbers calculations approximations only.
+    </div>
 
     <script type="module">
-        // Direct event handlers - These bypass any async lag
-        document.getElementById('calcBtn').onclick = () => {
-            document.getElementById('results').style.display = 'block';
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, serverTimestamp, query, where, getDocs, orderBy, doc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getStorage, ref, uploadString, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCu7kienn-NNwpaLCo7E3L54jhtXAhVwYg",
+            authDomain: "model-forge-studio.firebaseapp.com",
+            projectId: "model-forge-studio",
+            storageBucket: "model-forge-studio.firebasestorage.app",
+            messagingSenderId: "7475805296",
+            appId: "1:7475805296:web:6d954026c68bcb055148b5"
         };
 
-        document.getElementById('findBtn').onclick = () => {
-            const val = document.getElementById('searchInput').value;
-            document.getElementById('priceOutput').innerText = val ? `Price for ${val}: £1.25` : "Enter a name first";
-        };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
 
-        document.getElementById('navScanner').onclick = () => { 
-            document.getElementById('viewScanner').classList.add('active'); 
-            document.getElementById('viewBinder').classList.remove('active'); 
-        };
-        document.getElementById('navBinder').onclick = () => { 
-            document.getElementById('viewBinder').classList.add('active'); 
-            document.getElementById('viewScanner').classList.remove('active'); 
-        };
+        let currentUser = null;
+        let globalBinderCollectionMemory = [];
+        let currentActiveBinderPageIndex = 0;
+        let activeSelectedSlabDocId = null;
+        let localPlacedDamageDotsArray = []; 
+        let cacheLiveEstimatedValueGBP = 0.00;
 
-        // Render binder
-        const grid = document.getElementById('binderGrid');
-        for(let i=0; i<9; i++) {
-            const div = document.createElement('div');
-            div.className = 'pocket';
-            div.innerText = '×';
-            grid.appendChild(div);
+        const navBtnScanner = document.getElementById('navBtnScanner'); const navBtnBinder = document.getElementById('navBtnBinder');
+        const viewScanner = document.getElementById('viewScanner'); const viewBinder = document.getElementById('viewBinder');
+        const binderGridSheet9SlotPage = document.getElementById('binderGridSheet9SlotPage');
+        const helpModal = document.getElementById('helpModal');
+        const slabModal = document.getElementById('slabDetailModal');
+
+        document.getElementById('openHelp').addEventListener('click', () => helpModal.classList.add('active'));
+        document.getElementById('closeHelp').addEventListener('click', () => helpModal.classList.remove('active'));
+        document.getElementById('closeSlabDetailModal').addEventListener('click', () => slabModal.classList.remove('active'));
+
+        navBtnScanner.addEventListener('click', () => { navBtnScanner.classList.add('active'); navBtnBinder.classList.remove('active'); viewScanner.classList.add('active'); viewBinder.classList.remove('active'); });
+        navBtnBinder.addEventListener('click', () => { navBtnBinder.classList.add('active'); navBtnScanner.classList.remove('active'); viewBinder.classList.add('active'); viewScanner.classList.remove('active'); syncMasterUserCloudBinderLedger(); });
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user; document.getElementById('userDisplayEmail').innerText = user.email;
+                document.getElementById('authLoggedOut').style.display = 'none'; document.getElementById('authLoggedIn').style.display = 'block';
+                syncMasterUserCloudBinderLedger();
+            } else {
+                currentUser = null; document.getElementById('authLoggedOut').style.display = 'block'; document.getElementById('authLoggedIn').style.display = 'none';
+                clearBinderDisplayGridSlots();
+            }
+        });
+
+        // WORKSPACE DOCKS CONFIG pipelines
+        const frontFile = document.getElementById('frontFile'); const backFile = document.getElementById('backFile');
+        const frontLabel = document.getElementById('frontLabel'); const backLabel = document.getElementById('backLabel');
+        const sideTabs = document.getElementById('sideTabs'); const tabFront = document.getElementById('tabFront'); const tabBack = document.getElementById('tabBack');
+        const workspaceContainer = document.getElementById('workspace-container'); const previewImage = document.getElementById('previewImage');
+        const calculateButton = document.getElementById('calculateButton'); const resultsPanel = document.getElementById('resultsPanel');
+        const controlDock = document.getElementById('controlDock');
+        const damageToggle = document.getElementById('damageToggle'); const damageLogBox = document.getElementById('damageLogBox');
+        const panModeBtn = document.getElementById('panModeBtn');
+        const workspace = document.getElementById('workspace');
+        const imageContainer = document.getElementById('imageContainer');
+        const surfaceDropdownMenuController = document.getElementById('surfaceDropdownMenuController');
+        const damageToggleWorkspaceBlock = document.getElementById('damageToggleWorkspaceBlock');
+
+        let isPanMode = false; let currentSide = 'front';
+        let cardData = { 
+            front: { src: null, zoom: 1.0, rotate: 0, tiltX: 0, x: 0, y: 0, ol: 10, or: 90, ot: 10, ob: 90, il: 20, ir: 80, it: 20, ib: 80 }, 
+            back: { src: null, zoom: 1.0, rotate: 0, tiltX: 0, x: 0, y: 0, ol: 10, or: 90, ot: 10, ob: 90, il: 20, ir: 80, it: 20, ib: 80 } 
+        };
+        let isDraggingImage = false; let startX, startY; let activeLine = null;
+
+        surfaceDropdownMenuController.addEventListener('change', () => {
+            if(surfaceDropdownMenuController.value === 'show') {
+                damageToggleWorkspaceBlock.style.display = 'block'; document.querySelectorAll('.guide-line').forEach(l => l.style.setProperty('display', 'none', 'important')); 
+            } else {
+                damageToggleWorkspaceBlock.style.display = 'none'; document.querySelectorAll('.guide-line').forEach(l => l.style.setProperty('display', 'block', 'important')); 
+                damageToggle.checked = false; previewImage.style.filter = "none";
+            }
+        });
+
+        workspace.addEventListener('click', (e) => {
+            if(surfaceDropdownMenuController.value !== 'show' || isPanMode || !cardData[currentSide].src) return;
+            if(e.target.classList.contains('damage-dot-marker')) {
+                const targetDotIndex = parseInt(e.target.getAttribute('data-idx'));
+                localPlacedDamageDotsArray.splice(targetDotIndex, 1);
+                renderLocalDamageDotsOnWorkspaceCanvas(); return;
+            }
+            const rect = workspace.getBoundingClientRect();
+            localPlacedDamageDotsArray.push({ x: ((e.clientX - rect.left) / rect.width) * 100, y: ((e.clientY - rect.top) / rect.height) * 100, face: currentSide });
+            renderLocalDamageDotsOnWorkspaceCanvas();
+        });
+
+        function renderLocalDamageDotsOnWorkspaceCanvas() {
+            workspace.querySelectorAll('.damage-dot-marker').forEach(d => d.remove());
+            localPlacedDamageDotsArray.forEach((dot, index) => {
+                if(dot.face === currentSide) {
+                    const node = document.createElement('div'); node.className = 'damage-dot-marker';
+                    node.style.left = dot.x + '%'; node.style.top = dot.y + '%';
+                    node.setAttribute('data-idx', index); workspace.appendChild(node);
+                }
+            });
         }
+
+        function handleLocalImageUpload(file, side, labelObj) {
+            if (!file) return;
+            const reader = new FileReader(); reader.readAsDataURL(file);
+            reader.onload = (e) => {
+                cardData[side].src = e.target.result;
+                labelObj.innerText = side === 'front' ? "✓ Front Saved" : "✓ Back Saved"; labelObj.classList.add('has-file');
+                sideTabs.style.display = "flex"; workspace.style.display = 'block'; controlDock.style.display = 'flex'; calculateButton.style.display = 'block';
+                switchSide(side);
+            };
+        }
+        frontFile.addEventListener('change', (e) => handleLocalImageUpload(e.target.files[0], 'front', frontLabel));
+        backFile.addEventListener('change', (e) => handleLocalImageUpload(e.target.files[0], 'back', backLabel));
+
+        function switchSide(side) {
+            currentSide = side;
+            if (side === 'front') { tabFront.classList.add('active'); tabBack.classList.remove('active'); } 
+            else { tabBack.classList.add('active'); tabFront.classList.remove('active'); }
+            previewImage.src = cardData[side].src || "";
+            updateImageTransform(); restoreGuideLinesPositionsPercentage(); renderLocalDamageDotsOnWorkspaceCanvas();
+        }
+        tabFront.addEventListener('click', () => { if(cardData.front.src) switchSide('front'); });
+        tabBack.addEventListener('click', () => { if(cardData.back.src) switchSide('back'); });
+
+        document.getElementById('zoomIn').addEventListener('click', () => { cardData[currentSide].zoom += 0.08; updateImageTransform(); });
+        document.getElementById('zoomOut').addEventListener('click', () => { if (cardData[currentSide].zoom > 0.3) cardData[currentSide].zoom -= 0.08; updateImageTransform(); });
+        document.getElementById('rotateLeft').addEventListener('click', () => { cardData[currentSide].rotate -= 1.2; updateImageTransform(); });
+        document.getElementById('rotateRight').addEventListener('click', () => { cardData[currentSide].rotate += 1.2; updateImageTransform(); });
+        document.getElementById('leanForward').addEventListener('click', () => { cardData[currentSide].tiltX += 1.5; updateImageTransform(); });
+        document.getElementById('leanBackward').addEventListener('click', () => { cardData[currentSide].tiltX -= 1.5; updateImageTransform(); });
+
+        panModeBtn.addEventListener('click', () => {
+            isPanMode = !isPanMode;
+            panModeBtn.classList.toggle('active', isPanMode);
+            panModeBtn.innerText = isPanMode ? "✋ Adjusting Image" : "✋ Pan Mode";
+        });
+
+        function updateImageTransform() { 
+            const side = cardData[currentSide]; 
+            imageContainer.style.transform = `translate(${side.x}px, ${side.y}px) scale(${side.zoom}) rotate(${side.rotate}deg) rotateX(${side.tiltX}deg)`; 
+        }
+        
+        imageContainer.addEventListener('mousedown', startPan); imageContainer.addEventListener('touchstart', startPan, {passive: true});
+
+        function startPan(e) {
+            if(!isPanMode) return; isDraggingImage = true;
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX; const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            startX = clientX - cardData[currentSide].x; startY = clientY - cardData[currentSide].y;
+        }
+        window.addEventListener('mousemove', (e) => {
+            if (isDraggingImage && isPanMode) { const clientX = e.touches ? e.touches[0].clientX : e.clientX; const clientY = e.touches ? e.touches[0].clientY : e.clientY; cardData[currentSide].x = clientX - startX; cardData[currentSide].y = clientY - startY; updateImageTransform(); } 
+            else if (activeLine && !isPanMode) { handleLineMove(e); }
+        });
+        window.addEventListener('touchmove', (e) => {
+            if (isDraggingImage && isPanMode) { cardData[currentSide].x = e.touches[0].clientX - startX; cardData[currentSide].y = e.touches[0].clientY - startY; updateImageTransform(); } 
+            else if (activeLine && !isPanMode) { if(e.cancelable) e.preventDefault(); handleLineMove(e); }
+        }, {passive: false});
+        window.addEventListener('mouseup', () => { isDraggingImage = false; activeLine = null; }); window.addEventListener('touchend', () => { isDraggingImage = false; activeLine = null; });
+
+        const outL = document.getElementById('outLeft'); const outR = document.getElementById('outRight'); const outT = document.getElementById('outTop'); const outB = document.getElementById('outBottom');
+        const inL = document.getElementById('inLeft'); const inR = document.getElementById('inRight'); const inT = document.getElementById('inTop'); const inB = document.getElementById('inBottom');
+
+        document.querySelectorAll('.guide-line').forEach(line => {
+            line.addEventListener('mousedown', () => { if(!isPanMode && surfaceDropdownMenuController.value !== 'show') activeLine = line; });
+            line.addEventListener('touchstart', () => { if(!isPanMode && surfaceDropdownMenuController.value !== 'show') activeLine = line; }, {passive: true});
+        });
+
+        function handleLineMove(e) {
+            const rect = workspace.getBoundingClientRect(); const clientX = e.touches ? e.touches[0].clientX : e.clientX; const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            if (activeLine.classList.contains('vertical')) {
+                let posX = ((clientX - rect.left) / rect.width) * 100; if (posX >= 0 && posX <= 100) { activeLine.style.left = posX + '%'; saveLinePosition(activeLine.id, posX); }
+            } else {
+                let posY = ((clientY - rect.top) / rect.height) * 100; if (posY >= 0 && posY <= 100) { activeLine.style.top = posY + '%'; saveLinePosition(activeLine.id, posY); }
+            }
+        }
+        function saveLinePosition(id, val) {
+            if(id === 'outLeft') cardData[currentSide].ol = val; if(id === 'outRight') cardData[currentSide].or = val;
+            if(id === 'outTop') cardData[currentSide].ot = val; if(id === 'outBottom') cardData[currentSide].ob = val;
+            if(id === 'inLeft') cardData[currentSide].il = val; if(id === 'inRight') cardData[currentSide].ir = val;
+            if(id === 'inTop') cardData[currentSide].it = val; if(id === 'inBottom') cardData[currentSide].ib = val;
+        }
+        function restoreGuideLinesPositionsPercentage() {
+            const side = cardData[currentSide];
+            outL.style.left = side.ol + '%'; outR.style.left = side.or + '%'; outT.style.top = side.ot + '%'; outB.style.top = side.ob + '%';
+            inL.style.left = side.il + '%'; inR.style.left = side.ir + '%'; inT.style.top = side.it + '%'; inB.style.top = side.ib + '%';
+        }
+
+        async function triggerAutomatedPriceSearch(queryText) {
+            try {
+                const sanitizedQuery = queryText.replace(/['"“”‘’]/g, "").trim();
+                const cleanNameQuery = sanitizedQuery.split(' ')[0].replace(/[^a-zA-Z]/g, "");
+                
+                const response = await fetch(`https://api.pokemontcg.io/v2/cards?q=name:"${encodeURIComponent(cleanNameQuery)}"`);
+                const data = await response.json();
+                
+                if (data.data && data.data.length > 0) {
+                    let matchedCard = data.data.find(c => sanitizedQuery.includes(c.number)) || data.data[0];
+                    const cardName = matchedCard.name; const cardSetNum = `${matchedCard.number}/${matchedCard.set.printedTotal}`;
+                    const prices = matchedCard.tcgplayer ? matchedCard.tcgplayer.prices : null; let marketPrice = "N/A"; let lowPrice = "N/A";
+
+                    if (prices) {
+                        const priceType = prices.holofoil || prices.normal || prices.reverseHolofoil || Object.values(prices)[0];
+                        if (priceType && priceType.market) {
+                            marketPrice = `£${(priceType.market * 0.78).toFixed(2)}`;
+                            lowPrice = `£${(priceType.low * 0.78).toFixed(2)}`;
+                            cacheLiveEstimatedValueGBP = parseFloat((priceType.market * 0.78).toFixed(2));
+                        }
+                    }
+                    document.getElementById('cardTargetName').innerText = `${cardName} (${cardSetNum}) - ${matchedCard.set.name}`;
+                    document.getElementById('priceMarket').innerText = marketPrice; document.getElementById('priceLow').innerText = lowPrice;
+                    const ebayQuery = encodeURIComponent(`${cardName} ${matchedCard.number} ${matchedCard.set.name}`); document.getElementById('ebayLink').href = `https://www.ebay.co.uk/sch/i.html?_nkw=${ebayQuery}&LH_Sold=1&LH_Complete=1`;
+                    document.getElementById('priceResultBox').style.display = "block";
+                } else { throw new Error(); }
+            } catch (err) { 
+                cacheLiveEstimatedValueGBP = 1.25; 
+                document.getElementById('cardTargetName').innerText = "❌ No registry match found. Baseline foreign valuation engaged.";
+                document.getElementById('priceMarket').innerText = "£1.25"; document.getElementById('priceLow').innerText = "£0.50";
+                document.getElementById('priceResultBox').style.display = "block";
+            }
+        }
+
+        document.getElementById('searchPriceBtn').addEventListener('click', () => {
+            const val = document.getElementById('cardSearchInput').value.trim();
+            if(val) { triggerAutomatedPriceSearch(val); document.getElementById('customCardSaveTitleField').value = val; }
+        });
+
+        // FIXED CHANNELS CORES: STRIP VARIABLE CHECK COLLISIONS COMPILING CHECKS (GRADES DISPATCH LINK FIXED)
+        calculateButton.addEventListener('click', () => {
+            const fWorstLR = calculateSideMaxSplitPercentage(cardData.front.ol || 10, cardData.front.or || 90, cardData.front.il || 20, cardData.front.ir || 80);
+            const fWorstTB = calculateSideMaxSplitPercentage(cardData.front.ot || 10, cardData.front.ob || 90, cardData.front.it || 20, cardData.front.ib || 80);
+            let finalWorstLR = fWorstLR; let finalWorstTB = fWorstTB;
+            
+            if(cardData.back.src) {
+                const bWorstLR = calculateSideMaxSplitPercentage(cardData.back.ol || 10, cardData.back.or || 90, cardData.back.il || 20, cardData.back.ir || 80);
+                const bWorstTB = calculateSideMaxSplitPercentage(cardData.back.ot || 10, cardData.back.ob || 90, cardData.back.it || 20, cardData.back.ib || 80);
+                finalWorstLR = Math.round((fWorstLR * 0.6) + (bWorstLR * 0.4));
+                finalWorstTB = Math.round((fWorstTB * 0.6) + (bWorstTB * 0.4));
+                document.getElementById('ratioDisplayHUD').innerText = `📐 Front split: ${fWorstLR.toFixed(0)}% | Back split: ${bWorstLR.toFixed(0)}%`;
+            } else {
+                document.getElementById('ratioDisplayHUD').innerText = `📐 Front face split: ${fWorstLR.toFixed(0)}%:${(100-fWorstLR).toFixed(0)}% (Back Omitted)`;
+            }
+
+            // SAFE ACCESSIBLE CHECKS INSTEAD OF PARENT CHECKS (FIXED)
+            let conditionCap = 10; let reportedDefects = [];
+            const check1 = document.getElementById('defectHeavy'); if(check1 && check1.checked) { conditionCap = Math.min(conditionCap, 5); reportedDefects.push("Heavy Whitening"); }
+            const check2 = document.getElementById('defectScratch'); if(check2 && check2.checked) { conditionCap = Math.min(conditionCap, 7); reportedDefects.push("Surface Scratches"); }
+            const check3 = document.getElementById('defectDot3'); if(check3 && check3.checked) { conditionCap = Math.min(conditionCap, 8); reportedDefects.push("2-3 White Dots"); }
+            const check4 = document.getElementById('defectDot1'); if(check4 && check4.checked) { conditionCap = Math.min(conditionCap, 9); reportedDefects.push("1 White Speck"); }
+
+            const verdicts = evaluateExpandedGrades(finalWorstLR, finalWorstTB, conditionCap);
+            document.getElementById('psaVerdict').innerText = verdicts.psa;
+            document.getElementById('aceVerdict').innerText = verdicts.ace;
+            document.getElementById('tagVerdict').innerText = verdicts.tag;
+            document.getElementById('bgsVerdict').innerText = verdicts.bgs;
+
+            resultsPanel.removeAttribute('style');
+            resultsPanel.style.display = "block";
+            
+            let targetCardPrice = cacheLiveEstimatedValueGBP;
+            if(document.getElementById('cardTargetName').innerText === "Card Found") { targetCardPrice = 0.00; }
+
+            compiledFinalLedgerPayloadBlock = {
+                gradeBadge: verdicts.psa, lrRatio: `${finalWorstLR}:${100-finalWorstLR}`, tbRatio: `${finalWorstTB}:${100-finalWorstTB}`, defects: reportedDefects, cashValue: targetCardPrice, markers: localPlacedDamageDotsArray
+            };
+        });
+
+        function calculateSideMaxSplitPercentage(ol, or, il, ir) {
+            const lW = il - ol; const rW = or - ir; const tot = lW + rW;
+            if(!tot || isNaN(tot)) return 50; return (Math.max(lW, rW) / tot) * 100;
+        }
+        function evaluateExpandedGrades(lr, tb, cap) {
+            let psa = 'VG-EX 5'; if (lr <= 60 && tb <= 60) psa = 'Gem Mint 10'; else if (lr <= 65 && tb <= 65) psa = 'Mint 9'; else if (lr <= 70 && tb <= 70) psa = 'NM-MT 8';
+            let ace = 'Grade 5'; if (lr <= 55 && tb <= 55) ace = 'Gem Mint 10'; else if (lr <= 60 && tb <= 60) ace = 'Mint 9'; else if (lr <= 65 && tb <= 65) ace = 'NM-MT 8';
+            let tag = 'Tier 6'; if (lr <= 51 && tb <= 51) tag = 'Pristine 10'; else if (lr <= 55 && tb <= 55) tag = 'Mint 9'; else if (lr <= 60 && tb <= 60) tag = 'NM-MT 8';
+            let bgs = 'Grade 6'; if (lr <= 50 && tb <= 50) bgs = 'Black Label 10'; else if (lr <= 55 && tb <= 55) bgs = 'Gem Mint 10'; else if (lr <= 60 && tb <= 60) bgs = 'Mint 9';
+            return { psa: applyConditionCap(psa, cap), ace: applyConditionCap(ace, cap), tag: applyConditionCap(tag, cap), bgs: applyConditionCap(bgs, cap) };
+        }
+        function applyConditionCap(currentVerdict, cap) {
+            if (cap === 9 && currentVerdict.includes('10')) return 'Mint 9 (Drop)'; if (cap === 8 && (currentVerdict.includes('10') || currentVerdict.includes('9'))) return 'NM-MT 8 (Drop)';
+            if (cap === 7 && (currentVerdict.includes('10') || currentVerdict.includes('9') || currentVerdict.includes('8'))) return 'NM 7 (Drop)'; if (cap === 5 && !currentVerdict.includes('5')) return 'VG-EX 5 (Drop)';
+            return currentVerdict;
+        }
+
+        document.getElementById('btnUnlockFilingForm').addEventListener('click', () => { document.getElementById('save-ledger-form-block').style.display = "block"; document.getElementById('btnUnlockFilingForm').style.display = "none"; });
+        function resetFilingFormBlocksHUD() { document.getElementById('save-ledger-form-block').style.display = "none"; document.getElementById('btnUnlockFilingForm').style.display = "block"; compiledFinalLedgerPayloadBlock = null; }
+
+        // FIXED SAVE FLOW: Enforce sync calls return cleanly on submit (FIXED VAULT LINK)
+        document.getElementById('btnExecuteBinderFilingCloud').addEventListener('click', async () => {
+            if(!currentUser || !compiledFinalLedgerPayloadBlock) return alert("Verify authentication login.");
+            const verifiedFinalTitle = document.getElementById('customCardSaveTitleField').value.trim() || "Unindexed Custom Entry Shell";
+            const fireButton = document.getElementById('btnExecuteBinderFilingCloud');
+            fireButton.innerText = "☁ SECURING CORES..."; fireButton.disabled = true;
+
+            try {
+                let fUrl = ""; let bUrl = ""; const stampId = Date.now();
+                if(cardData.front.src) { const fRef = ref(storage, `scans/${currentUser.uid}/${stampId}_f.jpg`); await uploadString(fRef, cardData.front.src, 'data_url'); fUrl = await getDownloadURL(fRef); }
+                if(cardData.back.src) { const bRef = ref(storage, `scans/${currentUser.uid}/${stampId}_b.jpg`); await uploadString(bRef, cardData.back.src, 'data_url'); bUrl = await getDownloadURL(bRef); }
+
+                await addDoc(collection(db, "card_scans"), {
+                    userId: currentUser.uid, userEmail: currentUser.email, scannedAt: serverTimestamp(),
+                    cardTitle: verifiedFinalTitle, frontImage: fUrl, backImage: bUrl, ...compiledFinalLedgerPayloadBlock
+                });
+
+                alert("✓ Slab calculations locked directly to binder layout ledger!");
+                workspaceContainer.style.display = "none"; resultsPanel.style.display = "none"; calculateButton.style.display = "none";
+                frontLabel.innerText = "📸 Add Front Photo"; frontLabel.classList.remove('has-file');
+                backLabel.innerText = "📸 Add Back Photo (Optional)"; backLabel.classList.remove('has-file');
+                cardData = { front: { src: null, zoom:1, rotate:0, tiltX:0, x:0, y:0, ol:10, or:90, ot:10, ob:90, il:20, ir:80, it:20, ib:80 }, back: { src: null, zoom:1, rotate:0, tiltX:0, x:0, y:0, ol:10, or:90, ot:10, ob:90, il:20, ir:80, it:20, ib:80 } }; 
+                localPlacedDamageDotsArray = []; resetFilingFormBlocksHUD();
+                cacheLiveEstimatedValueGBP = 0.00; document.getElementById('cardTargetName').innerText = "Card Found"; document.getElementById('priceResultBox').style.display = "none";
+                
+                await syncMasterUserCloudBinderLedger(); // Force immediate update
+            } catch(e) { alert("Filing exception context."); } finally { fireButton.innerText = "☁ Finalize Vault Archive Sequence"; fireButton.disabled = false; }
+        });
+
+        async function syncMasterUserCloudBinderLedger() {
+            if(!currentUser) return;
+            binderGridSheet9SlotPage.innerHTML = "";
+            try {
+                const qDocs = query(collection(db, "card_scans"), where("userId", "==", currentUser.uid), orderBy("scannedAt", "desc"));
+                const snap = await getDocs(qDocs); globalBinderCollectionMemory = [];
+                snap.forEach(d => globalBinderCollectionMemory.push({ docId: d.id, ...d.data() }));
+                
+                processAndRenderBinderViewWithFilters();
+            } catch(e) { console.error("Sync issue:", e); }
+        }
+
+        function processAndRenderBinderViewWithFilters() {
+            let processedCards = [...globalBinderCollectionMemory];
+
+            const queryText = document.getElementById('binderInternalLiveSearchInput').value.toLowerCase().trim();
+            if(queryText) { processedCards = processedCards.filter(c => c.cardTitle.toLowerCase().includes(queryText)); }
+
+            const pricingMode = document.getElementById('pricingModeSelectToggle').value;
+            let sum = 0;
+            processedCards.forEach(c => {
+                let basePrice = parseFloat(c.cashValue || 0);
+                if(pricingMode === 'graded') {
+                    if(c.gradeBadge.includes('10')) basePrice *= 4.5;
+                    else if(c.gradeBadge.includes('9')) basePrice *= 1.8;
+                    else if(c.gradeBadge.includes('8')) basePrice *= 1.3;
+                }
+                c.derivedFinalPrice = parseFloat(basePrice.toFixed(2));
+                sum += c.derivedFinalPrice;
+            });
+            document.getElementById('binderPortfolioValuationSumDisplay').innerText = `£${sum.toFixed(2)}`;
+
+            const sortMode = document.getElementById('binderSortDirectionSelectToggle').value;
+            if(sortMode === 'dateAsc') processedCards.reverse();
+            else if(sortMode === 'valDesc') processedCards.sort((a,b) => b.derivedFinalPrice - a.derivedFinalPrice);
+            else if(sortMode === 'valAsc') processedCards.sort((a,b) => a.derivedFinalPrice - b.derivedFinalPrice);
+
+            binderGridSheet9SlotPage.innerHTML = "";
+            const startIndex = currentActiveBinderPageIndex * 9;
+            const totalCount = processedCards.length;
+            
+            const totalSlotsToRender = Math.max(18, Math.ceil(totalCount / 9) * 9);
+            const totalPages = Math.ceil(totalSlotsToRender / 9);
+            document.getElementById('binderPagePaginationTicker').innerText = `Page ${currentActiveBinderPageIndex + 1} of ${totalPages}`;
+
+            for(let i = 0; i < 9; i++) {
+                const targetIdx = startIndex + i;
+                const slot = document.createElement('div');
+                
+                if(targetIdx < totalCount) {
+                    const card = processedCards[targetIdx];
+                    slot.className = 'pocket-slot filled';
+                    if(card.gradeBadge.includes('10')) slot.classList.add('gold-slab-glow');
+                    
+                    slot.innerHTML = `
+                        <span class="pocket-grade-tab">${card.gradeBadge.split(' ')[0]} ${card.gradeBadge.match(/\d+/) ? card.gradeBadge.match(/\d+/)[0] : ''}</span>
+                        <img src="${card.frontImage || card.backImage}" class="pocket-img-render" alt="Showcase Slab Card">
+                    `;
+                    slot.addEventListener('click', () => triggerPremiumSlabPulloutInspectionModal(card.docId, card.derivedFinalPrice, processedCards));
+                } else {
+                    slot.className = 'pocket-slot'; slot.innerHTML = `<span class="empty-pocket-cross">×</span>`;
+                }
+                binderGridSheet9SlotPage.appendChild(slot);
+            }
+        }
+
+        function triggerPremiumSlabPulloutInspectionModal(docId, calculatedPrice, activeCardsArray) {
+            activeSelectedSlabDocId = docId;
+            const card = activeCardsArray.find(c => c.docId === docId); if(!card) return;
+
+            document.getElementById('modalSlabTitle').innerText = card.cardTitle;
+            document.getElementById('editSlabCardTitleInlineInputField').value = card.cardTitle; 
+            
+            document.getElementById('modalSlabMetrics').innerHTML = `
+                • 📐 <strong>Centering Layout Matrix:</strong> Split ${card.lrRatio} | T/B ${card.tbRatio}<br>
+                • 🔍 <strong>Condition Wear Marks:</strong> ${card.defects && card.defects.length > 0 ? card.defects.join(', ') : 'None marked'}<br>
+                • 💰 <strong>Portfolio Valuation Asset worth:</strong> £${calculatedPrice.toFixed(2)}
+            `;
+            
+            const mirrorFrameCanvas = document.getElementById('modalSlabVisualCanvasMirror');
+            document.getElementById('modalSlabPrimaryImageRenderPath').src = card.frontImage || card.backImage || "";
+
+            mirrorFrameCanvas.querySelectorAll('.damage-dot-marker').forEach(d => d.remove());
+
+            if(card.markers && card.markers.length > 0) {
+                card.markers.forEach(marker => {
+                    const dotNode = document.createElement('div'); dotNode.className = 'damage-dot-marker';
+                    dotNode.style.left = marker.x + '%'; dotNode.style.top = marker.y + '%';
+                    dotNode.style.pointerEvents = 'none'; 
+                    mirrorFrameCanvas.appendChild(dotNode);
+                });
+            }
+            slabModal.classList.add('active');
+        }
+
+        document.getElementById('btnSaveSlabTitleEditInline').addEventListener('click', async () => {
+            if(!activeSelectedSlabDocId || !currentUser) return;
+            const freshNameString = document.getElementById('editSlabCardTitleInlineInputField').value.trim();
+            if(!freshNameString) return alert("Type a valid entry name.");
+            
+            try {
+                const cardRef = doc(db, "card_scans", activeSelectedSlabDocId);
+                await updateDoc(cardRef, { cardTitle: freshNameString });
+                document.getElementById('modalSlabTitle').innerText = freshNameString;
+                alert(`✓ Title saved: "${freshNameString}"`);
+                syncMasterUserCloudBinderLedger(); 
+            } catch(e) { alert("Error saving title."); }
+        });
+
+        document.getElementById('btnPurgeCardDocumentFromBinder').addEventListener('click', async () => {
+            if(!activeSelectedSlabDocId || !currentUser) return;
+            if(confirm("Confirm row erasure?")) {
+                try {
+                    const card = globalBinderCollectionMemory.find(c => c.docId === activeSelectedSlabDocId);
+                    slabModal.classList.remove('active');
+                    await deleteDoc(doc(db, "card_scans", activeSelectedSlabDocId));
+                    if(card.frontImage) await deleteObject(ref(storage, card.frontImage)).catch(e=>{});
+                    if(card.backImage) await deleteObject(ref(storage, card.backImage)).catch(e=>{});
+                    alert("✓ Slab deleted successfully.");
+                    syncMasterUserCloudBinderLedger();
+                } catch(e) { alert("Wipe error."); }
+            }
+        });
+
+        document.getElementById('binderInternalLiveSearchInput').addEventListener('input', processAndRenderBinderViewWithFilters);
+        document.getElementById('pricingModeSelectToggle').addEventListener('change', processAndRenderBinderViewWithFilters);
+        document.getElementById('binderSortDirectionSelectToggle').addEventListener('change', processAndRenderBinderViewWithFilters);
+
+        const btnToggleBinderCustomizerMenu = document.getElementById('btnToggleBinderCustomizerMenu');
+        const binderCustomizerDropdownDrawer = document.getElementById('binder-customizer-dropdown-drawer');
+        btnToggleBinderCustomizerMenu.addEventListener('click', () => {
+            const isClosed = binderCustomizerDropdownDrawer.style.display === "none" || !binderCustomizerDropdownDrawer.style.display;
+            binderCustomizerDropdownDrawer.style.display = isClosed ? "block" : "none";
+        });
+
+        document.querySelectorAll('.binder-color-dot').forEach(dot => {
+            dot.addEventListener('click', () => {
+                document.querySelectorAll('.binder-color-dot').forEach(d => d.classList.remove('active')); dot.classList.add('active');
+                document.getElementById('binderOuterSkinHull').style.setProperty('--binder-color', dot.getAttribute('data-hex'));
+            });
+        });
+        document.getElementById('customBinderNameBannerInput').addEventListener('input', (e) => {
+            document.getElementById('renderBinderTitleHeaderDisplay').innerText = e.target.value.trim() || "Showcase Portfolio Album";
+        });
+
+        document.getElementById('btnBinderPrevPage').addEventListener('click', () => { if(currentActiveBinderPageIndex > 0) { currentActiveBinderPageIndex--; processAndRenderBinderViewWithFilters(); } });
+        document.getElementById('btnBinderNextPage').addEventListener('click', () => { const totalSlots = Math.max(18, Math.ceil(globalBinderCollectionMemory.length / 9) * 9); const totalPages = Math.ceil(totalSlots / 9); if(currentActiveBinderPageIndex < totalPages - 1) { currentActiveBinderPageIndex++; processAndRenderBinderViewWithFilters(); } });
+        function clearBinderDisplayGridSlots() { processAndRenderBinderViewWithFilters(); }
     </script>
 </body>
 </html>
