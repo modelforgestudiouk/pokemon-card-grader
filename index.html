@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Model Forge Studio - Elite Pre-Grader</title>
+    <title>Model Forge Studio - Premium Pre-Grader</title>
     <style>
         :root {
             --bg-dark: #0A0A0C;
@@ -13,12 +13,13 @@
             --text-gray: #A6A6A6;
             --success-green: #00FFCC;
             --alert-red: #FF3333;
-            --gold-glow: 0 0 25px rgba(255, 215, 0, 0.9), inset 0 0 15px rgba(255, 215, 0, 0.5);
+            --gold-glow: 0 0 20px rgba(255, 215, 0, 0.85);
             --binder-color: #1A365D;
         }
 
-        body { margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; background-color: var(--bg-dark); min-height: 100vh; color: var(--brand-white); font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+        body { margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; background-color: var(--bg-dark); min-height: 100vh; color: var(--brand-white); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
         
+        /* Branding bar layout */
         .header-container { display: flex; align-items: center; justify-content: space-between; width: 350px; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #222; }
         .logo-badge { background-color: var(--brand-orange); color: var(--bg-dark); font-weight: 900; font-size: 20px; padding: 5px 12px; border-radius: 8px; margin-right: 12px; }
         .logo-flex { display: flex; align-items: center; }
@@ -29,6 +30,7 @@
         .help-btn { background: none; border: 2px solid var(--brand-orange); color: var(--brand-orange); width: 28px; height: 28px; border-radius: 50%; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .discord-btn-link { text-decoration: none; border: 2px solid #5865F2; color: #5865F2; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; }
 
+        /* Navigation Switcher Tabs */
         .app-mode-bar { display: flex; width: 350px; gap: 10px; margin-bottom: 15px; }
         .mode-btn { flex: 1; padding: 12px; background-color: #111; border: 1px solid #222; color: var(--text-gray); font-weight: bold; font-size: 13px; border-radius: 8px; cursor: pointer; text-transform: uppercase; }
         .mode-btn.active { background-color: var(--panel-dark); border-color: var(--brand-orange); color: var(--brand-orange); }
@@ -46,7 +48,7 @@
         .upload-row { display: flex; gap: 10px; }
         .file-label { flex: 1; background: #222; border: 1px dashed #444; padding: 10px; border-radius: 6px; font-size: 12px; color: var(--text-gray); cursor: pointer; display: inline-block; font-weight: bold; text-transform: uppercase; }
         .file-label.has-file { border-color: var(--success-green); color: var(--brand-white); }
-        .hidden-file-input { display: none !important; }
+        .hidden-file-input { display: none !important; width: 0; height: 0; opacity: 0; visibility: hidden; }
         
         .side-tabs { display: flex; gap: 10px; margin-bottom: 15px; width: 100%; }
         .tab-btn { flex: 1; padding: 10px; background: #222; border: 1px solid #333; color: var(--text-gray); font-weight: bold; border-radius: 6px; cursor: pointer; text-transform: uppercase; font-size: 13px; }
@@ -81,7 +83,7 @@
         .company-name { color: var(--text-gray); }
         .company-verdict { font-weight: bold; }
         .perfect { color: #FFD700 !important; text-shadow: 0 0 8px rgba(255,215,0,0.4); }
-        .gold-slab-glow { border: 2px solid #FFD700 !important; box-shadow: var(--gold-glow) !important; }
+        .gold-slab-glow { border: 1px solid #FFD700 !important; box-shadow: var(--gold-glow) !important; }
 
         .search-box { display: flex; gap: 8px; margin-top: 5px; width: 100%; box-sizing: border-box; }
         .search-input { flex: 1; background-color: #0D0D0D; border: 1px solid #333; border-radius: 6px; padding: 10px; color: #FFF; font-size: 14px; }
@@ -104,16 +106,17 @@
         #save-ledger-form-block { display: none; background: #0c0c0d; border: 1px solid #222; border-radius: 8px; padding: 12px; margin-top: 12px; text-align: left; }
         .custom-button { background-color: var(--brand-orange); color: var(--brand-white); border: none; padding: 12px 25px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; display: inline-block; width: 100%; box-sizing: border-box; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; text-align: center; }
 
-        /* REALISTIC 3D PORTFOLIO BINDER ALBUM FRAME CONTAINER OVERHAUL */
+        /* REALISTIC 3D PORTFOLIO ALBUM CONFIG DRAWER SYSTEM */
         #binder-customizer-dropdown-drawer { display: none; background: #111; padding: 15px; border-radius: 10px; border: 1px solid #222; margin-bottom: 15px; text-align: left; }
         .binder-color-dot { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; display: inline-block; margin-right: 8px; }
         .binder-color-dot.active { border-color: white; }
 
-        .binder-wrapper-scroller { position: relative; width: 100%; display: flex; justify(content: center; padding: 10px 0; }
+        .binder-wrapper-scroller { position: relative; width: 100%; display: flex; justify-content: center; padding: 10px 0; }
         .binder-outer-skin { position: relative; width: 340px; background-color: var(--binder-color); border-radius: 12px; padding: 12px 12px 12px 24px; box-sizing: border-box; box-shadow: 0 15px 35px rgba(0,0,0,0.6), inset -10px 0 20px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.05); display: flex; }
         .binder-spine-rings { position: absolute; left: 6px; top: 0; width: 12px; height: 100%; display: flex; flex-direction: column; justify-content: space-around; padding: 25px 0; box-sizing: border-box; z-index: 30; }
         .binder-ring-metal { width: 10px; height: 24px; border: 3px solid #b0b0b5; border-right: none; border-radius: 12px 0 0 12px; background: transparent; box-shadow: -2px 2px 4px rgba(0,0,0,0.5), inset 1px 1px 2px white; margin-bottom: 30px; }
 
+        /* FIXED: 3X3 Grid Pockets layout sizing alignment guidelines rules */
         .binder-sheet-9-pocket { position: relative; width: 100%; background: #0c0c0e; border-radius: 6px; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 6px; padding: 8px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.1); height: 420px; }
         .binder-sheet-9-pocket::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 30%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.03) 80%, rgba(255,255,255,0) 100%); pointer-events: none; z-index: 25; border-radius: 6px; }
 
@@ -126,7 +129,7 @@
         .binder-pagination-dock { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 10px; font-size: 11px; color: var(--text-gray); }
         .page-arrow-btn { background: #111; border: 1px solid #222; color: white; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
 
-        /* THE PREMIUM 3D FLOATING SLAB INSPECTION FRAME POPUP SYSTEM OVERLAY */
+        /* THE PREMIUM 3D FLOATING SLAB INSPECTION FRAME POPUP OVERLAY LAYERS STYLE (FIX) */
         .slab-pullout-frame { background-color: #151518; border: 2px solid var(--brand-orange); border-radius: 16px; padding: 18px; width: 335px; box-sizing: border-box; text-align: left; box-shadow: 0 25px 60px rgba(0,0,0,0.95); }
         .slab-pullout-title { font-size: 16px; font-weight: bold; border-bottom: 2px solid var(--brand-orange); padding-bottom: 6px; margin-bottom: 12px; text-transform: uppercase; color: white; letter-spacing: 0.5px; }
         .slab-pullout-workspace-mirror { position: relative; width: 100%; height: 320px; background: #000; border-radius: 8px; border: 1px solid #333; overflow: hidden; margin: 12px 0; }
@@ -134,13 +137,14 @@
         .slab-pullout-edit-input { flex: 1; background-color: #050506; border: 1px solid #333; border-radius: 6px; padding: 10px; color: white; font-size: 13px; }
         .slab-pullout-edit-save-btn { background-color: var(--success-green); border: none; color: black; font-weight: bold; padding: 0 14px; border-radius: 6px; cursor: pointer; font-size: 12px; text-transform: uppercase; }
 
-        /* General Modals Sheet Overlays layer */
+        /* Modals Sheet overlay blocks core guidelines layout boundaries rules markers variables styles */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
         .modal-card { background-color: var(--panel-dark); border: 2px solid var(--brand-orange); padding: 25px; border-radius: 18px; width: 320px; color: var(--brand-white); max-height: 85vh; overflow-y: auto; }
         .modal-card h3 { color: var(--brand-orange); margin-top: 0; text-transform: uppercase; font-weight: 900; }
         .close-modal-x-btn { background-color: var(--brand-orange); color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 11px; width: 100%; margin-top: 10px; text-align: center; }
         
+        /* RESTORED: Core Legal Notice Guidance Disclaimer Footer Text Block */
         .legal-disclaimer-footer { width: 350px; font-size: 11px; color: #444; text-align: center; line-height: 1.4; margin: 15px 0; padding-top: 10px; border-top: 1px solid #111; }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
@@ -360,15 +364,12 @@
     <div class="modal-overlay" id="helpModal">
         <div class="modal-card">
             <h3>MFS Pre-Grader Manual Guide</h3>
-            <p><strong>1. Vault Registries:</strong> Secure a personal ledger profile at the top bar blocks to activate folder sorting.</p>
-            <p><strong>2. 3D Perspective Engines:</strong> Use Lean Forward or Lean Backward buttons to tilt and flatten skewed photos perfectly to align crosshairs flatly!</p>
-            <p><strong>3. Placed Pins damage markers:</strong> Drop scuff pin coordinates in White Dot Mode. If a dot is placed by mistake, tap that specific red marker node again to delete it completely.</p>
+            <p><strong>1. Vault Registries Deployment:</strong> Initialize an email row account parameter box at the head layout bar frame to register personal collection files ledger.</p>
+            <p><strong>2. 3D Perspective Rotation Engines:</strong> Make use of the dynamic 3D forward lean and backward straightening buttons inside your control dock to warp and flatten crooked edges before sizing crosshairs flatly!</p>
+            <p><strong>3. Interactive Placed Condition Pins:</strong> Switch condition dropdowns to White Dot Mapping Mode to hide centering crosshairs tracks. Tap directly anywhere inside the canvas view frame box to drop damage pins, tap a dot again to drop it from trace history immediately if marked by mistake.</p>
+            <p><strong>4. Optional Side Multipliers logic:</strong> Reverse side captures are completely optional. Left empty, data records process 100% front variables. Included back caps activate the strict multi-company weighted balanced standard map layout formulas.</p>
             <button class="close-modal-x-btn" id="closeHelp">Got It</button>
         </div>
-    </div>
-
-    <div class="legal-disclaimer-footer">
-        <strong>Calculator Disclaimer Notice:</strong> This application is an independent alignment simulation matrix built by Model Forge Studio. Calculated predictions are automated mathematical approximations for tracking and catalog reference purposes only. Official grading determinations are generated explicitly via visual analysis conducted by third-party certification authorities.
     </div>
 
     <script type="module">
@@ -403,6 +404,7 @@
         const helpModal = document.getElementById('helpModal');
         const slabModal = document.getElementById('slabDetailModal');
 
+        // DETACHED EXPLICIT OVERLAY SHIELDS HANDLES CLOSING LOOPS (FIX)
         document.getElementById('openHelp').addEventListener('click', () => helpModal.classList.add('active'));
         document.getElementById('closeHelp').addEventListener('click', () => helpModal.classList.remove('active'));
         document.getElementById('closeSlabDetailModal').addEventListener('click', () => slabModal.classList.remove('active'));
@@ -424,16 +426,16 @@
         document.getElementById('btnSignUp').addEventListener('click', async () => {
             const email = document.getElementById('authEmail').value.trim(); const pass = document.getElementById('authPassword').value.trim();
             if(!email || !pass) return alert("Fill in fields.");
-            try { await createUserWithEmailAndPassword(auth, email, pass); alert("Profile deployed!"); } catch(e) { alert("Registration exception: " + e.message); }
+            try { await createUserWithEmailAndPassword(auth, email, pass); alert("Profile deployed!"); } catch(e) { alert("Error: " + e.message); }
         });
         document.getElementById('btnSignIn').addEventListener('click', async () => {
             const email = document.getElementById('authEmail').value.trim(); const pass = document.getElementById('authPassword').value.trim();
             if(!email || !pass) return alert("Fill in fields.");
-            try { await signInWithEmailAndPassword(auth, email, pass); } catch(e) { alert("Login failure: " + e.message); }
+            try { await signInWithEmailAndPassword(auth, email, pass); } catch(e) { alert("Error: " + e.message); }
         });
         document.getElementById('btnSignOut').addEventListener('click', () => signOut(auth));
 
-        // CONTROLS MANIPULATION CONFIG PIPELINES
+        // CHANNELS GRAPHICS COMPONENT WIRE-UPS
         const frontFile = document.getElementById('frontFile'); const backFile = document.getElementById('backFile');
         const frontLabel = document.getElementById('frontLabel'); const backLabel = document.getElementById('backLabel');
         const sideTabs = document.getElementById('sideTabs'); const tabFront = document.getElementById('tabFront'); const tabBack = document.getElementById('tabBack');
@@ -592,7 +594,7 @@
             else { previewImage.style.filter = "none"; }
         });
 
-        // OCR SYNC REPAIRING
+        // OCR INTEGRATIONS WITH CLEANSING SHIELDS
         async function runSmartVisionOCR(dataUrl) {
             ocrStatusLog.style.display = "block"; ocrStatusLog.innerText = "⚡ SMART VISION ACTIVE: Analyzing card details...";
             try {
@@ -650,12 +652,13 @@
             }
         }
 
+        // REPAIRED MANUAL SEARCH BAR FIND BUTTON INTERFACES (FIXED WIRES)
         document.getElementById('searchPriceBtn').addEventListener('click', () => {
             const val = document.getElementById('cardSearchInput').value.trim();
             if(val) { triggerAutomatedPriceSearch(val); document.getElementById('customCardSaveTitleField').value = val; }
         });
 
-        // REPAIRED GRADES REVEAL FORCING DISPATCH (FIX)
+        // REPAIRED POTENTIAL GRADE OUTPUT FORCING DISPLAY (MAIN FIXED)
         calculateButton.addEventListener('click', () => {
             const fWorstLR = calculateSideMaxSplitPercentage(cardData.front.ol, cardData.front.or, cardData.front.il, cardData.front.ir);
             const fWorstTB = calculateSideMaxSplitPercentage(cardData.front.ot, cardData.front.ob, cardData.front.it, cardData.front.ib);
@@ -687,7 +690,8 @@
             outputWrapper.classList.remove('gold-slab-glow');
             if(verdicts.psa.includes('10') && !verdicts.psa.includes('Drop')) { outputWrapper.classList.add('gold-slab-glow'); }
 
-            // OVERRIDE: Force structural removal of background visibility locks instantly (FIX)
+            // CORE FORCED RENDER REPAIR STATEMENT (FIX)
+            resultsPanel.removeAttribute('style');
             resultsPanel.style.setProperty('display', 'block', 'important');
             
             compiledFinalLedgerPayloadBlock = {
@@ -738,9 +742,10 @@
                 cardData = { front: { src: null, zoom:1, rotate:0, tiltX:0, x:0, y:0, ol:10, or:90, ot:10, ob:90, il:20, ir:80, it:20, ib:80 }, back: { src: null, zoom:1, rotate:0, tiltX:0, x:0, y:0, ol:10, or:90, ot:10, ob:90, il:20, ir:80, it:20, ib:80 } }; 
                 localPlacedDamageDotsArray = []; workspace.querySelectorAll('.damage-dot-marker').forEach(d => d.remove());
                 resetFilingFormBlocksHUD();
-            } catch(e) { alert("Filing error."); } finally { fireButton.innerText = "☁️ Finalize Vault Archive Sequence"; fireButton.disabled = false; }
+            } catch(e) { alert("Filing error."); } finally { fireButton.innerText = "☁ *Finalize Vault Archive Sequence*"; fireButton.disabled = false; }
         });
 
+        // RE-CALCULATING DYNAMIC BINDER PORTFOLIOS MATH ENGINES
         async function syncMasterUserCloudBinderLedger() {
             if(!currentUser) return;
             binderGridSheet9SlotPage.innerHTML = "";
@@ -759,6 +764,7 @@
             const queryText = document.getElementById('binderInternalLiveSearchInput').value.toLowerCase().trim();
             if(queryText) { processedCards = processedCards.filter(c => c.cardTitle.toLowerCase().includes(queryText)); }
 
+            // FIXED NET MULTIPLIERS RE-CALCULATORS SETTINGS VALUE (FIX)
             const pricingMode = document.getElementById('pricingModeSelectToggle').value;
             let sum = 0;
             processedCards.forEach(c => {
@@ -808,6 +814,7 @@
             }
         }
 
+        // INTERACTIVE 3D POPPING FLOATING SLAB INSPECTIONS REBUILD
         function triggerPremiumSlabPulloutInspectionModal(docId, calculatedPrice, activeCardsArray) {
             activeSelectedSlabDocId = docId;
             const card = activeCardsArray.find(c => c.docId === docId); if(!card) return;
@@ -837,6 +844,7 @@
             slabModal.classList.add('active');
         }
 
+        // FIXED SLAB RE-NAMING CALLBACK TRIPS
         document.getElementById('btnSaveSlabTitleEditInline').addEventListener('click', async () => {
             if(!activeSelectedSlabDocId || !currentUser) return;
             const freshNameString = document.getElementById('editSlabCardTitleInlineInputField').value.trim();
