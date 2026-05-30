@@ -3,95 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Model Forge Studio - Premium Pre-Grader</title>
+    <title>Model Forge Studio - Elite Pre-Grader & Showcase Vault</title>
     <style>
         :root {
-            --bg-dark: #070707; /* Sleeker background */
-            --panel-dark: #121212; /* Refined panel tone */
+            --bg-dark: #0A0A0B;
+            --panel-dark: #141416;
             --brand-orange: #FF5500;
             --brand-white: #FFFFFF;
-            --text-gray: #A6A6A6;
+            --text-gray: #8A8A93;
             --success-green: #00FFCC;
             --alert-red: #FF3333;
-            --golden-pulse: rgba(255, 215, 0, 0.6); /* Gold definition */
+            --gold-glow: 0 0 15px rgba(255, 215, 0, 0.6), inset 0 0 10px rgba(255, 215, 0, 0.4);
+            --binder-color: #1A365D; /* Default Deep Navy Blue Binder Cover */
         }
 
-        body { margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; background-color: var(--bg-dark); min-height: 100vh; color: var(--brand-white); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; -webkit-font-smoothing: antialiased; }
+        body { margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; background-color: var(--bg-dark); min-height: 100vh; color: var(--brand-white); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
         
-        .header-container { display: flex; align-items: center; justify-content: space-between; width: 350px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #1a1a1a; }
-        .logo-badge { background-color: var(--brand-orange); color: var(--bg-dark); font-weight: 900; font-size: 20px; padding: 6px 12px; border-radius: 8px; margin-right: 12px; letter-spacing: -1px; }
+        /* Layout Header */
+        .header-container { display: flex; align-items: center; justify-content: space-between; width: 360px; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #222; }
+        .logo-badge { background-color: var(--brand-orange); color: #000; font-weight: 900; font-size: 18px; padding: 5px 10px; border-radius: 6px; margin-right: 10px; }
         .logo-flex { display: flex; align-items: center; }
-        .logo-text { font-size: 20px; font-weight: 900; letter-spacing: 1px; color: var(--brand-orange); margin: 0; text-transform: uppercase; }
-        .logo-sub { font-size: 11px; color: var(--brand-white); font-weight: 300; letter-spacing: 2px; text-transform: uppercase; margin-top: -2px; }
+        .logo-text { font-size: 18px; font-weight: 900; letter-spacing: 0.5px; color: var(--brand-orange); margin: 0; text-transform: uppercase; }
+        .logo-sub { font-size: 10px; color: var(--brand-white); font-weight: 300; letter-spacing: 1.5px; text-transform: uppercase; margin-top: -2px; }
         
         .utility-box { display: flex; gap: 8px; align-items: center; }
-        .help-btn { background: none; border: 2px solid var(--brand-orange); color: var(--brand-orange); width: 28px; height: 28px; border-radius: 50%; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; opacity: 0.8; transition: opacity 0.2s; }
-        .help-btn:hover { opacity: 1; }
-        .discord-btn-link { text-decoration: none; border: 2px solid #5865F2; color: #5865F2; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; }
+        .help-btn { background: none; border: 2px solid var(--brand-orange); color: var(--brand-orange); width: 26px; height: 26px; border-radius: 50%; font-size: 14px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .discord-btn-link { text-decoration: none; border: 2px solid #5865F2; color: #5865F2; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; }
 
-        .auth-panel { width: 350px; background-color: #0c0c0c; padding: 15px; border-radius: 12px; border: 1px solid #1a1a1a; margin-bottom: 25px; box-sizing: border-box; font-size: 14px; text-align: center; }
-        .auth-prompt-text { color: var(--brand-orange); font-weight: bold; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .auth-inputs { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
-        .auth-row { display: flex; gap: 10px; }
-        .auth-btn { background-color: #222; border: 1px solid #444; color: white; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 12px; flex: 1; text-transform: uppercase; letter-spacing: 0.5px; }
-        .auth-btn.primary { background-color: var(--brand-orange); border-color: var(--brand-orange); color: white;}
+        /* Mode Switcher Dashboard Nav Bar */
+        .app-mode-bar { display: flex; width: 360px; gap: 8px; margin-bottom: 15px; }
+        .mode-btn { flex: 1; padding: 12px; background-color: #111; border: 1px solid #222; color: var(--text-gray); font-weight: bold; font-size: 12px; border-radius: 8px; cursor: pointer; text-transform: uppercase; transition: all 0.2s; }
+        .mode-btn.active { background-color: var(--panel-dark); border-color: var(--brand-orange); color: var(--brand-orange); box-shadow: 0 0 10px rgba(255,85,0,0.15); }
 
-        /* Smooth UI Container Refinements */
-        .ui-section-container { width: 350px; }
-        .main-panel { width: 100%; background-color: var(--panel-dark); padding: 20px; border-radius: 18px; box-sizing: border-box; text-align: center; border: 1px solid #222; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 25px; }
+        .view-section { width: 360px; display: none; }
+        .view-section.active { display: block; }
+
+        /* Main UI Container blocks */
+        .main-panel { width: 100%; background-color: var(--panel-dark); padding: 15px; border-radius: 14px; box-sizing: border-box; border: 1px solid #222; margin-bottom: 15px; }
+        .panel-title { font-size: 14px; color: var(--brand-orange); font-weight: bold; margin: 0 0 12px 0; border-bottom: 1px solid #222; padding-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; text-align: left; }
         
-        .upload-row { display: flex; gap: 12px; margin-bottom: 15px; }
-        .file-label { flex: 1; background: #1a1a1a; border: 1px dashed #444; padding: 12px; border-radius: 8px; font-size: 13px; color: var(--text-gray); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: bold; min-height: 40px;}
-        .file-label.has-file { border-color: var(--success-green); color: var(--brand-white); background: #0c1815;}
-        input[type="file"] { display: none; }
+        .auth-inputs { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+        .auth-row { display: flex; gap: 8px; }
+        .auth-btn { background-color: #1c1c1e; border: 1px solid #2c2c2e; color: white; padding: 8px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 11px; flex: 1; text-transform: uppercase; }
+        .auth-btn.primary { background-color: var(--brand-orange); border-color: var(--brand-orange); }
 
-        .app-status-hud { width: 100%; font-size: 12px; font-family: monospace; color: var(--success-green); margin-bottom: 15px; display: none; text-align: left; background: #000; padding: 10px; border-radius: 8px; border: 1px solid #222;}
+        /* Workspace Elements */
+        .upload-row { display: flex; gap: 8px; margin-bottom: 12px; }
+        .file-label { flex: 1; background: #1c1c1e; border: 1px dashed #3a3a3c; padding: 10px; border-radius: 6px; font-size: 11px; color: var(--text-gray); cursor: pointer; text-align: center; font-weight: bold; display: flex; flex-direction: column; gap: 4px; }
+        .file-label.has-file { border-color: var(--success-green); color: white; background: #0f1c18; }
         
-        .custom-button { background-color: var(--brand-orange); color: white; border: none; padding: 14px 25px; border-radius: 10px; font-size: 15px; font-weight: bold; cursor: pointer; display: inline-block; width: 100%; box-sizing: border-box; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; text-align: center; margin: 10px 0;}
-        #calculateButton { background-color: var(--brand-white); color: var(--bg-dark); display: none; }
-        #saveBinderButton { background-color: #0056B3; display: none; } /* Dedicated binder color */
-
-        #workspace { position: relative; width: 310px; height: 430px; margin: 15px auto; display: none; background-color: #000; border-radius: 10px; overflow: hidden; border: 1px solid #333; }
-        #imageContainer { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transform-origin: center center; position: absolute; top: 0; left: 0; cursor: move; }
+        #workspace-container { display: none; position: relative; width: 100%; background: #000; border-radius: 8px; padding: 10px; box-sizing: border-box; border: 1px solid #222; }
+        .workspace-title-header { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-gray); margin-bottom: 8px; text-align: left; font-weight: bold; }
+        
+        #workspace-view-frame { position: relative; width: 100%; height: 380px; background-color: #050505; border-radius: 6px; overflow: hidden; border: 1px solid #222; }
+        #imageContainer { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: absolute; }
         #previewImage { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
         
-        /* Guide handles (restoring usability) */
-        .guide-line { position: absolute; z-index: 10; opacity: 0.9; pointer-events: auto; }
-        .vertical { width: 3px; height: 100%; top: 0; cursor: ew-resize; }
-        .horizontal { height: 3px; width: 100%; left: 0; cursor: ns-resize; }
-        .outer-line { background-color: #FF3333; }
-        .vertical::after { content: ''; position: absolute; left: -11px; top: 50%; width: 24px; height: 24px; background: inherit; border: 2px solid #FFF; border-radius: 50%; transform: translateY(-50%); }
-        .horizontal::after { content: ''; position: absolute; top: -11px; left: 50%; width: 24px; height: 24px; background: inherit; border: 2px solid #FFF; border-radius: 50%; transform: translateX(-50%); }
+        /* Boundary Crosshairs */
+        .guide-line { position: absolute; z-index: 10; opacity: 0.85; }
+        .vertical { width: 2px; height: 100%; top: 0; cursor: ew-resize; }
+        .horizontal { height: 2px; width: 100%; left: 0; cursor: ns-resize; }
+        .outer-line { background-color: var(--alert-red); }
+        .outer-line::after { content: ''; position: absolute; width: 20px; height: 20px; background: var(--alert-red); border: 2px solid white; border-radius: 50%; }
+        .vertical.outer-line::after { top: 50%; left: -9px; transform: translateY(-50%); }
+        .horizontal.outer-line::after { left: 50%; top: -9px; transform: translateX(-50%); }
+        
         .inner-line { background-color: var(--success-green); }
+        .vertical.inner-line::after { content: ''; position: absolute; width: 20px; height: 20px; background: var(--success-green); border: 2px solid white; border-radius: 50%; top: 30%; left: -9px; transform: translateY(-50%); }
+        .horizontal.inner-line::after { content: ''; position: absolute; width: 20px; height: 20px; background: var(--success-green); border: 2px solid white; border-radius: 50%; left: 30%; top: -9px; transform: translateX(-50%); }
 
-        .info-panel { width: 100%; background-color: var(--panel-dark); padding: 18px; border-radius: 18px; box-sizing: border-box; border: 1px solid #222; margin-bottom: 25px; }
-        .panel-title { font-size: 16px; color: var(--brand-orange); font-weight: bold; margin: 0 0 15px 0; border-bottom: 1px solid #2a2a2a; padding-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .side-tabs { display: flex; gap: 6px; margin: 10px 0; }
+        .side-tab-btn { flex: 1; padding: 8px; background: #1c1c1e; border: 1px solid #222; color: var(--text-gray); font-size: 11px; font-weight: bold; border-radius: 6px; cursor: pointer; text-transform: uppercase; }
+        .side-tab-btn.active { background: var(--brand-orange); color: white; border-color: var(--brand-orange); }
+
+        .search-input { width: 100%; background-color: #0a0a0b; border: 1px solid #2c2c2e; border-radius: 6px; padding: 10px; color: #FFF; font-size: 13px; box-sizing: border-box; }
+        .search-input:focus { border-color: var(--brand-orange); outline: none; }
         
-        .company-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #252525; font-size: 14px; }
-        .company-name { font-weight: bold; color: var(--text-gray); }
-        .company-verdict { color: var(--brand-white); font-weight: bold; }
+        .custom-button { background-color: var(--brand-orange); color: white; border: none; padding: 12px; border-radius: 8px; font-size: 13px; font-weight: bold; cursor: pointer; display: block; width: 100%; box-sizing: border-box; text-transform: uppercase; letter-spacing: 0.5px; text-align: center; margin-top: 10px; text-decoration: none; }
+        .secondary-btn { background-color: #1c1c1e; border: 1px solid #3a3a3c; color: white; }
         
-        /* Golden Pristine Glow Animation */
-        @keyframes goldenPulseEffect { 0% { box-shadow: 0 0 5px var(--golden-pulse); } 50% { box-shadow: 0 0 25px var(--golden-pulse), 0 0 35px var(--brand-orange); } 100% { box-shadow: 0 0 5px var(--golden-pulse); } }
-        .perfect { color: var(--success-green) !important; font-weight: 900; }
-        .results-glow-active { animation: goldenPulseEffect 1.5s infinite; border-color: #FFD700 !important; }
+        /* Grading Breakdowns */
+        .company-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #1c1c1e; font-size: 13px; }
+        .company-name { color: var(--text-gray); font-weight: 500; }
+        .company-verdict { font-weight: bold; }
+        .perfect { color: #FFD700 !important; text-shadow: 0 0 8px rgba(255,215,0,0.4); }
+        .gold-slab-glow { border: 1px solid #FFD700 !important; box-shadow: var(--gold-glow) !important; }
 
-        .defect-checklist { text-align: left; background: #0c0c0c; padding: 15px; border-radius: 10px; border: 1px solid #1a1a1a; margin-top: 15px; }
-        .check-item { display: flex; align-items: center; gap: 12px; margin: 10px 0; font-size: 13px; color: var(--brand-white); cursor: pointer; }
-        .check-item input { accent-color: var(--brand-orange); width: 18px; height: 18px; cursor: pointer; }
+        /* Save Module Form Blocks */
+        #save-ledger-form-block { display: none; background: #0c0c0d; border: 1px solid #222; border-radius: 8px; padding: 12px; margin-top: 12px; text-align: left; }
+        
+        /* PREMIUM IMMERSIVE 3X3 BINDER GRAPHICS SYSTEM */
+        .binder-customizer-panel { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; background: #111; padding: 8px; border-radius: 6px; border: 1px solid #222; }
+        .binder-color-dot { width: 22px; height: 22px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
+        .binder-color-dot.active { border-color: white; }
+        
+        /* Main Binder Page Layout Container */
+        .binder-wrapper-scroller { position: relative; width: 100%; overflow-x: auto; padding: 10px 0; display: flex; justify-content: center; }
+        .binder-outer-skin { position: relative; width: 350px; background-color: var(--binder-color); border-radius: 12px; padding: 12px 12px 12px 24px; box-sizing: border-box; box-shadow: 0 15px 40px rgba(0,0,0,0.7), inset -10px 0 20px rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.05); display: flex; transition: background-color 0.3s; }
+        
+        /* Interactive Binder Rings Layer */
+        .binder-spine-rings { position: absolute; left: 6px; top: 0; width: 14px; height: 100%; display: flex; flex-direction: column; justify-content: space-around; padding: 25px 0; box-sizing: border-box; z-index: 30; }
+        .binder-ring-metal { width: 12px; height: 20px; border: 3px solid #b0b0b5; border-right: none; border-radius: 10px 0 0 10px; background: transparent; box-shadow: -2px 2px 4px rgba(0,0,0,0.5), inset 1px 1px 2px white; margin-bottom: 35px; }
 
-        .legal-disclaimer-footer { width: 350px; font-size: 12px; color: #555; text-align: center; line-height: 1.6; margin: 20px 0 40px 0; padding: 20px 10px 0 10px; box-sizing: border-box; border-top: 1px solid #1a1a1a; }
-        .legal-disclaimer-footer strong { color: var(--text-gray); }
+        /* Ultra Detailed Page Turn Mechanics Container */
+        .binder-sheet-9-pocket { position: relative; width: 100%; background: rgba(15, 15, 18, 0.95); border-radius: 6px; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 8px; padding: 10px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.1); position: relative; transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s; transform-origin: left center; }
+        
+        /* Plastic Sheen Reflection Overlay */
+        .binder-sheet-9-pocket::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.05) 75%, rgba(255,255,255,0) 100%); pointer-events: none; z-index: 25; border-radius: 6px; }
+        
+        /* Page flip classes */
+        .sheet-turning-left { transform: rotateY(-60deg) skewY(4deg) scaleX(0.8); opacity: 0; z-index: 50; }
 
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
-        .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .modal-card { background-color: var(--panel-dark); border: 2px solid var(--brand-orange); padding: 25px; border-radius: 18px; width: 300px; color: var(--brand-white); max-height: 80vh; overflow-y: auto; }
-        .modal-card h3 { color: var(--brand-orange); margin-top: 0; text-transform: uppercase; font-weight: 900; border-bottom: 1px solid #2a2a2a; padding-bottom: 10px; }
-        .modal-card p { font-size: 14px; color: var(--text-gray); line-height: 1.6; margin: 12px 0; }
-        .modal-card strong { color: white; }
-        .close-modal { background-color: var(--brand-orange); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; margin-top: 15px; float: right; cursor: pointer; text-transform: uppercase; font-size: 12px; }
+        /* Binder Slots Pocket */
+        .pocket-slot { position: relative; aspect-ratio: 2.5 / 3.5; background: rgba(5,5,5,0.6); border: 1px dashed rgba(255,255,255,0.08); border-radius: 4px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: inset 0 2px 5px rgba(0,0,0,0.8); }
+        .pocket-slot.filled { border: 1px solid rgba(255,255,255,0.15); background: #16161a; box-shadow: 0 4px 10px rgba(0,0,0,0.5); cursor: pointer; }
+        
+        .pocket-img-render { width: 100%; height: 100%; object-fit: cover; }
+        .pocket-grade-tab { position: absolute; top: 4px; right: 4px; background: var(--brand-orange); color: black; font-weight: 900; font-size: 9px; padding: 1px 4px; border-radius: 3px; z-index: 10; }
+        .empty-pocket-cross { font-size: 14px; color: rgba(255,255,255,0.04); font-weight: bold; }
+
+        /* Navigation controls inside binder */
+        .binder-pagination-dock { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 10px; font-size: 12px; color: var(--text-gray); }
+        .page-arrow-btn { background: #111; border: 1px solid #222; color: white; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 11px; }
+
+        /* Micro Detail Overlay Modal */
+        .slab-detail-modal-card { background-color: var(--panel-dark); border: 1px solid #333; border-radius: 12px; padding: 15px; width: 310px; text-align: left; position: relative; color: white; }
+        .modal-slab-header { border-bottom: 2px solid var(--brand-orange); padding-bottom: 6px; font-weight: bold; font-size: 14px; margin-bottom: 10px; }
+        .modal-img-row { display: flex; gap: 8px; height: 120px; margin: 10px 0; }
+        .modal-img-thumb { flex: 1; border-radius: 4px; object-fit: cover; background: #000; border: 1px solid #222; }
+
+        .legal-disclaimer-footer { width: 360px; font-size: 11px; color: #444; text-align: center; line-height: 1.4; margin: 20px 0; padding-top: 10px; border-top: 1px solid #111; }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 </head>
 <body>
 
@@ -104,122 +146,164 @@
             </div>
         </div>
         <div class="utility-box">
-            <a href="https://discord.gg/2Ym5g64rf" id="discordBtn" target="_blank" class="discord-btn-link" title="MFS Community Discord">💬</a>
-            <button class="help-btn" id="openHelp" title="App User Guide">?</button>
+            <a href="https://discord.gg/2Ym5g64rf" id="discordBtn" target="_blank" class="discord-btn-link">💬</a>
+            <button class="help-btn" id="openHelp">?</button>
         </div>
     </div>
 
     <div class="auth-panel" id="authPanel">
         <div id="authLoggedOut">
-            <span class="auth-prompt-text">Login to access your binder</span>
+            <span style="color:var(--brand-orange); font-weight:bold; font-size:12px; text-transform:uppercase;">Login to Unlock Your Vault Binder</span>
             <div class="auth-inputs">
-                <input type="email" id="authEmail" class="search-input" placeholder="Email Address" style="padding:10px;">
-                <input type="password" id="authPassword" class="search-input" placeholder="Password" style="padding:10px;">
+                <input type="email" id="authEmail" class="search-input" placeholder="Enter Account Email" style="padding:6px;">
+                <input type="password" id="authPassword" class="search-input" placeholder="Enter Password" style="padding:6px;">
                 <div class="auth-row">
-                    <button id="btnSignIn" class="auth-btn primary">Login</button>
+                    <button id="btnSignIn" class="auth-btn primary">Secure Login</button>
                     <button id="btnSignUp" class="auth-btn">Register</button>
                 </div>
             </div>
         </div>
         <div id="authLoggedIn" style="display:none;">
-            Collector Profile: <span id="userDisplayEmail" style="color:var(--success-green); font-weight:bold;">--</span>
-            <button id="btnSignOut" class="auth-btn" style="padding:4px 10px; margin-left:10px; display:inline-block; width:auto;">Logout</button>
+            Vault Profile: <span id="userDisplayEmail" style="color:var(--success-green); font-weight:bold;">--</span>
+            <button id="btnSignOut" class="auth-btn" style="padding:3px 8px; margin-left:10px; display:inline-block; width:auto;">Logout</button>
         </div>
     </div>
 
-    <div class="ui-section-container">
-        
-        <div class="main-panel upload-container">
-            <div id="ocrStatusLog" class="app-status-hud">⚡ INITIALIZING SMART VISION ENGINE...</div>
+    <div class="app-mode-bar">
+        <button class="mode-btn active" id="navBtnScanner">Card Lab Scanner</button>
+        <button class="mode-btn" id="navBtnBinder">My Showcase Binder</button>
+    </div>
 
+    <div id="viewScanner" class="view-section active">
+        <div class="main-panel">
+            <div id="ocrStatusLog" class="app-status-hud">⚡ VISION ALIGNMENT SEQUENCE ENGAGED...</div>
+            
             <div class="upload-row">
-                <label for="frontFile" id="frontLabel" class="file-label">➕ Add Front Photo</label>
+                <label for="frontFile" id="frontLabel" class="file-label">📸 Add Front Photo</label>
                 <input type="file" id="frontFile" accept="image/*">
                 
-                <label for="backFile" id="backLabel" class="file-label">➕ Add Back Photo (Optional)</label>
+                <label for="backFile" id="backLabel" class="file-label">📸 Add Back Photo</label>
                 <input type="file" id="backFile" accept="image/*">
             </div>
-            
-            <div id="workspace">
-                <div id="imageContainer">
-                    <img id="previewImage" alt="Card Workspace">
-                </div>
-                
-                <div id="outLeft" class="guide-line vertical outer-line" style="left: 10%;"></div>
-                <div id="outRight" class="guide-line vertical outer-line" style="left: 90%;"></div>
-                <div id="outTop" class="guide-line horizontal outer-line" style="top: 10%;"></div>
-                <div id="outBottom" class="guide-line horizontal outer-line" style="top: 90%;"></div>
-                
-                <div id="inLeft" class="guide-line vertical inner-line" style="left: 20%;"></div>
-                <div id="inRight" class="guide-line vertical inner-line" style="left: 80%;"></div>
-                <div id="inTop" class="guide-line horizontal inner-line" style="top: 20%;"></div>
-                <div id="inBottom" class="guide-line horizontal inner-line" style="top: 80%;"></div>
+
+            <div class="side-tabs" id="sideTabs" style="display:none;">
+                <button class="side-tab-btn active" id="tabFront">Front Centering Lab</button>
+                <button class="side-tab-btn" id="tabBack">Back Centering Lab</button>
             </div>
-            
-            <button id="calculateButton" class="custom-button">Calculate Grading Ratios</button>
+
+            <div id="workspace-container">
+                <div class="workspace-title-header" id="currentWorkspaceTitleHUD">Front Face Scanning Channel</div>
+                <div id="workspace-view-frame">
+                    <div id="imageContainer">
+                        <img id="previewImage" alt="Pre-Grading Alignment Grid">
+                    </div>
+                    <div id="outLeft" class="guide-line vertical outer-line" style="left: 8%;"></div>
+                    <div id="outRight" class="guide-line vertical outer-line" style="left: 92%;"></div>
+                    <div id="outTop" class="guide-line horizontal outer-line" style="top: 8%;"></div>
+                    <div id="outBottom" class="guide-line horizontal outer-line" style="top: 92%;"></div>
+                    
+                    <div id="inLeft" class="guide-line vertical inner-line" style="left: 18%;"></div>
+                    <div id="inRight" class="guide-line vertical inner-line" style="left: 82%;"></div>
+                    <div id="inTop" class="guide-line horizontal inner-line" style="top: 18%;"></div>
+                    <div id="inBottom" class="guide-line horizontal inner-line" style="top: 18%;"></div>
+                </div>
+            </div>
+
+            <button id="calculateButton" class="custom-button" style="display:none;">Run Multi-Point Calculations</button>
         </div>
 
-        <div class="info-panel" id="resultsPanel" style="display: none;">
-            <div class="panel-title">Grading Breakdown</div>
+        <div class="main-panel" id="resultsPanel" style="display:none;">
+            <div class="panel-title">Calculated Condition Metric Engine</div>
+            <div class="company-row" style="justify-content:center; padding:0 0 8px 0;"><span id="ratioDisplayHUD" style="font-family:monospace; font-size:14px; font-weight:bold;">FRONT: -- | BACK: --</span></div>
             
-            <div class=" कंपनी-रो" style="justify-content: center; padding: 0 0 10px 0;"><span id="calculatedRatiosDisplay" style="color:white; font-family: monospace; font-size: 15px; font-weight: bold;">-- : --</span></div>
-
             <div class="defect-checklist">
-                <div style="font-size:12px; color:var(--brand-orange); font-weight:bold; margin-bottom:10px; text-transform:uppercase; letter-spacing:0.5px;">Mark Visible Surface wear / Whitening:</div>
-                <label class="check-item"><input type="checkbox" id="defectDot1"> <span>1 Tiny White Speck / Corner Chip (Max 9)</span></label>
-                <label class="check-item"><input type="checkbox" id="defectDot3"> <span>2-3 White Dots or Edge Silvering (Max 8)</span></label>
-                <label class="check-item"><input type="checkbox" id="defectScratch"> <span>Visible Surface Scratches (Max 7)</span></label>
-                <label class="check-item"><input type="checkbox" id="defectHeavy"> <span>Heavy Whitening / Crease / Dent (Max 5)</span></label>
+                <div style="font-size:11px; color:var(--brand-orange); font-weight:bold; margin-bottom:8px; text-transform:uppercase;">Select Located White Dots / Wear:</div>
+                <label class="check-item"><input type="checkbox" id="defectDot1"> <span>1 Minor Edge White Speck (Max 9 Grade)</span></label>
+                <label class="check-item"><input type="checkbox" id="defectDot3"> <span>2-3 Corner Dots / Minor Silvering (Max 8 Grade)</span></label>
+                <label class="check-item"><input type="checkbox" id="defectScratch"> <span>Visible Surface Scratching / Scuffs (Max 7 Grade)</span></label>
+                <label class="check-item"><input type="checkbox" id="defectHeavy"> <span>Heavy Whitening / Indent / Crease (Max 5 Grade)</span></label>
             </div>
 
-            <div style="margin-top:20px;">
-                <div class="company-row"><span class="company-name">PSA Predicted Standard:</span><span id="psaVerdict" class="company-verdict">Evaluating...</span></div>
-                <div class="company-row"><span class="company-name">ACE Predicted Standard:</span><span id="aceVerdict" class="company-verdict">Evaluating...</span></div>
-                <div class="company-row"><span class="company-name">TAG Analytics Engine:</span><span id="tagVerdict" class="company-verdict">Evaluating...</span></div>
-                <div class="company-row"><span class="company-name">BGS (Beckett Standards):</span><span id="bgsVerdict" class="company-verdict">Evaluating...</span></div>
+            <div style="margin-top:12px;" id="gradingOutputGlowWrapper" class="main-panel">
+                <div class="company-row"><span class="company-name">PSA Grading Approximation:</span><span id="psaVerdict" class="company-verdict">Evaluating...</span></div>
+                <div class="company-row"><span class="company-name">ACE Technical Grading Scale:</span><span id="aceVerdict" class="company-verdict">Evaluating...</span></div>
+                <div class="company-row"><span class="company-name">TAG Centering Analytics Engine:</span><span id="tagVerdict" class="company-verdict">Evaluating...</span></div>
+                <div class="company-row"><span class="company-name">BGS Subgrade Matrix Scale:</span><span id="bgsVerdict" class="company-verdict">Evaluating...</span></div>
             </div>
 
-            <button id="saveBinderButton" class="custom-button">➕ Lock into My Binder Ledger</button>
+            <button id="btnUnlockFilingForm" class="custom-button">➕ Secure Entry data Block</button>
+            
+            <div id="save-ledger-form-block">
+                <div style="font-size:11px; color:var(--brand-orange); font-weight:bold; margin-bottom:6px; text-transform:uppercase;">Name This Ledger Entry:</div>
+                <input type="text" id="customCardSaveTitleField" class="search-input" placeholder="e.g. Charizard Base Set 4/102">
+                <button id="btnExecuteBinderFilingCloud" class="custom-button" style="background:#0056B3;">☁️ Lock straight into My Binder Ledger</button>
+            </div>
         </div>
     </div>
 
-    <div class="legal-disclaimer-footer">
-        <strong>Calculator Disclaimer Guide:</strong> predictions generated are independent mathematical simulations intended for collection reference and tracking approximations only. Physical grading outcomes are explicitly determined by third-party visual analysis.
+    <div id="viewBinder" class="view-section">
+        
+        <div class="binder-customizer-panel">
+            <span style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase;">Cover Theme:</span>
+            <div class="binder-color-dot active" style="background:#1A365D;" data-hex="#1A365D"></div> <div class="binder-color-dot" style="background:#7A1C1C;" data-hex="#7A1C1C"></div> <div class="binder-color-dot" style="background:#1C5A35;" data-hex="#1C5A35"></div> <div class="binder-color-dot" style="background:#222222;" data-hex="#222222"></div> <input type="text" id="customBinderNameBannerInput" class="search-input" placeholder="Name My Album Binder" style="padding:4px 8px; font-size:11px; flex:1; height:24px;">
+        </div>
+
+        <div class="main-panel" style="padding:10px 5px; text-align:center;">
+            <div style="font-size:14px; font-weight:bold; color:var(--brand-orange); margin-bottom:4px;" id="renderBinderTitleHeaderDisplay">Showcase Portfolio Album</div>
+            <div style="font-size:11px; color:var(--text-gray); margin-bottom:12px;">Estimated Binder Net Assets Worth: <span id="binderPortfolioValuationSumDisplay" style="color:var(--success-green); font-weight:bold;">£0.00</span></div>
+            
+            <div class="binder-wrapper-scroller">
+                <div class="binder-outer-skin" id="binderOuterSkinHull">
+                    <div class="binder-spine-rings">
+                        <div class="binder-ring-metal"></div>
+                        <div class="binder-ring-metal"></div>
+                        <div class="binder-ring-metal"></div>
+                    </div>
+
+                    <div class="binder-sheet-9-pocket" id="binderGridSheet9SlotPage">
+                        </div>
+                </div>
+            </div>
+
+            <div class="binder-pagination-dock">
+                <button class="page-arrow-btn" id="btnBinderPrevPage">◀ Previous Sheet</button>
+                <span id="binderPagePaginationTicker">Page 1 of 1</span>
+                <button class="page-arrow-btn" id="btnBinderNextPage">Next Sheet ▶</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="slabDetailModal">
+        <div class="slab-detail-modal-card">
+            <div class="modal-slab-header" id="modalSlabTitle">Card Showcase Entry</div>
+            <div style="font-size:12px; color:var(--text-gray); margin-bottom:8px;" id="modalSlabMetrics">Centering Parameters logged index...</div>
+            <div class="modal-img-row" id="modalSlabImagesFlex">
+                </div>
+            <button class="custom-button secondary-btn" id="btnPurgeCardDocumentFromBinder" style="border-color:var(--alert-red); color:var(--alert-red); margin-top:15px;">⚠️ Delete Slab from Collection</button>
+            <button class="close-modal" id="closeSlabDetailModal" style="margin-top:15px;">Close Vault Door</button>
+        </div>
     </div>
 
     <div class="modal-overlay" id="helpModal">
         <div class="modal-card">
-            <h3>Pre-Grader User Guide</h3>
-            <p>Welcome to Model Forge Studio! Follow this standard workflow to pre-grade and archive your collection items:</p>
-            
-            <p><strong>Step 1: Setup Your Vault</strong><br>
-            Enter your Email and a Password and hit <strong>Register</strong>. This creates your personal digital binder ledger where your calculations will be saved securely.</p>
-            
-            <p><strong>Step 2: Upload Photo</strong><br>
-            Use a well-lit photo against a solid <strong>black background</strong> for maximum accuracy. Once uploaded, wait 3-4 seconds for the built-in Smart Vision to attempt an auto-fill of the card details.</p>
-            
-            <p><strong>Step 3: Align Borders</strong><br>
-            Drag the four <strong style="color:#FF3333">RED</strong> lines to the absolute outside edges of the physical card.<br>
-            Drag the four <strong style="color:var(--success-green)">GREEN</strong> lines to the inside border where the card artwork begins.</p>
-            
-            <p><strong>Step 4: Mark Defects & Calculate</strong><br>
-            Inspect the card's surface. Mark the checkboxes for any whitening, scuffs, or dents. Hit <strong>Calculate</strong> to run the multi-company centering math.</p>
-            
-            <p><strong>Step 5: Lock into Binder</strong><br>
-            Review your results. If you are satisfied with the scan, click the blue <strong>Lock into My Binder Ledger</strong> button. This saves the calculation, names, and original image capture permanently to your profile.</p>
-
-            <button class="close-modal" id="closeHelp">Get It</button>
+            <h3>Elite Pre-Grader Manual</h3>
+            <p><strong>1. Weighted Dual-Face Grading:</strong> Your final grade metric now calculates structural centering bounds across *both* sides of the card. Front face ratios contribute 60% weight, while back face alignment coordinates contribute 40% toward the mathematical standard cap models.</p>
+            <p><strong>2. Interactive 3x3 Pocket Binder:</strong> Swap over to the Showcase Binder tab to view your cards stored inside a simulated physical collectors portfolio page sheet. Cards that score a Pristine or Gem Mint 10 will receive a physical glowing gold leaf border effect directly inside their pocket vault window slot.</p>
+            <p><strong>3. Portfolio Valuations:</strong> Every card you verify automatically logs live average conversion pricing data into your master ledger table profile, populating a real-time accumulation net asset worth score display at the head of your binder page frame.</p>
+            <button class="close-modal" id="closeHelp">Got It</button>
         </div>
     </div>
 
+    <div class="legal-disclaimer-footer">
+        <strong>Calculator Disclaimer Notice:</strong> This application is an independent alignment simulation matrix built by Model Forge Studio. Calculated predictions are automated mathematical approximations for tracking and catalog reference purposes only. Official grading determinations are generated explicitly via visual analysis conducted by third-party certification authorities.
+    </div>
+
     <script type="module">
-        // Firebase Core Imports (Modular SDK)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, serverTimestamp, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-        import { getStorage, ref, uploadString, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+        import { getFirestore, collection, addDoc, serverTimestamp, query, where, getDocs, orderBy, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getStorage, ref, uploadString, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
-        // MFS Cloud Config (Blaze Plan Active)
         const firebaseConfig = {
             apiKey: "AIzaSyCu7kienn-NNwpaLCo7E3L54jhtXAhVwYg",
             authDomain: "model-forge-studio.firebaseapp.com",
@@ -229,338 +313,428 @@
             appId: "1:7475805296:web:6d954026c68bcb055148b5"
         };
 
-        // Initialize Services
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
         const storage = getStorage(app);
 
         let currentUser = null;
-        let lastCalculationData = null; // Global storage for calculated results waiting for save trigger
+        let globalBinderCollectionMemory = []; // Cache array tracking pulling row objects internally
+        let activeSelectedSlabDocId = null; // Memory anchor tracking row selected inside 3x3 grid display overlays
+        let currentActiveBinderPageIndex = 0; // Page view pointer tracker anchor parameters
 
-        // UI Variable Mapping
-        const authLoggedOut = document.getElementById('authLoggedOut');
-        const authLoggedIn = document.getElementById('authLoggedIn');
-        const userDisplayEmail = document.getElementById('userDisplayEmail');
-        const calculateButton = document.getElementById('calculateButton');
-        const saveBinderButton = document.getElementById('saveBinderButton');
-        const resultsPanel = document.getElementById('resultsPanel');
-        const resultsGlowNode = resultsPanel; // Node that receives the gold pulse
-        const frontFile = document.getElementById('frontFile');
-        const frontLabel = document.getElementById('frontLabel');
-        const backFile = document.getElementById('backFile');
-        const backLabel = document.getElementById('backLabel');
-        const workspace = document.getElementById('workspace');
-        const previewImage = document.getElementById('previewImage');
+        // Interface Views Elements Switches
+        const navBtnScanner = document.getElementById('navBtnScanner'); const navBtnBinder = document.getElementById('navBtnBinder');
+        const viewScanner = document.getElementById('viewScanner'); const viewBinder = document.getElementById('viewBinder');
         const ocrStatusLog = document.getElementById('ocrStatusLog');
 
-        // Help Modal Variables
-        const helpModal = document.getElementById('helpModal');
+        navBtnScanner.addEventListener('click', () => { navBtnScanner.classList.add('active'); navBtnBinder.classList.remove('active'); viewScanner.classList.add('active'); viewBinder.classList.remove('active'); });
+        navBtnBinder.addEventListener('click', () => { navBtnBinder.classList.add('active'); navBtnScanner.classList.remove('active'); viewBinder.classList.add('active'); viewScanner.classList.remove('active'); syncMasterUserCloudBinderLedger(); });
 
-        // Help Modal Listeners Wireup
-        document.getElementById('openHelp').addEventListener('click', () => helpModal.classList.add('active'));
-        document.getElementById('closeHelp').addEventListener('click', () => helpModal.classList.remove('active'));
-
-        // Core Image Processing Storage
-        let cardData = {
-            front: { src: null, x: 0, y: 0 },
-            back: { src: null }
-        };
-
-        // Authentication Observer HUD updates
+        // Authentication HUD Synchronizations
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                currentUser = user;
-                userDisplayEmail.innerText = user.email;
-                authLoggedOut.style.display = 'none';
-                authLoggedIn.style.display = 'block';
+                currentUser = user; document.getElementById('userDisplayEmail').innerText = user.email;
+                document.getElementById('authLoggedOut').style.display = 'none'; document.getElementById('authLoggedIn').style.display = 'block';
+                syncMasterUserCloudBinderLedger();
             } else {
-                currentUser = null;
-                authLoggedOut.style.display = 'block';
-                authLoggedIn.style.display = 'none';
+                currentUser = null; document.getElementById('authLoggedOut').style.display = 'block'; document.getElementById('authLoggedIn').style.display = 'none';
+                clearBinderDisplayGridSlots();
             }
         });
 
-        // Registration Handling
+        // AUTH CONTROL SIGNATURE LOGIC BINDINGS
         document.getElementById('btnSignUp').addEventListener('click', async () => {
-            const email = document.getElementById('authEmail').value.trim();
-            const pass = document.getElementById('authPassword').value.trim();
-            if(!email || !pass) return alert("Fill in your Email and Password.");
-            try {
-                await createUserWithEmailAndPassword(auth, email, pass);
-                alert("Vault registered! You can now save your collection history.");
-            } catch(err) { alert("Registration problem: " + err.message); }
+            const email = document.getElementById('authEmail').value.trim(); const pass = document.getElementById('authPassword').value.trim();
+            if(!email || !pass) return alert("Please fill fields.");
+            try { await createUserWithEmailAndPassword(auth, email, pass); alert("Vault account created successfully!"); } catch(e) { alert("Registration error: " + e.message); }
         });
-
-        // Sign In Handling
         document.getElementById('btnSignIn').addEventListener('click', async () => {
-            const email = document.getElementById('authEmail').value.trim();
-            const pass = document.getElementById('authPassword').value.trim();
-            if(!email || !pass) return alert("Fill in your Email and Password.");
-            try { await signInWithEmailAndPassword(auth, email, pass); }
-            catch(err) { alert("Login issue: " + err.message); }
+            const email = document.getElementById('authEmail').value.trim(); const pass = document.getElementById('authPassword').value.trim();
+            if(!email || !pass) return alert("Please fill fields.");
+            try { await signInWithEmailAndPassword(auth, email, pass); } catch(e) { alert("Login error: " + e.message); }
         });
-
-        // Sign Out Handling
         document.getElementById('btnSignOut').addEventListener('click', () => signOut(auth));
 
-        // Front Face Upload Handler (Restores OCR trigger)
-        frontFile.addEventListener('change', (e) => {
-            handleLocalImageUpload(e.target.files[0], 'front', frontLabel);
-        });
+        // DETAILED LAB DATA ALIGNMENT CONTROLS AND TRANSFORMS DATA STATE
+        const frontFile = document.getElementById('frontFile'); const backFile = document.getElementById('backFile');
+        const frontLabel = document.getElementById('frontLabel'); const backLabel = document.getElementById('backLabel');
+        const sideTabs = document.getElementById('sideTabs'); const tabFront = document.getElementById('tabFront'); const tabBack = document.getElementById('tabBack');
+        const workspaceContainer = document.getElementById('workspace-container'); const previewImage = document.getElementById('previewImage');
+        const currentWorkspaceTitleHUD = document.getElementById('currentWorkspaceTitleHUD');
+        const calculateButton = document.getElementById('calculateButton'); const resultsPanel = document.getElementById('resultsPanel');
+        
+        let currentSelectedLabSide = 'front';
+        let alignmentLabStateCache = {
+            front: { src: null, lr: "50:50", tb: "50:50" },
+            back: { src: null, lr: "50:50", tb: "50:50" }
+        };
 
-        // Back Face Upload Handler
-        backFile.addEventListener('change', (e) => {
-            handleLocalImageUpload(e.target.files[0], 'back', backLabel);
-        });
-
-        // Image Processing & Compression Pipeline
-        function handleLocalImageUpload(file, side, labelObj) {
-            if (!file) return;
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
+        function executeImageUploadCompression(file, side, labelObj) {
+            if(!file) return;
+            const reader = new FileReader(); reader.readAsDataURL(file);
             reader.onload = (e) => {
-                const img = new Image();
-                img.src = e.target.result;
+                const img = new Image(); img.src = e.target.result;
                 img.onload = () => {
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
-                    const maxDim = 800; // Efficient processing size
-                    let w = img.width; let h = img.height;
-                    if (w > h && w > maxDim) { h *= maxDim / w; w = maxDim; }
-                    else if (h > maxDim) { w *= maxDim / h; h = maxDim; }
-                    canvas.width = w; canvas.height = h;
-                    ctx.drawImage(img, 0, 0, w, h);
+                    const canvas = document.createElement('canvas'); const ctx = canvas.getContext('2d');
+                    const maxDim = 800; let w = img.width; let h = img.height;
+                    if(w > h && w > maxDim) { h *= maxDim / w; w = maxDim; } else if (h > maxDim) { w *= maxDim / h; h = maxDim; }
+                    canvas.width = w; canvas.height = h; ctx.drawImage(img, 0, 0, w, h);
                     
-                    const compressedData = canvas.toDataURL('image/jpeg', 0.8);
-                    cardData[side].src = compressedData;
-                    labelObj.innerText = side === 'front' ? "✓ Front Added" : "✓ Back Added";
-                    labelObj.classList.add('has-file');
+                    const compressedUrl = canvas.toDataURL('image/jpeg', 0.85);
+                    alignmentLabStateCache[side].src = compressedUrl;
+                    labelObj.innerText = side === 'front' ? "✓ Front Loaded" : "✓ Back Loaded"; labelObj.classList.add('has-file');
+                    
+                    sideTabs.style.display = "flex"; workspaceContainer.style.display = "block"; calculateButton.style.display = "block";
+                    resultsPanel.style.display = "none"; resetFilingFormBlocksHUD();
+                    switchLabWorkspaceActiveChannel(side);
 
-                    if(side === 'front') {
-                        previewImage.src = compressedData;
-                        workspace.style.display = 'block';
-                        calculateButton.style.display = 'block';
-                        resultsPanel.style.display = 'none'; // Clear old results on new photo
-                        runSmartVisionOCR(compressedData); // RESTORED OCR TRIGGER
-                    }
+                    if(side === 'front') executeBackgroundSmartVisionOCR(compressedUrl);
                 };
             };
         }
+        frontFile.addEventListener('change', (e) => executeImageUploadCompression(e.target.files[0], 'front', frontLabel));
+        backFile.addEventListener('change', (e) => executeImageUploadCompression(e.target.files[0], 'back', backLabel));
 
-        // Tesseract.js OCR Auto-Fill Engine (Restored)
-        async function runSmartVisionOCR(dataUrl) {
-            ocrStatusLog.style.display = "block";
-            ocrStatusLog.innerText = "⚡ SMART VISION ACTIVE: Attempting to read card text...";
-            
-            try {
-                const result = await Tesseract.recognize(dataUrl, 'eng');
-                const rawText = result.data.text;
-                console.log("Raw OCR Data Captured:", rawText);
+        function switchLabWorkspaceActiveChannel(side) {
+            currentSelectedLabSide = side;
+            if(side === 'front') { tabFront.classList.add('active'); tabBack.classList.remove('active'); currentWorkspaceTitleHUD.innerText = "Front Face Alignment Channel"; }
+            else { tabBack.classList.add('active'); tabFront.classList.remove('active'); currentWorkspaceTitleHUD.innerText = "Back Face Alignment Channel"; }
+            previewImage.src = alignmentLabStateCache[side].src || "";
+            restoreGuideLinesPositionsPercentage(side);
+        }
+        tabFront.addEventListener('click', () => { if(alignmentLabStateCache.front.src) switchLabWorkspaceActiveChannel('front'); });
+        tabBack.addEventListener('click', () => { if(alignmentLabStateCache.back.src) switchLabWorkspaceActiveChannel('back'); });
 
-                const lines = rawText.split('\n');
-                let foundName = "";
-                let foundNumber = "";
-                const skipWords = ["pokemon", "trainer", "stage", "basic", "item", "supporter", "hp", "illus"];
+        // CROSSHAIR LINES MATH LOGIC CHANNELS
+        let activeTrackLineNode = null;
+        const outL = document.getElementById('outLeft'); const outR = document.getElementById('outRight'); const outT = document.getElementById('outTop'); const outB = document.getElementById('outBottom');
+        const inL = document.getElementById('inLeft'); const inR = document.getElementById('inRight'); const inT = document.getElementById('inTop'); const inB = document.getElementById('inBottom');
 
-                for (let line of lines) {
-                    let cleanLine = line.toLowerCase().trim();
-                    if(!cleanLine) continue;
+        document.querySelectorAll('.guide-line').forEach(line => {
+            line.addEventListener('mousedown', () => activeTrackLineNode = line);
+            line.addEventListener('touchstart', () => activeTrackLineNode = line, {passive: true});
+        });
+        window.addEventListener('mouseup', () => { if(activeTrackLineNode) { cacheCurrentLinesLocations(currentSelectedLabSide); activeTrackLineNode = null; } });
+        window.addEventListener('touchend', () => { if(activeTrackLineNode) { cacheCurrentLinesLocations(currentSelectedLabSide); activeTrackLineNode = null; } });
+        window.addEventListener('mousemove', handleLineDragExecution);
+        window.addEventListener('touchmove', (e) => { if(activeTrackLineNode) { if(e.cancelable) e.preventDefault(); handleLineDragExecution(e); } }, {passive: false});
 
-                    // Look for standard number formatting patterns e.g. 151/165 or 069/073
-                    const numberMatch = cleanLine.match(/(\d+)\s*[\/\u2044\s]\s*(\d+)/);
-                    if(numberMatch && !foundNumber) {
-                        foundNumber = numberMatch[0].replace(/\s+/g, '');
-                    }
-
-                    // Attempt to capture Name at upper boundary
-                    if(!foundName && cleanLine.length > 3 && !skipWords.some(w => cleanLine.includes(w))) {
-                        let words = line.replace(/[^a-zA-Z\s]/g, "").trim().split(' ');
-                        if(words[0] && words[0].length > 2) {
-                            foundName = words.slice(0, 2).join(' '); // Grab first two text words
-                        }
-                    }
-                }
-
-                // Compile final search string
-                let optimalSearchQuery = "";
-                if (foundName) optimalSearchQuery += foundName;
-                if (foundNumber) optimalSearchQuery += " " + foundNumber;
-                optimalSearchQuery = optimalSearchQuery.trim();
-
-                if (optimalSearchQuery.length > 2) {
-                    ocrStatusLog.innerText = `✓ Vision recognized: "${optimalSearchQuery}". Prices ready below.`;
-                    console.log("Setting title fallback:", optimalSearchQuery);
-                } else {
-                    ocrStatusLog.innerText = "⚠️ Smart Vision timed out. Please enter card name manually.";
-                }
-
-                return optimalSearchQuery; // Return query for calculation logic
-            } catch (err) {
-                console.error("OCR Exception context:", err);
-                ocrStatusLog.innerText = "⚠️ Vision unavailable. Field manual lookup engaged.";
+        function handleLineDragExecution(e) {
+            if(!activeTrackLineNode) return;
+            const rect = document.getElementById('workspace-view-frame').getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX; const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            if(activeTrackLineNode.classList.contains('vertical')) {
+                let pX = ((clientX - rect.left) / rect.width) * 100; if(pX >= 0 && pX <= 100) activeTrackLineNode.style.left = pX + '%';
+            } else {
+                let pY = ((clientY - rect.top) / rect.height) * 100; if(pY >= 0 && pY <= 100) activeLine.style.top = pY + '%'; // dynamic fallback parsing
+                let posY = ((clientY - rect.top) / rect.height) * 100; if(posY >= 0 && posY <= 100) activeTrackLineNode.style.top = posY + '%';
             }
         }
 
-        // Calculation Dispatch & Results Rendering (Refined)
-        calculateButton.addEventListener('click', async () => {
-            // Restore Usability Checkboxes: Calculate new standard min-caps
-            let conditionCap = 10;
-            let reportedDefects = [];
-            if(document.getElementById('defectHeavy').checked) { conditionCap = Math.min(conditionCap, 5); reportedDefects.push("Heavy Whitening"); }
-            if(document.getElementById('defectScratch').checked) { conditionCap = Math.min(conditionCap, 7); reportedDefects.push("Surface Scratches"); }
-            if(document.getElementById('defectDot3').checked) { conditionCap = Math.min(conditionCap, 8); reportedDefects.push("2-3 White Dots"); }
-            if(document.getElementById('defectDot1').checked) { conditionCap = Math.min(conditionCap, 9); reportedDefects.push("1 White Speck"); }
+        function cacheCurrentLinesLocations(side) {
+            alignmentLabStateCache[side].ol = parseFloat(outL.style.left); alignmentLabStateCache[side].or = parseFloat(outR.style.left);
+            alignmentLabStateCache[side].ot = parseFloat(outT.style.top); alignmentLabStateCache[side].ob = parseFloat(outB.style.top);
+            alignmentLabStateCache[side].il = parseFloat(inL.style.left); alignmentLabStateCache[side].ir = parseFloat(inR.style.left);
+            alignmentLabStateCache[side].it = parseFloat(inT.style.top); alignmentLabStateCache[side].ib = parseFloat(inB.style.top);
+        }
+        function restoreGuideLinesPositionsPercentage(side) {
+            outL.style.left = alignmentLabStateCache[side].ol ? alignmentLabStateCache[side].ol + '%' : '10%';
+            outR.style.left = alignmentLabStateCache[side].or ? alignmentLabStateCache[side].or + '%' : '90%';
+            outT.style.top = alignmentLabStateCache[side].ot ? alignmentLabStateCache[side].ot + '%' : '10%';
+            outB.style.top = alignmentLabStateCache[side].ob ? alignmentLabStateCache[side].ob + '%' : '90%';
+            inL.style.left = alignmentLabStateCache[side].il ? alignmentLabStateCache[side].il + '%' : '20%';
+            inR.style.left = alignmentLabStateCache[side].ir ? alignmentLabStateCache[side].ir + '%' : '80%';
+            inT.style.top = alignmentLabStateCache[side].it ? alignmentLabStateCache[side].it + '%' : '20%';
+            inB.style.top = alignmentLabStateCache[side].ib ? alignmentLabStateCache[side].ib + '%' : '80%';
+        }
 
-            const outL = parseFloat(document.getElementById('outLeft').style.left); const outR = parseFloat(document.getElementById('outRight').style.left);
-            const outT = parseFloat(document.getElementById('outTop').style.top); const outB = parseFloat(document.getElementById('outBottom').style.top);
-            const inL = parseFloat(document.getElementById('inLeft').style.left); const inR = parseFloat(document.getElementById('inRight').style.left);
-            const inT = parseFloat(document.getElementById('inTop').style.top); const inB = parseFloat(document.getElementById('inBottom').style.top);
-            
-            const leftWidth = inL - outL; const rightWidth = outR - inR; const topWidth = inT - outT; const bottomWidth = outB - inB;
-            const lrTotal = leftWidth + rightWidth; const tbTotal = topWidth + bottomWidth;
-            
-            const worstLR = Math.max(leftWidth, rightWidth) / lrTotal * 100;
-            const worstTB = Math.max(topWidth, bottomWidth) / tbTotal * 100;
-            
-            // Calculate multi-company predictions (Restored mathematical caps application)
-            let psa = evaluateCompanyVerdicts('psa', worstLR, worstTB, conditionCap);
-            let ace = evaluateCompanyVerdicts('ace', worstLR, worstTB, conditionCap);
-            let tag = evaluateCompanyVerdicts('tag', worstLR, worstTB, conditionCap);
-            let bgs = evaluateCompanyVerdicts('bgs', worstLR, worstTB, conditionCap);
+        // TESSERACT FUZZY PARSER SHIELD ENGINE
+        async function executeBackgroundSmartVisionOCR(url) {
+            ocrStatusLog.style.display = "block"; ocrStatusLog.innerText = "⚡ SMART VISION: Scanning card surface blueprint matrix...";
+            try {
+                const res = await Tesseract.recognize(url, 'eng'); const text = res.data.text;
+                const lines = text.split('\n'); let name = ""; let num = "";
+                for(let l of lines) {
+                    let cl = l.toLowerCase().trim(); if(!cl) continue;
+                    const match = cl.match(/(\d+)\s*[\/\u2044\s]\s*(\d+)/); if(match && !num) num = match[0].replace(/\s+/g, '');
+                    if(!name && cl.length > 3 && !["pokemon", "trainer", "hp", "stage", "basic", "item", "energy"].some(w => cl.includes(w))) {
+                        let words = l.replace(/[^a-zA-Z\s]/g, "").trim().split(' '); if(words[0] && words[0].length > 2) name = words.slice(0, 2).join(' ');
+                    }
+                }
+                let queryStr = `${name} ${num}`.trim();
+                if(queryStr.length > 2) {
+                    document.getElementById('customCardSaveTitleField').value = queryStr;
+                    ocrStatusLog.innerText = `✓ Vision recognized: "${queryStr}". Data locked to ledger form field.`;
+                    executeAutomatedLivePriceLookupAPI(queryStr);
+                } else { ocrStatusLog.innerText = "⚠️ Vision unindexed. Feel free to use custom naming below."; }
+            } catch(e) { ocrStatusLog.innerText = "⚠️ Text layer unparsed. Manual catalog ready."; }
+        }
 
-            // Display Results (Restored Ratio Text and Verdict Spans)
-            document.getElementById('calculatedRatiosDisplay').innerText = `📐 Ratios -> L/R ${worstLR.toFixed(0)}:${(100-worstLR).toFixed(0)} | T/B ${worstTB.toFixed(0)}:${(100-worstTB).toFixed(0)}`;
-            
-            renderVerdictHUD('psaVerdict', psa);
-            renderVerdictHUD('aceVerdict', ace);
-            renderVerdictHUD('tagVerdict', tag);
-            renderVerdictHUD('bgsVerdict', bgs);
+        // HIGH STABILITY FUZZY FALLBACK COMPILATION PRICE SEARCH API
+        let cacheLiveEstimatedValueGBP = 1.50; // Stable default base line evaluation token cost value
+        async function executeAutomatedLivePriceLookupAPI(q) {
+            try {
+                const rootToken = q.split(' ')[0].replace(/[^a-zA-Z]/g, "");
+                const res = await fetch(`https://api.pokemontcg.io/v2/cards?q=name:"${encodeURIComponent(rootToken)}"`);
+                const json = await res.json();
+                if(json.data && json.data.length > 0) {
+                    let target = json.data.find(c => q.includes(c.number)) || json.data[0];
+                    const p = target.tcgplayer ? target.tcgplayer.prices : null;
+                    if(p) {
+                        const type = p.holofoil || p.normal || p.reverseHolofoil || Object.values(p)[0];
+                        if(type && type.market) cacheLiveEstimatedValueGBP = parseFloat((type.market * 0.78).toFixed(2));
+                    }
+                    console.log("Locked live conversion evaluation value:", cacheLiveEstimatedValueGBP);
+                }
+            } catch(e) { console.log("Lookup channel tracking baseline default values kept."); }
+        }
 
-            // PRISTINE 10 GOLD GLOW LOGIC (REPAIRED)
-            resultsGlowNode.classList.remove('results-glow-active'); // Clean old glows
-            const hasPristine = (psa.includes('10') || ace.includes('10') || tag.includes('10') || bgs.includes('10'));
-            if(hasPristine && !hasPristine.includes('Drop')) {
-                resultsGlowNode.classList.add('results-glow-active');
+        // DUAL-FACE WEIGHTED CALCULATION DISPATCH CHANNELS
+        let compiledFinalLedgerPayloadBlock = null;
+        calculateButton.addEventListener('click', () => {
+            cacheCurrentLinesLocations(currentSelectedLabSide);
+            
+            // 1. Calculate Front face coordinates splits ratio
+            const fWorstLR = calculateSideMaxSplitPercentage(alignmentLabStateCache.front.ol, alignmentLabStateCache.front.or, alignmentLabStateCache.front.il, alignmentLabStateCache.front.ir);
+            const fWorstTB = calculateSideMaxSplitPercentage(alignmentLabStateCache.front.ot, alignmentLabStateCache.front.ob, alignmentLabStateCache.front.it, alignmentLabStateCache.front.ib);
+            
+            // 2. Calculate Back face splits or copy front as fallback parameters data mapping
+            let bWorstLR = fWorstLR; let bWorstTB = fWorstTB;
+            if(alignmentLabStateCache.back.src) {
+                cacheCurrentLinesLocations('back');
+                bWorstLR = calculateSideMaxSplitPercentage(alignmentLabStateCache.back.ol, alignmentLabStateCache.back.or, alignmentLabStateCache.back.il, alignmentLabStateCache.back.ir);
+                bWorstTB = calculateSideMaxSplitPercentage(alignmentLabStateCache.back.ot, alignmentLabStateCache.back.ob, alignmentLabStateCache.back.it, alignmentLabStateCache.back.ib);
             }
 
-            resultsPanel.style.display = 'block';
-            ocrStatusLog.style.display = "none"; 
+            // 3. Apply strict 60% Front / 40% Back standard matrix balancing calculations
+            const finalWorstLR = Math.round((fWorstLR * 0.6) + (bWorstLR * 0.4));
+            const finalWorstTB = Math.round((fWorstTB * 0.6) + (bWorstTB * 0.4));
 
-            // Save results to global state and activate dedicated Binder button
-            lastCalculationData = {
-                prediction: psa, // Core prediction for binder display primary badge
-                lrRatio: `${worstLR.toFixed(0)}:${(100-worstLR).toFixed(0)}`,
-                tbRatio: `${worstTB.toFixed(0)}:${(100-worstTB).toFixed(0)}`,
-                defects: reportedDefects
+            document.getElementById('ratioDisplayHUD').innerText = `📐 Front Max split: ${fWorstLR.toFixed(0)}% | Back Max split: ${bWorstLR.toFixed(0)}%`;
+
+            // 4. Process standard condition caps logic checks overrides
+            let cap = 10; let defectLogs = [];
+            if(document.getElementById('defectHeavy').checked) { cap = Math.min(cap, 5); defectLogs.push("Heavy Wear / Crease"); }
+            if(document.getElementById('defectScratch').checked) { cap = Math.min(conditionCapFallback(cap, 7)); defectLogs.push("Scratches"); } // dynamic cap layer
+            if(document.getElementById('defectScratch').checked) { cap = Math.min(cap, 7); defectLogs.push("Surface Scratches"); }
+            if(document.getElementById('defectDot3').checked) { cap = Math.min(cap, 8); defectLogs.push("2-3 White Dots"); }
+            if(document.getElementById('defectDot1').checked) { cap = Math.min(cap, 9); defectLogs.push("1 Edge Chip"); }
+
+            const verdicts = processMultiCompanyGradesScales(finalWorstLR, finalWorstTB, cap);
+            
+            document.getElementById('psaVerdict').innerText = verdicts.psa; document.getElementById('psaVerdict').className = verdicts.psa.includes('10') && !verdicts.psa.includes('Drop') ? 'company-verdict perfect' : 'company-verdict';
+            document.getElementById('aceVerdict').innerText = verdicts.ace; document.getElementById('aceVerdict').className = verdicts.ace.includes('10') && !verdicts.ace.includes('Drop') ? 'company-verdict perfect' : 'company-verdict';
+            document.getElementById('tagVerdict').innerText = verdicts.tag; document.getElementById('tagVerdict').className = verdicts.tag.includes('10') && !verdicts.tag.includes('Drop') ? 'company-verdict perfect' : 'company-verdict';
+            document.getElementById('bgsVerdict').innerText = verdicts.bgs; document.getElementById('bgsVerdict').className = verdicts.bgs.includes('10') && !verdicts.bgs.includes('Drop') ? 'company-verdict perfect' : 'company-verdict';
+
+            // Apply Animated Golden Pulse if card scores Pristine 10
+            const outputWrapper = document.getElementById('gradingOutputGlowWrapper');
+            outputWrapper.classList.remove('gold-slab-glow');
+            if(verdicts.psa.includes('10') && !verdicts.psa.includes('Drop')) { outputWrapper.classList.add('gold-slab-glow'); }
+
+            resultsPanel.style.display = "block";
+            
+            // Build temporary payload cache mapping
+            compiledFinalLedgerPayloadBlock = {
+                gradeBadge: verdicts.psa,
+                lrRatio: `${finalWorstLR}:${100-finalWorstLR}`,
+                tbRatio: `${finalWorstTB}:${100-finalWorstTB}`,
+                defects: defectLogs,
+                cashValue: cacheLiveEstimatedValueGBP
             };
-            saveBinderButton.style.display = 'block';
-            calculateButton.style.display = 'none'; // Swap buttons smoothly
         });
 
-        function evaluateCompanyVerdicts(company, worstLR, worstTB, cap) {
-            let verdict = 'Evaluating';
-            if (company === 'psa') {
-                if (worstLR <= 60 && worstTB <= 60) verdict = 'Gem Mint 10';
-                else if (worstLR <= 65 && worstTB <= 65) verdict = 'Mint 9';
-                else if (worstLR <= 70 && worstTB <= 70) verdict = 'NM-MT 8';
-                else if (worstLR <= 75 && worstTB <= 75) verdict = 'NM 7';
-                else if (worstLR <= 80 && worstTB <= 80) verdict = 'Excellent 6';
-            } else if (company === 'ace') {
-                if (worstLR <= 55 && worstTB <= 55) verdict = 'Gem Mint 10';
-                else if (worstLR <= 60 && worstTB <= 60) verdict = 'Mint 9';
-                else if (worstLR <= 65 && worstTB <= 65) verdict = 'NM-MT 8';
-                else if (worstLR <= 70 && worstTB <= 70) verdict = 'NM 7';
-                else if (worstLR <= 75 && worstTB <= 75) verdict = 'Excellent 6';
-            } else if (company === 'tag') {
-                if (worstLR <= 51 && worstTB <= 51) verdict = 'Pristine 10 (1000)';
-                else if (worstLR <= 55 && worstTB <= 55) verdict = 'Mint 9';
-                else if (worstLR <= 60 && worstTB <= 60) verdict = 'NM-MT 8';
-                else if (worstLR <= 65 && worstTB <= 65) verdict = 'Excellent 7 or lower';
-            } else if (company === 'bgs') {
-                if (worstLR <= 50 && worstTB <= 50) verdict = 'Black Label 10';
-                else if (worstLR <= 55 && worstTB <= 55) verdict = 'Gem Mint 10';
-                else if (worstLR <= 60 && worstTB <= 60) verdict = 'Mint 9';
-                else if (worstLR <= 65 && worstTB <= 65) verdict = 'NM-MT 8';
-                else if (worstLR <= 70 && worstTB <= 70) verdict = 'NM 7';
-            }
-            return applyMathematicalGradeCap(verdict, cap);
+        function conditionCapFallback(c, v) { return Math.min(c, v); }
+
+        function calculateSideMaxSplitPercentage(ol, or, il, ir) {
+            const lW = il - ol; const rW = or - ir; const tot = lW + rW;
+            if(!tot || isNaN(tot)) return 50; return (Math.max(lW, rW) / tot) * 100;
         }
 
-        function applyMathematicalGradeCap(verdict, cap) {
-            if (cap === 9 && verdict.includes('10')) return 'Mint 9 (Condition Drop)'; 
-            if (cap === 8 && (verdict.includes('10') || verdict.includes('9'))) return 'NM-MT 8 (Condition Drop)'; 
-            if (cap === 7 && (verdict.includes('10') || verdict.includes('9') || verdict.includes('8'))) return 'NM 7 (Condition Drop)'; 
-            if (cap === 5 && !verdict.includes('5 or Lower')) return 'VG-EX 5 (Condition Drop)'; 
-            return verdict;
+        function processMultiCompanyGradesScales(lr, tb, cap) {
+            let psa = 'VG-EX 5'; if(lr <= 60 && tb <= 60) psa = 'Gem Mint 10'; else if(lr <= 65 && tb <= 65) psa = 'Mint 9'; else if(lr <= 70 && tb <= 70) psa = 'NM-MT 8';
+            let ace = 'Grade 6'; if(lr <= 55 && tb <= 55) ace = 'Gem Mint 10'; else if(lr <= 60 && tb <= 60) ace = 'Mint 9'; else if(lr <= 65 && tb <= 65) ace = 'NM-MT 8';
+            let tag = 'Tier 7'; if(lr <= 52 && tb <= 52) tag = 'Pristine 10'; else if(lr <= 56 && tb <= 56) tag = 'Mint 9'; else if(lr <= 60 && tb <= 60) tag = 'NM-MT 8';
+            let bgs = 'Grade 6'; if(lr <= 50 && tb <= 50) bgs = 'Black Label 10'; else if(lr <= 55 && tb <= 55) bgs = 'Gem Mint 10'; else if(lr <= 60 && tb <= 60) bgs = 'Mint 9';
+
+            return {
+                psa: applyGradeCapsFailsafes(psa, cap), ace: applyGradeCapsFailsafes(ace, cap),
+                tag: applyGradeCapsFailsafes(tag, cap), bgs: applyGradeCapsFailsafes(bgs, cap)
+            };
+        }
+        function applyGradeCapsFailsafes(v, c) {
+            if(c === 9 && v.includes('10')) return 'Mint 9 (Drop)'; if(c === 8 && (v.includes('10') || v.includes('9'))) return 'NM-MT 8 (Drop)';
+            if(c === 7 && (v.includes('10') || v.includes('9') || v.includes('8'))) return 'NM 7 (Drop)'; if(c === 5 && !v.includes('5')) return 'VG 5 (Drop)';
+            return v;
         }
 
-        function renderVerdictHUD(spanId, verdict) {
-            const el = document.getElementById(spanId);
-            el.innerText = verdict;
-            el.className = (verdict.includes('10') && !verdict.includes('Drop')) ? 'company-verdict perfect' : 'company-verdict';
+        // BINDER FILING FORM TOGGLE EXECUTIONS
+        document.getElementById('btnUnlockFilingForm').addEventListener('click', () => {
+            document.getElementById('save-ledger-form-block').style.display = "block";
+            document.getElementById('btnUnlockFilingForm').style.display = "none";
+        });
+
+        function resetFilingFormBlocksHUD() {
+            document.getElementById('save-ledger-form-block').style.display = "none";
+            document.getElementById('btnUnlockFilingForm').style.display = "block";
+            compiledFinalLedgerPayloadBlock = null;
         }
 
-        // BINDER SAVE EXECUTIONprotocol (REPAIRED DEDICATED TRIGGER)
-        saveBinderButton.addEventListener('click', async () => {
-            if(!currentUser) return alert("Please Login to your Vault Profile at the top to secure your card history!");
-            if(!lastCalculationData) return;
+        // CLOUD HARVESTER LEDGER SUBMIT ROUTE INTERFACE (MANUAL CLICK TRIGGER)
+        document.getElementById('btnExecuteBinderFilingCloud').addEventListener('click', async () => {
+            if(!currentUser) return alert("Login to save your data.");
+            if(!compiledFinalLedgerPayloadBlock) return;
 
-            saveBinderButton.innerText = "☁️ Securing your card!";
-            saveBinderButton.disabled = true;
+            const inputTitle = document.getElementById('customCardSaveTitleField').value.trim();
+            const verifiedFinalTitle = inputTitle || "Unindexed Custom Entry Shell";
+
+            const fireButton = document.getElementById('btnExecuteBinderFilingCloud');
+            fireButton.innerText = "☁️ SECURING VECTOR PATHS..."; fireButton.disabled = true;
 
             try {
-                let frontCloudUrl = ""; let backCloudUrl = ""; const timestampId = Date.now();
-                if(cardData.front.src) { const frontRef = ref(storage, `scans/${currentUser.uid}/${timestampId}_front.jpg`); await uploadString(frontRef, cardData.front.src, 'data_url'); frontCloudUrl = await getDownloadURL(frontRef); }
-                if(cardData.back.src) { const backRef = ref(storage, `scans/${currentUser.uid}/${timestampId}_back.jpg`); await uploadString(backRef, cardData.back.src, 'data_url'); backCloudUrl = await getDownloadURL(backRef); }
+                let fUrl = ""; let bUrl = ""; const stampId = Date.now();
+                if(alignmentLabStateCache.front.src) { const fRef = ref(storage, `scans/${currentUser.uid}/${stampId}_f.jpg`); await uploadString(fRef, alignmentLabStateCache.front.src, 'data_url'); fUrl = await getDownloadURL(fRef); }
+                if(alignmentLabStateCache.back.src) { const bRef = ref(storage, `scans/${currentUser.uid}/${stampId}_b.jpg`); await uploadString(bRef, alignmentLabStateCache.back.src, 'data_url'); bUrl = await getDownloadURL(bRef); }
 
-                // Attempt to grab fallback title from OCR banner if public price search hasn't overriden it
-                let cardLabelString = document.getElementById('cardTargetName').innerText;
-                if(cardLabelString === "Card Found" || cardLabelString.includes("Evaluating") || cardLabelString.includes("Custom Entry")) {
-                    cardLabelString = ocrStatusLog.innerText.split('"')[1] || "Custom Appraised Entry";
-                }
-
-                // Log entry matrix toFirestore ledger collection folder registry ledger
-                const entryId = `${currentUser.uid}_${timestampId}`;
-                await setDoc(doc(db, "card_scans", entryId), {
+                await addDoc(collection(db, "card_scans"), {
                     userId: currentUser.uid, userEmail: currentUser.email, scannedAt: serverTimestamp(),
-                    cardTitle: cardLabelString, ...lastCalculationData, frontImage: frontCloudUrl, backImage: backCloudUrl
+                    cardTitle: verifiedFinalTitle, frontImage: fUrl, backImage: bUrl, ...compiledFinalLedgerPayloadBlock
                 });
 
-                alert("✓ Card successfully locked into your showcase binder ledger ledger!");
-                workspace.style.display = 'none'; resultsPanel.style.display = 'none'; frontFile.value = ""; backFile.value = ""; 
-                frontLabel.innerText = "➕ Add Front Photo"; frontLabel.classList.remove('has-file');
-                backLabel.innerText = "➕ Add Back Photo (Optional)"; backLabel.classList.remove('has-file');
-                cardData = { front: { src: null, x: 0, y: 0 }, back: { src: null } }; // Reset state cleanly
-            } catch(err) { console.error("Cloud write failure:", err); alert("Unable to write ledger entry matrix. Data vault unsynchronized."); }
-            finally {
-                saveBinderButton.innerText = "➕ Lock into My Binder Ledger";
-                saveBinderButton.style.display = 'none';
-                calculateButton.style.display = 'none';
-                saveBinderButton.disabled = false;
+                alert("✓ Slab verified and securely dropped into your 3x3 Showcase Binder!");
+                workspaceContainer.style.display = "none"; resultsPanel.style.display = "none"; calculateButton.style.display = "none";
+                frontLabel.innerText = "📸 Add Front Photo"; frontLabel.classList.remove('has-file');
+                backLabel.innerText = "📸 Add Back Photo"; backLabel.classList.remove('has-file');
+                alignmentLabStateCache = { front: { src: null }, back: { src: null } }; resetFilingFormBlocksHUD();
+            } catch(e) { alert("Cloud write write failure context."); } finally { fireButton.innerText = "☁️ Lock straight into My Binder Ledger"; fireButton.disabled = false; }
+        });
+
+        // 3X3 BINDER DISPLAY GRID CORE MATRIX ENGINE (REBUILD 11-18)
+        async function syncMasterUserCloudBinderLedger() {
+            if(!currentUser) return;
+            const sheetGridNode = document.getElementById('binderGridSheet9SlotPage');
+            sheetGridNode.innerHTML = ""; clearBinderDisplayGridSlots();
+
+            try {
+                const qDocs = query(collection(db, "card_scans"), where("userId", "==", currentUser.uid), orderBy("scannedAt", "desc"));
+                const snap = await getDocs(qDocs);
+                globalBinderCollectionMemory = [];
+                snap.forEach(d => globalBinderCollectionMemory.push({ docId: d.id, ...d.data() }));
+
+                calculateAndDisplayPortfolioWorth();
+                renderBinderSheetGridPage(currentActiveBinderPageIndex);
+            } catch(e) { console.error("Binder fetch crash:", e); }
+        }
+
+        function calculateAndDisplayPortfolioWorth() {
+            let sum = 0;
+            globalBinderCollectionMemory.forEach(c => { sum += parseFloat(c.cashValue || 1.50); });
+            document.getElementById('binderPortfolioValuationSumDisplay').innerText = `£${sum.toFixed(2)}`;
+        }
+
+        function renderBinderSheetGridPage(pageIdx) {
+            const sheetGridNode = document.getElementById('binderGridSheet9SlotPage');
+            sheetGridNode.classList.add('sheet-turning-left'); // Trigger crease/bend animation warp
+
+            setTimeout(() => {
+                sheetGridNode.innerHTML = "";
+                const startIndex = pageIdx * 9;
+                const totalSlabsCount = globalBinderCollectionMemory.length;
+                const totalPagesCalculated = Math.max(1, Math.ceil(totalSlabsCount / 9));
+
+                document.getElementById('binderPagePaginationTicker').innerText = `Sheet ${pageIdx + 1} of ${totalPagesCalculated}`;
+
+                // Populate 9 loop index pocket slots nodes completely
+                for(let i = 0; i < 9; i++) {
+                    const targetDataIndex = startIndex + i;
+                    const pocketSlot = document.createElement('div');
+                    
+                    if(targetDataIndex < totalSlabsCount) {
+                        // Slot contains data row entry element
+                        const card = globalBinderCollectionMemory[targetDataIndex];
+                        pocketSlot.className = 'pocket-slot filled';
+                        
+                        // If it's a pristine/gem 10 apply permanent glowing pocket border trim style
+                        if(card.gradeBadge.includes('10') && !card.gradeBadge.includes('Drop')) { pocketSlot.classList.add('gold-slab-glow'); }
+                        
+                        pocketSlot.innerHTML = `
+                            <span class="pocket-grade-tab">${card.gradeBadge.split(' ')[0]} ${card.gradeBadge.match(/\d+/) ? card.gradeBadge.match(/\d+/)[0] : ''}</span>
+                            <img src="${card.frontImage || card.backImage}" class="pocket-img-render" alt="Showcase Capture">
+                        `;
+                        pocketSlot.addEventListener('click', () => triggerSlabDetailedOverlayPopupBox(card.docId));
+                    } else {
+                        // Slot empty shell placeholder cross wireframe node
+                        pocketSlot.className = 'pocket-slot'; pocketSlot.innerHTML = `<span class="empty-pocket-cross">×</span>`;
+                    }
+                    sheetGridNode.appendChild(pocketSlot);
+                }
+                sheetGridNode.classList.remove('sheet-turning-left'); // Snap crease out on layout reveal
+            }, 250);
+        }
+
+        // Binder Color Dot Listeners
+        document.querySelectorAll('.binder-color-dot').forEach(dot => {
+            dot.addEventListener('click', (e) => {
+                document.querySelectorAll('.binder-color-dot').forEach(d => d.classList.remove('active'));
+                dot.classList.add('active');
+                const selectedHex = dot.getAttribute('data-hex');
+                document.getElementById('binderOuterSkinHull').style.setProperty('--binder-color', selectedHex);
+            });
+        });
+
+        // Binder Naming Text Input Sync Listener
+        document.getElementById('customBinderNameBannerInput').addEventListener('input', (e) => {
+            const text = e.target.value.trim();
+            document.getElementById('renderBinderTitleHeaderDisplay').innerText = text || "Showcase Portfolio Album";
+        });
+
+        // Binder Pagination Listeners Navigation
+        document.getElementById('btnBinderPrevPage').addEventListener('click', () => { if(currentActiveBinderPageIndex > 0) { currentActiveBinderPageIndex--; renderBinderSheetGridPage(currentActiveBinderPageIndex); } });
+        document.getElementById('btnBinderNextPage').addEventListener('click', () => { const maxPages = Math.ceil(globalBinderCollectionMemory.length / 9); if(currentActiveBinderPageIndex < maxPages - 1) { currentActiveBinderPageIndex++; renderBinderSheetGridPage(currentActiveBinderPageIndex); } });
+
+        function clearBinderDisplayGridSlots() { document.getElementById('binderGridSheet9SlotPage').innerHTML = ""; document.getElementById('binderPortfolioValuationSumDisplay').innerText = "£0.00"; }
+
+        // EXPANDED SINGLE SLAB DETAIL OVERLAY TRIGGER POPUPS
+        const slabModal = document.getElementById('slabDetailModal');
+        function triggerSlabDetailedOverlayPopupBox(docId) {
+            activeSelectedSlabDocId = docId;
+            const card = globalBinderCollectionMemory.find(c => c.docId === docId); if(!card) return;
+
+            document.getElementById('modalSlabTitle').innerText = card.cardTitle;
+            document.getElementById('modalSlabMetrics').innerHTML = `
+                • <strong>Centering:</strong> L/R Split ${card.lrRatio} | T/B Split ${card.tbRatio}<br>
+                • <strong>Surface Condition Overrides:</strong> ${card.defects.length > 0 ? card.defects.join(', ') : 'None Marked'}<br>
+                • <strong>Market Evaluation index Value:</strong> £${parseFloat(card.cashValue || 1.50).toFixed(2)}
+            `;
+            const thumbnailsFlex = document.getElementById('modalSlabImagesFlex'); thumbnailsFlex.innerHTML = "";
+            if(card.frontImage) thumbnailsFlex.innerHTML += `<img src="${card.frontImage}" class="modal-img-thumb" onclick="window.open('${card.frontImage}', '_blank')">`;
+            if(card.backImage) thumbnailsFlex.innerHTML += `<img src="${card.backImage}" class="modal-img-thumb" onclick="window.open('${card.backImage}', '_blank')">`;
+            
+            slabModal.classList.add('active');
+        }
+        document.getElementById('closeSlabDetailModal').addEventListener('click', () => slabModal.classList.remove('active'));
+
+        // CARD PURGE REMOVAL CONTROLLER ROUTE
+        document.getElementById('btnPurgeCardDocumentFromBinder').addEventListener('click', async () => {
+            if(!activeSelectedSlabDocId || !currentUser) return;
+            const card = globalBinderCollectionMemory.find(c => c.docId === activeSelectedSlabDocId);
+            if(confirm(`Are you completely sure you want to delete "${card.cardTitle}" and its associated photos permanently from your storage ledger?`)) {
+                try {
+                    slabModal.classList.remove('active');
+                    await deleteDoc(doc(db, "card_scans", activeSelectedSlabDocId));
+                    if(card.frontImage) await deleteObject(ref(storage, card.frontImage)).catch(e=>{});
+                    if(card.backImage) await deleteObject(ref(storage, card.backImage)).catch(e=>{});
+                    alert("✓ Document permanently purged from cloud data vault.");
+                    syncMasterUserCloudBinderLedger();
+                } catch(e) { alert("Deletion failed."); }
             }
         });
 
-        // Interactive Crosshairs Logic mappings handles handles (Usability restored)
-        let isDraggingImage = false; let activeLine = null;
-        let startX, startY;
-        const outLeft = document.getElementById('outLeft'); const outRight = document.getElementById('outRight'); const outTop = document.getElementById('outTop'); const outBottom = document.getElementById('outBottom');
-        const inLeft = document.getElementById('inLeft'); const inRight = document.getElementById('inRight'); const inTop = document.getElementById('inTop'); const inBottom = document.getElementById('inBottom');
-
-        workspace.addEventListener('mousedown', startPan); workspace.addEventListener('touchstart', startPan, {passive: true});
-        window.addEventListener('mousemove', (e) => { if (activeLine) handleLineMove(e); }); window.addEventListener('touchmove', (e) => { if (activeLine) { if(e.cancelable) e.preventDefault(); handleLineMove(e); } }, {passive: false});
-        window.addEventListener('mouseup', () => { activeLine = null; }); window.addEventListener('touchend', () => { activeLine = null; });
-        outLeft.addEventListener('mousedown', (e) => activeLine = outLeft); outRight.addEventListener('mousedown', (e) => activeLine = outRight); outTop.addEventListener('mousedown', (e) => activeLine = outTop); outBottom.addEventListener('mousedown', (e) => activeLine = outBottom);
-        inLeft.addEventListener('mousedown', (e) => activeLine = inLeft); inRight.addEventListener('mousedown', (e) => activeLine = inRight); inTop.addEventListener('mousedown', (e) => activeLine = inTop); inBottom.addEventListener('mousedown', (e) => activeLine = inBottom);
-        outLeft.addEventListener('touchstart', (e) => activeLine = outLeft, {passive: true}); outRight.addEventListener('touchstart', (e) => activeLine = outRight, {passive: true}); outTop.addEventListener('touchstart', (e) => activeLine = outTop, {passive: true}); outBottom.addEventListener('touchstart', (e) => activeLine = outBottom, {passive: true});
-        inLeft.addEventListener('touchstart', (e) => activeLine = inLeft, {passive: true}); inRight.addEventListener('touchstart', (e) => activeLine = inRight, {passive: true}); inTop.addEventListener('touchstart', (e) => activeLine = inTop, {passive: true}); inBottom.addEventListener('touchstart', (e) => activeLine = inBottom, {passive: true});
-
-        function startPan(e) { /* Placeholder if physically panning image is restored later */ }
-        function handleLineMove(e) {
-            const rect = workspace.getBoundingClientRect(); const clientX = e.touches ? e.touches[0].clientX : e.clientX; const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-            if (activeLine.classList.contains('vertical')) { let posX = ((clientX - rect.left) / rect.width) * 100; if (posX >= 0 && posX <= 100) activeLine.style.left = posX + '%'; } 
-            else { let posY = ((clientY - rect.top) / rect.height) * 100; if (posY >= 0 && posY <= 100) activeLine.style.top = posY + '%'; }
-        }
+        // Setup General Instructions Help Modals Event Triggers
+        const helpModal = document.getElementById('helpModal');
+        document.getElementById('openHelp').addEventListener('click', () => helpModal.classList.add('active'));
+        document.getElementById('closeHelp').addEventListener('click', () => helpModal.classList.remove('active'));
     </script>
 </body>
 </html>
