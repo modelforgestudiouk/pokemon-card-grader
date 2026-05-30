@@ -13,13 +13,13 @@
             --text-gray: #8A8A93;
             --success-green: #00FFCC;
             --alert-red: #FF3333;
-            --gold-glow: 0 0 15px rgba(255, 215, 0, 0.75), inset 0 0 10px rgba(255, 215, 0, 0.5);
+            --gold-glow: 0 0 18px rgba(255, 215, 0, 0.85), inset 0 0 12px rgba(255, 215, 0, 0.5);
             --binder-color: #1A365D;
         }
 
         body { margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; background-color: var(--bg-dark); min-height: 100vh; color: var(--brand-white); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
         
-        /* Header styling */
+        /* Layout Header structure */
         .header-container { display: flex; align-items: center; justify-content: space-between; width: 350px; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #1c1c1e; }
         .logo-badge { background-color: var(--brand-orange); color: #000; font-weight: 900; font-size: 18px; padding: 5px 10px; border-radius: 6px; margin-right: 10px; }
         .logo-flex { display: flex; align-items: center; }
@@ -30,7 +30,7 @@
         .help-btn { background: none; border: 2px solid var(--brand-orange); color: var(--brand-orange); width: 26px; height: 26px; border-radius: 50%; font-size: 14px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .discord-btn-link { text-decoration: none; border: 2px solid #5865F2; color: #5865F2; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; }
 
-        /* Navigation Tabs */
+        /* Navigation Mode Selectors */
         .app-mode-bar { display: flex; width: 350px; gap: 8px; margin-bottom: 15px; }
         .mode-btn { flex: 1; padding: 12px; background-color: #111; border: 1px solid #222; color: var(--text-gray); font-weight: bold; font-size: 12px; border-radius: 8px; cursor: pointer; text-transform: uppercase; }
         .mode-btn.active { background-color: var(--panel-dark); border-color: var(--brand-orange); color: var(--brand-orange); }
@@ -47,23 +47,23 @@
         .auth-btn { background-color: #1c1c1e; border: 1px solid #2c2c2e; color: white; padding: 8px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 11px; flex: 1; text-transform: uppercase; }
         .auth-btn.primary { background-color: var(--brand-orange); border-color: var(--brand-orange); }
 
-        /* File Buttons Setup */
+        /* Premium Input file button layouts mapping */
         .upload-row { display: flex; gap: 10px; margin-bottom: 12px; width: 100%; box-sizing: border-box; }
-        .file-label { flex: 1; background: #1c1c1e; border: 2px dashed #3a3a3c; padding: 12px 5px; border-radius: 8px; font-size: 12px; color: var(--text-gray); cursor: pointer; text-align: center; font-weight: bold; text-transform: uppercase; display: inline-block; box-sizing: border-box; }
+        .file-label { flex: 1; background: #1c1c1e; border: 2px dashed #3a3a3c; padding: 12px 5px; border-radius: 8px; font-size: 11px; color: var(--text-gray); cursor: pointer; text-align: center; font-weight: bold; text-transform: uppercase; display: inline-block; box-sizing: border-box; }
         .file-label.has-file { border-color: var(--success-green); color: white; background: #0f1c18; }
-        .hidden-file-input { display: none !important; }
+        .hidden-file-input { display: none !important; width: 0; height: 0; opacity: 0; }
 
         .app-status-hud { width: 100%; font-size: 11px; font-family: monospace; color: var(--success-green); margin-bottom: 12px; display: none; text-align: left; background: #000; padding: 8px; border-radius: 6px; border: 1px solid #222; box-sizing: border-box; }
         .custom-button { background-color: var(--brand-orange); color: white; border: none; padding: 12px; border-radius: 8px; font-size: 13px; font-weight: bold; cursor: pointer; display: block; width: 100%; box-sizing: border-box; text-transform: uppercase; letter-spacing: 0.5px; text-align: center; margin-top: 10px; text-decoration: none; }
         .secondary-btn { background-color: #1c1c1e; border: 1px solid #3a3a3c; color: white; }
         
-        /* Alignment Grid Frame */
-        #workspace-container { display: none; position: relative; width: 100%; background: #000; border-radius: 8px; padding: 8px; box-sizing: border-box; border: 1px solid #222; margin-bottom: 10px; }
+        /* Labs Alignment Frames */
+        #workspace-container { display: none; position: relative; width: 100%; background: #000; border-radius: 8px; padding: 8px; box-sizing: border-box; border: 1px solid #222; margin-bottom: 12px; }
         #workspace-view-frame { position: relative; width: 100%; height: 380px; background-color: #050505; border-radius: 6px; overflow: hidden; }
         #imageContainer { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: absolute; }
         #previewImage { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
         
-        /* Crosshairs Lines Setup */
+        /* Crosshairs Boundary lines styles */
         .guide-line { position: absolute; z-index: 10; opacity: 0.85; }
         .vertical { width: 3px; height: 100%; top: 0; cursor: ew-resize; }
         .horizontal { height: 3px; width: 100%; left: 0; cursor: ns-resize; }
@@ -80,12 +80,15 @@
         .side-tab-btn { flex: 1; padding: 8px; background: #1c1c1e; border: 1px solid #222; color: var(--text-gray); font-size: 11px; font-weight: bold; border-radius: 6px; cursor: pointer; text-transform: uppercase; }
         .side-tab-btn.active { background: var(--brand-orange); color: white; border-color: var(--brand-orange); }
 
-        .search-input { width: 100%; background-color: #0a0a0b; border: 1px solid #2c2c2e; border-radius: 6px; padding: 10px; color: #FFF; font-size: 13px; box-sizing: border-box; }
+        .search-box { display: flex; gap: 6px; margin-bottom: 12px; width: 100%; box-sizing: border-box; }
+        .search-input { flex: 1; background-color: #0a0a0b; border: 1px solid #2c2c2e; border-radius: 6px; padding: 10px; color: #FFF; font-size: 13px; box-sizing: border-box; }
+        .search-btn { background-color: var(--brand-orange); border: none; color: white; font-weight: bold; padding: 0 14px; border-radius: 6px; cursor: pointer; text-transform: uppercase; font-size: 11px; }
+
         .company-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #1c1c1e; font-size: 13px; text-align: left; }
         .company-name { color: var(--text-gray); }
         .company-verdict { font-weight: bold; }
         .perfect { color: #FFD700 !important; text-shadow: 0 0 6px rgba(255,215,0,0.3); }
-        .gold-slab-glow { border: 1px solid #FFD700 !important; box-shadow: var(--gold-glow) !important; position: relative; }
+        .gold-slab-glow { border: 1px solid #FFD700 !important; box-shadow: var(--gold-glow) !important; z-index: 10; }
 
         .defect-checklist { text-align: left; background: #0c0c0d; padding: 12px; border-radius: 8px; border: 1px solid #1a1a1c; margin-top: 10px; }
         .check-item { display: flex; align-items: center; gap: 10px; margin: 8px 0; font-size: 12px; color: var(--brand-white); cursor: pointer; }
@@ -93,40 +96,39 @@
 
         #save-ledger-form-block { display: none; background: #0c0c0d; border: 1px solid #222; border-radius: 8px; padding: 12px; margin-top: 12px; text-align: left; }
 
-        /* REALISTIC SHOWCASE 3X3 BINDER ALBUM FRAME SYSTEM */
+        /* REALISTIC 3D SHOWCASE PORTFOLIO SHEET GRID MODULE OVERHAUL (Suggestions 11-18) */
         #binder-customizer-dropdown-drawer { display: none; background: #111; padding: 12px; border-radius: 8px; border: 1px solid #222; margin-bottom: 12px; text-align: left; }
         .binder-color-dot { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; display: inline-block; margin-right: 8px; }
         .binder-color-dot.active { border-color: white; }
         
-        .binder-wrapper-scroller { position: relative; width: 100%; display: flex; justify-content: center; padding: 5px 0; }
-        .binder-outer-skin { position: relative; width: 340px; background-color: var(--binder-color); border-radius: 12px; padding: 12px 12px 12px 24px; box-sizing: border-box; box-shadow: 0 15px 35px rgba(0,0,0,0.6), inset -10px 0 20px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.05); display: flex; }
+        .binder-wrapper-scroller { position: relative; width: 100%; display: flex; justify-content: center; padding: 10px 0; }
         
-        .binder-spine-rings { position: absolute; left: 6px; top: 0; width: 12px; height: 100%; display: flex; flex-direction: column; justify-content: space-around; padding: 25px 0; box-sizing: border-box; z-index: 30; }
-        .binder-ring-metal { width: 10px; height: 24px; border: 3px solid #b0b0b5; border-right: none; border-radius: 12px 0 0 12px; background: transparent; box-shadow: -2px 2px 4px rgba(0,0,0,0.5), inset 1px 1px 2px white; margin-bottom: 30px; }
+        /* 3D Realism styles: asymmetric padding splits, left metal drop rings margin shadows */
+        .binder-outer-skin { position: relative; width: 345px; background-color: var(--binder-color); border-radius: 12px; padding: 12px 12px 12px 28px; box-sizing: border-box; box-shadow: 0 20px 45px rgba(0,0,0,0.75), inset -12px 0 24px rgba(0,0,0,0.5), inset 4px 4px 10px rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.06); display: flex; transition: background-color 0.2s; }
+        .binder-spine-rings { position: absolute; left: 8px; top: 0; width: 14px; height: 100%; display: flex; flex-direction: column; justify-content: space-around; padding: 30px 0; box-sizing: border-box; z-index: 35; }
+        .binder-ring-metal { width: 12px; height: 26px; border: 3px solid #bcbcc2; border-right: none; border-radius: 14px 0 0 14px; background: transparent; box-shadow: -3px 3px 5px rgba(0,0,0,0.6), inset 1px 1px 2px white; margin-bottom: 25px; position: relative; }
 
-        .binder-sheet-9-pocket { position: relative; width: 100%; background: rgba(10, 10, 12, 0.98); border-radius: 6px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 8px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.1); overflow: hidden; }
-        .binder-sheet-9-pocket::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 30%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.03) 80%, rgba(255,255,255,0) 100%); pointer-events: none; z-index: 25; border-radius: 6px; }
+        .binder-sheet-9-pocket { position: relative; width: 100%; background: linear-gradient(180deg, #0b0b0d 0%, #111114 100%); border-radius: 6px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 10px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.12); overflow: hidden; box-shadow: 2px 4px 15px rgba(0,0,0,0.9); }
+        
+        /* Clear Plastic Overlay Layer Reflection Sheen */
+        .binder-sheet-9-pocket::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 25%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.04) 75%, rgba(255,255,255,0) 100%); pointer-events: none; z-index: 25; border-radius: 6px; }
 
-        .pocket-slot { position: relative; aspect-ratio: 2.5 / 3.5; background: #050506; border: 1px dashed rgba(255,255,255,0.05); border-radius: 4px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,0.8); }
-        .pocket-slot.filled { border: 1px solid rgba(255,255,255,0.15); background: #141416; box-shadow: 0 4px 8px rgba(0,0,0,0.5); cursor: pointer; }
-        .pocket-img-render { width: 100%; height: 100%; object-fit: cover; display: block; position: absolute; top:0; left:0; }
-        .pocket-grade-tab { position: absolute; top: 3px; right: 3px; background: var(--brand-orange); color: black; font-weight: 900; font-size: 8px; padding: 1px 3px; border-radius: 2px; z-index: 10; }
-        .empty-pocket-cross { font-size: 12px; color: rgba(255,255,255,0.03); font-weight: bold; }
+        /* FIXED IMAGES RENDERING LAYERS */
+        .pocket-slot { position: relative; aspect-ratio: 2.5 / 3.5; background: #040405; border: 1px dashed rgba(255,255,255,0.05); border-radius: 4px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: inset 0 3px 6px rgba(0,0,0,0.85); }
+        .pocket-slot.filled { border: 1px solid rgba(255,255,255,0.16); background: #131316; box-shadow: 0 4px 10px rgba(0,0,0,0.6); cursor: pointer; }
+        .pocket-img-render { width: 100%; height: 100%; object-fit: cover; display: block; position: absolute; top: 0; left: 0; z-index: 5; }
+        .pocket-grade-tab { position: absolute; top: 4px; right: 4px; background: var(--brand-orange); color: black; font-weight: 900; font-size: 8px; padding: 1px 3px; border-radius: 2px; z-index: 15; text-transform: uppercase; letter-spacing: 0.3px; }
+        .empty-pocket-cross { font-size: 11px; color: rgba(255,255,255,0.02); font-weight: bold; }
 
         .binder-pagination-dock { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 10px; font-size: 11px; color: var(--text-gray); }
-        .page-arrow-btn { background: #111; border: 1px solid #222; color: white; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+        .page-arrow-btn { background: #111; border: 1px solid #222; color: white; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 11px; }
 
-        /* Overlay Modals */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
-        .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .modal-card { background-color: var(--panel-dark); border: 2px solid var(--brand-orange); padding: 25px; border-radius: 18px; width: 300px; color: var(--brand-white); max-height: 80vh; overflow-y: auto; }
-        .modal-card h3 { color: var(--brand-orange); margin-top: 0; text-transform: uppercase; font-weight: 900; }
-        
-        .slab-detail-modal-card { background-color: var(--panel-dark); border: 1px solid #333; border-radius: 12px; padding: 20px; width: 310px; text-align: left; color: white; position: relative; }
+        /* Overlay Modals Framework stylesheet layout */
+        .slab-detail-modal-card { background-color: var(--panel-dark); border: 1px solid #333; border-radius: 12px; padding: 20px; width: 310px; text-align: left; color: white; }
         .modal-slab-header { border-bottom: 2px solid var(--brand-orange); padding-bottom: 4px; font-weight: bold; font-size: 14px; margin-bottom: 10px; text-transform: uppercase; }
         .modal-img-row { display: flex; gap: 8px; height: 120px; margin: 12px 0; }
         .modal-img-thumb { flex: 1; border-radius: 4px; object-fit: cover; background: #000; border: 1px solid #222; }
-        .close-modal-x-btn { background-color: var(--brand-orange); color: white; border: none; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 11px; width: 100%; margin-top: 10px; }
+        .close-modal-x-btn { background-color: var(--brand-orange); color: white; border: none; padding: 10px; border-radius: 6px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 11px; width: 100%; margin-top: 10px; text-align: center; }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 </head>
@@ -189,7 +191,7 @@
             <div id="workspace-container">
                 <div id="workspace-view-frame">
                     <div id="imageContainer">
-                        <img id="previewImage" alt="Lab Workspace Face">
+                        <img id="previewImage" alt="Lab Alignment Face">
                     </div>
                     <div id="outLeft" class="guide-line vertical outer-line" style="left: 8%;"></div>
                     <div id="outRight" class="guide-line vertical outer-line" style="left: 92%;"></div>
@@ -201,6 +203,11 @@
                     <div id="inTop" class="guide-line horizontal inner-line" style="top: 18%;"></div>
                     <div id="inBottom" class="guide-line horizontal inner-line" style="top: 82%;"></div>
                 </div>
+            </div>
+
+            <div class="search-box" style="margin-top:12px;">
+                <input type="text" id="manualCardQuerySearchField" class="search-input" placeholder="Failsafe Search (e.g. Charizard 151)">
+                <button id="btnManualDatabaseSearchAPI" class="search-btn">Find</button>
             </div>
 
             <button id="calculateButton" class="custom-button" style="display:none;">Run Multi-Point Calculations</button>
@@ -284,10 +291,10 @@
     <div class="modal-overlay" id="helpModal">
         <div class="modal-card">
             <h3>MFS Pre-Grader Manual Guide</h3>
-            <p><strong>1. Setup Your Vault Account:</strong> Register an account at the top to track your portfolio album history.</p>
-            <p><strong>2. Front Face Auto-Fills:</strong> Upload a crisp front image against a black background. The vision engine parses card text automatically.</p>
-            <p><strong>3. Optional Dual-Face Calculations:</strong> Back card captures are completely optional. If a back photo is missing, calculations process 100% on front stats. If a back photo is present, the formula automatically balances alignment metrics across both faces (60% front / 40% back weight).</p>
-            <p><strong>4. 3x3 Pocket Binder:</strong> Open your Showcase Binder tab to custom brand, rename, and view your digital ledger items saved directly inside interactive pocket display sheets.</p>
+            <p><strong>1. Setup Your Vault Portfolio Account:</strong> Register an account at the top to track your portfolio album history securely.</p>
+            <p><strong>2. Front Face Auto-Fills Scanning Channels:</strong> Upload a crisp front image file against a solid black backdrop. The integrated Smart Vision background parser reads alignment symbols and fills target catalog input details completely hands-free.</p>
+            <p><strong>3. Optional Dual-Face Calculations:</strong> Back card captures are completely optional. If a back photo is missing, calculations process 100% on front centering stats. If a back photo is present, the formula automatically balances alignment metrics across both faces (60% front / 40% back weight).</p>
+            <p><strong>4. 3x3 Pocket Binder Layout:</strong> Open your Showcase Binder tab to custom brand, rename, and view your digital ledger items saved directly inside interactive pocket display sheets.</p>
             <button class="close-modal-x-btn" id="closeHelp">Got It</button>
         </div>
     </div>
@@ -321,7 +328,7 @@
         const viewScanner = document.getElementById('viewScanner'); const viewBinder = document.getElementById('viewBinder');
         const binderGridSheet9SlotPage = document.getElementById('binderGridSheet9SlotPage');
 
-        // FIXED MODAL TRIGGER WIRES
+        // FIXED MODAL TRIGGER LISTENERS INTERFACES (FIX)
         const helpModal = document.getElementById('helpModal');
         const slabModal = document.getElementById('slabDetailModal');
         document.getElementById('openHelp').addEventListener('click', () => helpModal.classList.add('active'));
@@ -354,7 +361,7 @@
         });
         document.getElementById('btnSignOut').addEventListener('click', () => signOut(auth));
 
-        // CHANNELS CONTROLS
+        // CHANNELS FILE PIPELINES
         const frontFile = document.getElementById('frontFile'); const backFile = document.getElementById('backFile');
         const frontLabel = document.getElementById('frontLabel'); const backLabel = document.getElementById('backLabel');
         const sideTabs = document.getElementById('sideTabs'); const tabFront = document.getElementById('tabFront'); const tabBack = document.getElementById('tabBack');
@@ -400,7 +407,7 @@
         tabFront.addEventListener('click', () => { if(alignmentLabStateCache.front.src) switchLabWorkspaceActiveChannel('front'); });
         tabBack.addEventListener('click', () => { if(alignmentLabStateCache.back.src) switchLabWorkspaceActiveChannel('back'); });
 
-        // CALCULATE TRACKS
+        // DRAG CROSSHAIRS LINES LOGIC
         let activeTrackLineNode = null;
         const outL = document.getElementById('outLeft'); const outR = document.getElementById('outRight'); const outT = document.getElementById('outTop'); const outB = document.getElementById('outBottom');
         const inL = document.getElementById('inLeft'); const inR = document.getElementById('inRight'); const inT = document.getElementById('inTop'); const inB = document.getElementById('inBottom');
@@ -457,6 +464,7 @@
                 let queryStr = `${name} ${num}`.trim();
                 if(queryStr.length > 2) {
                     document.getElementById('customCardSaveTitleField').value = queryStr;
+                    document.getElementById('manualCardQuerySearchField').value = queryStr; // Lock down into restored input bar
                     ocrStatusLog.innerText = `✓ Vision recognized: "${queryStr}". Data locked to ledger form field.`;
                     executeAutomatedLivePriceLookupAPI(queryStr);
                 } else { ocrStatusLog.innerText = "⚠️ Vision unindexed. Custom tracking parameters ready."; }
@@ -480,7 +488,17 @@
             } catch(e) { console.log("Default pricing values retained."); }
         }
 
-        // DUAL-FACE GRADING CORE MATH
+        // RESTORED MANUAL PRICE ENGINE CLICK EVENT LINK
+        document.getElementById('btnManualDatabaseSearchAPI').addEventListener('click', () => {
+            const val = document.getElementById('manualCardQuerySearchField').value.trim();
+            if(val) {
+                document.getElementById('customCardSaveTitleField').value = val;
+                executeAutomatedLivePriceLookupAPI(val);
+                alert(`✓ Price search synchronized for: "${val}"`);
+            }
+        });
+
+        // DUAL FACE OPTIONAL MATHEMATICS WEIGHTS ENGINE
         let compiledFinalLedgerPayloadBlock = null;
         calculateButton.addEventListener('click', () => {
             cacheCurrentLinesLocations(currentSelectedLabSide);
@@ -488,10 +506,10 @@
             const fWorstLR = calculateSideMaxSplitPercentage(alignmentLabStateCache.front.ol, alignmentLabStateCache.front.or, alignmentLabStateCache.front.il, alignmentLabStateCache.front.ir);
             const fWorstTB = calculateSideMaxSplitPercentage(alignmentLabStateCache.front.ot, alignmentLabStateCache.front.ob, alignmentLabStateCache.front.it, alignmentLabStateCache.front.ib);
             
-            // FIXED CALCULATION CONTROLS: If back photo doesn't exist, ignore weight formula entirely
             let finalWorstLR = fWorstLR;
             let finalWorstTB = fWorstTB;
             
+            // OPTIONAL CALCULATION PIPELINE WEIGHT BALANCE (FIX)
             if(alignmentLabStateCache.back.src) {
                 cacheCurrentLinesLocations('back');
                 const bWorstLR = calculateSideMaxSplitPercentage(alignmentLabStateCache.back.ol, alignmentLabStateCache.back.or, alignmentLabStateCache.back.il, alignmentLabStateCache.back.ir);
@@ -553,7 +571,7 @@
         }
 
         document.getElementById('btnExecuteBinderFilingCloud').addEventListener('click', async () => {
-            if(!currentUser || !compiledFinalLedgerPayloadBlock) return alert("Verify account status.");
+            if(!currentUser || !compiledFinalLedgerPayloadBlock) return alert("Verify authentication status.");
             const verifiedFinalTitle = document.getElementById('customCardSaveTitleField').value.trim() || "Unindexed Custom Entry Shell";
             const fireButton = document.getElementById('btnExecuteBinderFilingCloud');
             fireButton.innerText = "☁️ SECURING VECTORS..."; fireButton.disabled = true;
@@ -576,7 +594,7 @@
             } catch(e) { alert("Filing failed."); } finally { fireButton.innerText = "☁️ Lock Straight Into My Binder Ledger"; fireButton.disabled = false; }
         });
 
-        // FIXED 3X3 BINDER ALBUM SYSTEM CORE MATRICES (REBUILD)
+        // FIXED 2-PAGE 18-SLOTS MESH EMBED FOR PORTFOLIO BINDER
         async function syncMasterUserCloudBinderLedger() {
             if(!currentUser) return;
             binderGridSheet9SlotPage.innerHTML = ""; clearBinderDisplayGridSlots();
@@ -585,7 +603,11 @@
                 const snap = await getDocs(qDocs); globalBinderCollectionMemory = [];
                 snap.forEach(d => globalBinderCollectionMemory.push({ docId: d.id, ...d.data() }));
                 
-                let sum = 0; globalBinderCollectionMemory.forEach(c => sum += parseFloat(c.cashValue || 1.50));
+                // FIXED ZERO BALANCE MATH GHOST VALUE ERRORS (FIX)
+                let sum = 0; 
+                if (globalBinderCollectionMemory.length > 0) {
+                    globalBinderCollectionMemory.forEach(c => sum += parseFloat(c.cashValue || 0));
+                }
                 document.getElementById('binderPortfolioValuationSumDisplay').innerText = `£${sum.toFixed(2)}`;
                 
                 renderBinderSheetGridPage(currentActiveBinderPageIndex);
@@ -597,7 +619,7 @@
             const startIndex = pageIdx * 9;
             const totalCount = globalBinderCollectionMemory.length;
             
-            // FIXED POCKET STRUCTURE: Forces exactly 18 slots total (2 pages) even if user has zero cards
+            // FORCE EXACTLY 18 POCKET TEMPLATE BOX MESH ROSTER CORES FOR TWO STABLE PAGES (FIX)
             const totalSlotsToRender = Math.max(18, Math.ceil(totalCount / 9) * 9);
             const totalPages = Math.ceil(totalSlotsToRender / 9);
 
@@ -608,7 +630,6 @@
                 const slot = document.createElement('div');
                 
                 if(targetIdx < totalCount) {
-                    // Pocket slot has archived data entry slab card
                     const card = globalBinderCollectionMemory[targetIdx];
                     slot.className = 'pocket-slot filled';
                     if(card.gradeBadge.includes('10') && !card.gradeBadge.includes('Drop')) slot.classList.add('gold-slab-glow');
@@ -620,14 +641,13 @@
                     `;
                     slot.addEventListener('click', () => triggerSlabDetailedOverlayPopupBox(card.docId));
                 } else {
-                    // Empty grid pocket shell wireframe slots template
                     slot.className = 'pocket-slot'; slot.innerHTML = `<span class="empty-pocket-cross">×</span>`;
                 }
                 binderGridSheet9SlotPage.appendChild(slot);
             }
         }
 
-        // DRAWER CUSTOMIZER TOGGLES
+        // CONTROL CUSTOMIZER TOGGLES DRAWER
         const btnToggleBinderCustomizerMenu = document.getElementById('btnToggleBinderCustomizerMenu');
         const binderCustomizerDropdownDrawer = document.getElementById('binder-customizer-dropdown-drawer');
         btnToggleBinderCustomizerMenu.addEventListener('click', () => {
@@ -651,7 +671,7 @@
         document.getElementById('btnBinderNextPage').addEventListener('click', () => { const totalSlots = Math.max(18, Math.ceil(globalBinderCollectionMemory.length / 9) * 9); const totalPages = Math.ceil(totalSlots / 9); if(currentActiveBinderPageIndex < totalPages - 1) { currentActiveBinderPageIndex++; renderBinderSheetGridPage(currentActiveBinderPageIndex); } });
         function clearBinderDisplayGridSlots() { renderBinderSheetGridPage(0); document.getElementById('binderPortfolioValuationSumDisplay').innerText = "£0.00"; }
 
-        // EXHAUSTIVE MODAL DETAIL OVERLAYS
+        // OVERLAY DETAILS SLAB WINDOW DISPLAY
         function triggerSlabDetailedOverlayPopupBox(docId) {
             activeSelectedSlabDocId = docId;
             const card = globalBinderCollectionMemory.find(c => c.docId === docId); if(!card) return;
@@ -659,7 +679,7 @@
             document.getElementById('modalSlabMetrics').innerHTML = `
                 • <strong>Centering Layout:</strong> L/R Bound Split ${card.lrRatio} | T/B bound Split ${card.tbRatio}<br>
                 • <strong>Condition Defect Overrides:</strong> ${card.defects.length > 0 ? card.defects.join(', ') : 'None marked'}<br>
-                • <strong>Assigned live Worth:</strong> £${parseFloat(card.cashValue || 1.50).toFixed(2)}
+                • <strong>Assigned live Worth:</strong> £${parseFloat(card.cashValue || 0).toFixed(2)}
             `;
             const flex = document.getElementById('modalSlabImagesFlex'); flex.innerHTML = "";
             if(card.frontImage) flex.innerHTML += `<img src="${card.frontImage}" class="modal-img-thumb" onclick="window.open('${card.frontImage}', '_blank')">`;
