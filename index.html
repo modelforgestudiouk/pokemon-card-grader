@@ -13,12 +13,13 @@
             --text-gray: #A6A6A6;
             --success-green: #00FFCC;
             --alert-red: #FF3333;
-            --gold-glow: 0 0 20px rgba(255, 215, 0, 0.8);
+            --gold-glow: 0 0 25px rgba(255, 215, 0, 0.9), inset 0 0 15px rgba(255, 215, 0, 0.5);
             --binder-color: #1A365D;
         }
 
         body { margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; background-color: var(--bg-dark); min-height: 100vh; color: var(--brand-white); font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
         
+        /* Layout Bar Header */
         .header-container { display: flex; align-items: center; justify-content: space-between; width: 350px; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #222; }
         .logo-badge { background-color: var(--brand-orange); color: var(--bg-dark); font-weight: 900; font-size: 20px; padding: 5px 12px; border-radius: 8px; margin-right: 12px; }
         .logo-flex { display: flex; align-items: center; }
@@ -52,15 +53,17 @@
         .tab-btn { flex: 1; padding: 10px; background: #222; border: 1px solid #333; color: var(--text-gray); font-weight: bold; border-radius: 6px; cursor: pointer; text-transform: uppercase; font-size: 13px; }
         .tab-btn.active { background: var(--brand-orange); color: white; border-color: var(--brand-orange); }
         
-        #controlDock { display: none; justify-content: space-between; margin-top: 10px; background: #222; padding: 8px; border-radius: 8px; flex-wrap: wrap; gap: 5px; width: 100%; box-sizing: border-box; }
-        .dock-btn { background: none; border: 1px solid var(--brand-orange); color: var(--brand-white); padding: 6px 10px; border-radius: 5px; font-size: 11px; font-weight: bold; cursor: pointer; }
-        .dock-btn.active { background: var(--brand-orange); }
+        /* 3D MANIPULATION PLATFORM CONTROLS */
+        #controlDock { display: none; justify-content: space-between; margin-top: 10px; background: #1a1a1c; padding: 10px; border-radius: 8px; flex-wrap: wrap; gap: 6px; width: 100%; box-sizing: border-box; border: 1px solid #2d2d30; }
+        .dock-btn { background: #111; border: 1px solid var(--brand-orange); color: var(--brand-white); padding: 8px 10px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+        .dock-btn.active { background: var(--brand-orange); color: black; }
 
-        #workspace { position: relative; width: 310px; height: 430px; margin: 15px auto; display: none; background-color: #000; border-radius: 8px; overflow: hidden; border: 1px solid #333; }
+        /* Perspective Engine Anchor Viewports */
+        #workspace { position: relative; width: 310px; height: 430px; margin: 15px auto; display: none; background-color: #030304; border-radius: 8px; overflow: hidden; border: 1px solid #333; perspective: 1000px; }
         #imageContainer { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transform-origin: center center; position: absolute; top: 0; left: 0; }
-        #previewImage { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
+        #previewImage { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; transition: transform 0.1s; }
         
-        /* Guide Lines Crosshairs */
+        /* Boundary tracks crosshairs lines style variables mapping */
         .guide-line { position: absolute; z-index: 10; opacity: 0.9; }
         .vertical { width: 3px; height: 100%; top: 0; cursor: ew-resize; }
         .horizontal { height: 3px; width: 100%; left: 0; cursor: ns-resize; }
@@ -73,8 +76,7 @@
         .vertical.inner-line::after { top: 35%; left: -11px; transform: translateY(-50%); }
         .horizontal.inner-line::after { left: 35%; top: -11px; transform: translateX(-50%); }
 
-        /* Custom Interactive Placed Damage Pins Markers style layout rules mapping */
-        .damage-dot-marker { position: absolute; width: 14px; height: 14px; background-color: #FF1111; border: 2px solid #FFF; border-radius: 50%; z-index: 22; transform: translate(-50%, -50%); pointer-events: auto; cursor: pointer; box-shadow: 0 0 10px #FF0000; }
+        .damage-dot-marker { position: absolute; width: 16px; height: 16px; background-color: #FF1111; border: 2px solid #FFF; border-radius: 50%; z-index: 22; transform: translate(-50%, -50%); pointer-events: auto; cursor: pointer; box-shadow: 0 0 12px #FF0000; }
 
         .info-panel { width: 100%; background-color: var(--panel-dark); padding: 15px; border-radius: 15px; box-sizing: border-box; border: 1px solid #2B2B2B; margin-bottom: 20px; }
         .panel-title { font-size: 16px; color: var(--brand-orange); font-weight: bold; margin: 0 0 12px 0; border-bottom: 1px solid #333; padding-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
@@ -83,7 +85,7 @@
         .company-name { color: var(--text-gray); }
         .company-verdict { font-weight: bold; }
         .perfect { color: #FFD700 !important; text-shadow: 0 0 8px rgba(255,215,0,0.4); }
-        .gold-slab-glow { border: 1px solid #FFD700 !important; box-shadow: var(--gold-glow) !important; }
+        .gold-slab-glow { border: 2px solid #FFD700 !important; box-shadow: var(--gold-glow) !important; }
 
         .search-box { display: flex; gap: 8px; margin-top: 5px; width: 100%; box-sizing: border-box; }
         .search-input { flex: 1; background-color: #0D0D0D; border: 1px solid #333; border-radius: 6px; padding: 10px; color: #FFF; font-size: 14px; }
@@ -93,7 +95,6 @@
         .price-val { font-weight: bold; color: var(--success-green); }
         #ebayLink { background-color: #0056B3; color: white; font-size: 13px; margin-top: 15px; display: inline-block; }
 
-        /* Compressed Droplist Header controls styles layout */
         .damage-toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; margin-bottom: 12px; }
         .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
         .switch input { opacity: 0; width: 0; height: 0; }
@@ -106,9 +107,8 @@
 
         #save-ledger-form-block { display: none; background: #0c0c0d; border: 1px solid #222; border-radius: 8px; padding: 12px; margin-top: 12px; text-align: left; }
         .custom-button { background-color: var(--brand-orange); color: var(--brand-white); border: none; padding: 12px 25px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; display: inline-block; width: 100%; box-sizing: border-box; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; text-align: center; }
-        #calculateButton { background-color: var(--brand-white); color: var(--bg-dark); display: none; margin-top: 15px; }
 
-        /* DETAILED IMMERSIVE VIRTUAL 3D BINDER GRAPHICS SHEET SYSTEM */
+        /* PREMIUM 3D OPEN BOOK BINDER SYSTEM SHEETS GRAPHICS */
         #binder-customizer-dropdown-drawer { display: none; background: #111; padding: 15px; border-radius: 10px; border: 1px solid #222; margin-bottom: 15px; text-align: left; }
         .binder-color-dot { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; display: inline-block; margin-right: 8px; }
         .binder-color-dot.active { border-color: white; }
@@ -118,10 +118,10 @@
         .binder-spine-rings { position: absolute; left: 6px; top: 0; width: 12px; height: 100%; display: flex; flex-direction: column; justify-content: space-around; padding: 25px 0; box-sizing: border-box; z-index: 30; }
         .binder-ring-metal { width: 10px; height: 24px; border: 3px solid #b0b0b5; border-right: none; border-radius: 12px 0 0 12px; background: transparent; box-shadow: -2px 2px 4px rgba(0,0,0,0.5), inset 1px 1px 2px white; margin-bottom: 30px; }
 
-        .binder-sheet-9-pocket { position: relative; width: 100%; background: rgba(10, 10, 12, 0.98); border-radius: 6px; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 6px; padding: 8px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.1); height: 420px; }
+        .binder-sheet-9-pocket { position: relative; width: 100%; background: #0c0c0e; border-radius: 6px; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 6px; padding: 8px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.1); height: 420px; }
         .binder-sheet-9-pocket::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 30%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.03) 80%, rgba(255,255,255,0) 100%); pointer-events: none; z-index: 25; border-radius: 6px; }
 
-        .pocket-slot { position: relative; width: 100%; height: 100%; background: #050506; border: 1px dashed rgba(255,255,255,0.05); border-radius: 4px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,0.8); }
+        .pocket-slot { position: relative; width: 100%; height: 100%; background: #040405; border: 1px dashed rgba(255,255,255,0.04); border-radius: 4px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,0.8); }
         .pocket-slot.filled { border: 1px solid rgba(255,255,255,0.15); background: #141416; box-shadow: 0 4px 8px rgba(0,0,0,0.5); cursor: pointer; }
         .pocket-img-render { width: 100%; height: 100%; object-fit: cover; display: block; position: absolute; top:0; left:0; z-index: 5; }
         .pocket-grade-tab { position: absolute; top: 3px; right: 3px; background: var(--brand-orange); color: black; font-weight: 900; font-size: 8px; padding: 1px 3px; border-radius: 2px; z-index: 10; }
@@ -130,15 +130,20 @@
         .binder-pagination-dock { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 10px; font-size: 11px; color: var(--text-gray); }
         .page-arrow-btn { background: #111; border: 1px solid #222; color: white; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
 
-        /* PREMIUM INTEGRATED PULLOUT INDEPENDENT SLAB MODAL (REBUILT CLEAN) */
-        .slab-pullout-frame { background-color: #151517; border: 2px solid var(--brand-orange); border-radius: 16px; padding: 18px; width: 335px; box-sizing: border-box; text-align: left; }
-        .slab-pullout-title { font-size: 16px; font-weight: bold; border-bottom: 2px solid var(--brand-orange); padding-bottom: 6px; margin-bottom: 12px; text-transform: uppercase; color: white; }
+        /* THE PREMIUM 3D FLOATING SLAB INSPECTION FRAME (Suggestions 11-18 REBUILT DETAILED) */
+        .slab-pullout-frame { background-color: #151518; border: 2px solid var(--brand-orange); border-radius: 16px; padding: 18px; width: 335px; box-sizing: border-box; text-align: left; box-shadow: 0 25px 60px rgba(0,0,0,0.95); }
+        .slab-pullout-title { font-size: 16px; font-weight: bold; border-bottom: 2px solid var(--brand-orange); padding-bottom: 6px; margin-bottom: 12px; text-transform: uppercase; color: white; letter-spacing: 0.5px; }
         .slab-pullout-workspace-mirror { position: relative; width: 100%; height: 320px; background: #000; border-radius: 8px; border: 1px solid #333; overflow: hidden; margin: 12px 0; }
         .slab-pullout-input-edit-row { display: flex; gap: 8px; margin: 12px 0; }
-        .slab-pullout-edit-input { flex: 1; background-color: #050506; border: 1px solid #333; border-radius: 6px; padding: 8px; color: white; font-size: 13px; }
-        .slab-pullout-edit-save-btn { background-color: var(--success-green); border: none; color: black; font-weight: bold; padding: 0 12px; border-radius: 6px; cursor: pointer; font-size: 12px; text-transform: uppercase; }
+        .slab-pullout-edit-input { flex: 1; background-color: #050506; border: 1px solid #333; border-radius: 6px; padding: 10px; color: white; font-size: 13px; }
+        .slab-pullout-edit-save-btn { background-color: var(--success-green); border: none; color: black; font-weight: bold; padding: 0 14px; border-radius: 6px; cursor: pointer; font-size: 12px; text-transform: uppercase; }
 
-        .legal-disclaimer-footer { width: 350px; font-size: 11px; color: #444; text-align: center; line-height: 1.4; margin: 15px 0; padding-top: 10px; border-top: 1px solid #111; }
+        /* Modals Overlays Sheet */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .modal-card { background-color: var(--panel-dark); border: 2px solid var(--brand-orange); padding: 25px; border-radius: 18px; width: 320px; color: var(--brand-white); max-height: 85vh; overflow-y: auto; }
+        .modal-card h3 { color: var(--brand-orange); margin-top: 0; text-transform: uppercase; font-weight: 900; }
+        .close-modal-x-btn { background-color: var(--brand-orange); color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 11px; width: 100%; margin-top: 10px; text-align: center; }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 </head>
@@ -201,8 +206,10 @@
             <div id="controlDock">
                 <button class="dock-btn" id="zoomIn">🔍 Zoom +</button>
                 <button class="dock-btn" id="zoomOut">🔍 Zoom -</button>
-                <button class="dock-btn" id="rotateLeft">🔄 Tilt L</button>
-                <button class="dock-btn" id="rotateRight">🔄 Tilt R</button>
+                <button class="dock-btn" id="rotateLeft">🔄 Rotate L</button>
+                <button class="dock-btn" id="rotateRight">🔄 Rotate R</button>
+                <button class="dock-btn" id="leanForward">📐 Lean Fwd</button>
+                <button class="dock-btn" id="leanBackward">📐 Lean Back</button>
                 <button class="dock-btn" id="panModeBtn" style="border-color:var(--success-green)">✋ Pan Mode</button>
             </div>
 
@@ -252,7 +259,7 @@
             </div>
         </div>
 
-        <div class="info-panel" id="resultsPanel" style="display: none;">
+        <div class="info-panel" id="resultsPanel" style="display: none !important;">
             <div class="panel-title">Calculated Centering Metrics</div>
             <div class="company-row" style="justify-content:center; padding:0 0 8px 0;"><span id="ratioDisplayHUD" style="font-family:monospace; font-size:13px; font-weight:bold; color:white;">--</span></div>
             <div class="company-row"><span class="company-name">PSA Predicted Standard:</span><span id="psaVerdict" class="company-verdict">Evaluating...</span></div>
@@ -336,14 +343,14 @@
     <div class="modal-overlay" id="slabDetailModal">
         <div class="slab-pullout-frame" id="slabPulloutCardNodeBox">
             <div class="slab-pullout-title" id="modalSlabTitle">Showcase Slab Deck</div>
-            <div style="font-size:12px; color:var(--text-gray); line-height:1.5;" id="modalSlabMetrics">Metrics breakdown details loading ledger...</div>
+            <div style="font-size:12px; color:var(--text-gray); line-height:1.5;" id="modalSlabMetrics">Metrics loading ledger breakdown...</div>
             
             <div class="slab-pullout-workspace-mirror" id="modalSlabVisualCanvasMirror">
                 <img id="modalSlabPrimaryImageRenderPath" style="width:100%; height:100%; object-fit:contain;">
             </div>
 
             <div class="slab-pullout-input-edit-row">
-                <input type="text" id="editSlabCardTitleInlineInputField" class="slab-pullout-edit-input" placeholder="Edit Card Title Entry Name">
+                <input type="text" id="editSlabCardTitleInlineInputField" class="slab-pullout-edit-input" placeholder="Change Card Custom Name">
                 <button id="btnSaveSlabTitleEditInline" class="slab-pullout-edit-save-btn">Save</button>
             </div>
 
@@ -355,15 +362,11 @@
     <div class="modal-overlay" id="helpModal">
         <div class="modal-card">
             <h3>MFS Pre-Grader Manual Guide</h3>
-            <p><strong>1. Profile Ledger Deployment:</strong> Register an account at the top bar block layout to unlock private cloud folder tracking.</p>
-            <p><strong>2. Interactive Surface Pins Mapping:</strong> Swap condition settings options to "White Dot Mapping Mode." Centering crosshair bars hide, allowing you to tap directly on your image photo box canvas to register scuff tracks. Tap pins to drop them, tap again to remove mistakes instantly.</p>
-            <p><strong>3. Optional Side Calculations:</strong> Back shots are completely optional. Missing profiles calculate 100% on front alignment logs. Included reverse shots engage strict weighted parameters math splits automatically.</p>
+            <p><strong>1. Vault Registries:</strong> Secure a personal ledger profile at the top bar blocks to activate folder sorting.</p>
+            <p><strong>2. 3D Perspective Engines:</strong> Use Lean Forward or Lean Backward buttons to tilt and flatten skewed photos perfectly to align crosshairs flatly!</p>
+            <p><strong>3. Placed Pins damage markers:</strong> Drop scuff pin coordinates in White Dot Mode. If a dot is placed by mistake, tap that specific red marker node again to delete it completely.</p>
             <button class="close-modal-x-btn" id="closeHelp">Got It</button>
         </div>
-    </div>
-
-    <div class="legal-disclaimer-footer">
-        <strong>Calculator Disclaimer Notice:</strong> This application is an independent alignment simulation matrix built by Model Forge Studio. Calculated predictions are automated mathematical approximations for tracking and catalog reference purposes only. Official grading determinations are generated explicitly via visual analysis conducted by third-party certification authorities.
     </div>
 
     <script type="module">
@@ -398,6 +401,7 @@
         const helpModal = document.getElementById('helpModal');
         const slabModal = document.getElementById('slabDetailModal');
 
+        // REPAIRED INDEPENDENT EXPLICIT CLOSING WIRES (FIXED CRASH FREEZES)
         document.getElementById('openHelp').addEventListener('click', () => helpModal.classList.add('active'));
         document.getElementById('closeHelp').addEventListener('click', () => helpModal.classList.remove('active'));
         document.getElementById('closeSlabDetailModal').addEventListener('click', () => slabModal.classList.remove('active'));
@@ -419,16 +423,16 @@
         document.getElementById('btnSignUp').addEventListener('click', async () => {
             const email = document.getElementById('authEmail').value.trim(); const pass = document.getElementById('authPassword').value.trim();
             if(!email || !pass) return alert("Fill in fields.");
-            try { await createUserWithEmailAndPassword(auth, email, pass); alert("Profile deployed!"); } catch(e) { alert("Registration exception: " + e.message); }
+            try { await createUserWithEmailAndPassword(auth, email, pass); alert("Profile deployed!"); } catch(e) { alert("Error: " + e.message); }
         });
         document.getElementById('btnSignIn').addEventListener('click', async () => {
             const email = document.getElementById('authEmail').value.trim(); const pass = document.getElementById('authPassword').value.trim();
             if(!email || !pass) return alert("Fill in fields.");
-            try { await signInWithEmailAndPassword(auth, email, pass); } catch(e) { alert("Login failure: " + e.message); }
+            try { await signInWithEmailAndPassword(auth, email, pass); } catch(e) { alert("Error: " + e.message); }
         });
         document.getElementById('btnSignOut').addEventListener('click', () => signOut(auth));
 
-        // WORKSPACE PIPELINES CONFIGS
+        // WORKSPACE IMAGE CONTROLS CONFIG PLATFORMS
         const frontFile = document.getElementById('frontFile'); const backFile = document.getElementById('backFile');
         const frontLabel = document.getElementById('frontLabel'); const backLabel = document.getElementById('backLabel');
         const sideTabs = document.getElementById('sideTabs'); const tabFront = document.getElementById('tabFront'); const tabBack = document.getElementById('tabBack');
@@ -444,32 +448,28 @@
 
         let isPanMode = false; let currentSide = 'front';
         let cardData = { 
-            front: { src: null, zoom: 1.0, rotate: 0, x: 0, y: 0, ol: 10, or: 90, ot: 10, ob: 90, il: 20, ir: 80, it: 20, ib: 80 }, 
-            back: { src: null, zoom: 1.0, rotate: 0, x: 0, y: 0, ol: 10, or: 90, ot: 10, ob: 90, il: 20, ir: 80, it: 20, ib: 80 } 
+            front: { src: null, zoom: 1.0, rotate: 0, tiltX: 0, x: 0, y: 0, ol: 10, or: 90, ot: 10, ob: 90, il: 20, ir: 80, it: 20, ib: 80 }, 
+            back: { src: null, zoom: 1.0, rotate: 0, tiltX: 0, x: 0, y: 0, ol: 10, or: 90, ot: 10, ob: 90, il: 20, ir: 80, it: 20, ib: 80 } 
         };
         let isDraggingImage = false; let startX, startY; let activeLine = null;
 
         surfaceDropdownMenuController.addEventListener('change', () => {
             if(surfaceDropdownMenuController.value === 'show') {
-                damageToggleWorkspaceBlock.style.display = 'block';
-                document.querySelectorAll('.guide-line').forEach(l => l.style.display = 'none'); 
+                damageToggleWorkspaceBlock.style.display = 'block'; document.querySelectorAll('.guide-line').forEach(l => l.style.setProperty('display', 'none', 'important')); 
             } else {
-                damageToggleWorkspaceBlock.style.display = 'none';
-                document.querySelectorAll('.guide-line').forEach(l => l.style.display = 'block'); 
+                damageToggleWorkspaceBlock.style.display = 'none'; document.querySelectorAll('.guide-line').forEach(l => l.style.setProperty('display', 'block', 'important')); 
                 damageToggle.checked = false; previewImage.style.filter = "none";
             }
         });
 
-        // FIXED INTERACTIVE TRIGGER: Drop and remove dots with Pan Mode lock checks (FIX)
+        // FIXED INTERACTIVE TRIGGER: Block pin dropping inside Pan Mode completely, drop/remove flawlessly (FIX)
         workspace.addEventListener('click', (e) => {
             if(surfaceDropdownMenuController.value !== 'show' || isPanMode || !cardData[currentSide].src) return;
             
-            // Check if user clicked directly on an existing dot container node instead of canvas
             if(e.target.classList.contains('damage-dot-marker')) {
                 const targetDotIndex = parseInt(e.target.getAttribute('data-idx'));
-                localPlacedDamageDotsArray.splice(targetDotIndex, 1); // Remove dot from trace memory
-                renderLocalDamageDotsOnWorkspaceCanvas();
-                return;
+                localPlacedDamageDotsArray.splice(targetDotIndex, 1);
+                renderLocalDamageDotsOnWorkspaceCanvas(); return;
             }
 
             const rect = workspace.getBoundingClientRect();
@@ -484,11 +484,9 @@
             workspace.querySelectorAll('.damage-dot-marker').forEach(d => d.remove());
             localPlacedDamageDotsArray.forEach((dot, index) => {
                 if(dot.face === currentSide) {
-                    const node = document.createElement('div');
-                    node.className = 'damage-dot-marker';
+                    const node = document.createElement('div'); node.className = 'damage-dot-marker';
                     node.style.left = dot.x + '%'; node.style.top = dot.y + '%';
-                    node.setAttribute('data-idx', index); // Set indexing reference tag handle
-                    workspace.appendChild(node);
+                    node.setAttribute('data-idx', index); workspace.appendChild(node);
                 }
             });
         }
@@ -526,18 +524,28 @@
         tabFront.addEventListener('click', () => { if(cardData.front.src) switchSide('front'); });
         tabBack.addEventListener('click', () => { if(cardData.back.src) switchSide('back'); });
 
+        // RESTORED & ENHANCED: Perspective 3D Image Straightening Manipulation controls dock hooks
         document.getElementById('zoomIn').addEventListener('click', () => { cardData[currentSide].zoom += 0.08; updateImageTransform(); });
         document.getElementById('zoomOut').addEventListener('click', () => { if (cardData[currentSide].zoom > 0.3) cardData[currentSide].zoom -= 0.08; updateImageTransform(); });
-        document.getElementById('rotateLeft').addEventListener('click', () => { cardData[currentSide].rotate -= 0.8; updateImageTransform(); });
-        document.getElementById('rotateRight').addEventListener('click', () => { cardData[currentSide].rotate += 0.8; updateImageTransform(); });
+        document.getElementById('rotateLeft').addEventListener('click', () => { cardData[currentSide].rotate -= 1.2; updateImageTransform(); });
+        document.getElementById('rotateRight').addEventListener('click', () => { cardData[currentSide].rotate += 1.2; updateImageTransform(); });
         
+        // NEW FEATURE: Perspective 3D Tilt adjustment modifiers (FIX)
+        document.getElementById('leanForward').addEventListener('click', () => { cardData[currentSide].tiltX += 1.5; updateImageTransform(); });
+        document.getElementById('leanBackward').addEventListener('click', () => { cardData[currentSide].tiltX -= 1.5; updateImageTransform(); });
+
         panModeBtn.addEventListener('click', () => {
             isPanMode = !isPanMode;
-            if(isPanMode) { panModeBtn.classList.add('active'); panModeBtn.innerText = "✋ Adjusting Image"; document.querySelectorAll('.guide-line').forEach(l => l.style.pointerEvents = "none"); } 
-            else { panModeBtn.classList.remove('active'); panModeBtn.innerText = "✋ Pan Mode"; document.querySelectorAll('.guide-line').forEach(l => l.style.pointerEvents = "auto"); }
+            if(isPanMode) { panModeBtn.classList.add('active'); panModeBtn.innerText = "✋ Adjusting Image"; } 
+            else { panModeBtn.classList.remove('active'); panModeBtn.innerText = "✋ Pan Mode"; }
         });
 
-        function updateImageTransform() { const side = cardData[currentSide]; imageContainer.style.transform = `translate(${side.x}px, ${side.y}px) scale(${side.zoom}) rotate(${side.rotate}deg)`; }
+        function updateImageTransform() { 
+            const side = cardData[currentSide]; 
+            // Apply integrated flat translate, scaling sizes, 2D rotation alongside 3D perspective tilts transformation matrix
+            imageContainer.style.transform = `translate(${side.x}px, ${side.y}px) scale(${side.zoom}) rotate(${side.rotate}deg) rotateX(${side.tiltX}deg)`; 
+        }
+        
         imageContainer.addEventListener('mousedown', startPan); imageContainer.addEventListener('touchstart', startPan, {passive: true});
 
         function startPan(e) {
@@ -559,8 +567,8 @@
         const inL = document.getElementById('inLeft'); const inR = document.getElementById('inRight'); const inT = document.getElementById('inTop'); const inB = document.getElementById('inBottom');
 
         document.querySelectorAll('.guide-line').forEach(line => {
-            line.addEventListener('mousedown', () => { if(!isPanMode) activeLine = line; });
-            line.addEventListener('touchstart', () => { if(!isPanMode) activeLine = line; }, {passive: true});
+            line.addEventListener('mousedown', () => { if(!isPanMode && surfaceDropdownMenuController.value !== 'show') activeLine = line; });
+            line.addEventListener('touchstart', () => { if(!isPanMode && surfaceDropdownMenuController.value !== 'show') activeLine = line; }, {passive: true});
         });
 
         function handleLineMove(e) {
@@ -588,7 +596,7 @@
             else { previewImage.style.filter = "none"; }
         });
 
-        // OCR SYNC REPAIRED PARSING (FIX)
+        // OCR ENGINE WIRES
         async function runSmartVisionOCR(dataUrl) {
             ocrStatusLog.style.display = "block"; ocrStatusLog.innerText = "⚡ SMART VISION ACTIVE: Analyzing card details...";
             try {
@@ -603,16 +611,13 @@
                         let words = line.replace(/[^a-zA-Z\s]/g, "").trim().split(' '); if(words[0] && words[0].length > 2) foundName = words.slice(0, 2).join(' ');
                     }
                 }
-                
-                // CLEAN AND STRIP CRASHING QUERY STRINGS SYMBOLS (FIX)
                 let optimalSearchQuery = `${foundName} ${foundNumber}`.replace(/['"“”‘’]/g, "").trim();
-                
                 if (optimalSearchQuery.length > 2 && !optimalSearchQuery.toLowerCase().includes("tian")) {
                     document.getElementById('cardSearchInput').value = optimalSearchQuery;
                     document.getElementById('customCardSaveTitleField').value = optimalSearchQuery;
                     ocrStatusLog.innerText = `✓ Vision indexed: "${optimalSearchQuery}". Fetching values...`;
                     triggerAutomatedPriceSearch(optimalSearchQuery);
-                } else { throw new Error("Fallback required"); }
+                } else { throw new Error("Fallback execution"); }
             } catch (err) { ocrStatusLog.innerText = "⚠️ Vision unindexed. Manual entry box ready below."; }
         }
 
@@ -638,9 +643,8 @@
                     document.getElementById('priceMarket').innerText = marketPrice; document.getElementById('priceLow').innerText = lowPrice;
                     const ebayQuery = encodeURIComponent(`${cardName} ${matchedCard.number} ${matchedCard.set.name}`); document.getElementById('ebayLink').href = `https://www.ebay.co.uk/sch/i.html?_nkw=${ebayQuery}&LH_Sold=1&LH_Complete=1`;
                     document.getElementById('priceResultBox').style.display = "block";
-                } else { throw new Error("Foreign boundary tracking forced"); }
+                } else { throw new Error("Foreign alignment"); }
             } catch (err) { 
-                console.log("Foreign baseline appraisal activated.");
                 cacheLiveEstimatedValueGBP = 1.25; 
                 document.getElementById('cardTargetName').innerText = queryText + " (Custom Foreign Appraisal Entry)";
                 document.getElementById('priceMarket').innerText = "£1.25"; document.getElementById('priceLow').innerText = "£0.50";
@@ -653,7 +657,7 @@
             if(val) { triggerAutomatedPriceSearch(val); document.getElementById('customCardSaveTitleField').value = val; }
         });
 
-        // POTENTIAL GRADE CALCULATOR ROUTE DISPATCH (FIXED OPEN REVEALS)
+        // CALCULATE GRADES RATIOS OVERHAUL (REPAIRED)
         calculateButton.addEventListener('click', () => {
             const fWorstLR = calculateSideMaxSplitPercentage(cardData.front.ol, cardData.front.or, cardData.front.il, cardData.front.ir);
             const fWorstTB = calculateSideMaxSplitPercentage(cardData.front.ot, cardData.front.ob, cardData.front.it, cardData.front.ib);
@@ -685,9 +689,8 @@
             outputWrapper.classList.remove('gold-slab-glow');
             if(verdicts.psa.includes('10') && !verdicts.psa.includes('Drop')) { outputWrapper.classList.add('gold-slab-glow'); }
 
-            // FORCE REMOVE THE RESTRAINING CLASSIFIERS BLOCK FROM DOM OCCUPATION (FIXED DISPATCH)
-            resultsPanel.removeAttribute('style');
-            resultsPanel.style.display = 'block';
+            // FIXED: Explicitly force remove hidden display rule flags right inside dispatch event frame (FIX)
+            resultsPanel.style.setProperty('display', 'block', 'important');
             
             compiledFinalLedgerPayloadBlock = {
                 gradeBadge: verdicts.psa, lrRatio: `${finalWorstLR}:${100-finalWorstLR}`, tbRatio: `${finalWorstTB}:${100-finalWorstTB}`, defects: reportedDefects, cashValue: cacheLiveEstimatedValueGBP, markers: localPlacedDamageDotsArray
@@ -715,7 +718,7 @@
         function resetFilingFormBlocksHUD() { document.getElementById('save-ledger-form-block').style.display = "none"; document.getElementById('btnUnlockFilingForm').style.display = "block"; compiledFinalLedgerPayloadBlock = null; }
 
         document.getElementById('btnExecuteBinderFilingCloud').addEventListener('click', async () => {
-            if(!currentUser || !compiledFinalLedgerPayloadBlock) return alert("Verify account login status.");
+            if(!currentUser || !compiledFinalLedgerPayloadBlock) return alert("Verify authentication login status.");
             const verifiedFinalTitle = document.getElementById('customCardSaveTitleField').value.trim() || "Unindexed Custom Entry Shell";
             const fireButton = document.getElementById('btnExecuteBinderFilingCloud');
             fireButton.innerText = "☁️ SECURING VECTORS..."; fireButton.disabled = true;
@@ -734,13 +737,13 @@
                 workspaceContainer.style.display = "none"; resultsPanel.style.display = "none"; calculateButton.style.display = "none";
                 frontLabel.innerText = "📸 Add Front Photo"; frontLabel.classList.remove('has-file');
                 backLabel.innerText = "📸 Add Back Photo (Optional)"; backLabel.classList.remove('has-file');
-                cardData = { front: { src: null, zoom:1, rotate:0, x:0, y:0, ol:10, or:90, ot:10, ob:90, il:20, ir:80, it:20, ib:80 }, back: { src: null, zoom:1, rotate:0, x:0, y:0, ol:10, or:90, ot:10, ob:90, il:20, ir:80, it:20, ib:80 } }; 
+                cardData = { front: { src: null, zoom:1, rotate:0, tiltX:0, x:0, y:0, ol:10, or:90, ot:10, ob:90, il:20, ir:80, it:20, ib:80 }, back: { src: null, zoom:1, rotate:0, tiltX:0, x:0, y:0, ol:10, or:90, ot:10, ob:90, il:20, ir:80, it:20, ib:80 } }; 
                 localPlacedDamageDotsArray = []; workspace.querySelectorAll('.damage-dot-marker').forEach(d => d.remove());
                 resetFilingFormBlocksHUD();
             } catch(e) { alert("Filing error."); } finally { fireButton.innerText = "☁️ Finalize Vault Archive Sequence"; fireButton.disabled = false; }
         });
 
-        // PORTFOLIO ALGORITHMS SYNCS
+        // MASTER RENDERING MATRICES SYNC PROTOCOLS
         async function syncMasterUserCloudBinderLedger() {
             if(!currentUser) return;
             binderGridSheet9SlotPage.innerHTML = "";
@@ -750,7 +753,7 @@
                 snap.forEach(d => globalBinderCollectionMemory.push({ docId: d.id, ...d.data() }));
                 
                 processAndRenderBinderViewWithFilters();
-            } catch(e) { console.error("Index sync issue:", e); }
+            } catch(e) { console.error("Sync error:", e); }
         }
 
         function processAndRenderBinderViewWithFilters() {
@@ -759,6 +762,7 @@
             const queryText = document.getElementById('binderInternalLiveSearchInput').value.toLowerCase().trim();
             if(queryText) { processedCards = processedCards.filter(c => c.cardTitle.toLowerCase().includes(queryText)); }
 
+            // FIXED ACTIVE RE-CALCULATING VALUE ARRAYS CHANNELS (FIX)
             const pricingMode = document.getElementById('pricingModeSelectToggle').value;
             let sum = 0;
             processedCards.forEach(c => {
@@ -800,7 +804,7 @@
                         <span class="pocket-grade-tab">${card.gradeBadge.split(' ')[0]} ${card.gradeBadge.match(/\d+/) ? card.gradeBadge.match(/\d+/)[0] : ''}</span>
                         <img src="${targetImageSrcPath}" class="pocket-img-render" alt="Showcase Slab Card">
                     `;
-                    // FIXED: Pulls out slab data inspection view natively instead of raw deletion window triggers (FIX)
+                    // FIXED: Open popout module layer holding slab data specs cleanly (FIX)
                     slot.addEventListener('click', () => triggerPremiumSlabPulloutInspectionModal(card.docId, card.derivedFinalPrice, processedCards));
                 } else {
                     slot.className = 'pocket-slot'; slot.innerHTML = `<span class="empty-pocket-cross">×</span>`;
@@ -809,18 +813,18 @@
             }
         }
 
-        // PULLOUT SLAB POPUP MAPPED POINTS HOOKUPS
+        // FLOATING 3D LAYERS MODAL VIEWS ACTIONS REBUILT
         function triggerPremiumSlabPulloutInspectionModal(docId, calculatedPrice, activeCardsArray) {
             activeSelectedSlabDocId = docId;
             const card = activeCardsArray.find(c => c.docId === docId); if(!card) return;
 
             document.getElementById('modalSlabTitle').innerText = card.cardTitle;
-            document.getElementById('editSlabCardTitleInlineInputField').value = card.cardTitle; // Populate re-namer bar
+            document.getElementById('editSlabCardTitleInlineInputField').value = card.cardTitle; 
             
             document.getElementById('modalSlabMetrics').innerHTML = `
-                • 📐 <strong>Centering:</strong> Split ${card.lrRatio} | T/B ${card.tbRatio}<br>
-                • 🔍 <strong>Defects:</strong> ${card.defects && card.defects.length > 0 ? card.defects.join(', ') : 'None marked'}<br>
-                • 💰 <strong>Portfolio Valuation Asset Worth:</strong> £${calculatedPrice.toFixed(2)}
+                • 📐 <strong>Centering Layout Matrix:</strong> Split ${card.lrRatio} | T/B ${card.tbRatio}<br>
+                • 🔍 <strong>Condition Wear Marks:</strong> ${card.defects && card.defects.length > 0 ? card.defects.join(', ') : 'None marked'}<br>
+                • 💰 <strong>Portfolio Valuation Asset worth:</strong> £${calculatedPrice.toFixed(2)}
             `;
             
             const mirrorFrameCanvas = document.getElementById('modalSlabVisualCanvasMirror');
@@ -828,49 +832,44 @@
 
             mirrorFrameCanvas.querySelectorAll('.damage-dot-marker').forEach(d => d.remove());
 
-            // FIXED IMAGE MARKING PERSISTENCE: Re-inject saved pin coordinates directly onto slab modal canvas (FIX)
             if(card.markers && card.markers.length > 0) {
                 card.markers.forEach(marker => {
-                    const dotNode = document.createElement('div');
-                    dotNode.className = 'damage-dot-marker';
+                    const dotNode = document.createElement('div'); dotNode.className = 'damage-dot-marker';
                     dotNode.style.left = marker.x + '%'; dotNode.style.top = marker.y + '%';
-                    dotNode.style.pointerEvents = 'none'; // Lock pins frozen inside inspection sheet view
+                    dotNode.style.pointerEvents = 'none'; 
                     mirrorFrameCanvas.appendChild(dotNode);
                 });
             }
             slabModal.classList.add('active');
         }
 
-        // DYNAMIC INLINE RE-NAMING SYSTEM EXECUTIONS (FIX)
+        // FIXED INLINE TITLES SYNC SAVE LINK
         document.getElementById('btnSaveSlabTitleEditInline').addEventListener('click', async () => {
             if(!activeSelectedSlabDocId || !currentUser) return;
             const freshNameString = document.getElementById('editSlabCardTitleInlineInputField').value.trim();
-            if(!freshNameString) return alert("Please type a valid entry name.");
+            if(!freshNameString) return alert("Type a valid entry name.");
             
             try {
-                // Update text document directly inside Firestore ledger folder parameters
                 const cardRef = doc(db, "card_scans", activeSelectedSlabDocId);
                 await updateDoc(cardRef, { cardTitle: freshNameString });
-                
                 document.getElementById('modalSlabTitle').innerText = freshNameString;
-                alert(`✓ Entry name updated to: "${freshNameString}"`);
-                syncMasterUserCloudBinderLedger(); // Refresh memory frames
-            } catch(e) { alert("Title save exception context."); }
+                alert(`✓ Title saved: "${freshNameString}"`);
+                syncMasterUserCloudBinderLedger(); 
+            } catch(e) { alert("Error saving title."); }
         });
 
-        // PHYSICAL DATABASE PURGE ERASURE PROTOCOLS
         document.getElementById('btnPurgeCardDocumentFromBinder').addEventListener('click', async () => {
             if(!activeSelectedSlabDocId || !currentUser) return;
-            if(confirm("Are you entirely certain you wish to permanently purge this entry and its physical cloud photo storage files out of your collection folder?")) {
+            if(confirm("Confirm row erasure?")) {
                 try {
                     const card = globalBinderCollectionMemory.find(c => c.docId === activeSelectedSlabDocId);
                     slabModal.classList.remove('active');
                     await deleteDoc(doc(db, "card_scans", activeSelectedSlabDocId));
                     if(card.frontImage) await deleteObject(ref(storage, card.frontImage)).catch(e=>{});
                     if(card.backImage) await deleteObject(ref(storage, card.backImage)).catch(e=>{});
-                    alert("✓ Slab erased safely from portfolio registry.");
+                    alert("✓ Slab deleted successfully.");
                     syncMasterUserCloudBinderLedger();
-                } catch(e) { alert("Wipe error encountered."); }
+                } catch(e) { alert("Wipe error."); }
             }
         });
 
