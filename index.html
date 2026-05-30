@@ -39,7 +39,7 @@
         .auth-panel { width: 350px; background-color: #0c0c0c; padding: 12px; border-radius: 10px; border: 1px solid #222; margin-bottom: 20px; box-sizing: border-box; font-size: 13px; text-align: center; }
         .auth-inputs { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
         .auth-row { display: flex; gap: 8px; }
-        .auth-btn { background-color: #222; border: 1px solid #444; color: white; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 12px; flex: 1; }
+        .auth-btn { background-color: #222; border: 1px solid #444; color: white; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 12px; flex: 1; text-transform: uppercase; }
         .auth-btn.primary { background-color: var(--brand-orange); border-color: var(--brand-orange); }
 
         .upload-container { width: 100%; background-color: var(--panel-dark); padding: 15px; border-radius: 15px; box-sizing: border-box; text-align: center; border: 1px solid #2B2B2B; margin-bottom: 20px; }
@@ -57,7 +57,7 @@
         .dock-btn.active { background: var(--brand-orange); }
 
         #workspace { position: relative; width: 310px; height: 430px; margin: 15px auto; display: none; background-color: #000; border-radius: 8px; overflow: hidden; border: 1px solid #333; }
-        #imageContainer { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transform-origin: center center; position: absolute; top: 0; left: 0; cursor: move; }
+        #imageContainer { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transform-origin: center center; position: absolute; top: 0; left: 0; }
         #previewImage { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
         
         .guide-line { position: absolute; z-index: 10; opacity: 0.9; }
@@ -72,12 +72,15 @@
         .vertical.inner-line::after { top: 35%; left: -11px; transform: translateY(-50%); }
         .horizontal.inner-line::after { left: 35%; top: -11px; transform: translateX(-50%); }
 
+        /* Custom Placed Damage Dot Markers Style */
+        .damage-dot-marker { position: absolute; width: 12px; height: 12px; background-color: #FF2222; border: 2px solid #FFF; border-radius: 50%; z-index: 20; transform: translate(-50%, -50%); pointer-events: none; box-shadow: 0 0 8px #FF2222; }
+
         .info-panel { width: 100%; background-color: var(--panel-dark); padding: 15px; border-radius: 15px; box-sizing: border-box; border: 1px solid #2B2B2B; margin-bottom: 20px; }
         .panel-title { font-size: 16px; color: var(--brand-orange); font-weight: bold; margin: 0 0 12px 0; border-bottom: 1px solid #333; padding-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
         
-        .company-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #252525; font-size: 14px; text-align: left; }
-        .company-name { font-weight: bold; color: var(--text-gray); }
-        .company-verdict { color: var(--brand-white); font-weight: bold; }
+        .company-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #1c1c1e; font-size: 13px; text-align: left; }
+        .company-name { color: var(--text-gray); }
+        .company-verdict { font-weight: bold; }
         .perfect { color: #FFD700 !important; text-shadow: 0 0 8px rgba(255,215,0,0.4); }
         .gold-slab-glow { border: 1px solid #FFD700 !important; box-shadow: var(--gold-glow) !important; }
 
@@ -97,28 +100,23 @@
         input:checked + .slider { background-color: var(--brand-orange); }
         input:checked + .slider:before { transform: translateX(22px); }
         #damageLogBox { background-color: #050505; border: 1px solid #222; border-radius: 8px; padding: 12px; text-align: left; font-family: monospace; font-size: 12px; color: var(--text-gray); line-height: 1.4; margin-bottom: 15px; }
-        .defect-checklist { text-align: left; background: #111; padding: 12px; border-radius: 8px; border: 1px solid #222; }
-        .check-item { display: flex; align-items: center; gap: 10px; margin: 8px 0; font-size: 13px; color: var(--brand-white); cursor: pointer; }
-        .check-item input { accent-color: var(--brand-orange); width: 16px; height: 16px; }
+        .select-dropdown { width: 100%; background-color: #050506; border: 1px solid #333; border-radius: 6px; padding: 10px; color: white; font-size: 13px; margin-top: 5px; }
 
         #save-ledger-form-block { display: none; background: #0c0c0d; border: 1px solid #222; border-radius: 8px; padding: 12px; margin-top: 12px; text-align: left; }
         .custom-button { background-color: var(--brand-orange); color: var(--brand-white); border: none; padding: 12px 25px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; display: inline-block; width: 100%; box-sizing: border-box; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; text-align: center; }
         #calculateButton { background-color: var(--brand-white); color: var(--bg-dark); display: none; margin-top: 15px; }
 
-        /* MULTI-FUNCTIONAL CUSTOMIZER & UTILITY DRAWER */
+        /* REALISTIC 3D SHOWCASE PORTFOLIO TRACK BINDER SYSTEM */
         #binder-customizer-dropdown-drawer { display: none; background: #111; padding: 15px; border-radius: 10px; border: 1px solid #222; margin-bottom: 15px; text-align: left; }
         .binder-color-dot { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; display: inline-block; margin-right: 8px; }
         .binder-color-dot.active { border-color: white; }
-        
-        .select-dropdown { width: 100%; background-color: #050506; border: 1px solid #333; border-radius: 6px; padding: 8px; color: white; font-size: 13px; margin-top: 5px; }
 
-        /* REALISTIC 3D SHOWCASE PORTFOLIO TRACK BINDER SYSTEM */
         .binder-wrapper-scroller { position: relative; width: 100%; display: flex; justify-content: center; padding: 10px 0; }
         .binder-outer-skin { position: relative; width: 340px; background-color: var(--binder-color); border-radius: 12px; padding: 12px 12px 12px 24px; box-sizing: border-box; box-shadow: 0 15px 35px rgba(0,0,0,0.6), inset -10px 0 20px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.05); display: flex; }
         .binder-spine-rings { position: absolute; left: 6px; top: 0; width: 12px; height: 100%; display: flex; flex-direction: column; justify-content: space-around; padding: 25px 0; box-sizing: border-box; z-index: 30; }
         .binder-ring-metal { width: 10px; height: 24px; border: 3px solid #b0b0b5; border-right: none; border-radius: 12px 0 0 12px; background: transparent; box-shadow: -2px 2px 4px rgba(0,0,0,0.5), inset 1px 1px 2px white; margin-bottom: 30px; }
 
-        /* ADVANCED 3X3 FIXED PAGE SYSTEM GRID MODULE */
+        /* FIXED: Height allocation for 3x3 grids folders slots sheet */
         .binder-sheet-9-pocket { position: relative; width: 100%; background: rgba(10, 10, 12, 0.98); border-radius: 6px; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 6px; padding: 8px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.1); height: 420px; }
         .binder-sheet-9-pocket::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 30%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.03) 80%, rgba(255,255,255,0) 100%); pointer-events: none; z-index: 25; border-radius: 6px; }
 
@@ -134,11 +132,14 @@
         /* Overlay Modals */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .modal-card { background-color: var(--panel-dark); border: 2px solid var(--brand-orange); padding: 25px; border-radius: 18px; width: 300px; color: var(--brand-white); max-height: 80vh; overflow-y: auto; }
+        .modal-card { background-color: var(--panel-dark); border: 2px solid var(--brand-orange); padding: 25px; border-radius: 18px; width: 320px; color: var(--brand-white); max-height: 85vh; overflow-y: auto; }
         .modal-card h3 { color: var(--brand-orange); margin-top: 0; text-transform: uppercase; font-weight: 900; }
         .close-modal-x-btn { background-color: var(--brand-orange); color: white; border: none; padding: 10px; border-radius: 6px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 11px; width: 100%; margin-top: 10px; text-align: center; }
         
-        .legal-disclaimer-footer { width: 350px; font-size: 11px; color: #444; text-align: center; line-height: 1.4; margin: 15px 0; padding-top: 10px; border-top: 1px solid #111; }
+        /* Premium Pullout Slab Detail Display Inspection Modal (REBUILT 11-18) */
+        .slab-pullout-frame { background-color: #161619; border: 2px solid var(--brand-orange); border-radius: 16px; padding: 15px; width: 330px; box-sizing: border-box; text-align: left; }
+        .slab-pullout-title { font-size: 16px; font-weight: bold; border-bottom: 2px solid var(--brand-orange); padding-bottom: 6px; margin-bottom: 12px; text-transform: uppercase; color: white; }
+        .slab-pullout-workspace-mirror { position: relative; width: 100%; height: 320px; background: #000; border-radius: 8px; border: 1px solid #333; overflow: hidden; margin: 12px 0; }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 </head>
@@ -221,43 +222,50 @@
                 <div id="inBottom" class="guide-line horizontal inner-line" style="top: 82%;"></div>
             </div>
 
-            <button id="calculateButton" class="custom-button">Calculate Accurate Ratios</button>
+            <button id="calculateButton" class="custom-button" style="background:#FFF; color:#000;">📊 Show Potential Grades</button>
         </div>
 
         <div class="info-panel">
-            <div class="panel-title">Surface & Edge Scan Filter</div>
-            <div class="damage-toggle-row">
-                <span style="font-size: 14px; color: var(--text-gray);">Contrast High-Pass Scanner Mode</span>
-                <label class="switch">
-                    <input type="checkbox" id="damageToggle">
-                    <span class="slider"></span>
-                </label>
-            </div>
-            <div id="damageLogBox">
-                <span style="color:var(--brand-orange)">💡 TIP:</span> Take photos against a solid <strong>BLACK background</strong>. Anomalies will stand out clearly.
-            </div>
+            <div class="panel-title">🔍 Surface Condition Mapping Suite</div>
+            <select id="surfaceDropdownMenuController" class="select-dropdown" style="margin-bottom:10px; padding:12px;">
+                <option value="hide">🎛️ Standard Centering Alignment Mode</option>
+                <option value="show">🔴 High-Pass White Dot Mapping Mode</option>
+            </select>
 
-            <div class="defect-checklist">
-                <div style="font-size:12px; color:var(--brand-orange); font-weight:bold; margin-bottom:8px; text-transform:uppercase;">Select Located White Dots / Wear:</div>
-                <label class="check-item"><input type="checkbox" id="defectDot1"> <span>1 Tiny White Speck / Corner Chip (Max 9)</span></label>
-                <label class="check-item"><input type="checkbox" id="defectDot3"> <span>2-3 White Dots or Edge Silvering (Max 8)</span></label>
-                <label class="check-item"><input type="checkbox" id="defectScratch"> <span>Visible Surface Scratches or Scuffs (Max 7)</span></label>
-                <label class="check-item"><input type="checkbox" id="defectHeavy"> <span>Heavy Whitening / Corner Fraying (Max 5)</span></label>
+            <div id="damageToggleWorkspaceBlock" style="display:none; margin-top:10px;">
+                <div class="damage-toggle-row">
+                    <span style="font-size: 13px; color: var(--text-gray);">Contrast High-Pass Scanner Mode</span>
+                    <label class="switch">
+                        <input type="checkbox" id="damageToggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div id="damageLogBox">
+                    <span style="color:var(--brand-orange)">🔴 SURFACE POINT MATRIX ACTIVE:</span> Tap anywhere directly inside the card image box above to place localized damage pins onto whitening blemishes!
+                </div>
+                <div class="defect-checklist">
+                    <div style="font-size:11px; color:var(--brand-orange); font-weight:bold; margin-bottom:8px; text-transform:uppercase;">Condition Limit Adjusters:</div>
+                    <label class="check-item"><input type="checkbox" id="defectDot1"> <span>1 Tiny White Speck / Corner Chip (Max 9)</span></label>
+                    <label class="check-item"><input type="checkbox" id="defectDot3"> <span>2-3 White Dots or Edge Silvering (Max 8)</span></label>
+                    <label class="check-item"><input type="checkbox" id="defectScratch"> <span>Visible Surface Scratches or Scuffs (Max 7)</span></label>
+                    <label class="check-item"><input type="checkbox" id="defectHeavy"> <span>Heavy Whitening / Corner Fraying (Max 5)</span></label>
+                </div>
             </div>
         </div>
 
         <div class="info-panel" id="resultsPanel" style="display: none;">
-            <div class="panel-title" id="calculatedRatiosDisplay">Calculated Ratios</div>
-            <div class="company-row"><span class="company-name">PSA Grading Standard:</span><span id="psaVerdict" class="company-verdict">Evaluating...</span></div>
-            <div class="company-row"><span class="company-name">ACE Grading Standard:</span><span id="aceVerdict" class="company-verdict">Evaluating...</span></div>
+            <div class="panel-title" id="calculatedRatiosDisplay">Calculated Centering Metrics</div>
+            <div class="company-row" style="justify-content:center; padding:0 0 8px 0;"><span id="ratioDisplayHUD" style="font-family:monospace; font-size:13px; font-weight:bold; color:white;">--</span></div>
+            <div class="company-row"><span class="company-name">PSA Predicted Standard:</span><span id="psaVerdict" class="company-verdict">Evaluating...</span></div>
+            <div class="company-row"><span class="company-name">ACE Technical Scale:</span><span id="aceVerdict" class="company-verdict">Evaluating...</span></div>
             <div class="company-row"><span class="company-name">TAG Analytics Engine:</span><span id="tagVerdict" class="company-verdict">Evaluating...</span></div>
-            <div class="company-row"><span class="company-name">BGS (Beckett Standards):</span><span id="bgsVerdict" class="company-verdict">Evaluating...</span></div>
+            <div class="company-row"><span class="company-name">BGS Subgrade Matrix:</span><span id="bgsVerdict" class="company-verdict">Evaluating...</span></div>
             
-            <button id="btnUnlockFilingForm" class="custom-button" style="margin-top:15px;">➕ Secure Entry Data Block</button>
+            <button id="btnUnlockFilingForm" class="custom-button" style="margin-top:15px;">➕ Lock Straight Into My Binder Ledger</button>
             <div id="save-ledger-form-block">
-                <div style="font-size:11px; color:var(--brand-orange); font-weight:bold; margin:10px 0 6px 0; text-transform:uppercase;">Name This Ledger Entry:</div>
+                <div style="font-size:11px; color:var(--brand-orange); font-weight:bold; margin:10px 0 6px 0; text-transform:uppercase;">Name This Showcase Entry:</div>
                 <input type="text" id="customCardSaveTitleField" class="search-input" placeholder="e.g. Charizard Base Set 4/102">
-                <button id="btnExecuteBinderFilingCloud" class="custom-button" style="background:#0056B3; margin-top:10px;">☁️ Lock Straight Into My Binder Ledger</button>
+                <button id="btnExecuteBinderFilingCloud" class="custom-button" style="background:#0056B3; margin-top:10px;">☁️ Finalize Vault Archive Sequence</button>
             </div>
         </div>
 
@@ -280,29 +288,25 @@
         <button class="custom-button secondary-btn" id="btnToggleBinderCustomizerMenu" style="margin-bottom:10px;">⚙️ Customise Album View & Settings</button>
         
         <div id="binder-customizer-dropdown-drawer">
-            <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin-bottom:6px;">Portfolio Asset Valuation Metric:</div>
+            <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin-bottom:6px;">Portfolio Valuation Metric Mode:</div>
             <select id="pricingModeSelectToggle" class="select-dropdown">
-                <option value="raw">Raw Value Index (Ungraded Baseline)</option>
-                <option value="graded">Graded Multiplier Model (Premium Scale)</option>
+                <option value="raw">Raw Base Value Index (Ungraded Market)</option>
+                <option value="graded">Graded Multiplier Model (Slab Premium Scale)</option>
             </select>
-
             <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin:12px 0 6px 0;">Live Binder Search Filter:</div>
             <input type="text" id="binderInternalLiveSearchInput" class="search-input" placeholder="Search card in binder instantly...">
-
-            <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin:12px 0 6px 0;">Sort Binder Rows:</div>
+            <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin:12px 0 6px 0;">Sort Binder Pockets Rows:</div>
             <select id="binderSortDirectionSelectToggle" class="select-dropdown">
                 <option value="dateDesc">Scanned Date: Newest First</option>
                 <option value="dateAsc">Scanned Date: Oldest First</option>
                 <option value="valDesc">Portfolio Value: Highest First</option>
                 <option value="valAsc">Portfolio Value: Lowest First</option>
             </select>
-
-            <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin:12px 0 6px 0;">Choose Cover Theme:</div>
+            <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin:12px 0 6px 0;">Choose Cover Color Theme:</div>
             <div class="binder-color-dot active" style="background:#1A365D;" data-hex="#1A365D"></div>
             <div class="binder-color-dot" style="background:#7A1C1C;" data-hex="#7A1C1C"></div>
             <div class="binder-color-dot" style="background:#1C5A35;" data-hex="#1C5A35"></div>
             <div class="binder-color-dot" style="background:#222222;" data-hex="#222222"></div>
-            
             <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin:12px 0 6px 0;">Rename Portfolio Album:</div>
             <input type="text" id="customBinderNameBannerInput" class="search-input" placeholder="Name My Album Binder" style="padding:6px; font-size:12px;">
         </div>
@@ -330,24 +334,33 @@
         </div>
     </div>
 
+    <div class="modal-overlay" id="slabDetailModal">
+        <div class="slab-pullout-frame" id="slabPulloutCardNodeBox">
+            <div class="slab-pullout-title" id="modalSlabTitle">Showcase Slab Deck</div>
+            <div style="font-size:12px; color:var(--text-gray); line-height:1.5;" id="modalSlabMetrics">Metrics breakdown details loading ledger...</div>
+            
+            <div class="slab-pullout-workspace-mirror" id="modalSlabVisualCanvasMirror">
+                <img id="modalSlabPrimaryImageRenderPath" style="width:100%; height:100%; object-fit:contain;">
+            </div>
+
+            <button class="custom-button" id="btnPurgeCardDocumentFromBinder" style="background:none; border:1px solid var(--alert-red); color:var(--alert-red); margin-top:10px; font-size:12px; padding:8px;">🗑️ Remove Card From Vault</button>
+            <button class="close-modal-x-btn" id="closeSlabDetailModal">Return to Binder</button>
+        </div>
+    </div>
+
     <div class="modal-overlay" id="helpModal">
         <div class="modal-card">
             <h3>MFS Pre-Grader Manual Guide</h3>
-            <p><strong>1. Setup Your Profile:</strong> Register an account at the top to track your portfolio album history securely.</p>
-            <p><strong>2. Camera Alignments Dock:</strong> Use the Zoom/Tilt buttons to rotate or resize your images. Drag red lines to outside frames, and green lines to internal limits.</p>
-            <p><strong>3. Optional Face Weights:</strong> Back photo uploads are entirely optional. Missing back shots will cause calculations to process 100% on front centering stats. Adding a back shot seamlessly blends alignment metrics (60% front / 40% back weighting).</p>
-            <p><strong>4. 3x3 Showcase Binder:</strong> Pockets render 18 slots total across 2 sheets when empty, filling up dynamically in real time as your data calculations lock into the vault ledger folder.</p>
+            <p><strong>1. Profile Ledger Initialization:</strong> Deploy a personalized vault registry account at the top header block to save portfolio details.</p>
+            <p><strong>2. Interactive Surface Mapping:</strong> Switch your condition settings menu block to "White Dot Mapping Mode." The crosshairs disappear, allowing you to tap directly onto your uploaded photo to map out physical scuff coordinate tracks seamlessly!</p>
+            <p><strong>3. Optional Back Weights:</strong> Omitted reverse side card photos pass 100% calculation values on front centering stats. Included reverse photos engage the strict weighted mathematical grid architecture model.</p>
             <button class="close-modal-x-btn" id="closeHelp">Got It</button>
         </div>
     </div>
 
-    <div class="legal-disclaimer-footer">
-        <strong>Calculator Disclaimer Notice:</strong> This application is an independent alignment simulation matrix built by Model Forge Studio. Calculated predictions are automated mathematical approximations for tracking and catalog reference purposes only. Official grading determinations are generated explicitly via visual analysis conducted by third-party certification authorities.
-    </div>
-
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { getFirestore, collection, addDoc, serverTimestamp, query, where, getDocs, orderBy, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
         import { getStorage, ref, uploadString, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
@@ -368,16 +381,18 @@
         let currentUser = null;
         let globalBinderCollectionMemory = [];
         let currentActiveBinderPageIndex = 0;
-        let cacheLiveEstimatedValueGBP = 0.00;
+        let activeSelectedSlabDocId = null;
+        let localPlacedDamageDotsArray = []; // Mapped coordinates points container array
 
         const navBtnScanner = document.getElementById('navBtnScanner'); const navBtnBinder = document.getElementById('navBtnBinder');
         const viewScanner = document.getElementById('viewScanner'); const viewBinder = document.getElementById('viewBinder');
         const binderGridSheet9SlotPage = document.getElementById('binderGridSheet9SlotPage');
-
-        // FIXED INDEPENDENT MODAL SHIELDS CLOSES
         const helpModal = document.getElementById('helpModal');
+        const slabModal = document.getElementById('slabDetailModal');
+
         document.getElementById('openHelp').addEventListener('click', () => helpModal.classList.add('active'));
         document.getElementById('closeHelp').addEventListener('click', () => helpModal.classList.remove('active'));
+        document.getElementById('closeSlabDetailModal').addEventListener('click', () => slabModal.classList.remove('active'));
 
         navBtnScanner.addEventListener('click', () => { navBtnScanner.classList.add('active'); navBtnBinder.classList.remove('active'); viewScanner.classList.add('active'); viewBinder.classList.remove('active'); });
         navBtnBinder.addEventListener('click', () => { navBtnBinder.classList.add('active'); navBtnScanner.classList.remove('active'); viewBinder.classList.add('active'); viewScanner.classList.remove('active'); syncMasterUserCloudBinderLedger(); });
@@ -393,19 +408,20 @@
             }
         });
 
+        // AUTH CONTROL ROUTE CONNECTIONS
         document.getElementById('btnSignUp').addEventListener('click', async () => {
             const email = document.getElementById('authEmail').value.trim(); const pass = document.getElementById('authPassword').value.trim();
-            if(!email || !pass) return alert("Please fill fields.");
-            try { await createUserWithEmailAndPassword(auth, email, pass); alert("Vault profile initialized!"); } catch(e) { alert("Issue: " + e.message); }
+            if(!email || !pass) return alert("Fill in credentials.");
+            try { await createUserWithEmailAndPassword(auth, email, pass); alert("Profile deployed!"); } catch(e) { alert("Registration exception: " + e.message); }
         });
         document.getElementById('btnSignIn').addEventListener('click', async () => {
             const email = document.getElementById('authEmail').value.trim(); const pass = document.getElementById('authPassword').value.trim();
-            if(!email || !pass) return alert("Please fill fields.");
-            try { await signInWithEmailAndPassword(auth, email, pass); } catch(e) { alert("Issue: " + e.message); }
+            if(!email || !pass) return alert("Fill in credentials.");
+            try { await signInWithEmailAndPassword(auth, email, pass); } catch(e) { alert("Login failure: " + e.message); }
         });
         document.getElementById('btnSignOut').addEventListener('click', () => signOut(auth));
 
-        // CONTROLS MANIPULATIONS BLOCKS RE-WIND
+        // WORKSPACE PIPELINES COMPONENTS CONFIG
         const frontFile = document.getElementById('frontFile'); const backFile = document.getElementById('backFile');
         const frontLabel = document.getElementById('frontLabel'); const backLabel = document.getElementById('backLabel');
         const sideTabs = document.getElementById('sideTabs'); const tabFront = document.getElementById('tabFront'); const tabBack = document.getElementById('tabBack');
@@ -416,6 +432,8 @@
         const panModeBtn = document.getElementById('panModeBtn');
         const workspace = document.getElementById('workspace');
         const imageContainer = document.getElementById('imageContainer');
+        const surfaceDropdownMenuController = document.getElementById('surfaceDropdownMenuController');
+        const damageToggleWorkspaceBlock = document.getElementById('damageToggleWorkspaceBlock');
 
         let isPanMode = false; let currentSide = 'front';
         let cardData = { 
@@ -423,6 +441,42 @@
             back: { src: null, zoom: 1.0, rotate: 0, x: 0, y: 0, ol: 10, or: 90, ot: 10, ob: 90, il: 20, ir: 80, it: 20, ib: 80 } 
         };
         let isDraggingImage = false; let startX, startY; let activeLine = null;
+
+        // NEW DROPDOWN CONDITION FILTER MODE CONTROLLER (FIX)
+        surfaceDropdownMenuController.addEventListener('change', () => {
+            if(surfaceDropdownMenuController.value === 'show') {
+                damageToggleWorkspaceBlock.style.display = 'block';
+                document.querySelectorAll('.guide-line').forEach(l => l.style.display = 'none'); // HIDE CROSSHAIRS
+            } else {
+                damageToggleWorkspaceBlock.style.display = 'none';
+                document.querySelectorAll('.guide-line').forEach(l => l.style.display = 'block'); // RESTORE CROSSHAIRS
+                damageToggle.checked = false; previewImage.style.filter = "none";
+            }
+        });
+
+        // DYNAMIC DIRECT WORKSPACE DAMAGE MARKER PIN PLACEMENT (FIX)
+        workspace.addEventListener('click', (e) => {
+            if(surfaceDropdownMenuController.value !== 'show' || isPanMode || !cardData[currentSide].src) return;
+            const rect = workspace.getBoundingClientRect();
+            const clickXPercentage = ((e.clientX - rect.left) / rect.width) * 100;
+            const clickYPercentage = ((e.clientY - rect.top) / rect.height) * 100;
+
+            // Cache placed dot positions vectors
+            localPlacedDamageDotsArray.push({ x: clickXPercentage, y: clickYPercentage, face: currentSide });
+            renderLocalDamageDotsOnWorkspaceCanvas();
+        });
+
+        function renderLocalDamageDotsOnWorkspaceCanvas() {
+            document.querySelectorAll('.damage-dot-marker').forEach(d => d.remove()); // Clear old pins nodes
+            localPlacedDamageDotsArray.forEach(dot => {
+                if(dot.face === currentSide) {
+                    const node = document.createElement('div');
+                    node.className = 'damage-dot-marker';
+                    node.style.left = dot.x + '%'; node.style.top = dot.y + '%';
+                    workspace.appendChild(node);
+                }
+            });
+        }
 
         function handleLocalImageUpload(file, side, labelObj) {
             if (!file) return;
@@ -452,7 +506,7 @@
             if (side === 'front') { tabFront.classList.add('active'); tabBack.classList.remove('active'); } 
             else { tabBack.classList.add('active'); tabFront.classList.remove('active'); }
             previewImage.src = cardData[side].src || "";
-            updateImageTransform(); restoreGuideLinesPositionsPercentage();
+            updateImageTransform(); restoreGuideLinesPositionsPercentage(); renderLocalDamageDotsOnWorkspaceCanvas();
         }
         tabFront.addEventListener('click', () => { if(cardData.front.src) switchSide('front'); });
         tabBack.addEventListener('click', () => { if(cardData.back.src) switchSide('back'); });
@@ -519,7 +573,7 @@
             else { previewImage.style.filter = "none"; }
         });
 
-        // TCG APIS INTEGRATIONS CORES
+        // OCR UTILITIES SHIELDS
         async function runSmartVisionOCR(dataUrl) {
             ocrStatusLog.style.display = "block"; ocrStatusLog.innerText = "⚡ SMART VISION ACTIVE: Analyzing card details...";
             try {
@@ -540,15 +594,18 @@
                     document.getElementById('customCardSaveTitleField').value = optimalSearchQuery;
                     ocrStatusLog.innerText = `✓ Vision indexed: "${optimalSearchQuery}". Fetching values...`;
                     triggerAutomatedPriceSearch(optimalSearchQuery);
-                } else { ocrStatusLog.innerText = "⚠️ Blurred view query layout. Manual search ready."; }
-            } catch (err) { ocrStatusLog.innerText = "⚠️ Scanning frame cleared."; }
+                } else { ocrStatusLog.innerText = "⚠️ Blurred layout query blueprint ready."; }
+            } catch (err) { ocrStatusLog.innerText = "⚠️ Text layers unparsed."; }
         }
 
+        // FIXED HIGH STABILITY FOREIGN ENTRY BASELINE RESOLUTIONS (FIX)
         async function triggerAutomatedPriceSearch(queryText) {
             try {
                 const cleanNameQuery = queryText.split(' ')[0].replace(/[^a-zA-Z]/g, "");
                 const response = await fetch(`https://api.pokemontcg.io/v2/cards?q=name:"${encodeURIComponent(cleanNameQuery)}"`);
                 const data = await response.json();
+                
+                // IF BLANK FOREIGN OR REGISTRY NULL DETECTED HARD RESET TO STABLE TRACK ARRAYS (FIX)
                 if (data.data && data.data.length > 0) {
                     let matchedCard = data.data.find(c => queryText.includes(c.number)) || data.data[0];
                     const cardName = matchedCard.name; const cardSetNum = `${matchedCard.number}/${matchedCard.set.printedTotal}`;
@@ -566,8 +623,14 @@
                     document.getElementById('priceMarket').innerText = marketPrice; document.getElementById('priceLow').innerText = lowPrice;
                     const ebayQuery = encodeURIComponent(`${cardName} ${matchedCard.number} ${matchedCard.set.name}`); document.getElementById('ebayLink').href = `https://www.ebay.co.uk/sch/i.html?_nkw=${ebayQuery}&LH_Sold=1&LH_Complete=1`;
                     document.getElementById('priceResultBox').style.display = "block";
-                }
-            } catch (err) { console.log("Search error reset."); }
+                } else { throw new Error("Foreign baseline check forced"); }
+            } catch (err) { 
+                console.log("Foreign baseline appraisal activated.");
+                cacheLiveEstimatedValueGBP = 1.25; // Reset Korean/Foreign to true ungraded base value cost cleanly
+                document.getElementById('cardTargetName').innerText = queryText + " (Custom Foreign Appraisal Entry)";
+                document.getElementById('priceMarket').innerText = "£1.25"; document.getElementById('priceLow').innerText = "£0.50";
+                document.getElementById('priceResultBox').style.display = "block";
+            }
         }
 
         document.getElementById('searchPriceBtn').addEventListener('click', () => {
@@ -575,8 +638,7 @@
             if(val) { triggerAutomatedPriceSearch(val); document.getElementById('customCardSaveTitleField').value = val; }
         });
 
-        // CALCULATE PIPELINES
-        let compiledFinalLedgerPayloadBlock = null;
+        // EVALUATION CALCULATION MASTER
         calculateButton.addEventListener('click', () => {
             const fWorstLR = calculateSideMaxSplitPercentage(cardData.front.ol, cardData.front.or, cardData.front.il, cardData.front.ir);
             const fWorstTB = calculateSideMaxSplitPercentage(cardData.front.ot, cardData.front.ob, cardData.front.it, cardData.front.ib);
@@ -587,9 +649,9 @@
                 const bWorstTB = calculateSideMaxSplitPercentage(cardData.back.ot, cardData.back.ob, cardData.back.it, cardData.back.ib);
                 finalWorstLR = Math.round((fWorstLR * 0.6) + (bWorstLR * 0.4));
                 finalWorstTB = Math.round((fWorstTB * 0.6) + (bWorstTB * 0.4));
-                document.getElementById('calculatedRatiosDisplay').innerText = `Ratios -> L/R Combined ${finalWorstLR.toFixed(0)}% | T/B Combined ${finalWorstTB.toFixed(0)}% (Dual-Face Enabled)`;
+                document.getElementById('ratioDisplayHUD').innerText = `📐 Front split: ${fWorstLR.toFixed(0)}% | Back split: ${bWorstLR.toFixed(0)}%`;
             } else {
-                document.getElementById('calculatedRatiosDisplay').innerText = `Ratios -> L/R Front ${fWorstLR.toFixed(0)}% | T/B Front ${fWorstTB.toFixed(0)}% (Back Scan Omitted)`;
+                document.getElementById('ratioDisplayHUD').innerText = `📐 Front face split: ${fWorstLR.toFixed(0)}%:${(100-fWorstLR).toFixed(0)}% (Back Scan Omitted)`;
             }
 
             let conditionCap = 10; let reportedDefects = [];
@@ -599,6 +661,7 @@
             if(document.getElementById('defectDot1').checked) { conditionCap = Math.min(conditionCap, 9); reportedDefects.push("1 White Speck"); }
 
             const verdicts = evaluateExpandedGrades(finalWorstLR, finalWorstTB, conditionCap);
+            
             document.getElementById('psaVerdict').innerText = verdicts.psa; document.getElementById('psaVerdict').className = verdicts.psa.includes('10') && !verdicts.psa.includes('Drop') ? 'company-verdict perfect' : 'company-verdict';
             document.getElementById('aceVerdict').innerText = verdicts.ace; document.getElementById('aceVerdict').className = verdicts.ace.includes('10') && !verdicts.ace.includes('Drop') ? 'company-verdict perfect' : 'company-verdict';
             document.getElementById('tagVerdict').innerText = verdicts.tag; document.getElementById('tagVerdict').className = verdicts.tag.includes('10') && !verdicts.tag.includes('Drop') ? 'company-verdict perfect' : 'company-verdict';
@@ -608,9 +671,12 @@
             outputWrapper.classList.remove('gold-slab-glow');
             if(verdicts.psa.includes('10') && !verdicts.psa.includes('Drop')) { outputWrapper.classList.add('gold-slab-glow'); }
 
+            // FIXED RESULTS SCREEN DISPLAY REVEAL FORCE (FIX)
             resultsPanel.style.display = 'block';
+            document.getElementById('calculatedRatiosDisplay').innerText = `Centering Split Data Calculations:`;
+            
             compiledFinalLedgerPayloadBlock = {
-                gradeBadge: verdicts.psa, lrRatio: `${finalWorstLR}:${100-finalWorstLR}`, tbRatio: `${finalWorstTB}:${100-finalWorstTB}`, defects: reportedDefects, cashValue: cacheLiveEstimatedValueGBP
+                gradeBadge: verdicts.psa, lrRatio: `${finalWorstLR}:${100-finalWorstLR}`, tbRatio: `${finalWorstTB}:${100-finalWorstTB}`, defects: reportedDefects, cashValue: cacheLiveEstimatedValueGBP, markers: localPlacedDamageDotsArray
             };
         });
 
@@ -635,7 +701,7 @@
         function resetFilingFormBlocksHUD() { document.getElementById('save-ledger-form-block').style.display = "none"; document.getElementById('btnUnlockFilingForm').style.display = "block"; compiledFinalLedgerPayloadBlock = null; }
 
         document.getElementById('btnExecuteBinderFilingCloud').addEventListener('click', async () => {
-            if(!currentUser || !compiledFinalLedgerPayloadBlock) return alert("Verify authentication status.");
+            if(!currentUser || !compiledFinalLedgerPayloadBlock) return alert("Verify account login status.");
             const verifiedFinalTitle = document.getElementById('customCardSaveTitleField').value.trim() || "Unindexed Custom Entry Shell";
             const fireButton = document.getElementById('btnExecuteBinderFilingCloud');
             fireButton.innerText = "☁️ SECURING VECTORS..."; fireButton.disabled = true;
@@ -650,15 +716,17 @@
                     cardTitle: verifiedFinalTitle, frontImage: fUrl, backImage: bUrl, ...compiledFinalLedgerPayloadBlock
                 });
 
-                alert("✓ Slab calculation locked cleanly into binder portfolio!");
+                alert("✓ Slab calculations securely archived to portfolio layout grid!");
                 workspaceContainer.style.display = "none"; resultsPanel.style.display = "none"; calculateButton.style.display = "none";
                 frontLabel.innerText = "📸 Add Front Photo"; frontLabel.classList.remove('has-file');
                 backLabel.innerText = "📸 Add Back Photo (Optional)"; backLabel.classList.remove('has-file');
-                cardData = { front: { src: null, zoom:1, rotate:0, x:0, y:0, ol:10, or:90, ot:10, ob:90, il:20, ir:80, it:20, ib:80 }, back: { src: null, zoom:1, rotate:0, x:0, y:0, ol:10, or:90, ot:10, ob:90, il:20, ir:80, it:20, ib:80 } }; resetFilingFormBlocksHUD();
-            } catch(e) { alert("Filing error."); } finally { fireButton.innerText = "☁️ Lock Straight Into My Binder Ledger"; fireButton.disabled = false; }
+                cardData = { front: { src: null, zoom:1, rotate:0, x:0, y:0, ol:10, or:90, ot:10, ob:90, il:20, ir:80, it:20, ib:80 }, back: { src: null, zoom:1, rotate:0, x:0, y:0, ol:10, or:90, ot:10, ob:90, il:20, ir:80, it:20, ib:80 } }; 
+                localPlacedDamageDotsArray = []; document.querySelectorAll('.damage-dot-marker').forEach(d => d.remove());
+                resetFilingFormBlocksHUD();
+            } catch(e) { alert("Filing error."); } finally { fireButton.innerText = "☁️ Finalize Vault Archive Sequence"; fireButton.disabled = false; }
         });
 
-        // RE-ENGINEERED 3X3 BINDER SHEET ALGORITHMS (REBUILD)
+        // MASTER BINDER CALCULATOR FILTERS RE-RENDERING (REBUILT CLEAN 11-18)
         async function syncMasterUserCloudBinderLedger() {
             if(!currentUser) return;
             binderGridSheet9SlotPage.innerHTML = "";
@@ -668,43 +736,39 @@
                 snap.forEach(d => globalBinderCollectionMemory.push({ docId: d.id, ...d.data() }));
                 
                 processAndRenderBinderViewWithFilters();
-            } catch(e) { console.error("Index sync issue:", e); }
+            } catch(e) { console.error("Sync error:", e); }
         }
 
-        // COMPLEX LIVE RENDERING SYSTEM SUPPORTING MODES & SEARCHING
         function processAndRenderBinderViewWithFilters() {
             let processedCards = [...globalBinderCollectionMemory];
 
-            // 1. Process Live text searching filter queries
             const queryText = document.getElementById('binderInternalLiveSearchInput').value.toLowerCase().trim();
-            if(queryText) {
-                processedCards = processedCards.filter(c => c.cardTitle.toLowerCase().includes(queryText));
-            }
+            if(queryText) { processedCards = processedCards.filter(c => c.cardTitle.toLowerCase().includes(queryText)); }
 
-            // 2. Process Multi-Pricing Multipliers Calculations Settings (Ungraded vs Graded Scaler Model)
+            // FIXED LIVE PORTFOLIO MULTIPLIERS SETTINGS CALCULATIONS (FIX)
             const pricingMode = document.getElementById('pricingModeSelectToggle').value;
             let sum = 0;
             processedCards.forEach(c => {
                 let basePrice = parseFloat(c.cashValue || 0);
-                if(pricingMode === 'graded' && c.gradeBadge.includes('10')) { basePrice *= 4.5; } // Apply high tier multiplier
-                else if (pricingMode === 'graded' && c.gradeBadge.includes('9')) { basePrice *= 1.8; }
-                c.derivedFinalPrice = basePrice;
-                sum += basePrice;
+                if(pricingMode === 'graded') {
+                    if(c.gradeBadge.includes('10') && !c.gradeBadge.includes('Drop')) basePrice *= 4.5;
+                    else if(c.gradeBadge.includes('9')) basePrice *= 1.8;
+                    else if(c.gradeBadge.includes('8')) basePrice *= 1.3;
+                }
+                c.derivedFinalPrice = parseFloat(basePrice.toFixed(2));
+                sum += c.derivedFinalPrice;
             });
             document.getElementById('binderPortfolioValuationSumDisplay').innerText = `£${sum.toFixed(2)}`;
 
-            // 3. Process Sorting rules
             const sortMode = document.getElementById('binderSortDirectionSelectToggle').value;
-            if(sortMode === 'dateAsc') processedCards.reverse(); // Default database is already dateDesc
+            if(sortMode === 'dateAsc') processedCards.reverse();
             else if(sortMode === 'valDesc') processedCards.sort((a,b) => b.derivedFinalPrice - a.derivedFinalPrice);
             else if(sortMode === 'valAsc') processedCards.sort((a,b) => a.derivedFinalPrice - b.derivedFinalPrice);
 
-            // 4. Render Layout Pages (FORCES FULL 3x3 ROWS RECONSTRUCT)
             binderGridSheet9SlotPage.innerHTML = "";
             const startIndex = currentActiveBinderPageIndex * 9;
             const totalCount = processedCards.length;
             
-            // Force 18 openings grid framework rules (2 full sheets layout grids minimum)
             const totalSlotsToRender = Math.max(18, Math.ceil(totalCount / 9) * 9);
             const totalPages = Math.ceil(totalSlotsToRender / 9);
             document.getElementById('binderPagePaginationTicker').innerText = `Page ${currentActiveBinderPageIndex + 1} of ${totalPages}`;
@@ -723,12 +787,8 @@
                         <span class="pocket-grade-tab">${card.gradeBadge.split(' ')[0]} ${card.gradeBadge.match(/\d+/) ? card.gradeBadge.match(/\d+/)[0] : ''}</span>
                         <img src="${targetImageSrcPath}" class="pocket-img-render" alt="Showcase Slab Card">
                     `;
-                    // Simple click wipe handle setup
-                    slot.addEventListener('click', () => {
-                        if(confirm(`Delete "${card.cardTitle}" from binder rows permanently?`)) {
-                            deleteDoc(doc(db, "card_scans", card.docId)).then(() => syncMasterUserCloudBinderLedger());
-                        }
-                    });
+                    // FIXED INTERACTIVE TRIGGER: Pull out slab details instead of prompt deletion (FIX)
+                    slot.addEventListener('click', () => triggerPremiumSlabPulloutInspectionModal(card.docId, card.derivedFinalPrice, processedCards));
                 } else {
                     slot.className = 'pocket-slot'; slot.innerHTML = `<span class="empty-pocket-cross">×</span>`;
                 }
@@ -736,17 +796,63 @@
             }
         }
 
-        // CUSTOMIZER LISTENERS WIRES AND INSTANT FILTER TRIPS
+        // PREMIUM SLAB INSPECTION SHEET POPUP WITH PIN DAMAGE OVERLAY VIEW (FIX)
+        function triggerPremiumSlabPulloutInspectionModal(docId, calculatedPrice, activeCardsArray) {
+            activeSelectedSlabDocId = docId;
+            const card = activeCardsArray.find(c => c.docId === docId); if(!card) return;
+
+            document.getElementById('modalSlabTitle').innerText = card.cardTitle;
+            document.getElementById('modalSlabMetrics').innerHTML = `
+                • 📐 <strong>Centering:</strong> L/R Split ${card.lrRatio} | T/B Split ${card.tbRatio}<br>
+                • 🔍 <strong>Condition Notes:</strong> ${card.defects && card.defects.length > 0 ? card.defects.join(', ') : 'None marked'}<br>
+                • 💰 <strong>Portfolio Valuation Asset Worth:</strong> £${calculatedPrice.toFixed(2)}
+            `;
+            
+            const mirrorFrameCanvas = document.getElementById('modalSlabVisualCanvasMirror');
+            document.getElementById('modalSlabPrimaryImageRenderPath').src = card.frontImage || card.backImage || "";
+
+            // Clear old pins nodes from inside inspection modal backdrop window
+            mirrorFrameCanvas.querySelectorAll('.damage-dot-marker').forEach(d => d.remove());
+
+            // If coordinates metadata paths array exist inject into the layout frame natively
+            if(card.markers && card.markers.length > 0) {
+                card.markers.forEach(marker => {
+                    const dotNode = document.createElement('div');
+                    dotNode.className = 'damage-dot-marker';
+                    dotNode.style.left = marker.x + '%'; dotNode.style.top = marker.y + '%';
+                    mirrorFrameCanvas.appendChild(dotNode);
+                });
+            }
+            slabModal.classList.add('active');
+        }
+
+        // DETAILED EXPLICIT DATA PURGE CLOUD MANIPULATIONS
+        document.getElementById('btnPurgeCardDocumentFromBinder').addEventListener('click', async () => {
+            if(!activeSelectedSlabDocId || !currentUser) return;
+            if(confirm("Are you entirely certain you wish to permanently purge this entry and its physical cloud photo storage files out of your collection folder?")) {
+                try {
+                    const card = globalBinderCollectionMemory.find(c => c.docId === activeSelectedSlabDocId);
+                    slabModal.classList.remove('active');
+                    await deleteDoc(doc(db, "card_scans", activeSelectedSlabDocId));
+                    if(card.frontImage) await deleteObject(ref(storage, card.frontImage)).catch(e=>{});
+                    if(card.backImage) await deleteObject(ref(storage, card.backImage)).catch(e=>{});
+                    alert("✓ Slab erased safely from portfolio registry.");
+                    syncMasterUserCloudBinderLedger();
+                } catch(e) { alert("Wipe error encountered."); }
+            }
+        });
+
+        // DROPDOWN LIVE MUTATION LISTENERS ACTIONS
+        document.getElementById('binderInternalLiveSearchInput').addEventListener('input', processAndRenderBinderViewWithFilters);
+        document.getElementById('pricingModeSelectToggle').addEventListener('change', processAndRenderBinderViewWithFilters);
+        document.getElementById('binderSortDirectionSelectToggle').addEventListener('change', processAndRenderBinderViewWithFilters);
+
         const btnToggleBinderCustomizerMenu = document.getElementById('btnToggleBinderCustomizerMenu');
         const binderCustomizerDropdownDrawer = document.getElementById('binder-customizer-dropdown-drawer');
         btnToggleBinderCustomizerMenu.addEventListener('click', () => {
             const isClosed = binderCustomizerDropdownDrawer.style.display === "none" || !binderCustomizerDropdownDrawer.style.display;
             binderCustomizerDropdownDrawer.style.display = isClosed ? "block" : "none";
         });
-
-        document.getElementById('binderInternalLiveSearchInput').addEventListener('input', processAndRenderBinderViewWithFilters);
-        document.getElementById('pricingModeSelectToggle').addEventListener('change', processAndRenderBinderViewWithFilters);
-        document.getElementById('binderSortDirectionSelectToggle').addEventListener('change', processAndRenderBinderViewWithFilters);
 
         document.querySelectorAll('.binder-color-dot').forEach(dot => {
             dot.addEventListener('click', () => {
@@ -759,8 +865,8 @@
         });
 
         document.getElementById('btnBinderPrevPage').addEventListener('click', () => { if(currentActiveBinderPageIndex > 0) { currentActiveBinderPageIndex--; processAndRenderBinderViewWithFilters(); } });
-        document.getElementById('btnBinderNextPage').addEventListener('click', () => { const max = Math.ceil(Math.max(18, globalBinderCollectionMemory.length) / 9); if(currentActiveBinderPageIndex < max - 1) { currentActiveBinderPageIndex++; processAndRenderBinderViewWithFilters(); } });
-        function clearBinderDisplayGridSlots() { binderGridSheet9SlotPage.innerHTML = ""; document.getElementById('binderPortfolioValuationSumDisplay').innerText = "£0.00"; }
+        document.getElementById('btnBinderNextPage').addEventListener('click', () => { const totalSlots = Math.max(18, Math.ceil(globalBinderCollectionMemory.length / 9) * 9); const totalPages = Math.ceil(totalSlots / 9); if(currentActiveBinderPageIndex < totalPages - 1) { currentActiveBinderPageIndex++; processAndRenderBinderViewWithFilters(); } });
+        function clearBinderDisplayGridSlots() { processAndRenderBinderViewWithFilters(); }
     </script>
 </body>
 </html>
