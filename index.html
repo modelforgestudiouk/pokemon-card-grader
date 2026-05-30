@@ -123,9 +123,6 @@
         .pocket-grade-tab { position: absolute; top: 3px; right: 3px; background: var(--brand-orange); color: black; font-weight: 900; font-size: 8px; padding: 1px 3px; border-radius: 2px; z-index: 10; }
         .empty-pocket-cross { font-size: 14px; color: rgba(255,255,255,0.03); font-weight: bold; }
 
-        .binder-pagination-dock { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 10px; font-size: 11px; color: var(--text-gray); }
-        .page-arrow-btn { background: #111; border: 1px solid #222; color: white; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
-
         /* THE PREMIUM 3D FLOATING SLAB INSPECTION FRAME POPUP SYSTEM OVERLAY LAYERS */
         .slab-pullout-frame { background-color: #151518; border: 2px solid var(--brand-orange); border-radius: 16px; padding: 18px; width: 335px; box-sizing: border-box; text-align: left; box-shadow: 0 25px 60px rgba(0,0,0,0.95); }
         .slab-pullout-title { font-size: 16px; font-weight: bold; border-bottom: 2px solid var(--brand-orange); padding-bottom: 6px; margin-bottom: 12px; text-transform: uppercase; color: white; letter-spacing: 0.5px; }
@@ -141,7 +138,6 @@
         .modal-card h3 { color: var(--brand-orange); margin-top: 0; text-transform: uppercase; font-weight: 900; }
         .close-modal-x-btn { background-color: var(--brand-orange); color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 11px; width: 100%; margin-top: 10px; text-align: center; }
         
-        /* RESTORED: Core Legal notice guidance disclaimer notice layout footer */
         .legal-disclaimer-footer { width: 350px; font-size: 11px; color: #444; text-align: center; line-height: 1.4; margin: 15px 0; padding-top: 10px; border-top: 1px solid #111; }
     </style>
 </head>
@@ -670,7 +666,6 @@
             if(verdicts.psa.includes('10') && !verdicts.psa.includes('Drop')) { outputWrapper.classList.add('gold-slab-glow'); }
 
             // OVERRIDE FORCED VISIBILITY STATEMENT RELEASE (FIX)
-            resultsPanel.removeAttribute('style');
             resultsPanel.style.setProperty('display', 'block', 'important');
             
             // IF VALUE WAS NEVER SEARCHED, DEFAULT SQUASH RAW VALUE TO £0.00
