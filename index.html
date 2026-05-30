@@ -60,6 +60,7 @@
         #imageContainer { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transform-origin: center center; position: absolute; top: 0; left: 0; }
         #previewImage { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
         
+        /* Guide Lines Crosshairs */
         .guide-line { position: absolute; z-index: 10; opacity: 0.9; }
         .vertical { width: 3px; height: 100%; top: 0; cursor: ew-resize; }
         .horizontal { height: 3px; width: 100%; left: 0; cursor: ns-resize; }
@@ -72,8 +73,8 @@
         .vertical.inner-line::after { top: 35%; left: -11px; transform: translateY(-50%); }
         .horizontal.inner-line::after { left: 35%; top: -11px; transform: translateX(-50%); }
 
-        /* Custom Placed Damage Dot Markers Style */
-        .damage-dot-marker { position: absolute; width: 12px; height: 12px; background-color: #FF2222; border: 2px solid #FFF; border-radius: 50%; z-index: 20; transform: translate(-50%, -50%); pointer-events: none; box-shadow: 0 0 8px #FF2222; }
+        /* Custom Interactive Placed Damage Pins Markers style layout rules mapping */
+        .damage-dot-marker { position: absolute; width: 14px; height: 14px; background-color: #FF1111; border: 2px solid #FFF; border-radius: 50%; z-index: 22; transform: translate(-50%, -50%); pointer-events: auto; cursor: pointer; box-shadow: 0 0 10px #FF0000; }
 
         .info-panel { width: 100%; background-color: var(--panel-dark); padding: 15px; border-radius: 15px; box-sizing: border-box; border: 1px solid #2B2B2B; margin-bottom: 20px; }
         .panel-title { font-size: 16px; color: var(--brand-orange); font-weight: bold; margin: 0 0 12px 0; border-bottom: 1px solid #333; padding-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
@@ -92,6 +93,7 @@
         .price-val { font-weight: bold; color: var(--success-green); }
         #ebayLink { background-color: #0056B3; color: white; font-size: 13px; margin-top: 15px; display: inline-block; }
 
+        /* Compressed Droplist Header controls styles layout */
         .damage-toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; margin-bottom: 12px; }
         .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
         .switch input { opacity: 0; width: 0; height: 0; }
@@ -106,7 +108,7 @@
         .custom-button { background-color: var(--brand-orange); color: var(--brand-white); border: none; padding: 12px 25px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; display: inline-block; width: 100%; box-sizing: border-box; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; text-align: center; }
         #calculateButton { background-color: var(--brand-white); color: var(--bg-dark); display: none; margin-top: 15px; }
 
-        /* REALISTIC 3D SHOWCASE PORTFOLIO TRACK BINDER SYSTEM */
+        /* DETAILED IMMERSIVE VIRTUAL 3D BINDER GRAPHICS SHEET SYSTEM */
         #binder-customizer-dropdown-drawer { display: none; background: #111; padding: 15px; border-radius: 10px; border: 1px solid #222; margin-bottom: 15px; text-align: left; }
         .binder-color-dot { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; display: inline-block; margin-right: 8px; }
         .binder-color-dot.active { border-color: white; }
@@ -116,7 +118,6 @@
         .binder-spine-rings { position: absolute; left: 6px; top: 0; width: 12px; height: 100%; display: flex; flex-direction: column; justify-content: space-around; padding: 25px 0; box-sizing: border-box; z-index: 30; }
         .binder-ring-metal { width: 10px; height: 24px; border: 3px solid #b0b0b5; border-right: none; border-radius: 12px 0 0 12px; background: transparent; box-shadow: -2px 2px 4px rgba(0,0,0,0.5), inset 1px 1px 2px white; margin-bottom: 30px; }
 
-        /* FIXED: Height allocation for 3x3 grids folders slots sheet */
         .binder-sheet-9-pocket { position: relative; width: 100%; background: rgba(10, 10, 12, 0.98); border-radius: 6px; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 6px; padding: 8px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.1); height: 420px; }
         .binder-sheet-9-pocket::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 30%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.03) 80%, rgba(255,255,255,0) 100%); pointer-events: none; z-index: 25; border-radius: 6px; }
 
@@ -129,17 +130,15 @@
         .binder-pagination-dock { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 10px; font-size: 11px; color: var(--text-gray); }
         .page-arrow-btn { background: #111; border: 1px solid #222; color: white; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
 
-        /* Overlay Modals */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
-        .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .modal-card { background-color: var(--panel-dark); border: 2px solid var(--brand-orange); padding: 25px; border-radius: 18px; width: 320px; color: var(--brand-white); max-height: 85vh; overflow-y: auto; }
-        .modal-card h3 { color: var(--brand-orange); margin-top: 0; text-transform: uppercase; font-weight: 900; }
-        .close-modal-x-btn { background-color: var(--brand-orange); color: white; border: none; padding: 10px; border-radius: 6px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 11px; width: 100%; margin-top: 10px; text-align: center; }
-        
-        /* Premium Pullout Slab Detail Display Inspection Modal (REBUILT 11-18) */
-        .slab-pullout-frame { background-color: #161619; border: 2px solid var(--brand-orange); border-radius: 16px; padding: 15px; width: 330px; box-sizing: border-box; text-align: left; }
+        /* PREMIUM INTEGRATED PULLOUT INDEPENDENT SLAB MODAL (REBUILT CLEAN) */
+        .slab-pullout-frame { background-color: #151517; border: 2px solid var(--brand-orange); border-radius: 16px; padding: 18px; width: 335px; box-sizing: border-box; text-align: left; }
         .slab-pullout-title { font-size: 16px; font-weight: bold; border-bottom: 2px solid var(--brand-orange); padding-bottom: 6px; margin-bottom: 12px; text-transform: uppercase; color: white; }
         .slab-pullout-workspace-mirror { position: relative; width: 100%; height: 320px; background: #000; border-radius: 8px; border: 1px solid #333; overflow: hidden; margin: 12px 0; }
+        .slab-pullout-input-edit-row { display: flex; gap: 8px; margin: 12px 0; }
+        .slab-pullout-edit-input { flex: 1; background-color: #050506; border: 1px solid #333; border-radius: 6px; padding: 8px; color: white; font-size: 13px; }
+        .slab-pullout-edit-save-btn { background-color: var(--success-green); border: none; color: black; font-weight: bold; padding: 0 12px; border-radius: 6px; cursor: pointer; font-size: 12px; text-transform: uppercase; }
+
+        .legal-disclaimer-footer { width: 350px; font-size: 11px; color: #444; text-align: center; line-height: 1.4; margin: 15px 0; padding-top: 10px; border-top: 1px solid #111; }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 </head>
@@ -241,7 +240,7 @@
                     </label>
                 </div>
                 <div id="damageLogBox">
-                    <span style="color:var(--brand-orange)">🔴 SURFACE POINT MATRIX ACTIVE:</span> Tap anywhere directly inside the card image box above to place localized damage pins onto whitening blemishes!
+                    <span style="color:var(--brand-orange)">🔴 SURFACE POINT MATRIX:</span> Tap any wear mark on the photo box above to drop damage markers. Tap a red dot again to remove it if dropped by mistake!
                 </div>
                 <div class="defect-checklist">
                     <div style="font-size:11px; color:var(--brand-orange); font-weight:bold; margin-bottom:8px; text-transform:uppercase;">Condition Limit Adjusters:</div>
@@ -254,7 +253,7 @@
         </div>
 
         <div class="info-panel" id="resultsPanel" style="display: none;">
-            <div class="panel-title" id="calculatedRatiosDisplay">Calculated Centering Metrics</div>
+            <div class="panel-title">Calculated Centering Metrics</div>
             <div class="company-row" style="justify-content:center; padding:0 0 8px 0;"><span id="ratioDisplayHUD" style="font-family:monospace; font-size:13px; font-weight:bold; color:white;">--</span></div>
             <div class="company-row"><span class="company-name">PSA Predicted Standard:</span><span id="psaVerdict" class="company-verdict">Evaluating...</span></div>
             <div class="company-row"><span class="company-name">ACE Technical Scale:</span><span id="aceVerdict" class="company-verdict">Evaluating...</span></div>
@@ -343,7 +342,12 @@
                 <img id="modalSlabPrimaryImageRenderPath" style="width:100%; height:100%; object-fit:contain;">
             </div>
 
-            <button class="custom-button" id="btnPurgeCardDocumentFromBinder" style="background:none; border:1px solid var(--alert-red); color:var(--alert-red); margin-top:10px; font-size:12px; padding:8px;">🗑️ Remove Card From Vault</button>
+            <div class="slab-pullout-input-edit-row">
+                <input type="text" id="editSlabCardTitleInlineInputField" class="slab-pullout-edit-input" placeholder="Edit Card Title Entry Name">
+                <button id="btnSaveSlabTitleEditInline" class="slab-pullout-edit-save-btn">Save</button>
+            </div>
+
+            <button class="custom-button" id="btnPurgeCardDocumentFromBinder" style="background:none; border:1px solid var(--alert-red); color:var(--alert-red); margin-top:5px; font-size:12px; padding:8px;">🗑️ Remove Card From Vault</button>
             <button class="close-modal-x-btn" id="closeSlabDetailModal">Return to Binder</button>
         </div>
     </div>
@@ -351,17 +355,21 @@
     <div class="modal-overlay" id="helpModal">
         <div class="modal-card">
             <h3>MFS Pre-Grader Manual Guide</h3>
-            <p><strong>1. Profile Ledger Initialization:</strong> Deploy a personalized vault registry account at the top header block to save portfolio details.</p>
-            <p><strong>2. Interactive Surface Mapping:</strong> Switch your condition settings menu block to "White Dot Mapping Mode." The crosshairs disappear, allowing you to tap directly onto your uploaded photo to map out physical scuff coordinate tracks seamlessly!</p>
-            <p><strong>3. Optional Back Weights:</strong> Omitted reverse side card photos pass 100% calculation values on front centering stats. Included reverse photos engage the strict weighted mathematical grid architecture model.</p>
+            <p><strong>1. Profile Ledger Deployment:</strong> Register an account at the top bar block layout to unlock private cloud folder tracking.</p>
+            <p><strong>2. Interactive Surface Pins Mapping:</strong> Swap condition settings options to "White Dot Mapping Mode." Centering crosshair bars hide, allowing you to tap directly on your image photo box canvas to register scuff tracks. Tap pins to drop them, tap again to remove mistakes instantly.</p>
+            <p><strong>3. Optional Side Calculations:</strong> Back shots are completely optional. Missing profiles calculate 100% on front alignment logs. Included reverse shots engage strict weighted parameters math splits automatically.</p>
             <button class="close-modal-x-btn" id="closeHelp">Got It</button>
         </div>
+    </div>
+
+    <div class="legal-disclaimer-footer">
+        <strong>Calculator Disclaimer Notice:</strong> This application is an independent alignment simulation matrix built by Model Forge Studio. Calculated predictions are automated mathematical approximations for tracking and catalog reference purposes only. Official grading determinations are generated explicitly via visual analysis conducted by third-party certification authorities.
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, serverTimestamp, query, where, getDocs, orderBy, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, serverTimestamp, query, where, getDocs, orderBy, doc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
         import { getStorage, ref, uploadString, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
         const firebaseConfig = {
@@ -382,7 +390,7 @@
         let globalBinderCollectionMemory = [];
         let currentActiveBinderPageIndex = 0;
         let activeSelectedSlabDocId = null;
-        let localPlacedDamageDotsArray = []; // Mapped coordinates points container array
+        let localPlacedDamageDotsArray = []; 
 
         const navBtnScanner = document.getElementById('navBtnScanner'); const navBtnBinder = document.getElementById('navBtnBinder');
         const viewScanner = document.getElementById('viewScanner'); const viewBinder = document.getElementById('viewBinder');
@@ -408,20 +416,19 @@
             }
         });
 
-        // AUTH CONTROL ROUTE CONNECTIONS
         document.getElementById('btnSignUp').addEventListener('click', async () => {
             const email = document.getElementById('authEmail').value.trim(); const pass = document.getElementById('authPassword').value.trim();
-            if(!email || !pass) return alert("Fill in credentials.");
+            if(!email || !pass) return alert("Fill in fields.");
             try { await createUserWithEmailAndPassword(auth, email, pass); alert("Profile deployed!"); } catch(e) { alert("Registration exception: " + e.message); }
         });
         document.getElementById('btnSignIn').addEventListener('click', async () => {
             const email = document.getElementById('authEmail').value.trim(); const pass = document.getElementById('authPassword').value.trim();
-            if(!email || !pass) return alert("Fill in credentials.");
+            if(!email || !pass) return alert("Fill in fields.");
             try { await signInWithEmailAndPassword(auth, email, pass); } catch(e) { alert("Login failure: " + e.message); }
         });
         document.getElementById('btnSignOut').addEventListener('click', () => signOut(auth));
 
-        // WORKSPACE PIPELINES COMPONENTS CONFIG
+        // WORKSPACE PIPELINES CONFIGS
         const frontFile = document.getElementById('frontFile'); const backFile = document.getElementById('backFile');
         const frontLabel = document.getElementById('frontLabel'); const backLabel = document.getElementById('backLabel');
         const sideTabs = document.getElementById('sideTabs'); const tabFront = document.getElementById('tabFront'); const tabBack = document.getElementById('tabBack');
@@ -442,37 +449,45 @@
         };
         let isDraggingImage = false; let startX, startY; let activeLine = null;
 
-        // NEW DROPDOWN CONDITION FILTER MODE CONTROLLER (FIX)
         surfaceDropdownMenuController.addEventListener('change', () => {
             if(surfaceDropdownMenuController.value === 'show') {
                 damageToggleWorkspaceBlock.style.display = 'block';
-                document.querySelectorAll('.guide-line').forEach(l => l.style.display = 'none'); // HIDE CROSSHAIRS
+                document.querySelectorAll('.guide-line').forEach(l => l.style.display = 'none'); 
             } else {
                 damageToggleWorkspaceBlock.style.display = 'none';
-                document.querySelectorAll('.guide-line').forEach(l => l.style.display = 'block'); // RESTORE CROSSHAIRS
+                document.querySelectorAll('.guide-line').forEach(l => l.style.display = 'block'); 
                 damageToggle.checked = false; previewImage.style.filter = "none";
             }
         });
 
-        // DYNAMIC DIRECT WORKSPACE DAMAGE MARKER PIN PLACEMENT (FIX)
+        // FIXED INTERACTIVE TRIGGER: Drop and remove dots with Pan Mode lock checks (FIX)
         workspace.addEventListener('click', (e) => {
             if(surfaceDropdownMenuController.value !== 'show' || isPanMode || !cardData[currentSide].src) return;
+            
+            // Check if user clicked directly on an existing dot container node instead of canvas
+            if(e.target.classList.contains('damage-dot-marker')) {
+                const targetDotIndex = parseInt(e.target.getAttribute('data-idx'));
+                localPlacedDamageDotsArray.splice(targetDotIndex, 1); // Remove dot from trace memory
+                renderLocalDamageDotsOnWorkspaceCanvas();
+                return;
+            }
+
             const rect = workspace.getBoundingClientRect();
             const clickXPercentage = ((e.clientX - rect.left) / rect.width) * 100;
             const clickYPercentage = ((e.clientY - rect.top) / rect.height) * 100;
 
-            // Cache placed dot positions vectors
             localPlacedDamageDotsArray.push({ x: clickXPercentage, y: clickYPercentage, face: currentSide });
             renderLocalDamageDotsOnWorkspaceCanvas();
         });
 
         function renderLocalDamageDotsOnWorkspaceCanvas() {
-            document.querySelectorAll('.damage-dot-marker').forEach(d => d.remove()); // Clear old pins nodes
-            localPlacedDamageDotsArray.forEach(dot => {
+            workspace.querySelectorAll('.damage-dot-marker').forEach(d => d.remove());
+            localPlacedDamageDotsArray.forEach((dot, index) => {
                 if(dot.face === currentSide) {
                     const node = document.createElement('div');
                     node.className = 'damage-dot-marker';
                     node.style.left = dot.x + '%'; node.style.top = dot.y + '%';
+                    node.setAttribute('data-idx', index); // Set indexing reference tag handle
                     workspace.appendChild(node);
                 }
             });
@@ -573,7 +588,7 @@
             else { previewImage.style.filter = "none"; }
         });
 
-        // OCR UTILITIES SHIELDS
+        // OCR SYNC REPAIRED PARSING (FIX)
         async function runSmartVisionOCR(dataUrl) {
             ocrStatusLog.style.display = "block"; ocrStatusLog.innerText = "⚡ SMART VISION ACTIVE: Analyzing card details...";
             try {
@@ -588,24 +603,24 @@
                         let words = line.replace(/[^a-zA-Z\s]/g, "").trim().split(' '); if(words[0] && words[0].length > 2) foundName = words.slice(0, 2).join(' ');
                     }
                 }
-                let optimalSearchQuery = `${foundName} ${foundNumber}`.trim();
-                if (optimalSearchQuery.length > 2) {
+                
+                // CLEAN AND STRIP CRASHING QUERY STRINGS SYMBOLS (FIX)
+                let optimalSearchQuery = `${foundName} ${foundNumber}`.replace(/['"“”‘’]/g, "").trim();
+                
+                if (optimalSearchQuery.length > 2 && !optimalSearchQuery.toLowerCase().includes("tian")) {
                     document.getElementById('cardSearchInput').value = optimalSearchQuery;
                     document.getElementById('customCardSaveTitleField').value = optimalSearchQuery;
                     ocrStatusLog.innerText = `✓ Vision indexed: "${optimalSearchQuery}". Fetching values...`;
                     triggerAutomatedPriceSearch(optimalSearchQuery);
-                } else { ocrStatusLog.innerText = "⚠️ Blurred layout query blueprint ready."; }
-            } catch (err) { ocrStatusLog.innerText = "⚠️ Text layers unparsed."; }
+                } else { throw new Error("Fallback required"); }
+            } catch (err) { ocrStatusLog.innerText = "⚠️ Vision unindexed. Manual entry box ready below."; }
         }
 
-        // FIXED HIGH STABILITY FOREIGN ENTRY BASELINE RESOLUTIONS (FIX)
         async function triggerAutomatedPriceSearch(queryText) {
             try {
                 const cleanNameQuery = queryText.split(' ')[0].replace(/[^a-zA-Z]/g, "");
                 const response = await fetch(`https://api.pokemontcg.io/v2/cards?q=name:"${encodeURIComponent(cleanNameQuery)}"`);
                 const data = await response.json();
-                
-                // IF BLANK FOREIGN OR REGISTRY NULL DETECTED HARD RESET TO STABLE TRACK ARRAYS (FIX)
                 if (data.data && data.data.length > 0) {
                     let matchedCard = data.data.find(c => queryText.includes(c.number)) || data.data[0];
                     const cardName = matchedCard.name; const cardSetNum = `${matchedCard.number}/${matchedCard.set.printedTotal}`;
@@ -623,10 +638,10 @@
                     document.getElementById('priceMarket').innerText = marketPrice; document.getElementById('priceLow').innerText = lowPrice;
                     const ebayQuery = encodeURIComponent(`${cardName} ${matchedCard.number} ${matchedCard.set.name}`); document.getElementById('ebayLink').href = `https://www.ebay.co.uk/sch/i.html?_nkw=${ebayQuery}&LH_Sold=1&LH_Complete=1`;
                     document.getElementById('priceResultBox').style.display = "block";
-                } else { throw new Error("Foreign baseline check forced"); }
+                } else { throw new Error("Foreign boundary tracking forced"); }
             } catch (err) { 
                 console.log("Foreign baseline appraisal activated.");
-                cacheLiveEstimatedValueGBP = 1.25; // Reset Korean/Foreign to true ungraded base value cost cleanly
+                cacheLiveEstimatedValueGBP = 1.25; 
                 document.getElementById('cardTargetName').innerText = queryText + " (Custom Foreign Appraisal Entry)";
                 document.getElementById('priceMarket').innerText = "£1.25"; document.getElementById('priceLow').innerText = "£0.50";
                 document.getElementById('priceResultBox').style.display = "block";
@@ -638,7 +653,7 @@
             if(val) { triggerAutomatedPriceSearch(val); document.getElementById('customCardSaveTitleField').value = val; }
         });
 
-        // EVALUATION CALCULATION MASTER
+        // POTENTIAL GRADE CALCULATOR ROUTE DISPATCH (FIXED OPEN REVEALS)
         calculateButton.addEventListener('click', () => {
             const fWorstLR = calculateSideMaxSplitPercentage(cardData.front.ol, cardData.front.or, cardData.front.il, cardData.front.ir);
             const fWorstTB = calculateSideMaxSplitPercentage(cardData.front.ot, cardData.front.ob, cardData.front.it, cardData.front.ib);
@@ -651,7 +666,7 @@
                 finalWorstTB = Math.round((fWorstTB * 0.6) + (bWorstTB * 0.4));
                 document.getElementById('ratioDisplayHUD').innerText = `📐 Front split: ${fWorstLR.toFixed(0)}% | Back split: ${bWorstLR.toFixed(0)}%`;
             } else {
-                document.getElementById('ratioDisplayHUD').innerText = `📐 Front face split: ${fWorstLR.toFixed(0)}%:${(100-fWorstLR).toFixed(0)}% (Back Scan Omitted)`;
+                document.getElementById('ratioDisplayHUD').innerText = `📐 Front face split: ${fWorstLR.toFixed(0)}%:${(100-fWorstLR).toFixed(0)}% (Back Omitted)`;
             }
 
             let conditionCap = 10; let reportedDefects = [];
@@ -661,7 +676,6 @@
             if(document.getElementById('defectDot1').checked) { conditionCap = Math.min(conditionCap, 9); reportedDefects.push("1 White Speck"); }
 
             const verdicts = evaluateExpandedGrades(finalWorstLR, finalWorstTB, conditionCap);
-            
             document.getElementById('psaVerdict').innerText = verdicts.psa; document.getElementById('psaVerdict').className = verdicts.psa.includes('10') && !verdicts.psa.includes('Drop') ? 'company-verdict perfect' : 'company-verdict';
             document.getElementById('aceVerdict').innerText = verdicts.ace; document.getElementById('aceVerdict').className = verdicts.ace.includes('10') && !verdicts.ace.includes('Drop') ? 'company-verdict perfect' : 'company-verdict';
             document.getElementById('tagVerdict').innerText = verdicts.tag; document.getElementById('tagVerdict').className = verdicts.tag.includes('10') && !verdicts.tag.includes('Drop') ? 'company-verdict perfect' : 'company-verdict';
@@ -671,9 +685,9 @@
             outputWrapper.classList.remove('gold-slab-glow');
             if(verdicts.psa.includes('10') && !verdicts.psa.includes('Drop')) { outputWrapper.classList.add('gold-slab-glow'); }
 
-            // FIXED RESULTS SCREEN DISPLAY REVEAL FORCE (FIX)
+            // FORCE REMOVE THE RESTRAINING CLASSIFIERS BLOCK FROM DOM OCCUPATION (FIXED DISPATCH)
+            resultsPanel.removeAttribute('style');
             resultsPanel.style.display = 'block';
-            document.getElementById('calculatedRatiosDisplay').innerText = `Centering Split Data Calculations:`;
             
             compiledFinalLedgerPayloadBlock = {
                 gradeBadge: verdicts.psa, lrRatio: `${finalWorstLR}:${100-finalWorstLR}`, tbRatio: `${finalWorstTB}:${100-finalWorstTB}`, defects: reportedDefects, cashValue: cacheLiveEstimatedValueGBP, markers: localPlacedDamageDotsArray
@@ -716,17 +730,17 @@
                     cardTitle: verifiedFinalTitle, frontImage: fUrl, backImage: bUrl, ...compiledFinalLedgerPayloadBlock
                 });
 
-                alert("✓ Slab calculations securely archived to portfolio layout grid!");
+                alert("✓ Slab calculation locked cleanly into binder portfolio!");
                 workspaceContainer.style.display = "none"; resultsPanel.style.display = "none"; calculateButton.style.display = "none";
                 frontLabel.innerText = "📸 Add Front Photo"; frontLabel.classList.remove('has-file');
                 backLabel.innerText = "📸 Add Back Photo (Optional)"; backLabel.classList.remove('has-file');
                 cardData = { front: { src: null, zoom:1, rotate:0, x:0, y:0, ol:10, or:90, ot:10, ob:90, il:20, ir:80, it:20, ib:80 }, back: { src: null, zoom:1, rotate:0, x:0, y:0, ol:10, or:90, ot:10, ob:90, il:20, ir:80, it:20, ib:80 } }; 
-                localPlacedDamageDotsArray = []; document.querySelectorAll('.damage-dot-marker').forEach(d => d.remove());
+                localPlacedDamageDotsArray = []; workspace.querySelectorAll('.damage-dot-marker').forEach(d => d.remove());
                 resetFilingFormBlocksHUD();
             } catch(e) { alert("Filing error."); } finally { fireButton.innerText = "☁️ Finalize Vault Archive Sequence"; fireButton.disabled = false; }
         });
 
-        // MASTER BINDER CALCULATOR FILTERS RE-RENDERING (REBUILT CLEAN 11-18)
+        // PORTFOLIO ALGORITHMS SYNCS
         async function syncMasterUserCloudBinderLedger() {
             if(!currentUser) return;
             binderGridSheet9SlotPage.innerHTML = "";
@@ -736,7 +750,7 @@
                 snap.forEach(d => globalBinderCollectionMemory.push({ docId: d.id, ...d.data() }));
                 
                 processAndRenderBinderViewWithFilters();
-            } catch(e) { console.error("Sync error:", e); }
+            } catch(e) { console.error("Index sync issue:", e); }
         }
 
         function processAndRenderBinderViewWithFilters() {
@@ -745,7 +759,6 @@
             const queryText = document.getElementById('binderInternalLiveSearchInput').value.toLowerCase().trim();
             if(queryText) { processedCards = processedCards.filter(c => c.cardTitle.toLowerCase().includes(queryText)); }
 
-            // FIXED LIVE PORTFOLIO MULTIPLIERS SETTINGS CALCULATIONS (FIX)
             const pricingMode = document.getElementById('pricingModeSelectToggle').value;
             let sum = 0;
             processedCards.forEach(c => {
@@ -787,7 +800,7 @@
                         <span class="pocket-grade-tab">${card.gradeBadge.split(' ')[0]} ${card.gradeBadge.match(/\d+/) ? card.gradeBadge.match(/\d+/)[0] : ''}</span>
                         <img src="${targetImageSrcPath}" class="pocket-img-render" alt="Showcase Slab Card">
                     `;
-                    // FIXED INTERACTIVE TRIGGER: Pull out slab details instead of prompt deletion (FIX)
+                    // FIXED: Pulls out slab data inspection view natively instead of raw deletion window triggers (FIX)
                     slot.addEventListener('click', () => triggerPremiumSlabPulloutInspectionModal(card.docId, card.derivedFinalPrice, processedCards));
                 } else {
                     slot.className = 'pocket-slot'; slot.innerHTML = `<span class="empty-pocket-cross">×</span>`;
@@ -796,37 +809,56 @@
             }
         }
 
-        // PREMIUM SLAB INSPECTION SHEET POPUP WITH PIN DAMAGE OVERLAY VIEW (FIX)
+        // PULLOUT SLAB POPUP MAPPED POINTS HOOKUPS
         function triggerPremiumSlabPulloutInspectionModal(docId, calculatedPrice, activeCardsArray) {
             activeSelectedSlabDocId = docId;
             const card = activeCardsArray.find(c => c.docId === docId); if(!card) return;
 
             document.getElementById('modalSlabTitle').innerText = card.cardTitle;
+            document.getElementById('editSlabCardTitleInlineInputField').value = card.cardTitle; // Populate re-namer bar
+            
             document.getElementById('modalSlabMetrics').innerHTML = `
-                • 📐 <strong>Centering:</strong> L/R Split ${card.lrRatio} | T/B Split ${card.tbRatio}<br>
-                • 🔍 <strong>Condition Notes:</strong> ${card.defects && card.defects.length > 0 ? card.defects.join(', ') : 'None marked'}<br>
+                • 📐 <strong>Centering:</strong> Split ${card.lrRatio} | T/B ${card.tbRatio}<br>
+                • 🔍 <strong>Defects:</strong> ${card.defects && card.defects.length > 0 ? card.defects.join(', ') : 'None marked'}<br>
                 • 💰 <strong>Portfolio Valuation Asset Worth:</strong> £${calculatedPrice.toFixed(2)}
             `;
             
             const mirrorFrameCanvas = document.getElementById('modalSlabVisualCanvasMirror');
             document.getElementById('modalSlabPrimaryImageRenderPath').src = card.frontImage || card.backImage || "";
 
-            // Clear old pins nodes from inside inspection modal backdrop window
             mirrorFrameCanvas.querySelectorAll('.damage-dot-marker').forEach(d => d.remove());
 
-            // If coordinates metadata paths array exist inject into the layout frame natively
+            // FIXED IMAGE MARKING PERSISTENCE: Re-inject saved pin coordinates directly onto slab modal canvas (FIX)
             if(card.markers && card.markers.length > 0) {
                 card.markers.forEach(marker => {
                     const dotNode = document.createElement('div');
                     dotNode.className = 'damage-dot-marker';
                     dotNode.style.left = marker.x + '%'; dotNode.style.top = marker.y + '%';
+                    dotNode.style.pointerEvents = 'none'; // Lock pins frozen inside inspection sheet view
                     mirrorFrameCanvas.appendChild(dotNode);
                 });
             }
             slabModal.classList.add('active');
         }
 
-        // DETAILED EXPLICIT DATA PURGE CLOUD MANIPULATIONS
+        // DYNAMIC INLINE RE-NAMING SYSTEM EXECUTIONS (FIX)
+        document.getElementById('btnSaveSlabTitleEditInline').addEventListener('click', async () => {
+            if(!activeSelectedSlabDocId || !currentUser) return;
+            const freshNameString = document.getElementById('editSlabCardTitleInlineInputField').value.trim();
+            if(!freshNameString) return alert("Please type a valid entry name.");
+            
+            try {
+                // Update text document directly inside Firestore ledger folder parameters
+                const cardRef = doc(db, "card_scans", activeSelectedSlabDocId);
+                await updateDoc(cardRef, { cardTitle: freshNameString });
+                
+                document.getElementById('modalSlabTitle').innerText = freshNameString;
+                alert(`✓ Entry name updated to: "${freshNameString}"`);
+                syncMasterUserCloudBinderLedger(); // Refresh memory frames
+            } catch(e) { alert("Title save exception context."); }
+        });
+
+        // PHYSICAL DATABASE PURGE ERASURE PROTOCOLS
         document.getElementById('btnPurgeCardDocumentFromBinder').addEventListener('click', async () => {
             if(!activeSelectedSlabDocId || !currentUser) return;
             if(confirm("Are you entirely certain you wish to permanently purge this entry and its physical cloud photo storage files out of your collection folder?")) {
@@ -842,7 +874,6 @@
             }
         });
 
-        // DROPDOWN LIVE MUTATION LISTENERS ACTIONS
         document.getElementById('binderInternalLiveSearchInput').addEventListener('input', processAndRenderBinderViewWithFilters);
         document.getElementById('pricingModeSelectToggle').addEventListener('change', processAndRenderBinderViewWithFilters);
         document.getElementById('binderSortDirectionSelectToggle').addEventListener('change', processAndRenderBinderViewWithFilters);
