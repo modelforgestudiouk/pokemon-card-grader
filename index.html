@@ -19,7 +19,6 @@
 
         body { margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; background-color: var(--bg-dark); min-height: 100vh; color: var(--brand-white); font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
         
-        /* Layout Bar Header */
         .header-container { display: flex; align-items: center; justify-content: space-between; width: 350px; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #222; }
         .logo-badge { background-color: var(--brand-orange); color: var(--bg-dark); font-weight: 900; font-size: 20px; padding: 5px 12px; border-radius: 8px; margin-right: 12px; }
         .logo-flex { display: flex; align-items: center; }
@@ -53,17 +52,14 @@
         .tab-btn { flex: 1; padding: 10px; background: #222; border: 1px solid #333; color: var(--text-gray); font-weight: bold; border-radius: 6px; cursor: pointer; text-transform: uppercase; font-size: 13px; }
         .tab-btn.active { background: var(--brand-orange); color: white; border-color: var(--brand-orange); }
         
-        /* 3D MANIPULATION PLATFORM CONTROLS */
         #controlDock { display: none; justify-content: space-between; margin-top: 10px; background: #1a1a1c; padding: 10px; border-radius: 8px; flex-wrap: wrap; gap: 6px; width: 100%; box-sizing: border-box; border: 1px solid #2d2d30; }
         .dock-btn { background: #111; border: 1px solid var(--brand-orange); color: var(--brand-white); padding: 8px 10px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
         .dock-btn.active { background: var(--brand-orange); color: black; }
 
-        /* Perspective Engine Anchor Viewports */
         #workspace { position: relative; width: 310px; height: 430px; margin: 15px auto; display: none; background-color: #030304; border-radius: 8px; overflow: hidden; border: 1px solid #333; perspective: 1000px; }
-        #imageContainer { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transform-origin: center center; position: absolute; top: 0; left: 0; }
-        #previewImage { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; transition: transform 0.1s; }
+        #imageContainer { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transform-origin: center center; position: absolute; top: 0; left: 0; cursor: move; }
+        #previewImage { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
         
-        /* Boundary tracks crosshairs lines style variables mapping */
         .guide-line { position: absolute; z-index: 10; opacity: 0.9; }
         .vertical { width: 3px; height: 100%; top: 0; cursor: ew-resize; }
         .horizontal { height: 3px; width: 100%; left: 0; cursor: ns-resize; }
@@ -108,12 +104,12 @@
         #save-ledger-form-block { display: none; background: #0c0c0d; border: 1px solid #222; border-radius: 8px; padding: 12px; margin-top: 12px; text-align: left; }
         .custom-button { background-color: var(--brand-orange); color: var(--brand-white); border: none; padding: 12px 25px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; display: inline-block; width: 100%; box-sizing: border-box; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; text-align: center; }
 
-        /* PREMIUM 3D OPEN BOOK BINDER SYSTEM SHEETS GRAPHICS */
+        /* REALISTIC 3D PORTFOLIO BINDER ALBUM FRAME CONTAINER OVERHAUL */
         #binder-customizer-dropdown-drawer { display: none; background: #111; padding: 15px; border-radius: 10px; border: 1px solid #222; margin-bottom: 15px; text-align: left; }
         .binder-color-dot { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; display: inline-block; margin-right: 8px; }
         .binder-color-dot.active { border-color: white; }
 
-        .binder-wrapper-scroller { position: relative; width: 100%; display: flex; justify-content: center; padding: 10px 0; }
+        .binder-wrapper-scroller { position: relative; width: 100%; display: flex; justify(content: center; padding: 10px 0; }
         .binder-outer-skin { position: relative; width: 340px; background-color: var(--binder-color); border-radius: 12px; padding: 12px 12px 12px 24px; box-sizing: border-box; box-shadow: 0 15px 35px rgba(0,0,0,0.6), inset -10px 0 20px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.05); display: flex; }
         .binder-spine-rings { position: absolute; left: 6px; top: 0; width: 12px; height: 100%; display: flex; flex-direction: column; justify-content: space-around; padding: 25px 0; box-sizing: border-box; z-index: 30; }
         .binder-ring-metal { width: 10px; height: 24px; border: 3px solid #b0b0b5; border-right: none; border-radius: 12px 0 0 12px; background: transparent; box-shadow: -2px 2px 4px rgba(0,0,0,0.5), inset 1px 1px 2px white; margin-bottom: 30px; }
@@ -130,7 +126,7 @@
         .binder-pagination-dock { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 10px; font-size: 11px; color: var(--text-gray); }
         .page-arrow-btn { background: #111; border: 1px solid #222; color: white; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
 
-        /* THE PREMIUM 3D FLOATING SLAB INSPECTION FRAME (Suggestions 11-18 REBUILT DETAILED) */
+        /* THE PREMIUM 3D FLOATING SLAB INSPECTION FRAME POPUP SYSTEM OVERLAY */
         .slab-pullout-frame { background-color: #151518; border: 2px solid var(--brand-orange); border-radius: 16px; padding: 18px; width: 335px; box-sizing: border-box; text-align: left; box-shadow: 0 25px 60px rgba(0,0,0,0.95); }
         .slab-pullout-title { font-size: 16px; font-weight: bold; border-bottom: 2px solid var(--brand-orange); padding-bottom: 6px; margin-bottom: 12px; text-transform: uppercase; color: white; letter-spacing: 0.5px; }
         .slab-pullout-workspace-mirror { position: relative; width: 100%; height: 320px; background: #000; border-radius: 8px; border: 1px solid #333; overflow: hidden; margin: 12px 0; }
@@ -138,12 +134,14 @@
         .slab-pullout-edit-input { flex: 1; background-color: #050506; border: 1px solid #333; border-radius: 6px; padding: 10px; color: white; font-size: 13px; }
         .slab-pullout-edit-save-btn { background-color: var(--success-green); border: none; color: black; font-weight: bold; padding: 0 14px; border-radius: 6px; cursor: pointer; font-size: 12px; text-transform: uppercase; }
 
-        /* Modals Overlays Sheet */
+        /* General Modals Sheet Overlays layer */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
         .modal-card { background-color: var(--panel-dark); border: 2px solid var(--brand-orange); padding: 25px; border-radius: 18px; width: 320px; color: var(--brand-white); max-height: 85vh; overflow-y: auto; }
         .modal-card h3 { color: var(--brand-orange); margin-top: 0; text-transform: uppercase; font-weight: 900; }
         .close-modal-x-btn { background-color: var(--brand-orange); color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 11px; width: 100%; margin-top: 10px; text-align: center; }
+        
+        .legal-disclaimer-footer { width: 350px; font-size: 11px; color: #444; text-align: center; line-height: 1.4; margin: 15px 0; padding-top: 10px; border-top: 1px solid #111; }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 </head>
@@ -259,7 +257,7 @@
             </div>
         </div>
 
-        <div class="info-panel" id="resultsPanel" style="display: none !important;">
+        <div class="info-panel" id="resultsPanel" style="display: none;">
             <div class="panel-title">Calculated Centering Metrics</div>
             <div class="company-row" style="justify-content:center; padding:0 0 8px 0;"><span id="ratioDisplayHUD" style="font-family:monospace; font-size:13px; font-weight:bold; color:white;">--</span></div>
             <div class="company-row"><span class="company-name">PSA Predicted Standard:</span><span id="psaVerdict" class="company-verdict">Evaluating...</span></div>
@@ -369,6 +367,10 @@
         </div>
     </div>
 
+    <div class="legal-disclaimer-footer">
+        <strong>Calculator Disclaimer Notice:</strong> This application is an independent alignment simulation matrix built by Model Forge Studio. Calculated predictions are automated mathematical approximations for tracking and catalog reference purposes only. Official grading determinations are generated explicitly via visual analysis conducted by third-party certification authorities.
+    </div>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -401,7 +403,6 @@
         const helpModal = document.getElementById('helpModal');
         const slabModal = document.getElementById('slabDetailModal');
 
-        // REPAIRED INDEPENDENT EXPLICIT CLOSING WIRES (FIXED CRASH FREEZES)
         document.getElementById('openHelp').addEventListener('click', () => helpModal.classList.add('active'));
         document.getElementById('closeHelp').addEventListener('click', () => helpModal.classList.remove('active'));
         document.getElementById('closeSlabDetailModal').addEventListener('click', () => slabModal.classList.remove('active'));
@@ -423,16 +424,16 @@
         document.getElementById('btnSignUp').addEventListener('click', async () => {
             const email = document.getElementById('authEmail').value.trim(); const pass = document.getElementById('authPassword').value.trim();
             if(!email || !pass) return alert("Fill in fields.");
-            try { await createUserWithEmailAndPassword(auth, email, pass); alert("Profile deployed!"); } catch(e) { alert("Error: " + e.message); }
+            try { await createUserWithEmailAndPassword(auth, email, pass); alert("Profile deployed!"); } catch(e) { alert("Registration exception: " + e.message); }
         });
         document.getElementById('btnSignIn').addEventListener('click', async () => {
             const email = document.getElementById('authEmail').value.trim(); const pass = document.getElementById('authPassword').value.trim();
             if(!email || !pass) return alert("Fill in fields.");
-            try { await signInWithEmailAndPassword(auth, email, pass); } catch(e) { alert("Error: " + e.message); }
+            try { await signInWithEmailAndPassword(auth, email, pass); } catch(e) { alert("Login failure: " + e.message); }
         });
         document.getElementById('btnSignOut').addEventListener('click', () => signOut(auth));
 
-        // WORKSPACE IMAGE CONTROLS CONFIG PLATFORMS
+        // CONTROLS MANIPULATION CONFIG PIPELINES
         const frontFile = document.getElementById('frontFile'); const backFile = document.getElementById('backFile');
         const frontLabel = document.getElementById('frontLabel'); const backLabel = document.getElementById('backLabel');
         const sideTabs = document.getElementById('sideTabs'); const tabFront = document.getElementById('tabFront'); const tabBack = document.getElementById('tabBack');
@@ -462,7 +463,6 @@
             }
         });
 
-        // FIXED INTERACTIVE TRIGGER: Block pin dropping inside Pan Mode completely, drop/remove flawlessly (FIX)
         workspace.addEventListener('click', (e) => {
             if(surfaceDropdownMenuController.value !== 'show' || isPanMode || !cardData[currentSide].src) return;
             
@@ -524,13 +524,10 @@
         tabFront.addEventListener('click', () => { if(cardData.front.src) switchSide('front'); });
         tabBack.addEventListener('click', () => { if(cardData.back.src) switchSide('back'); });
 
-        // RESTORED & ENHANCED: Perspective 3D Image Straightening Manipulation controls dock hooks
         document.getElementById('zoomIn').addEventListener('click', () => { cardData[currentSide].zoom += 0.08; updateImageTransform(); });
         document.getElementById('zoomOut').addEventListener('click', () => { if (cardData[currentSide].zoom > 0.3) cardData[currentSide].zoom -= 0.08; updateImageTransform(); });
         document.getElementById('rotateLeft').addEventListener('click', () => { cardData[currentSide].rotate -= 1.2; updateImageTransform(); });
         document.getElementById('rotateRight').addEventListener('click', () => { cardData[currentSide].rotate += 1.2; updateImageTransform(); });
-        
-        // NEW FEATURE: Perspective 3D Tilt adjustment modifiers (FIX)
         document.getElementById('leanForward').addEventListener('click', () => { cardData[currentSide].tiltX += 1.5; updateImageTransform(); });
         document.getElementById('leanBackward').addEventListener('click', () => { cardData[currentSide].tiltX -= 1.5; updateImageTransform(); });
 
@@ -542,7 +539,6 @@
 
         function updateImageTransform() { 
             const side = cardData[currentSide]; 
-            // Apply integrated flat translate, scaling sizes, 2D rotation alongside 3D perspective tilts transformation matrix
             imageContainer.style.transform = `translate(${side.x}px, ${side.y}px) scale(${side.zoom}) rotate(${side.rotate}deg) rotateX(${side.tiltX}deg)`; 
         }
         
@@ -596,7 +592,7 @@
             else { previewImage.style.filter = "none"; }
         });
 
-        // OCR ENGINE WIRES
+        // OCR SYNC REPAIRING
         async function runSmartVisionOCR(dataUrl) {
             ocrStatusLog.style.display = "block"; ocrStatusLog.innerText = "⚡ SMART VISION ACTIVE: Analyzing card details...";
             try {
@@ -611,7 +607,9 @@
                         let words = line.replace(/[^a-zA-Z\s]/g, "").trim().split(' '); if(words[0] && words[0].length > 2) foundName = words.slice(0, 2).join(' ');
                     }
                 }
+                
                 let optimalSearchQuery = `${foundName} ${foundNumber}`.replace(/['"“”‘’]/g, "").trim();
+                
                 if (optimalSearchQuery.length > 2 && !optimalSearchQuery.toLowerCase().includes("tian")) {
                     document.getElementById('cardSearchInput').value = optimalSearchQuery;
                     document.getElementById('customCardSaveTitleField').value = optimalSearchQuery;
@@ -657,7 +655,7 @@
             if(val) { triggerAutomatedPriceSearch(val); document.getElementById('customCardSaveTitleField').value = val; }
         });
 
-        // CALCULATE GRADES RATIOS OVERHAUL (REPAIRED)
+        // REPAIRED GRADES REVEAL FORCING DISPATCH (FIX)
         calculateButton.addEventListener('click', () => {
             const fWorstLR = calculateSideMaxSplitPercentage(cardData.front.ol, cardData.front.or, cardData.front.il, cardData.front.ir);
             const fWorstTB = calculateSideMaxSplitPercentage(cardData.front.ot, cardData.front.ob, cardData.front.it, cardData.front.ib);
@@ -689,7 +687,7 @@
             outputWrapper.classList.remove('gold-slab-glow');
             if(verdicts.psa.includes('10') && !verdicts.psa.includes('Drop')) { outputWrapper.classList.add('gold-slab-glow'); }
 
-            // FIXED: Explicitly force remove hidden display rule flags right inside dispatch event frame (FIX)
+            // OVERRIDE: Force structural removal of background visibility locks instantly (FIX)
             resultsPanel.style.setProperty('display', 'block', 'important');
             
             compiledFinalLedgerPayloadBlock = {
@@ -743,7 +741,6 @@
             } catch(e) { alert("Filing error."); } finally { fireButton.innerText = "☁️ Finalize Vault Archive Sequence"; fireButton.disabled = false; }
         });
 
-        // MASTER RENDERING MATRICES SYNC PROTOCOLS
         async function syncMasterUserCloudBinderLedger() {
             if(!currentUser) return;
             binderGridSheet9SlotPage.innerHTML = "";
@@ -753,7 +750,7 @@
                 snap.forEach(d => globalBinderCollectionMemory.push({ docId: d.id, ...d.data() }));
                 
                 processAndRenderBinderViewWithFilters();
-            } catch(e) { console.error("Sync error:", e); }
+            } catch(e) { console.error("Index sync issue:", e); }
         }
 
         function processAndRenderBinderViewWithFilters() {
@@ -762,7 +759,6 @@
             const queryText = document.getElementById('binderInternalLiveSearchInput').value.toLowerCase().trim();
             if(queryText) { processedCards = processedCards.filter(c => c.cardTitle.toLowerCase().includes(queryText)); }
 
-            // FIXED ACTIVE RE-CALCULATING VALUE ARRAYS CHANNELS (FIX)
             const pricingMode = document.getElementById('pricingModeSelectToggle').value;
             let sum = 0;
             processedCards.forEach(c => {
@@ -804,7 +800,6 @@
                         <span class="pocket-grade-tab">${card.gradeBadge.split(' ')[0]} ${card.gradeBadge.match(/\d+/) ? card.gradeBadge.match(/\d+/)[0] : ''}</span>
                         <img src="${targetImageSrcPath}" class="pocket-img-render" alt="Showcase Slab Card">
                     `;
-                    // FIXED: Open popout module layer holding slab data specs cleanly (FIX)
                     slot.addEventListener('click', () => triggerPremiumSlabPulloutInspectionModal(card.docId, card.derivedFinalPrice, processedCards));
                 } else {
                     slot.className = 'pocket-slot'; slot.innerHTML = `<span class="empty-pocket-cross">×</span>`;
@@ -813,7 +808,6 @@
             }
         }
 
-        // FLOATING 3D LAYERS MODAL VIEWS ACTIONS REBUILT
         function triggerPremiumSlabPulloutInspectionModal(docId, calculatedPrice, activeCardsArray) {
             activeSelectedSlabDocId = docId;
             const card = activeCardsArray.find(c => c.docId === docId); if(!card) return;
@@ -843,7 +837,6 @@
             slabModal.classList.add('active');
         }
 
-        // FIXED INLINE TITLES SYNC SAVE LINK
         document.getElementById('btnSaveSlabTitleEditInline').addEventListener('click', async () => {
             if(!activeSelectedSlabDocId || !currentUser) return;
             const freshNameString = document.getElementById('editSlabCardTitleInlineInputField').value.trim();
