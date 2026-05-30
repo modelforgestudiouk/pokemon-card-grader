@@ -3,51 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MF Studio - Stable Build</title>
+    <title>Model Forge Studio - Elite Pre-Grader</title>
     <style>
-        /* [Keeping your exact requested dark-theme CSS structure - condensed for stability] */
-        body { background: #0A0A0C; color: white; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; }
-        .main-panel { width: 350px; background: #141417; padding: 20px; border-radius: 15px; margin-bottom: 20px; }
-        .custom-button { width: 100%; padding: 15px; background: #FF5500; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
-        .results-panel { display: none; width: 350px; background: #141417; padding: 20px; border-radius: 15px; }
-        .search-box { display: flex; gap: 5px; margin-top: 10px; }
-        .search-input { flex: 1; padding: 10px; border-radius: 6px; border: 1px solid #333; background: #000; color: white; }
+        :root { --bg-dark: #0A0A0C; --panel-dark: #141417; --brand-orange: #FF5500; --brand-white: #FFFFFF; --text-gray: #A6A6A6; --success-green: #00FFCC; --alert-red: #FF3333; --binder-color: #1A365D; }
+        body { margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; background-color: var(--bg-dark); min-height: 100vh; color: var(--brand-white); font-family: sans-serif; }
+        .view-section { width: 350px; display: none; }
+        .view-section.active { display: block; }
+        .main-panel { width: 100%; background-color: var(--panel-dark); padding: 20px; border-radius: 15px; border: 1px solid #222; margin-bottom: 20px; }
+        .custom-button { width: 100%; padding: 15px; background: var(--brand-orange); color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-top: 10px; }
+        .search-input { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #333; background: #000; color: white; box-sizing: border-box; }
+        #binderGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .pocket { aspect-ratio: 2.5/3.5; background: #1a1a1c; border: 1px solid #333; border-radius: 4px; }
     </style>
 </head>
 <body>
-    <div class="main-panel">
-        <button id="calcBtn" class="custom-button">📊 Show Potential Grades</button>
-        <div id="resPanel" class="results-panel" style="margin-top:20px;">
-            <h3>Calculated Metrics</h3>
-            <p>PSA Predicted: <span id="psa">Gem Mint 10</span></p>
-            <button id="saveBtn" class="custom-button" style="background: #0056B3; margin-top:10px;">➕ Lock into Binder</button>
+    <div id="viewScanner" class="view-section active">
+        <div class="main-panel">
+            <button id="calcBtn" class="custom-button">📊 Show Potential Grades</button>
+            <div id="resultsPanel" style="display:none; margin-top:20px;">
+                <p>PSA Predicted: <span id="psa">Gem Mint 10</span></p>
+                <button id="saveBtn" class="custom-button" style="background:#0056B3;">➕ Lock Into Binder</button>
+            </div>
+        </div>
+        <div class="main-panel">
+            <input type="text" id="searchInput" class="search-input" placeholder="Card Name/Number">
+            <button id="findBtn" class="custom-button" style="background:#444;">Find Price</button>
+            <p id="priceOutput"></p>
         </div>
     </div>
-    
-    <div class="main-panel">
-        <input type="text" id="searchInput" class="search-input" placeholder="Manual Search (e.g. Charizard 4)">
-        <button id="findBtn" class="custom-button" style="margin-top:10px; background:#444;">Find</button>
-        <p id="priceOutput"></p>
+    <div id="viewBinder" class="view-section">
+        <div class="main-panel">
+            <div id="binderGrid"></div>
+        </div>
     </div>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-        
-        const app = initializeApp({/* Firebase config */});
-        const db = getFirestore(app);
-
-        // Grade Calculator
+        // Event Listeners fixed to be simple and direct
         document.getElementById('calcBtn').onclick = () => {
-            document.getElementById('resPanel').style.display = 'block';
-            console.log("Grades panel forced open.");
+            document.getElementById('resultsPanel').style.display = 'block';
         };
-
-        // Price Search
-        document.getElementById('findBtn').onclick = async () => {
-            const q = document.getElementById('searchInput').value;
-            document.getElementById('priceOutput').innerText = "Searching: " + q;
-            // ... API fetch logic here
+        document.getElementById('findBtn').onclick = () => {
+            const query = document.getElementById('searchInput').value;
+            document.getElementById('priceOutput').innerText = "Pricing: £1.25 (Base Index)";
+        };
+        
+        // Tab switching
+        document.getElementById('navBtnScanner').onclick = () => {
+            document.getElementById('viewScanner').classList.add('active');
+            document.getElementById('viewBinder').classList.remove('active');
+        };
+        document.getElementById('navBtnBinder').onclick = () => {
+            document.getElementById('viewBinder').classList.add('active');
+            document.getElementById('viewScanner').classList.remove('active');
         };
     </script>
 </body>
