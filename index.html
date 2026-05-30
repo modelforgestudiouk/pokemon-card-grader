@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Model Forge Studio - Elite Pre-Grader & Showcase Vault</title>
+    <title>Model Forge Studio - Elite Pre-Grader</title>
     <style>
         :root {
-            --bg-dark: #0A0A0B;
-            --panel-dark: #141416;
+            --bg-dark: #070708;
+            --panel-dark: #121214;
             --brand-orange: #FF5500;
             --brand-white: #FFFFFF;
             --text-gray: #8A8A93;
             --success-green: #00FFCC;
             --alert-red: #FF3333;
-            --gold-glow: 0 0 15px rgba(255, 215, 0, 0.6), inset 0 0 10px rgba(255, 215, 0, 0.4);
-            --binder-color: #1A365D; /* Default Deep Navy Blue Binder Cover */
+            --gold-glow: 0 0 15px rgba(255, 215, 0, 0.6);
+            --binder-color: #1A365D;
         }
 
-        body { margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; background-color: var(--bg-dark); min-height: 100vh; color: var(--brand-white); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+        body { margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; background-color: var(--bg-dark); min-height: 100vh; color: var(--brand-white); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
         
         /* Layout Header */
-        .header-container { display: flex; align-items: center; justify-content: space-between; width: 360px; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #222; }
+        .header-container { display: flex; align-items: center; justify-content: space-between; width: 350px; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #1c1c1e; }
         .logo-badge { background-color: var(--brand-orange); color: #000; font-weight: 900; font-size: 18px; padding: 5px 10px; border-radius: 6px; margin-right: 10px; }
         .logo-flex { display: flex; align-items: center; }
         .logo-text { font-size: 18px; font-weight: 900; letter-spacing: 0.5px; color: var(--brand-orange); margin: 0; text-transform: uppercase; }
@@ -30,110 +30,105 @@
         .help-btn { background: none; border: 2px solid var(--brand-orange); color: var(--brand-orange); width: 26px; height: 26px; border-radius: 50%; font-size: 14px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .discord-btn-link { text-decoration: none; border: 2px solid #5865F2; color: #5865F2; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; }
 
-        /* Mode Switcher Dashboard Nav Bar */
-        .app-mode-bar { display: flex; width: 360px; gap: 8px; margin-bottom: 15px; }
-        .mode-btn { flex: 1; padding: 12px; background-color: #111; border: 1px solid #222; color: var(--text-gray); font-weight: bold; font-size: 12px; border-radius: 8px; cursor: pointer; text-transform: uppercase; transition: all 0.2s; }
-        .mode-btn.active { background-color: var(--panel-dark); border-color: var(--brand-orange); color: var(--brand-orange); box-shadow: 0 0 10px rgba(255,85,0,0.15); }
+        /* Navigation Mode Selector */
+        .app-mode-bar { display: flex; width: 350px; gap: 8px; margin-bottom: 15px; }
+        .mode-btn { flex: 1; padding: 12px; background-color: #111; border: 1px solid #222; color: var(--text-gray); font-weight: bold; font-size: 12px; border-radius: 8px; cursor: pointer; text-transform: uppercase; }
+        .mode-btn.active { background-color: var(--panel-dark); border-color: var(--brand-orange); color: var(--brand-orange); }
 
-        .view-section { width: 360px; display: none; }
+        .view-section { width: 350px; display: none; }
         .view-section.active { display: block; }
 
-        /* Main UI Container blocks */
-        .main-panel { width: 100%; background-color: var(--panel-dark); padding: 15px; border-radius: 14px; box-sizing: border-box; border: 1px solid #222; margin-bottom: 15px; }
+        /* Panels layout elements */
+        .main-panel { width: 100%; background-color: var(--panel-dark); padding: 15px; border-radius: 14px; box-sizing: border-box; border: 1px solid #222; margin-bottom: 15px; text-align: center; }
         .panel-title { font-size: 14px; color: var(--brand-orange); font-weight: bold; margin: 0 0 12px 0; border-bottom: 1px solid #222; padding-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; text-align: left; }
         
+        .auth-panel { width: 350px; background-color: #0c0c0c; padding: 15px; border-radius: 12px; border: 1px solid #1a1a1a; margin-bottom: 15px; box-sizing: border-box; font-size: 13px; text-align: center; }
         .auth-inputs { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
         .auth-row { display: flex; gap: 8px; }
         .auth-btn { background-color: #1c1c1e; border: 1px solid #2c2c2e; color: white; padding: 8px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 11px; flex: 1; text-transform: uppercase; }
         .auth-btn.primary { background-color: var(--brand-orange); border-color: var(--brand-orange); }
 
-        /* Workspace Elements */
-        .upload-row { display: flex; gap: 8px; margin-bottom: 12px; }
-        .file-label { flex: 1; background: #1c1c1e; border: 1px dashed #3a3a3c; padding: 10px; border-radius: 6px; font-size: 11px; color: var(--text-gray); cursor: pointer; text-align: center; font-weight: bold; display: flex; flex-direction: column; gap: 4px; }
+        /* STYLING FIX: Native input hidden, custom styled interactive buttons fully accessible */
+        .upload-row { display: flex; gap: 10px; margin-bottom: 12px; width: 100%; box-sizing: border-box; }
+        .file-label { flex: 1; background: #1c1c1e; border: 2px dashed #3a3a3c; padding: 12px 5px; border-radius: 8px; font-size: 12px; color: var(--text-gray); cursor: pointer; text-align: center; font-weight: bold; text-transform: uppercase; display: inline-block; box-sizing: border-box; }
         .file-label.has-file { border-color: var(--success-green); color: white; background: #0f1c18; }
-        
-        #workspace-container { display: none; position: relative; width: 100%; background: #000; border-radius: 8px; padding: 10px; box-sizing: border-box; border: 1px solid #222; }
-        .workspace-title-header { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-gray); margin-bottom: 8px; text-align: left; font-weight: bold; }
-        
-        #workspace-view-frame { position: relative; width: 100%; height: 380px; background-color: #050505; border-radius: 6px; overflow: hidden; border: 1px solid #222; }
-        #imageContainer { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: absolute; }
-        #previewImage { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
-        
-        /* Boundary Crosshairs */
-        .guide-line { position: absolute; z-index: 10; opacity: 0.85; }
-        .vertical { width: 2px; height: 100%; top: 0; cursor: ew-resize; }
-        .horizontal { height: 2px; width: 100%; left: 0; cursor: ns-resize; }
-        .outer-line { background-color: var(--alert-red); }
-        .outer-line::after { content: ''; position: absolute; width: 20px; height: 20px; background: var(--alert-red); border: 2px solid white; border-radius: 50%; }
-        .vertical.outer-line::after { top: 50%; left: -9px; transform: translateY(-50%); }
-        .horizontal.outer-line::after { left: 50%; top: -9px; transform: translateX(-50%); }
-        
-        .inner-line { background-color: var(--success-green); }
-        .vertical.inner-line::after { content: ''; position: absolute; width: 20px; height: 20px; background: var(--success-green); border: 2px solid white; border-radius: 50%; top: 30%; left: -9px; transform: translateY(-50%); }
-        .horizontal.inner-line::after { content: ''; position: absolute; width: 20px; height: 20px; background: var(--success-green); border: 2px solid white; border-radius: 50%; left: 30%; top: -9px; transform: translateX(-50%); }
+        .hidden-file-input { display: none !important; width: 0; height: 0; opacity: 0; visibility: hidden; position: absolute; }
 
-        .side-tabs { display: flex; gap: 6px; margin: 10px 0; }
-        .side-tab-btn { flex: 1; padding: 8px; background: #1c1c1e; border: 1px solid #222; color: var(--text-gray); font-size: 11px; font-weight: bold; border-radius: 6px; cursor: pointer; text-transform: uppercase; }
-        .side-tab-btn.active { background: var(--brand-orange); color: white; border-color: var(--brand-orange); }
-
-        .search-input { width: 100%; background-color: #0a0a0b; border: 1px solid #2c2c2e; border-radius: 6px; padding: 10px; color: #FFF; font-size: 13px; box-sizing: border-box; }
-        .search-input:focus { border-color: var(--brand-orange); outline: none; }
+        .app-status-hud { width: 100%; font-size: 11px; font-family: monospace; color: var(--success-green); margin-bottom: 12px; display: none; text-align: left; background: #000; padding: 8px; border-radius: 6px; border: 1px solid #222; box-sizing: border-box; }
         
         .custom-button { background-color: var(--brand-orange); color: white; border: none; padding: 12px; border-radius: 8px; font-size: 13px; font-weight: bold; cursor: pointer; display: block; width: 100%; box-sizing: border-box; text-transform: uppercase; letter-spacing: 0.5px; text-align: center; margin-top: 10px; text-decoration: none; }
         .secondary-btn { background-color: #1c1c1e; border: 1px solid #3a3a3c; color: white; }
         
-        /* Grading Breakdowns */
-        .company-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #1c1c1e; font-size: 13px; }
-        .company-name { color: var(--text-gray); font-weight: 500; }
+        #workspace-container { display: none; position: relative; width: 100%; background: #000; border-radius: 8px; padding: 8px; box-sizing: border-box; border: 1px solid #222; margin-bottom: 10px; }
+        #workspace-view-frame { position: relative; width: 100%; height: 380px; background-color: #050505; border-radius: 6px; overflow: hidden; }
+        #imageContainer { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: absolute; }
+        #previewImage { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
+        
+        /* Guide handles lines controls */
+        .guide-line { position: absolute; z-index: 10; opacity: 0.85; }
+        .vertical { width: 3px; height: 100%; top: 0; cursor: ew-resize; }
+        .horizontal { height: 3px; width: 100%; left: 0; cursor: ns-resize; }
+        .outer-line { background-color: var(--alert-red); }
+        .outer-line::after { content: ''; position: absolute; width: 22px; height: 22px; background: var(--alert-red); border: 2px solid white; border-radius: 50%; }
+        .vertical.outer-line::after { top: 50%; left: -10px; transform: translateY(-50%); }
+        .horizontal.outer-line::after { left: 50%; top: -10px; transform: translateX(-50%); }
+        .inner-line { background-color: var(--success-green); }
+        .inner-line::after { content: ''; position: absolute; width: 22px; height: 22px; background: var(--success-green); border: 2px solid white; border-radius: 50%; }
+        .vertical.inner-line::after { top: 30%; left: -10px; transform: translateY(-50%); }
+        .horizontal.inner-line::after { left: 30%; top: -10px; transform: translateX(-50%); }
+
+        .side-tabs { display: flex; gap: 6px; margin-bottom: 12px; width: 100%; }
+        .side-tab-btn { flex: 1; padding: 8px; background: #1c1c1e; border: 1px solid #222; color: var(--text-gray); font-size: 11px; font-weight: bold; border-radius: 6px; cursor: pointer; text-transform: uppercase; }
+        .side-tab-btn.active { background: var(--brand-orange); color: white; border-color: var(--brand-orange); }
+
+        .search-input { width: 100%; background-color: #0a0a0b; border: 1px solid #2c2c2e; border-radius: 6px; padding: 10px; color: #FFF; font-size: 13px; box-sizing: border-box; }
+        .company-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #1c1c1e; font-size: 13px; text-align: left; }
+        .company-name { color: var(--text-gray); }
         .company-verdict { font-weight: bold; }
-        .perfect { color: #FFD700 !important; text-shadow: 0 0 8px rgba(255,215,0,0.4); }
+        .perfect { color: #FFD700 !important; text-shadow: 0 0 6px rgba(255,215,0,0.3); }
         .gold-slab-glow { border: 1px solid #FFD700 !important; box-shadow: var(--gold-glow) !important; }
 
-        /* Save Module Form Blocks */
+        .defect-checklist { text-align: left; background: #0c0c0d; padding: 12px; border-radius: 8px; border: 1px solid #1a1a1c; margin-top: 10px; }
+        .check-item { display: flex; align-items: center; gap: 10px; margin: 8px 0; font-size: 12px; color: var(--brand-white); cursor: pointer; }
+        .check-item input { accent-color: var(--brand-orange); width: 16px; height: 16px; }
+
         #save-ledger-form-block { display: none; background: #0c0c0d; border: 1px solid #222; border-radius: 8px; padding: 12px; margin-top: 12px; text-align: left; }
-        
-        /* PREMIUM IMMERSIVE 3X3 BINDER GRAPHICS SYSTEM */
-        .binder-customizer-panel { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; background: #111; padding: 8px; border-radius: 6px; border: 1px solid #222; }
-        .binder-color-dot { width: 22px; height: 22px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
+
+        /* REALISTIC SHOWCASE 3X3 BINDER ALBUM SYSTEM GRAPHICS */
+        #binder-customizer-dropdown-drawer { display: none; background: #111; padding: 12px; border-radius: 8px; border: 1px solid #222; margin-bottom: 12px; text-align: left; }
+        .binder-color-dot { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; display: inline-block; margin-right: 8px; }
         .binder-color-dot.active { border-color: white; }
         
-        /* Main Binder Page Layout Container */
-        .binder-wrapper-scroller { position: relative; width: 100%; overflow-x: auto; padding: 10px 0; display: flex; justify-content: center; }
-        .binder-outer-skin { position: relative; width: 350px; background-color: var(--binder-color); border-radius: 12px; padding: 12px 12px 12px 24px; box-sizing: border-box; box-shadow: 0 15px 40px rgba(0,0,0,0.7), inset -10px 0 20px rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.05); display: flex; transition: background-color 0.3s; }
+        .binder-wrapper-scroller { position: relative; width: 100%; display: flex; justify-content: center; padding: 5px 0; }
+        .binder-outer-skin { position: relative; width: 340px; background-color: var(--binder-color); border-radius: 12px; padding: 10px 10px 10px 22px; box-sizing: border-box; box-shadow: 0 15px 35px rgba(0,0,0,0.6), inset -8px 0 16px rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.05); display: flex; transition: background-color 0.2s; }
         
-        /* Interactive Binder Rings Layer */
-        .binder-spine-rings { position: absolute; left: 6px; top: 0; width: 14px; height: 100%; display: flex; flex-direction: column; justify-content: space-around; padding: 25px 0; box-sizing: border-box; z-index: 30; }
-        .binder-ring-metal { width: 12px; height: 20px; border: 3px solid #b0b0b5; border-right: none; border-radius: 10px 0 0 10px; background: transparent; box-shadow: -2px 2px 4px rgba(0,0,0,0.5), inset 1px 1px 2px white; margin-bottom: 35px; }
+        .binder-spine-rings { position: absolute; left: 5px; top: 0; width: 12px; height: 100%; display: flex; flex-direction: column; justify-content: space-around; padding: 20px 0; box-sizing: border-box; z-index: 30; }
+        .binder-ring-metal { width: 10px; height: 22px; border: 3px solid #b0b0b5; border-right: none; border-radius: 10px 0 0 10px; background: transparent; box-shadow: -1px 2px 3px rgba(0,0,0,0.4); margin-bottom: 30px; }
 
-        /* Ultra Detailed Page Turn Mechanics Container */
-        .binder-sheet-9-pocket { position: relative; width: 100%; background: rgba(15, 15, 18, 0.95); border-radius: 6px; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 8px; padding: 10px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.1); position: relative; transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s; transform-origin: left center; }
-        
-        /* Plastic Sheen Reflection Overlay */
-        .binder-sheet-9-pocket::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.05) 75%, rgba(255,255,255,0) 100%); pointer-events: none; z-index: 25; border-radius: 6px; }
-        
-        /* Page flip classes */
-        .sheet-turning-left { transform: rotateY(-60deg) skewY(4deg) scaleX(0.8); opacity: 0; z-index: 50; }
+        /* 3X3 Page layout grid mesh assembly rules */
+        .binder-sheet-9-pocket { position: relative; width: 100%; background: rgba(12, 12, 14, 0.96); border-radius: 6px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 8px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.08); transition: transform 0.4s ease-out, opacity 0.3s; transform-origin: left center; }
+        .binder-sheet-9-pocket::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 30%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.04) 80%, rgba(255,255,255,0) 100%); pointer-events: none; z-index: 25; border-radius: 6px; }
+        .sheet-turning-left { transform: rotateY(-45deg) skewY(2deg) scaleX(0.9); opacity: 0.3; }
 
-        /* Binder Slots Pocket */
-        .pocket-slot { position: relative; aspect-ratio: 2.5 / 3.5; background: rgba(5,5,5,0.6); border: 1px dashed rgba(255,255,255,0.08); border-radius: 4px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: inset 0 2px 5px rgba(0,0,0,0.8); }
-        .pocket-slot.filled { border: 1px solid rgba(255,255,255,0.15); background: #16161a; box-shadow: 0 4px 10px rgba(0,0,0,0.5); cursor: pointer; }
-        
-        .pocket-img-render { width: 100%; height: 100%; object-fit: cover; }
-        .pocket-grade-tab { position: absolute; top: 4px; right: 4px; background: var(--brand-orange); color: black; font-weight: 900; font-size: 9px; padding: 1px 4px; border-radius: 3px; z-index: 10; }
-        .empty-pocket-cross { font-size: 14px; color: rgba(255,255,255,0.04); font-weight: bold; }
+        /* FIXED BINDER PIC RENDERING INTERFACE STYLING */
+        .pocket-slot { position: relative; aspect-ratio: 2.5 / 3.5; background: #09090a; border: 1px dashed rgba(255,255,255,0.06); border-radius: 4px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,0.8); }
+        .pocket-slot.filled { border: 1px solid rgba(255,255,255,0.12); background: #151518; box-shadow: 0 4px 8px rgba(0,0,0,0.5); cursor: pointer; }
+        .pocket-img-render { width: 100%; height: 100%; object-fit: cover; display: block; position: absolute; top:0; left:0; }
+        .pocket-grade-tab { position: absolute; top: 3px; right: 3px; background: var(--brand-orange); color: black; font-weight: 900; font-size: 8px; padding: 1px 3px; border-radius: 2px; z-index: 10; text-transform: uppercase; }
+        .empty-pocket-cross { font-size: 12px; color: rgba(255,255,255,0.03); font-weight: bold; }
 
-        /* Navigation controls inside binder */
-        .binder-pagination-dock { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 10px; font-size: 12px; color: var(--text-gray); }
-        .page-arrow-btn { background: #111; border: 1px solid #222; color: white; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 11px; }
+        .binder-pagination-dock { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 10px; font-size: 11px; color: var(--text-gray); }
+        .page-arrow-btn { background: #111; border: 1px solid #222; color: white; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
 
-        /* Micro Detail Overlay Modal */
-        .slab-detail-modal-card { background-color: var(--panel-dark); border: 1px solid #333; border-radius: 12px; padding: 15px; width: 310px; text-align: left; position: relative; color: white; }
-        .modal-slab-header { border-bottom: 2px solid var(--brand-orange); padding-bottom: 6px; font-weight: bold; font-size: 14px; margin-bottom: 10px; }
-        .modal-img-row { display: flex; gap: 8px; height: 120px; margin: 10px 0; }
+        /* Overlay Modals */
+        .slab-detail-modal-card { background-color: var(--panel-dark); border: 1px solid #333; border-radius: 12px; padding: 15px; width: 310px; text-align: left; color: white; }
+        .modal-slab-header { border-bottom: 2px solid var(--brand-orange); padding-bottom: 4px; font-weight: bold; font-size: 14px; margin-bottom: 10px; text-transform: uppercase; }
+        .modal-img-row { display: flex; gap: 8px; height: 120px; margin: 12px 0; }
         .modal-img-thumb { flex: 1; border-radius: 4px; object-fit: cover; background: #000; border: 1px solid #222; }
 
-        .legal-disclaimer-footer { width: 360px; font-size: 11px; color: #444; text-align: center; line-height: 1.4; margin: 20px 0; padding-top: 10px; border-top: 1px solid #111; }
+        .legal-disclaimer-footer { width: 350px; font-size: 11px; color: #444; text-align: center; line-height: 1.4; margin: 15px 0; padding-top: 10px; border-top: 1px solid #111; }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 </head>
 <body>
 
@@ -153,19 +148,19 @@
 
     <div class="auth-panel" id="authPanel">
         <div id="authLoggedOut">
-            <span style="color:var(--brand-orange); font-weight:bold; font-size:12px; text-transform:uppercase;">Login to Unlock Your Vault Binder</span>
+            <span style="color:var(--brand-orange); font-weight:bold; font-size:11px; text-transform:uppercase; letter-spacing:0.5px;">Unlock Profile Database Vault Binder</span>
             <div class="auth-inputs">
-                <input type="email" id="authEmail" class="search-input" placeholder="Enter Account Email" style="padding:6px;">
-                <input type="password" id="authPassword" class="search-input" placeholder="Enter Password" style="padding:6px;">
+                <input type="email" id="authEmail" class="search-input" placeholder="Account Email" style="padding:8px;">
+                <input type="password" id="authPassword" class="search-input" placeholder="Password" style="padding:8px;">
                 <div class="auth-row">
-                    <button id="btnSignIn" class="auth-btn primary">Secure Login</button>
+                    <button id="btnSignIn" class="auth-btn primary">Login</button>
                     <button id="btnSignUp" class="auth-btn">Register</button>
                 </div>
             </div>
         </div>
         <div id="authLoggedIn" style="display:none;">
             Vault Profile: <span id="userDisplayEmail" style="color:var(--success-green); font-weight:bold;">--</span>
-            <button id="btnSignOut" class="auth-btn" style="padding:3px 8px; margin-left:10px; display:inline-block; width:auto;">Logout</button>
+            <button id="btnSignOut" class="auth-btn" style="padding:2px 8px; margin-left:10px; display:inline-block; width:auto;">Logout</button>
         </div>
     </div>
 
@@ -176,14 +171,14 @@
 
     <div id="viewScanner" class="view-section active">
         <div class="main-panel">
-            <div id="ocrStatusLog" class="app-status-hud">⚡ VISION ALIGNMENT SEQUENCE ENGAGED...</div>
+            <div id="ocrStatusLog" class="app-status-hud">⚡ VISION ENGINE SYNC ACTIVE...</div>
             
             <div class="upload-row">
                 <label for="frontFile" id="frontLabel" class="file-label">📸 Add Front Photo</label>
-                <input type="file" id="frontFile" accept="image/*">
+                <input type="file" id="frontFile" class="hidden-file-input">
                 
                 <label for="backFile" id="backLabel" class="file-label">📸 Add Back Photo</label>
-                <input type="file" id="backFile" accept="image/*">
+                <input type="file" id="backFile" class="hidden-file-input">
             </div>
 
             <div class="side-tabs" id="sideTabs" style="display:none;">
@@ -192,10 +187,9 @@
             </div>
 
             <div id="workspace-container">
-                <div class="workspace-title-header" id="currentWorkspaceTitleHUD">Front Face Scanning Channel</div>
                 <div id="workspace-view-frame">
                     <div id="imageContainer">
-                        <img id="previewImage" alt="Pre-Grading Alignment Grid">
+                        <img id="previewImage" alt="Lab Workspace Alignment Face">
                     </div>
                     <div id="outLeft" class="guide-line vertical outer-line" style="left: 8%;"></div>
                     <div id="outRight" class="guide-line vertical outer-line" style="left: 92%;"></div>
@@ -205,7 +199,7 @@
                     <div id="inLeft" class="guide-line vertical inner-line" style="left: 18%;"></div>
                     <div id="inRight" class="guide-line vertical inner-line" style="left: 82%;"></div>
                     <div id="inTop" class="guide-line horizontal inner-line" style="top: 18%;"></div>
-                    <div id="inBottom" class="guide-line horizontal inner-line" style="top: 18%;"></div>
+                    <div id="inBottom" class="guide-line horizontal inner-line" style="top: 82%;"></div>
                 </div>
             </div>
 
@@ -213,11 +207,11 @@
         </div>
 
         <div class="main-panel" id="resultsPanel" style="display:none;">
-            <div class="panel-title">Calculated Condition Metric Engine</div>
-            <div class="company-row" style="justify-content:center; padding:0 0 8px 0;"><span id="ratioDisplayHUD" style="font-family:monospace; font-size:14px; font-weight:bold;">FRONT: -- | BACK: --</span></div>
+            <div class="panel-title">Calculated Centering Metrics</div>
+            <div class="company-row" style="justify-content:center; padding:0 0 8px 0;"><span id="ratioDisplayHUD" style="font-family:monospace; font-size:13px; font-weight:bold; color:white;">--</span></div>
             
             <div class="defect-checklist">
-                <div style="font-size:11px; color:var(--brand-orange); font-weight:bold; margin-bottom:8px; text-transform:uppercase;">Select Located White Dots / Wear:</div>
+                <div style="font-size:11px; color:var(--brand-orange); font-weight:bold; margin-bottom:6px; text-transform:uppercase;">Select Located White Dots / Wear:</div>
                 <label class="check-item"><input type="checkbox" id="defectDot1"> <span>1 Minor Edge White Speck (Max 9 Grade)</span></label>
                 <label class="check-item"><input type="checkbox" id="defectDot3"> <span>2-3 Corner Dots / Minor Silvering (Max 8 Grade)</span></label>
                 <label class="check-item"><input type="checkbox" id="defectScratch"> <span>Visible Surface Scratching / Scuffs (Max 7 Grade)</span></label>
@@ -225,32 +219,39 @@
             </div>
 
             <div style="margin-top:12px;" id="gradingOutputGlowWrapper" class="main-panel">
-                <div class="company-row"><span class="company-name">PSA Grading Approximation:</span><span id="psaVerdict" class="company-verdict">Evaluating...</span></div>
-                <div class="company-row"><span class="company-name">ACE Technical Grading Scale:</span><span id="aceVerdict" class="company-verdict">Evaluating...</span></div>
-                <div class="company-row"><span class="company-name">TAG Centering Analytics Engine:</span><span id="tagVerdict" class="company-verdict">Evaluating...</span></div>
-                <div class="company-row"><span class="company-name">BGS Subgrade Matrix Scale:</span><span id="bgsVerdict" class="company-verdict">Evaluating...</span></div>
+                <div class="company-row"><span class="company-name">PSA Grading Standard:</span><span id="psaVerdict" class="company-verdict">Evaluating...</span></div>
+                <div class="company-row"><span class="company-name">ACE Technical Scale:</span><span id="aceVerdict" class="company-verdict">Evaluating...</span></div>
+                <div class="company-row"><span class="company-name">TAG Analytics Engine:</span><span id="tagVerdict" class="company-verdict">Evaluating...</span></div>
+                <div class="company-row"><span class="company-name">BGS Subgrade Matrix:</span><span id="bgsVerdict" class="company-verdict">Evaluating...</span></div>
             </div>
 
-            <button id="btnUnlockFilingForm" class="custom-button">➕ Secure Entry data Block</button>
+            <button id="btnUnlockFilingForm" class="custom-button">➕ Secure Entry Data Block</button>
             
             <div id="save-ledger-form-block">
                 <div style="font-size:11px; color:var(--brand-orange); font-weight:bold; margin-bottom:6px; text-transform:uppercase;">Name This Ledger Entry:</div>
                 <input type="text" id="customCardSaveTitleField" class="search-input" placeholder="e.g. Charizard Base Set 4/102">
-                <button id="btnExecuteBinderFilingCloud" class="custom-button" style="background:#0056B3;">☁️ Lock straight into My Binder Ledger</button>
+                <button id="btnExecuteBinderFilingCloud" class="custom-button" style="background:#0056B3;">☁️ Lock Straight Into My Binder Ledger</button>
             </div>
         </div>
     </div>
 
     <div id="viewBinder" class="view-section">
         
-        <div class="binder-customizer-panel">
-            <span style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase;">Cover Theme:</span>
-            <div class="binder-color-dot active" style="background:#1A365D;" data-hex="#1A365D"></div> <div class="binder-color-dot" style="background:#7A1C1C;" data-hex="#7A1C1C"></div> <div class="binder-color-dot" style="background:#1C5A35;" data-hex="#1C5A35"></div> <div class="binder-color-dot" style="background:#222222;" data-hex="#222222"></div> <input type="text" id="customBinderNameBannerInput" class="search-input" placeholder="Name My Album Binder" style="padding:4px 8px; font-size:11px; flex:1; height:24px;">
+        <button class="custom-button secondary-btn" id="btnToggleBinderCustomizerMenu" style="margin-bottom:10px;">⚙️ Customise Album View</button>
+        
+        <div id="binder-customizer-dropdown-drawer">
+            <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin-bottom:8px;">Choose Album Cover Style:</div>
+            <div class="binder-color-dot active" style="background:#1A365D;" data-hex="#1A365D"></div>
+            <div class="binder-color-dot" style="background:#7A1C1C;" data-hex="#7A1C1C"></div>
+            <div class="binder-color-dot" style="background:#1C5A35;" data-hex="#1C5A35"></div>
+            <div class="binder-color-dot" style="background:#222222;" data-hex="#222222"></div>
+            <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin:10px 0 6px 0;">Label Your Portfolio Title:</div>
+            <input type="text" id="customBinderNameBannerInput" class="search-input" placeholder="Name My Album Binder" style="padding:6px; font-size:12px;">
         </div>
 
-        <div class="main-panel" style="padding:10px 5px; text-align:center;">
+        <div class="main-panel" style="padding:10px 6px;">
             <div style="font-size:14px; font-weight:bold; color:var(--brand-orange); margin-bottom:4px;" id="renderBinderTitleHeaderDisplay">Showcase Portfolio Album</div>
-            <div style="font-size:11px; color:var(--text-gray); margin-bottom:12px;">Estimated Binder Net Assets Worth: <span id="binderPortfolioValuationSumDisplay" style="color:var(--success-green); font-weight:bold;">£0.00</span></div>
+            <div style="font-size:11px; color:var(--text-gray); margin-bottom:12px;">Net Portfolio Album Value worth: <span id="binderPortfolioValuationSumDisplay" style="color:var(--success-green); font-weight:bold;">£0.00</span></div>
             
             <div class="binder-wrapper-scroller">
                 <div class="binder-outer-skin" id="binderOuterSkinHull">
@@ -266,30 +267,30 @@
             </div>
 
             <div class="binder-pagination-dock">
-                <button class="page-arrow-btn" id="btnBinderPrevPage">◀ Previous Sheet</button>
+                <button class="page-arrow-btn" id="btnBinderPrevPage">◀ Previous</button>
                 <span id="binderPagePaginationTicker">Page 1 of 1</span>
-                <button class="page-arrow-btn" id="btnBinderNextPage">Next Sheet ▶</button>
+                <button class="page-arrow-btn" id="btnBinderNextPage">Next ▶</button>
             </div>
         </div>
     </div>
 
     <div class="modal-overlay" id="slabDetailModal">
         <div class="slab-detail-modal-card">
-            <div class="modal-slab-header" id="modalSlabTitle">Card Showcase Entry</div>
-            <div style="font-size:12px; color:var(--text-gray); margin-bottom:8px;" id="modalSlabMetrics">Centering Parameters logged index...</div>
-            <div class="modal-img-row" id="modalSlabImagesFlex">
-                </div>
-            <button class="custom-button secondary-btn" id="btnPurgeCardDocumentFromBinder" style="border-color:var(--alert-red); color:var(--alert-red); margin-top:15px;">⚠️ Delete Slab from Collection</button>
-            <button class="close-modal" id="closeSlabDetailModal" style="margin-top:15px;">Close Vault Door</button>
+            <div class="modal-slab-header" id="modalSlabTitle">Showcase slab Entry</div>
+            <div style="font-size:12px; color:var(--text-gray); margin-bottom:8px; line-height:1.4;" id="modalSlabMetrics">Metrics logged tracking matrix...</div>
+            <div class="modal-img-row" id="modalSlabImagesFlex"></div>
+            <button class="custom-button secondary-btn" id="btnPurgeCardDocumentFromBinder" style="border-color:var(--alert-red); color:var(--alert-red); margin-top:10px;">⚠️ Delete slab Document from Portfolio</button>
+            <button class="close-modal" id="closeSlabDetailModal" style="margin-top:10px;">Close Vault Door</button>
         </div>
     </div>
 
     <div class="modal-overlay" id="helpModal">
         <div class="modal-card">
-            <h3>Elite Pre-Grader Manual</h3>
-            <p><strong>1. Weighted Dual-Face Grading:</strong> Your final grade metric now calculates structural centering bounds across *both* sides of the card. Front face ratios contribute 60% weight, while back face alignment coordinates contribute 40% toward the mathematical standard cap models.</p>
-            <p><strong>2. Interactive 3x3 Pocket Binder:</strong> Swap over to the Showcase Binder tab to view your cards stored inside a simulated physical collectors portfolio page sheet. Cards that score a Pristine or Gem Mint 10 will receive a physical glowing gold leaf border effect directly inside their pocket vault window slot.</p>
-            <p><strong>3. Portfolio Valuations:</strong> Every card you verify automatically logs live average conversion pricing data into your master ledger table profile, populating a real-time accumulation net asset worth score display at the head of your binder page frame.</p>
+            <h3>MFS Pre-Grader Manual Guide</h3>
+            <p><strong>1. Setup Your Vault Portfolio Account:</strong><br> Enter an email address and a custom password at the top bar framework then click <strong>Register</strong> to deploy your private data ledger.</p>
+            <p><strong>2. Front Face Auto-Fills Scanning Channels:</strong><br> Upload a crisp front image file against a solid black backdrop. The integrated Smart Vision background parser reads alignment symbols and fills target catalog input details completely hands-free.</p>
+            <p><strong>3. Reverse Alignment Balancing Rules:</strong><br> Use the back tab view space to line up reverse layout metrics. Calculations are strictly weighted at 60% front facial accuracy balance and 40% reverse design balance parameters.</p>
+            <p><strong>4. Showcase Portfolio customizer Pockets:</strong><br> Swap views to open your custom virtual sheet binder album page layout grids. Cards that capture a Gem Mint or Pristine 10 standard receive an animated gold glow leaf pocket frame edge border style automatically!</p>
             <button class="close-modal" id="closeHelp">Got It</button>
         </div>
     </div>
@@ -319,19 +320,17 @@
         const storage = getStorage(app);
 
         let currentUser = null;
-        let globalBinderCollectionMemory = []; // Cache array tracking pulling row objects internally
-        let activeSelectedSlabDocId = null; // Memory anchor tracking row selected inside 3x3 grid display overlays
-        let currentActiveBinderPageIndex = 0; // Page view pointer tracker anchor parameters
+        let globalBinderCollectionMemory = [];
+        let activeSelectedSlabDocId = null;
+        let currentActiveBinderPageIndex = 0;
 
-        // Interface Views Elements Switches
         const navBtnScanner = document.getElementById('navBtnScanner'); const navBtnBinder = document.getElementById('navBtnBinder');
         const viewScanner = document.getElementById('viewScanner'); const viewBinder = document.getElementById('viewBinder');
-        const ocrStatusLog = document.getElementById('ocrStatusLog');
+        const binderGridSheet9SlotPage = document.getElementById('binderGridSheet9SlotPage');
 
         navBtnScanner.addEventListener('click', () => { navBtnScanner.classList.add('active'); navBtnBinder.classList.remove('active'); viewScanner.classList.add('active'); viewBinder.classList.remove('active'); });
         navBtnBinder.addEventListener('click', () => { navBtnBinder.classList.add('active'); navBtnScanner.classList.remove('active'); viewBinder.classList.add('active'); viewScanner.classList.remove('active'); syncMasterUserCloudBinderLedger(); });
 
-        // Authentication HUD Synchronizations
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 currentUser = user; document.getElementById('userDisplayEmail').innerText = user.email;
@@ -343,34 +342,29 @@
             }
         });
 
-        // AUTH CONTROL SIGNATURE LOGIC BINDINGS
         document.getElementById('btnSignUp').addEventListener('click', async () => {
             const email = document.getElementById('authEmail').value.trim(); const pass = document.getElementById('authPassword').value.trim();
             if(!email || !pass) return alert("Please fill fields.");
-            try { await createUserWithEmailAndPassword(auth, email, pass); alert("Vault account created successfully!"); } catch(e) { alert("Registration error: " + e.message); }
+            try { await createUserWithEmailAndPassword(auth, email, pass); alert("Vault account deployed!"); } catch(e) { alert("Error: " + e.message); }
         });
         document.getElementById('btnSignIn').addEventListener('click', async () => {
             const email = document.getElementById('authEmail').value.trim(); const pass = document.getElementById('authPassword').value.trim();
             if(!email || !pass) return alert("Please fill fields.");
-            try { await signInWithEmailAndPassword(auth, email, pass); } catch(e) { alert("Login error: " + e.message); }
+            try { await signInWithEmailAndPassword(auth, email, pass); } catch(e) { alert("Error: " + e.message); }
         });
         document.getElementById('btnSignOut').addEventListener('click', () => signOut(auth));
 
-        // DETAILED LAB DATA ALIGNMENT CONTROLS AND TRANSFORMS DATA STATE
+        // WORKSPACE INTERFACE CHANNELS CONTROLS BINDINGS
         const frontFile = document.getElementById('frontFile'); const backFile = document.getElementById('backFile');
         const frontLabel = document.getElementById('frontLabel'); const backLabel = document.getElementById('backLabel');
         const sideTabs = document.getElementById('sideTabs'); const tabFront = document.getElementById('tabFront'); const tabBack = document.getElementById('tabBack');
         const workspaceContainer = document.getElementById('workspace-container'); const previewImage = document.getElementById('previewImage');
-        const currentWorkspaceTitleHUD = document.getElementById('currentWorkspaceTitleHUD');
         const calculateButton = document.getElementById('calculateButton'); const resultsPanel = document.getElementById('resultsPanel');
         
         let currentSelectedLabSide = 'front';
-        let alignmentLabStateCache = {
-            front: { src: null, lr: "50:50", tb: "50:50" },
-            back: { src: null, lr: "50:50", tb: "50:50" }
-        };
+        let alignmentLabStateCache = { front: { src: null }, back: { src: null } };
 
-        function executeImageUploadCompression(file, side, labelObj) {
+        function executeLocalUploadPipeline(file, side, labelObj) {
             if(!file) return;
             const reader = new FileReader(); reader.readAsDataURL(file);
             reader.onload = (e) => {
@@ -393,20 +387,20 @@
                 };
             };
         }
-        frontFile.addEventListener('change', (e) => executeImageUploadCompression(e.target.files[0], 'front', frontLabel));
-        backFile.addEventListener('change', (e) => executeImageUploadCompression(e.target.files[0], 'back', backLabel));
+        frontFile.addEventListener('change', (e) => executeLocalUploadPipeline(e.target.files[0], 'front', frontLabel));
+        backFile.addEventListener('change', (e) => executeLocalUploadPipeline(e.target.files[0], 'back', backLabel));
 
         function switchLabWorkspaceActiveChannel(side) {
             currentSelectedLabSide = side;
-            if(side === 'front') { tabFront.classList.add('active'); tabBack.classList.remove('active'); currentWorkspaceTitleHUD.innerText = "Front Face Alignment Channel"; }
-            else { tabBack.classList.add('active'); tabFront.classList.remove('active'); currentWorkspaceTitleHUD.innerText = "Back Face Alignment Channel"; }
+            if(side === 'front') { tabFront.classList.add('active'); tabBack.classList.remove('active'); }
+            else { tabBack.classList.add('active'); tabFront.classList.remove('active'); }
             previewImage.src = alignmentLabStateCache[side].src || "";
             restoreGuideLinesPositionsPercentage(side);
         }
         tabFront.addEventListener('click', () => { if(alignmentLabStateCache.front.src) switchLabWorkspaceActiveChannel('front'); });
         tabBack.addEventListener('click', () => { if(alignmentLabStateCache.back.src) switchLabWorkspaceActiveChannel('back'); });
 
-        // CROSSHAIR LINES MATH LOGIC CHANNELS
+        // GAUGE CROSSHAIR TRACK SELECTION DRAG MECHANICS CHANNELS
         let activeTrackLineNode = null;
         const outL = document.getElementById('outLeft'); const outR = document.getElementById('outRight'); const outT = document.getElementById('outTop'); const outB = document.getElementById('outBottom');
         const inL = document.getElementById('inLeft'); const inR = document.getElementById('inRight'); const inT = document.getElementById('inTop'); const inB = document.getElementById('inBottom');
@@ -427,8 +421,7 @@
             if(activeTrackLineNode.classList.contains('vertical')) {
                 let pX = ((clientX - rect.left) / rect.width) * 100; if(pX >= 0 && pX <= 100) activeTrackLineNode.style.left = pX + '%';
             } else {
-                let pY = ((clientY - rect.top) / rect.height) * 100; if(pY >= 0 && pY <= 100) activeLine.style.top = pY + '%'; // dynamic fallback parsing
-                let posY = ((clientY - rect.top) / rect.height) * 100; if(posY >= 0 && posY <= 100) activeTrackLineNode.style.top = posY + '%';
+                let pY = ((clientY - rect.top) / rect.height) * 100; if(pY >= 0 && pY <= 100) activeTrackLineNode.style.top = pY + '%';
             }
         }
 
@@ -449,9 +442,9 @@
             inB.style.top = alignmentLabStateCache[side].ib ? alignmentLabStateCache[side].ib + '%' : '80%';
         }
 
-        // TESSERACT FUZZY PARSER SHIELD ENGINE
+        // TESSERACT OCR AUTOMATION CORE CHANNELS
         async function executeBackgroundSmartVisionOCR(url) {
-            ocrStatusLog.style.display = "block"; ocrStatusLog.innerText = "⚡ SMART VISION: Scanning card surface blueprint matrix...";
+            ocrStatusLog.style.display = "block"; ocrStatusLog.innerText = "⚡ SMART VISION: Scanning card surface for text signatures...";
             try {
                 const res = await Tesseract.recognize(url, 'eng'); const text = res.data.text;
                 const lines = text.split('\n'); let name = ""; let num = "";
@@ -467,12 +460,11 @@
                     document.getElementById('customCardSaveTitleField').value = queryStr;
                     ocrStatusLog.innerText = `✓ Vision recognized: "${queryStr}". Data locked to ledger form field.`;
                     executeAutomatedLivePriceLookupAPI(queryStr);
-                } else { ocrStatusLog.innerText = "⚠️ Vision unindexed. Feel free to use custom naming below."; }
-            } catch(e) { ocrStatusLog.innerText = "⚠️ Text layer unparsed. Manual catalog ready."; }
+                } else { ocrStatusLog.innerText = "⚠️ Vision unindexed. Custom tracking parameters ready."; }
+            } catch(e) { ocrStatusLog.innerText = "⚠️ Text layers unparsed."; }
         }
 
-        // HIGH STABILITY FUZZY FALLBACK COMPILATION PRICE SEARCH API
-        let cacheLiveEstimatedValueGBP = 1.50; // Stable default base line evaluation token cost value
+        let cacheLiveEstimatedValueGBP = 1.50;
         async function executeAutomatedLivePriceLookupAPI(q) {
             try {
                 const rootToken = q.split(' ')[0].replace(/[^a-zA-Z]/g, "");
@@ -485,21 +477,18 @@
                         const type = p.holofoil || p.normal || p.reverseHolofoil || Object.values(p)[0];
                         if(type && type.market) cacheLiveEstimatedValueGBP = parseFloat((type.market * 0.78).toFixed(2));
                     }
-                    console.log("Locked live conversion evaluation value:", cacheLiveEstimatedValueGBP);
                 }
-            } catch(e) { console.log("Lookup channel tracking baseline default values kept."); }
+            } catch(e) { console.log("Default pricing values retained."); }
         }
 
-        // DUAL-FACE WEIGHTED CALCULATION DISPATCH CHANNELS
+        // BALANCED GRADING MATRICES MATHEMATICAL ACTIONS
         let compiledFinalLedgerPayloadBlock = null;
         calculateButton.addEventListener('click', () => {
             cacheCurrentLinesLocations(currentSelectedLabSide);
             
-            // 1. Calculate Front face coordinates splits ratio
             const fWorstLR = calculateSideMaxSplitPercentage(alignmentLabStateCache.front.ol, alignmentLabStateCache.front.or, alignmentLabStateCache.front.il, alignmentLabStateCache.front.ir);
             const fWorstTB = calculateSideMaxSplitPercentage(alignmentLabStateCache.front.ot, alignmentLabStateCache.front.ob, alignmentLabStateCache.front.it, alignmentLabStateCache.front.ib);
             
-            // 2. Calculate Back face splits or copy front as fallback parameters data mapping
             let bWorstLR = fWorstLR; let bWorstTB = fWorstTB;
             if(alignmentLabStateCache.back.src) {
                 cacheCurrentLinesLocations('back');
@@ -507,16 +496,13 @@
                 bWorstTB = calculateSideMaxSplitPercentage(alignmentLabStateCache.back.ot, alignmentLabStateCache.back.ob, alignmentLabStateCache.back.it, alignmentLabStateCache.back.ib);
             }
 
-            // 3. Apply strict 60% Front / 40% Back standard matrix balancing calculations
             const finalWorstLR = Math.round((fWorstLR * 0.6) + (bWorstLR * 0.4));
             const finalWorstTB = Math.round((fWorstTB * 0.6) + (bWorstTB * 0.4));
 
-            document.getElementById('ratioDisplayHUD').innerText = `📐 Front Max split: ${fWorstLR.toFixed(0)}% | Back Max split: ${bWorstLR.toFixed(0)}%`;
+            document.getElementById('ratioDisplayHUD').innerText = `📐 Front split: ${fWorstLR.toFixed(0)}% | Back split: ${bWorstLR.toFixed(0)}%`;
 
-            // 4. Process standard condition caps logic checks overrides
             let cap = 10; let defectLogs = [];
             if(document.getElementById('defectHeavy').checked) { cap = Math.min(cap, 5); defectLogs.push("Heavy Wear / Crease"); }
-            if(document.getElementById('defectScratch').checked) { cap = Math.min(conditionCapFallback(cap, 7)); defectLogs.push("Scratches"); } // dynamic cap layer
             if(document.getElementById('defectScratch').checked) { cap = Math.min(cap, 7); defectLogs.push("Surface Scratches"); }
             if(document.getElementById('defectDot3').checked) { cap = Math.min(cap, 8); defectLogs.push("2-3 White Dots"); }
             if(document.getElementById('defectDot1').checked) { cap = Math.min(cap, 9); defectLogs.push("1 Edge Chip"); }
@@ -528,24 +514,15 @@
             document.getElementById('tagVerdict').innerText = verdicts.tag; document.getElementById('tagVerdict').className = verdicts.tag.includes('10') && !verdicts.tag.includes('Drop') ? 'company-verdict perfect' : 'company-verdict';
             document.getElementById('bgsVerdict').innerText = verdicts.bgs; document.getElementById('bgsVerdict').className = verdicts.bgs.includes('10') && !verdicts.bgs.includes('Drop') ? 'company-verdict perfect' : 'company-verdict';
 
-            // Apply Animated Golden Pulse if card scores Pristine 10
             const outputWrapper = document.getElementById('gradingOutputGlowWrapper');
             outputWrapper.classList.remove('gold-slab-glow');
             if(verdicts.psa.includes('10') && !verdicts.psa.includes('Drop')) { outputWrapper.classList.add('gold-slab-glow'); }
 
             resultsPanel.style.display = "block";
-            
-            // Build temporary payload cache mapping
             compiledFinalLedgerPayloadBlock = {
-                gradeBadge: verdicts.psa,
-                lrRatio: `${finalWorstLR}:${100-finalWorstLR}`,
-                tbRatio: `${finalWorstTB}:${100-finalWorstTB}`,
-                defects: defectLogs,
-                cashValue: cacheLiveEstimatedValueGBP
+                gradeBadge: verdicts.psa, lrRatio: `${finalWorstLR}:${100-finalWorstLR}`, tbRatio: `${finalWorstTB}:${100-finalWorstTB}`, defects: defectLogs, cashValue: cacheLiveEstimatedValueGBP
             };
         });
-
-        function conditionCapFallback(c, v) { return Math.min(c, v); }
 
         function calculateSideMaxSplitPercentage(ol, or, il, ir) {
             const lW = il - ol; const rW = or - ir; const tot = lW + rW;
@@ -557,11 +534,7 @@
             let ace = 'Grade 6'; if(lr <= 55 && tb <= 55) ace = 'Gem Mint 10'; else if(lr <= 60 && tb <= 60) ace = 'Mint 9'; else if(lr <= 65 && tb <= 65) ace = 'NM-MT 8';
             let tag = 'Tier 7'; if(lr <= 52 && tb <= 52) tag = 'Pristine 10'; else if(lr <= 56 && tb <= 56) tag = 'Mint 9'; else if(lr <= 60 && tb <= 60) tag = 'NM-MT 8';
             let bgs = 'Grade 6'; if(lr <= 50 && tb <= 50) bgs = 'Black Label 10'; else if(lr <= 55 && tb <= 55) bgs = 'Gem Mint 10'; else if(lr <= 60 && tb <= 60) bgs = 'Mint 9';
-
-            return {
-                psa: applyGradeCapsFailsafes(psa, cap), ace: applyGradeCapsFailsafes(ace, cap),
-                tag: applyGradeCapsFailsafes(tag, cap), bgs: applyGradeCapsFailsafes(bgs, cap)
-            };
+            return { psa: applyGradeCapsFailsafes(psa, cap), ace: applyGradeCapsFailsafes(ace, cap), tag: applyGradeCapsFailsafes(tag, cap), bgs: applyGradeCapsFailsafes(bgs, cap) };
         }
         function applyGradeCapsFailsafes(v, c) {
             if(c === 9 && v.includes('10')) return 'Mint 9 (Drop)'; if(c === 8 && (v.includes('10') || v.includes('9'))) return 'NM-MT 8 (Drop)';
@@ -569,28 +542,19 @@
             return v;
         }
 
-        // BINDER FILING FORM TOGGLE EXECUTIONS
         document.getElementById('btnUnlockFilingForm').addEventListener('click', () => {
-            document.getElementById('save-ledger-form-block').style.display = "block";
-            document.getElementById('btnUnlockFilingForm').style.display = "none";
+            document.getElementById('save-ledger-form-block').style.display = "block"; document.getElementById('btnUnlockFilingForm').style.display = "none";
         });
-
         function resetFilingFormBlocksHUD() {
-            document.getElementById('save-ledger-form-block').style.display = "none";
-            document.getElementById('btnUnlockFilingForm').style.display = "block";
-            compiledFinalLedgerPayloadBlock = null;
+            document.getElementById('save-ledger-form-block').style.display = "none"; document.getElementById('btnUnlockFilingForm').style.display = "block"; compiledFinalLedgerPayloadBlock = null;
         }
 
-        // CLOUD HARVESTER LEDGER SUBMIT ROUTE INTERFACE (MANUAL CLICK TRIGGER)
+        // DISPATCH DATA PACKETS HARVESTER ROUTE
         document.getElementById('btnExecuteBinderFilingCloud').addEventListener('click', async () => {
-            if(!currentUser) return alert("Login to save your data.");
-            if(!compiledFinalLedgerPayloadBlock) return;
-
-            const inputTitle = document.getElementById('customCardSaveTitleField').value.trim();
-            const verifiedFinalTitle = inputTitle || "Unindexed Custom Entry Shell";
-
+            if(!currentUser || !compiledFinalLedgerPayloadBlock) return alert("Verify authentication status.");
+            const verifiedFinalTitle = document.getElementById('customCardSaveTitleField').value.trim() || "Unindexed Custom Entry Shell";
             const fireButton = document.getElementById('btnExecuteBinderFilingCloud');
-            fireButton.innerText = "☁️ SECURING VECTOR PATHS..."; fireButton.disabled = true;
+            fireButton.innerText = "☁️ SECURING VECTORS..."; fireButton.disabled = true;
 
             try {
                 let fUrl = ""; let bUrl = ""; const stampId = Date.now();
@@ -602,136 +566,123 @@
                     cardTitle: verifiedFinalTitle, frontImage: fUrl, backImage: bUrl, ...compiledFinalLedgerPayloadBlock
                 });
 
-                alert("✓ Slab verified and securely dropped into your 3x3 Showcase Binder!");
+                alert("✓ Entry registered safely into your 3x3 portfolio binder sheet!");
                 workspaceContainer.style.display = "none"; resultsPanel.style.display = "none"; calculateButton.style.display = "none";
                 frontLabel.innerText = "📸 Add Front Photo"; frontLabel.classList.remove('has-file');
                 backLabel.innerText = "📸 Add Back Photo"; backLabel.classList.remove('has-file');
                 alignmentLabStateCache = { front: { src: null }, back: { src: null } }; resetFilingFormBlocksHUD();
-            } catch(e) { alert("Cloud write write failure context."); } finally { fireButton.innerText = "☁️ Lock straight into My Binder Ledger"; fireButton.disabled = false; }
+            } catch(e) { alert("Filing exception context."); } finally { fireButton.innerText = "☁️ Lock Straight Into My Binder Ledger"; fireButton.disabled = false; }
         });
 
-        // 3X3 BINDER DISPLAY GRID CORE MATRIX ENGINE (REBUILD 11-18)
+        // FIXED 3X3 PORFOLIO GRAPHICS GENERATOR PIPELINE (REPAIR FIX)
         async function syncMasterUserCloudBinderLedger() {
             if(!currentUser) return;
-            const sheetGridNode = document.getElementById('binderGridSheet9SlotPage');
-            sheetGridNode.innerHTML = ""; clearBinderDisplayGridSlots();
-
+            binderGridSheet9SlotPage.innerHTML = ""; clearBinderDisplayGridSlots();
             try {
                 const qDocs = query(collection(db, "card_scans"), where("userId", "==", currentUser.uid), orderBy("scannedAt", "desc"));
-                const snap = await getDocs(qDocs);
-                globalBinderCollectionMemory = [];
+                const snap = await getDocs(qDocs); globalBinderCollectionMemory = [];
                 snap.forEach(d => globalBinderCollectionMemory.push({ docId: d.id, ...d.data() }));
-
-                calculateAndDisplayPortfolioWorth();
+                
+                let sum = 0; globalBinderCollectionMemory.forEach(c => sum += parseFloat(c.cashValue || 1.50));
+                document.getElementById('binderPortfolioValuationSumDisplay').innerText = `£${sum.toFixed(2)}`;
+                
                 renderBinderSheetGridPage(currentActiveBinderPageIndex);
-            } catch(e) { console.error("Binder fetch crash:", e); }
-        }
-
-        function calculateAndDisplayPortfolioWorth() {
-            let sum = 0;
-            globalBinderCollectionMemory.forEach(c => { sum += parseFloat(c.cashValue || 1.50); });
-            document.getElementById('binderPortfolioValuationSumDisplay').innerText = `£${sum.toFixed(2)}`;
+            } catch(e) { console.error("Sync error:", e); }
         }
 
         function renderBinderSheetGridPage(pageIdx) {
-            const sheetGridNode = document.getElementById('binderGridSheet9SlotPage');
-            sheetGridNode.classList.add('sheet-turning-left'); // Trigger crease/bend animation warp
-
+            binderGridSheet9SlotPage.classList.add('sheet-turning-left');
             setTimeout(() => {
-                sheetGridNode.innerHTML = "";
+                binderGridSheet9SlotPage.innerHTML = "";
                 const startIndex = pageIdx * 9;
-                const totalSlabsCount = globalBinderCollectionMemory.length;
-                const totalPagesCalculated = Math.max(1, Math.ceil(totalSlabsCount / 9));
+                const totalCount = globalBinderCollectionMemory.length;
+                const totalPages = Math.max(1, Math.ceil(totalCount / 9));
 
-                document.getElementById('binderPagePaginationTicker').innerText = `Sheet ${pageIdx + 1} of ${totalPagesCalculated}`;
+                document.getElementById('binderPagePaginationTicker').innerText = `Page ${pageIdx + 1} of ${totalPages}`;
 
-                // Populate 9 loop index pocket slots nodes completely
                 for(let i = 0; i < 9; i++) {
-                    const targetDataIndex = startIndex + i;
-                    const pocketSlot = document.createElement('div');
+                    const targetIdx = startIndex + i;
+                    const slot = document.createElement('div');
                     
-                    if(targetDataIndex < totalSlabsCount) {
-                        // Slot contains data row entry element
-                        const card = globalBinderCollectionMemory[targetDataIndex];
-                        pocketSlot.className = 'pocket-slot filled';
+                    if(targetIdx < totalCount) {
+                        const card = globalBinderCollectionMemory[targetIdx];
+                        slot.className = 'pocket-slot filled';
+                        if(card.gradeBadge.includes('10') && !card.gradeBadge.includes('Drop')) slot.classList.add('gold-slab-glow');
                         
-                        // If it's a pristine/gem 10 apply permanent glowing pocket border trim style
-                        if(card.gradeBadge.includes('10') && !card.gradeBadge.includes('Drop')) { pocketSlot.classList.add('gold-slab-glow'); }
-                        
-                        pocketSlot.innerHTML = `
+                        // FIXED PIC INTERFACE: Explicit image path sourcing injection logic fixed
+                        const finalImageSrcPath = card.frontImage || card.backImage || "";
+                        slot.innerHTML = `
                             <span class="pocket-grade-tab">${card.gradeBadge.split(' ')[0]} ${card.gradeBadge.match(/\d+/) ? card.gradeBadge.match(/\d+/)[0] : ''}</span>
-                            <img src="${card.frontImage || card.backImage}" class="pocket-img-render" alt="Showcase Capture">
+                            <img src="${finalImageSrcPath}" class="pocket-img-render" alt="Slab asset view">
                         `;
-                        pocketSlot.addEventListener('click', () => triggerSlabDetailedOverlayPopupBox(card.docId));
+                        slot.addEventListener('click', () => triggerSlabDetailedOverlayPopupBox(card.docId));
                     } else {
-                        // Slot empty shell placeholder cross wireframe node
-                        pocketSlot.className = 'pocket-slot'; pocketSlot.innerHTML = `<span class="empty-pocket-cross">×</span>`;
+                        slot.className = 'pocket-slot'; slot.innerHTML = `<span class="empty-pocket-cross">×</span>`;
                     }
-                    sheetGridNode.appendChild(pocketSlot);
+                    binderGridSheet9SlotPage.appendChild(slot);
                 }
-                sheetGridNode.classList.remove('sheet-turning-left'); // Snap crease out on layout reveal
-            }, 250);
+                binderGridSheet9SlotPage.classList.remove('sheet-turning-left');
+            }, 200);
         }
 
-        // Binder Color Dot Listeners
+        // BINDER THEMES CUSTOMIZER CONTROL DRAWER
+        const btnToggleBinderCustomizerMenu = document.getElementById('btnToggleBinderCustomizerMenu');
+        const binderCustomizerDropdownDrawer = document.getElementById('binder-customizer-dropdown-drawer');
+        
+        btnToggleBinderCustomizerMenu.addEventListener('click', () => {
+            const isClosed = binderCustomizerDropdownDrawer.style.display === "none" || !binderCustomizerDropdownDrawer.style.display;
+            binderCustomizerDropdownDrawer.style.display = isClosed ? "block" : "none";
+        });
+
         document.querySelectorAll('.binder-color-dot').forEach(dot => {
-            dot.addEventListener('click', (e) => {
+            dot.addEventListener('click', () => {
                 document.querySelectorAll('.binder-color-dot').forEach(d => d.classList.remove('active'));
                 dot.classList.add('active');
-                const selectedHex = dot.getAttribute('data-hex');
-                document.getElementById('binderOuterSkinHull').style.setProperty('--binder-color', selectedHex);
+                document.getElementById('binderOuterSkinHull').style.setProperty('--binder-color', dot.getAttribute('data-hex'));
             });
         });
 
-        // Binder Naming Text Input Sync Listener
         document.getElementById('customBinderNameBannerInput').addEventListener('input', (e) => {
-            const text = e.target.value.trim();
-            document.getElementById('renderBinderTitleHeaderDisplay').innerText = text || "Showcase Portfolio Album";
+            document.getElementById('renderBinderTitleHeaderDisplay').innerText = e.target.value.trim() || "Showcase Portfolio Album";
         });
 
-        // Binder Pagination Listeners Navigation
         document.getElementById('btnBinderPrevPage').addEventListener('click', () => { if(currentActiveBinderPageIndex > 0) { currentActiveBinderPageIndex--; renderBinderSheetGridPage(currentActiveBinderPageIndex); } });
-        document.getElementById('btnBinderNextPage').addEventListener('click', () => { const maxPages = Math.ceil(globalBinderCollectionMemory.length / 9); if(currentActiveBinderPageIndex < maxPages - 1) { currentActiveBinderPageIndex++; renderBinderSheetGridPage(currentActiveBinderPageIndex); } });
+        document.getElementById('btnBinderNextPage').addEventListener('click', () => { const max = Math.ceil(globalBinderCollectionMemory.length / 9); if(currentActiveBinderPageIndex < max - 1) { currentActiveBinderPageIndex++; renderBinderSheetGridPage(currentActiveBinderPageIndex); } });
+        function clearBinderDisplayGridSlots() { binderGridSheet9SlotPage.innerHTML = ""; document.getElementById('binderPortfolioValuationSumDisplay').innerText = "£0.00"; }
 
-        function clearBinderDisplayGridSlots() { document.getElementById('binderGridSheet9SlotPage').innerHTML = ""; document.getElementById('binderPortfolioValuationSumDisplay').innerText = "£0.00"; }
-
-        // EXPANDED SINGLE SLAB DETAIL OVERLAY TRIGGER POPUPS
+        // DETAILED OVERLAY POPUPS MODAL SHEET
         const slabModal = document.getElementById('slabDetailModal');
         function triggerSlabDetailedOverlayPopupBox(docId) {
             activeSelectedSlabDocId = docId;
             const card = globalBinderCollectionMemory.find(c => c.docId === docId); if(!card) return;
-
             document.getElementById('modalSlabTitle').innerText = card.cardTitle;
             document.getElementById('modalSlabMetrics').innerHTML = `
-                • <strong>Centering:</strong> L/R Split ${card.lrRatio} | T/B Split ${card.tbRatio}<br>
-                • <strong>Surface Condition Overrides:</strong> ${card.defects.length > 0 ? card.defects.join(', ') : 'None Marked'}<br>
-                • <strong>Market Evaluation index Value:</strong> £${parseFloat(card.cashValue || 1.50).toFixed(2)}
+                • <strong>Centering Layout:</strong> L/R Bound Split ${card.lrRatio} | T/B bound Split ${card.tbRatio}<br>
+                • <strong>Condition Defect Overrides:</strong> ${card.defects.length > 0 ? card.defects.join(', ') : 'None marked'}<br>
+                • <strong>Assigned live Worth:</strong> £${parseFloat(card.cashValue || 1.50).toFixed(2)}
             `;
-            const thumbnailsFlex = document.getElementById('modalSlabImagesFlex'); thumbnailsFlex.innerHTML = "";
-            if(card.frontImage) thumbnailsFlex.innerHTML += `<img src="${card.frontImage}" class="modal-img-thumb" onclick="window.open('${card.frontImage}', '_blank')">`;
-            if(card.backImage) thumbnailsFlex.innerHTML += `<img src="${card.backImage}" class="modal-img-thumb" onclick="window.open('${card.backImage}', '_blank')">`;
-            
+            const flex = document.getElementById('modalSlabImagesFlex'); flex.innerHTML = "";
+            if(card.frontImage) flex.innerHTML += `<img src="${card.frontImage}" class="modal-img-thumb" onclick="window.open('${card.frontImage}', '_blank')">`;
+            if(card.backImage) flex.innerHTML += `<img src="${card.backImage}" class="modal-img-thumb" onclick="window.open('${card.backImage}', '_blank')">`;
             slabModal.classList.add('active');
         }
         document.getElementById('closeSlabDetailModal').addEventListener('click', () => slabModal.classList.remove('active'));
 
-        // CARD PURGE REMOVAL CONTROLLER ROUTE
         document.getElementById('btnPurgeCardDocumentFromBinder').addEventListener('click', async () => {
             if(!activeSelectedSlabDocId || !currentUser) return;
             const card = globalBinderCollectionMemory.find(c => c.docId === activeSelectedSlabDocId);
-            if(confirm(`Are you completely sure you want to delete "${card.cardTitle}" and its associated photos permanently from your storage ledger?`)) {
+            if(confirm("Confirm row erasure?")) {
                 try {
                     slabModal.classList.remove('active');
                     await deleteDoc(doc(db, "card_scans", activeSelectedSlabDocId));
                     if(card.frontImage) await deleteObject(ref(storage, card.frontImage)).catch(e=>{});
                     if(card.backImage) await deleteObject(ref(storage, card.backImage)).catch(e=>{});
-                    alert("✓ Document permanently purged from cloud data vault.");
-                    syncMasterUserCloudBinderLedger();
-                } catch(e) { alert("Deletion failed."); }
+                    alert("✓ Purged from database ledger."); syncMasterUserCloudBinderLedger();
+                } catch(e) { alert("Purge error."); }
             }
         });
 
-        // Setup General Instructions Help Modals Event Triggers
+        // HELP MANUAL TRANSITION (REMOVED FROM HOME SCREEN GRID)
         const helpModal = document.getElementById('helpModal');
         document.getElementById('openHelp').addEventListener('click', () => helpModal.classList.add('active'));
         document.getElementById('closeHelp').addEventListener('click', () => helpModal.classList.remove('active'));
