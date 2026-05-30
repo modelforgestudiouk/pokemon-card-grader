@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Model Forge Studio - Premium Pre-Grader</title>
+    <title>Model Forge Studio - Elite Pre-Grader</title>
     <style>
         :root {
             --bg-dark: #0A0A0C;
@@ -19,7 +19,6 @@
 
         body { margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; background-color: var(--bg-dark); min-height: 100vh; color: var(--brand-white); font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
         
-        /* Layout Header */
         .header-container { display: flex; align-items: center; justify-content: space-between; width: 350px; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #222; }
         .logo-badge { background-color: var(--brand-orange); color: var(--bg-dark); font-weight: 900; font-size: 20px; padding: 5px 12px; border-radius: 8px; margin-right: 12px; }
         .logo-flex { display: flex; align-items: center; }
@@ -30,7 +29,6 @@
         .help-btn { background: none; border: 2px solid var(--brand-orange); color: var(--brand-orange); width: 28px; height: 28px; border-radius: 50%; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .discord-btn-link { text-decoration: none; border: 2px solid #5865F2; color: #5865F2; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; }
 
-        /* Navigation Toggles */
         .app-mode-bar { display: flex; width: 350px; gap: 10px; margin-bottom: 15px; }
         .mode-btn { flex: 1; padding: 12px; background-color: #111; border: 1px solid #222; color: var(--text-gray); font-weight: bold; font-size: 13px; border-radius: 8px; cursor: pointer; text-transform: uppercase; }
         .mode-btn.active { background-color: var(--panel-dark); border-color: var(--brand-orange); color: var(--brand-orange); }
@@ -48,13 +46,12 @@
         .upload-row { display: flex; gap: 10px; }
         .file-label { flex: 1; background: #222; border: 1px dashed #444; padding: 10px; border-radius: 6px; font-size: 12px; color: var(--text-gray); cursor: pointer; display: inline-block; font-weight: bold; text-transform: uppercase; }
         .file-label.has-file { border-color: var(--success-green); color: var(--brand-white); }
-        input[type="file"] { display: none !important; }
+        .hidden-file-input { display: none !important; }
         
         .side-tabs { display: flex; gap: 10px; margin-bottom: 15px; width: 100%; }
         .tab-btn { flex: 1; padding: 10px; background: #222; border: 1px solid #333; color: var(--text-gray); font-weight: bold; border-radius: 6px; cursor: pointer; text-transform: uppercase; font-size: 13px; }
         .tab-btn.active { background: var(--brand-orange); color: white; border-color: var(--brand-orange); }
         
-        /* RESTORED: Core Manipulation Control Dock UI */
         #controlDock { display: none; justify-content: space-between; margin-top: 10px; background: #222; padding: 8px; border-radius: 8px; flex-wrap: wrap; gap: 5px; width: 100%; box-sizing: border-box; }
         .dock-btn { background: none; border: 1px solid var(--brand-orange); color: var(--brand-white); padding: 6px 10px; border-radius: 5px; font-size: 11px; font-weight: bold; cursor: pointer; }
         .dock-btn.active { background: var(--brand-orange); }
@@ -63,10 +60,9 @@
         #imageContainer { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transform-origin: center center; position: absolute; top: 0; left: 0; cursor: move; }
         #previewImage { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
         
-        /* Crosshairs Setup */
         .guide-line { position: absolute; z-index: 10; opacity: 0.9; }
-        .vertical { width: 2px; height: 100%; top: 0; cursor: ew-resize; }
-        .horizontal { height: 2px; width: 100%; left: 0; cursor: ns-resize; }
+        .vertical { width: 3px; height: 100%; top: 0; cursor: ew-resize; }
+        .horizontal { height: 3px; width: 100%; left: 0; cursor: ns-resize; }
         .outer-line { background-color: #FF2222; }
         .outer-line::after { content: ''; position: absolute; width: 24px; height: 24px; background: #FF2222; border: 2px solid #FFF; border-radius: 50%; }
         .vertical.outer-line::after { top: 50%; left: -11px; transform: translateY(-50%); }
@@ -85,7 +81,6 @@
         .perfect { color: #FFD700 !important; text-shadow: 0 0 8px rgba(255,215,0,0.4); }
         .gold-slab-glow { border: 1px solid #FFD700 !important; box-shadow: var(--gold-glow) !important; }
 
-        /* RESTORED: Manual Search Bar Component */
         .search-box { display: flex; gap: 8px; margin-top: 5px; width: 100%; box-sizing: border-box; }
         .search-input { flex: 1; background-color: #0D0D0D; border: 1px solid #333; border-radius: 6px; padding: 10px; color: #FFF; font-size: 14px; }
         .search-btn { background-color: var(--brand-orange); border: none; color: #FFF; font-weight: bold; padding: 0 15px; border-radius: 6px; cursor: pointer; text-transform: uppercase; font-size: 11px; }
@@ -94,7 +89,6 @@
         .price-val { font-weight: bold; color: var(--success-green); }
         #ebayLink { background-color: #0056B3; color: white; font-size: 13px; margin-top: 15px; display: inline-block; }
 
-        /* RESTORED: High-Pass Surface Scan Controls */
         .damage-toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; margin-bottom: 12px; }
         .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
         .switch input { opacity: 0; width: 0; height: 0; }
@@ -111,25 +105,28 @@
         .custom-button { background-color: var(--brand-orange); color: var(--brand-white); border: none; padding: 12px 25px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; display: inline-block; width: 100%; box-sizing: border-box; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; text-align: center; }
         #calculateButton { background-color: var(--brand-white); color: var(--bg-dark); display: none; margin-top: 15px; }
 
-        /* REALISTIC 3D SHOWCASE PORTFOLIO TRACK BINDER SYSTEM */
-        #binder-customizer-dropdown-drawer { display: none; background: #111; padding: 12px; border-radius: 8px; border: 1px solid #222; margin-bottom: 12px; text-align: left; }
+        /* MULTI-FUNCTIONAL CUSTOMIZER & UTILITY DRAWER */
+        #binder-customizer-dropdown-drawer { display: none; background: #111; padding: 15px; border-radius: 10px; border: 1px solid #222; margin-bottom: 15px; text-align: left; }
         .binder-color-dot { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; display: inline-block; margin-right: 8px; }
         .binder-color-dot.active { border-color: white; }
         
+        .select-dropdown { width: 100%; background-color: #050506; border: 1px solid #333; border-radius: 6px; padding: 8px; color: white; font-size: 13px; margin-top: 5px; }
+
+        /* REALISTIC 3D SHOWCASE PORTFOLIO TRACK BINDER SYSTEM */
         .binder-wrapper-scroller { position: relative; width: 100%; display: flex; justify-content: center; padding: 10px 0; }
         .binder-outer-skin { position: relative; width: 340px; background-color: var(--binder-color); border-radius: 12px; padding: 12px 12px 12px 24px; box-sizing: border-box; box-shadow: 0 15px 35px rgba(0,0,0,0.6), inset -10px 0 20px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.05); display: flex; }
         .binder-spine-rings { position: absolute; left: 6px; top: 0; width: 12px; height: 100%; display: flex; flex-direction: column; justify-content: space-around; padding: 25px 0; box-sizing: border-box; z-index: 30; }
         .binder-ring-metal { width: 10px; height: 24px; border: 3px solid #b0b0b5; border-right: none; border-radius: 12px 0 0 12px; background: transparent; box-shadow: -2px 2px 4px rgba(0,0,0,0.5), inset 1px 1px 2px white; margin-bottom: 30px; }
 
-        /* FIXED 3X3 SHIELD BINDER RENDERING OVERHAUL */
-        .binder-sheet-9-pocket { position: relative; width: 100%; background: rgba(10, 10, 12, 0.98); border-radius: 6px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 8px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.1); overflow: hidden; }
+        /* ADVANCED 3X3 FIXED PAGE SYSTEM GRID MODULE */
+        .binder-sheet-9-pocket { position: relative; width: 100%; background: rgba(10, 10, 12, 0.98); border-radius: 6px; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 6px; padding: 8px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.1); height: 420px; }
         .binder-sheet-9-pocket::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 30%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.03) 80%, rgba(255,255,255,0) 100%); pointer-events: none; z-index: 25; border-radius: 6px; }
 
-        .pocket-slot { position: relative; aspect-ratio: 2.5 / 3.5; background: #050506; border: 1px dashed rgba(255,255,255,0.05); border-radius: 4px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,0.8); }
+        .pocket-slot { position: relative; width: 100%; height: 100%; background: #050506; border: 1px dashed rgba(255,255,255,0.05); border-radius: 4px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,0.8); }
         .pocket-slot.filled { border: 1px solid rgba(255,255,255,0.15); background: #141416; box-shadow: 0 4px 8px rgba(0,0,0,0.5); cursor: pointer; }
         .pocket-img-render { width: 100%; height: 100%; object-fit: cover; display: block; position: absolute; top:0; left:0; z-index: 5; }
         .pocket-grade-tab { position: absolute; top: 3px; right: 3px; background: var(--brand-orange); color: black; font-weight: 900; font-size: 8px; padding: 1px 3px; border-radius: 2px; z-index: 10; }
-        .empty-pocket-cross { font-size: 12px; color: rgba(255,255,255,0.03); font-weight: bold; }
+        .empty-pocket-cross { font-size: 14px; color: rgba(255,255,255,0.03); font-weight: bold; }
 
         .binder-pagination-dock { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 10px; font-size: 11px; color: var(--text-gray); }
         .page-arrow-btn { background: #111; border: 1px solid #222; color: white; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
@@ -141,7 +138,6 @@
         .modal-card h3 { color: var(--brand-orange); margin-top: 0; text-transform: uppercase; font-weight: 900; }
         .close-modal-x-btn { background-color: var(--brand-orange); color: white; border: none; padding: 10px; border-radius: 6px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 11px; width: 100%; margin-top: 10px; text-align: center; }
         
-        /* RESTORED: Guidance Disclaimer Footer */
         .legal-disclaimer-footer { width: 350px; font-size: 11px; color: #444; text-align: center; line-height: 1.4; margin: 15px 0; padding-top: 10px; border-top: 1px solid #111; }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
@@ -281,15 +277,33 @@
     </div>
 
     <div id="viewBinder" class="view-section">
-        <button class="custom-button secondary-btn" id="btnToggleBinderCustomizerMenu" style="margin-bottom:10px;">⚙️ Customise Album View</button>
+        <button class="custom-button secondary-btn" id="btnToggleBinderCustomizerMenu" style="margin-bottom:10px;">⚙️ Customise Album View & Settings</button>
         
         <div id="binder-customizer-dropdown-drawer">
-            <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin-bottom:8px;">Choose Album Cover Style:</div>
+            <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin-bottom:6px;">Portfolio Asset Valuation Metric:</div>
+            <select id="pricingModeSelectToggle" class="select-dropdown">
+                <option value="raw">Raw Value Index (Ungraded Baseline)</option>
+                <option value="graded">Graded Multiplier Model (Premium Scale)</option>
+            </select>
+
+            <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin:12px 0 6px 0;">Live Binder Search Filter:</div>
+            <input type="text" id="binderInternalLiveSearchInput" class="search-input" placeholder="Search card in binder instantly...">
+
+            <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin:12px 0 6px 0;">Sort Binder Rows:</div>
+            <select id="binderSortDirectionSelectToggle" class="select-dropdown">
+                <option value="dateDesc">Scanned Date: Newest First</option>
+                <option value="dateAsc">Scanned Date: Oldest First</option>
+                <option value="valDesc">Portfolio Value: Highest First</option>
+                <option value="valAsc">Portfolio Value: Lowest First</option>
+            </select>
+
+            <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin:12px 0 6px 0;">Choose Cover Theme:</div>
             <div class="binder-color-dot active" style="background:#1A365D;" data-hex="#1A365D"></div>
             <div class="binder-color-dot" style="background:#7A1C1C;" data-hex="#7A1C1C"></div>
             <div class="binder-color-dot" style="background:#1C5A35;" data-hex="#1C5A35"></div>
             <div class="binder-color-dot" style="background:#222222;" data-hex="#222222"></div>
-            <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin:10px 0 6px 0;">Label Your Portfolio Title:</div>
+            
+            <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin:12px 0 6px 0;">Rename Portfolio Album:</div>
             <input type="text" id="customBinderNameBannerInput" class="search-input" placeholder="Name My Album Binder" style="padding:6px; font-size:12px;">
         </div>
 
@@ -354,12 +368,13 @@
         let currentUser = null;
         let globalBinderCollectionMemory = [];
         let currentActiveBinderPageIndex = 0;
+        let cacheLiveEstimatedValueGBP = 0.00;
 
         const navBtnScanner = document.getElementById('navBtnScanner'); const navBtnBinder = document.getElementById('navBtnBinder');
         const viewScanner = document.getElementById('viewScanner'); const viewBinder = document.getElementById('viewBinder');
         const binderGridSheet9SlotPage = document.getElementById('binderGridSheet9SlotPage');
 
-        // FIXED MODAL CLOSING LOGIC (SWEEP REPAIR)
+        // FIXED INDEPENDENT MODAL SHIELDS CLOSES
         const helpModal = document.getElementById('helpModal');
         document.getElementById('openHelp').addEventListener('click', () => helpModal.classList.add('active'));
         document.getElementById('closeHelp').addEventListener('click', () => helpModal.classList.remove('active'));
@@ -378,7 +393,6 @@
             }
         });
 
-        // AUTH CONTROL WIRE-UPS
         document.getElementById('btnSignUp').addEventListener('click', async () => {
             const email = document.getElementById('authEmail').value.trim(); const pass = document.getElementById('authPassword').value.trim();
             if(!email || !pass) return alert("Please fill fields.");
@@ -391,7 +405,7 @@
         });
         document.getElementById('btnSignOut').addEventListener('click', () => signOut(auth));
 
-        // CHANNELS COMPRESSION FILE INTERACTION CORES
+        // CONTROLS MANIPULATIONS BLOCKS RE-WIND
         const frontFile = document.getElementById('frontFile'); const backFile = document.getElementById('backFile');
         const frontLabel = document.getElementById('frontLabel'); const backLabel = document.getElementById('backLabel');
         const sideTabs = document.getElementById('sideTabs'); const tabFront = document.getElementById('tabFront'); const tabBack = document.getElementById('tabBack');
@@ -443,7 +457,6 @@
         tabFront.addEventListener('click', () => { if(cardData.front.src) switchSide('front'); });
         tabBack.addEventListener('click', () => { if(cardData.back.src) switchSide('back'); });
 
-        // RESTORED: Image Zoom Rotate Pan Control Execution Listeners
         document.getElementById('zoomIn').addEventListener('click', () => { cardData[currentSide].zoom += 0.08; updateImageTransform(); });
         document.getElementById('zoomOut').addEventListener('click', () => { if (cardData[currentSide].zoom > 0.3) cardData[currentSide].zoom -= 0.08; updateImageTransform(); });
         document.getElementById('rotateLeft').addEventListener('click', () => { cardData[currentSide].rotate -= 0.8; updateImageTransform(); });
@@ -473,7 +486,6 @@
         }, {passive: false});
         window.addEventListener('mouseup', () => { isDraggingImage = false; activeLine = null; }); window.addEventListener('touchend', () => { isDraggingImage = false; activeLine = null; });
 
-        // Crosshairs Node Drag parameters mappings
         const outL = document.getElementById('outLeft'); const outR = document.getElementById('outRight'); const outT = document.getElementById('outTop'); const outB = document.getElementById('outBottom');
         const inL = document.getElementById('inLeft'); const inR = document.getElementById('inRight'); const inT = document.getElementById('inTop'); const inB = document.getElementById('inBottom');
 
@@ -502,13 +514,12 @@
             inL.style.left = side.il + '%'; inR.style.left = side.ir + '%'; inT.style.top = side.it + '%'; inB.style.top = side.ib + '%';
         }
 
-        // RESTORED: Contrast Surface Scanning Toggle Filters
         damageToggle.addEventListener('change', () => {
-            if(damageToggle.checked) { previewImage.style.filter = "contrast(280%) brightness(90%) saturate(30%) grayscale(40%)"; damageLogBox.innerHTML = `[SCANNER ENGINE HIGH-PASS FILTER ACTIVE] Inspect edge WHITENING glowing particles cleanly.`; } 
-            else { previewImage.style.filter = "none"; damageLogBox.innerHTML = `<span style="color:var(--brand-orange)">💡 TIP:</span> Take photos against a solid <strong>BLACK background</strong>. Anomalies will stand out clearly.`; }
+            if(damageToggle.checked) { previewImage.style.filter = "contrast(280%) brightness(90%) saturate(30%) grayscale(40%)"; } 
+            else { previewImage.style.filter = "none"; }
         });
 
-        // OPTICAL TEXT PARSER AUTO-FILL SCRIPTS
+        // TCG APIS INTEGRATIONS CORES
         async function runSmartVisionOCR(dataUrl) {
             ocrStatusLog.style.display = "block"; ocrStatusLog.innerText = "⚡ SMART VISION ACTIVE: Analyzing card details...";
             try {
@@ -529,11 +540,10 @@
                     document.getElementById('customCardSaveTitleField').value = optimalSearchQuery;
                     ocrStatusLog.innerText = `✓ Vision indexed: "${optimalSearchQuery}". Fetching values...`;
                     triggerAutomatedPriceSearch(optimalSearchQuery);
-                } else { ocrStatusLog.innerText = "⚠️ Blurred card view layout. Manual inputs ready."; }
-            } catch (err) { ocrStatusLog.innerText = "⚠️ Text scanning frame bypassed."; }
+                } else { ocrStatusLog.innerText = "⚠️ Blurred view query layout. Manual search ready."; }
+            } catch (err) { ocrStatusLog.innerText = "⚠️ Scanning frame cleared."; }
         }
 
-        let cacheLiveEstimatedValueGBP = 0.00;
         async function triggerAutomatedPriceSearch(queryText) {
             try {
                 const cleanNameQuery = queryText.split(' ')[0].replace(/[^a-zA-Z]/g, "");
@@ -557,24 +567,21 @@
                     const ebayQuery = encodeURIComponent(`${cardName} ${matchedCard.number} ${matchedCard.set.name}`); document.getElementById('ebayLink').href = `https://www.ebay.co.uk/sch/i.html?_nkw=${ebayQuery}&LH_Sold=1&LH_Complete=1`;
                     document.getElementById('priceResultBox').style.display = "block";
                 }
-            } catch (err) { console.log("Silent search safety triggered."); }
+            } catch (err) { console.log("Search error reset."); }
         }
 
-        // RESTORED MANUAL FIND CLICK TRIGGER WIRES
         document.getElementById('searchPriceBtn').addEventListener('click', () => {
             const val = document.getElementById('cardSearchInput').value.trim();
             if(val) { triggerAutomatedPriceSearch(val); document.getElementById('customCardSaveTitleField').value = val; }
         });
 
-        // REPAIRED OPTIONAL REVERSE BALANCING RATIO MATH ENGINE
+        // CALCULATE PIPELINES
         let compiledFinalLedgerPayloadBlock = null;
         calculateButton.addEventListener('click', () => {
             const fWorstLR = calculateSideMaxSplitPercentage(cardData.front.ol, cardData.front.or, cardData.front.il, cardData.front.ir);
             const fWorstTB = calculateSideMaxSplitPercentage(cardData.front.ot, cardData.front.ob, cardData.front.it, cardData.front.ib);
-            
             let finalWorstLR = fWorstLR; let finalWorstTB = fWorstTB;
             
-            // IF BACK SCAN ARRAYS DETECTED AUTOMATICALLY SWITCH INDICES CHANNELS (FIX)
             if(cardData.back.src) {
                 const bWorstLR = calculateSideMaxSplitPercentage(cardData.back.ol, cardData.back.or, cardData.back.il, cardData.back.ir);
                 const bWorstTB = calculateSideMaxSplitPercentage(cardData.back.ot, cardData.back.ob, cardData.back.it, cardData.back.ib);
@@ -592,7 +599,6 @@
             if(document.getElementById('defectDot1').checked) { conditionCap = Math.min(conditionCap, 9); reportedDefects.push("1 White Speck"); }
 
             const verdicts = evaluateExpandedGrades(finalWorstLR, finalWorstTB, conditionCap);
-            
             document.getElementById('psaVerdict').innerText = verdicts.psa; document.getElementById('psaVerdict').className = verdicts.psa.includes('10') && !verdicts.psa.includes('Drop') ? 'company-verdict perfect' : 'company-verdict';
             document.getElementById('aceVerdict').innerText = verdicts.ace; document.getElementById('aceVerdict').className = verdicts.ace.includes('10') && !verdicts.ace.includes('Drop') ? 'company-verdict perfect' : 'company-verdict';
             document.getElementById('tagVerdict').innerText = verdicts.tag; document.getElementById('tagVerdict').className = verdicts.tag.includes('10') && !verdicts.tag.includes('Drop') ? 'company-verdict perfect' : 'company-verdict';
@@ -652,52 +658,77 @@
             } catch(e) { alert("Filing error."); } finally { fireButton.innerText = "☁️ Lock Straight Into My Binder Ledger"; fireButton.disabled = false; }
         });
 
-        // FIXED: 2-PAGE 18-POCKET CORE TEMPLATE ASSETS VALUES (FIX)
+        // RE-ENGINEERED 3X3 BINDER SHEET ALGORITHMS (REBUILD)
         async function syncMasterUserCloudBinderLedger() {
             if(!currentUser) return;
-            binderGridSheet9SlotPage.innerHTML = ""; clearBinderDisplayGridSlots();
+            binderGridSheet9SlotPage.innerHTML = "";
             try {
                 const qDocs = query(collection(db, "card_scans"), where("userId", "==", currentUser.uid), orderBy("scannedAt", "desc"));
                 const snap = await getDocs(qDocs); globalBinderCollectionMemory = [];
                 snap.forEach(d => globalBinderCollectionMemory.push({ docId: d.id, ...d.data() }));
                 
-                // FIXED ZERO ASSET BALANCE WORTH PIPELINE MATH (FIX)
-                let sum = 0; 
-                if (globalBinderCollectionMemory.length > 0) {
-                    globalBinderCollectionMemory.forEach(c => sum += parseFloat(c.cashValue || 0));
-                }
-                document.getElementById('binderPortfolioValuationSumDisplay').innerText = `£${sum.toFixed(2)}`;
-                renderBinderSheetGridPage(currentActiveBinderPageIndex);
+                processAndRenderBinderViewWithFilters();
             } catch(e) { console.error("Index sync issue:", e); }
         }
 
-        function renderBinderSheetGridPage(pageIdx) {
+        // COMPLEX LIVE RENDERING SYSTEM SUPPORTING MODES & SEARCHING
+        function processAndRenderBinderViewWithFilters() {
+            let processedCards = [...globalBinderCollectionMemory];
+
+            // 1. Process Live text searching filter queries
+            const queryText = document.getElementById('binderInternalLiveSearchInput').value.toLowerCase().trim();
+            if(queryText) {
+                processedCards = processedCards.filter(c => c.cardTitle.toLowerCase().includes(queryText));
+            }
+
+            // 2. Process Multi-Pricing Multipliers Calculations Settings (Ungraded vs Graded Scaler Model)
+            const pricingMode = document.getElementById('pricingModeSelectToggle').value;
+            let sum = 0;
+            processedCards.forEach(c => {
+                let basePrice = parseFloat(c.cashValue || 0);
+                if(pricingMode === 'graded' && c.gradeBadge.includes('10')) { basePrice *= 4.5; } // Apply high tier multiplier
+                else if (pricingMode === 'graded' && c.gradeBadge.includes('9')) { basePrice *= 1.8; }
+                c.derivedFinalPrice = basePrice;
+                sum += basePrice;
+            });
+            document.getElementById('binderPortfolioValuationSumDisplay').innerText = `£${sum.toFixed(2)}`;
+
+            // 3. Process Sorting rules
+            const sortMode = document.getElementById('binderSortDirectionSelectToggle').value;
+            if(sortMode === 'dateAsc') processedCards.reverse(); // Default database is already dateDesc
+            else if(sortMode === 'valDesc') processedCards.sort((a,b) => b.derivedFinalPrice - a.derivedFinalPrice);
+            else if(sortMode === 'valAsc') processedCards.sort((a,b) => a.derivedFinalPrice - b.derivedFinalPrice);
+
+            // 4. Render Layout Pages (FORCES FULL 3x3 ROWS RECONSTRUCT)
             binderGridSheet9SlotPage.innerHTML = "";
-            const startIndex = pageIdx * 9;
-            const totalCount = globalBinderCollectionMemory.length;
+            const startIndex = currentActiveBinderPageIndex * 9;
+            const totalCount = processedCards.length;
             
-            // FORCE 18 CELLS (2 COMPLETE PAGES) IF PORTFOLIO RECORDS EMPTY (FIX)
+            // Force 18 openings grid framework rules (2 full sheets layout grids minimum)
             const totalSlotsToRender = Math.max(18, Math.ceil(totalCount / 9) * 9);
             const totalPages = Math.ceil(totalSlotsToRender / 9);
-
-            document.getElementById('binderPagePaginationTicker').innerText = `Page ${pageIdx + 1} of ${totalPages}`;
+            document.getElementById('binderPagePaginationTicker').innerText = `Page ${currentActiveBinderPageIndex + 1} of ${totalPages}`;
 
             for(let i = 0; i < 9; i++) {
                 const targetIdx = startIndex + i;
                 const slot = document.createElement('div');
                 
                 if(targetIdx < totalCount) {
-                    const card = globalBinderCollectionMemory[targetIdx];
+                    const card = processedCards[targetIdx];
                     slot.className = 'pocket-slot filled';
                     if(card.gradeBadge.includes('10') && !card.gradeBadge.includes('Drop')) slot.classList.add('gold-slab-glow');
                     
-                    // FIXED IMAGE INJECTION ROUTE PATHS MATCH
                     const targetImageSrcPath = card.frontImage || card.backImage || "";
                     slot.innerHTML = `
                         <span class="pocket-grade-tab">${card.gradeBadge.split(' ')[0]} ${card.gradeBadge.match(/\d+/) ? card.gradeBadge.match(/\d+/)[0] : ''}</span>
                         <img src="${targetImageSrcPath}" class="pocket-img-render" alt="Showcase Slab Card">
                     `;
-                    slot.addEventListener('click', () => triggerDirectCloudSlabPurge(card.docId, card.cardTitle, card.frontImage, card.backImage));
+                    // Simple click wipe handle setup
+                    slot.addEventListener('click', () => {
+                        if(confirm(`Delete "${card.cardTitle}" from binder rows permanently?`)) {
+                            deleteDoc(doc(db, "card_scans", card.docId)).then(() => syncMasterUserCloudBinderLedger());
+                        }
+                    });
                 } else {
                     slot.className = 'pocket-slot'; slot.innerHTML = `<span class="empty-pocket-cross">×</span>`;
                 }
@@ -705,13 +736,18 @@
             }
         }
 
-        // CUSTOMIZER CONTROLS DRAWER
+        // CUSTOMIZER LISTENERS WIRES AND INSTANT FILTER TRIPS
         const btnToggleBinderCustomizerMenu = document.getElementById('btnToggleBinderCustomizerMenu');
         const binderCustomizerDropdownDrawer = document.getElementById('binder-customizer-dropdown-drawer');
         btnToggleBinderCustomizerMenu.addEventListener('click', () => {
             const isClosed = binderCustomizerDropdownDrawer.style.display === "none" || !binderCustomizerDropdownDrawer.style.display;
             binderCustomizerDropdownDrawer.style.display = isClosed ? "block" : "none";
         });
+
+        document.getElementById('binderInternalLiveSearchInput').addEventListener('input', processAndRenderBinderViewWithFilters);
+        document.getElementById('pricingModeSelectToggle').addEventListener('change', processAndRenderBinderViewWithFilters);
+        document.getElementById('binderSortDirectionSelectToggle').addEventListener('change', processAndRenderBinderViewWithFilters);
+
         document.querySelectorAll('.binder-color-dot').forEach(dot => {
             dot.addEventListener('click', () => {
                 document.querySelectorAll('.binder-color-dot').forEach(d => d.classList.remove('active')); dot.classList.add('active');
@@ -722,22 +758,9 @@
             document.getElementById('renderBinderTitleHeaderDisplay').innerText = e.target.value.trim() || "Showcase Portfolio Album";
         });
 
-        document.getElementById('btnBinderPrevPage').addEventListener('click', () => { if(currentActiveBinderPageIndex > 0) { currentActiveBinderPageIndex--; renderBinderSheetGridPage(currentActiveBinderPageIndex); } });
-        document.getElementById('btnBinderNextPage').addEventListener('click', () => { const max = Math.ceil(Math.max(18, globalBinderCollectionMemory.length) / 9); if(currentActiveBinderPageIndex < max - 1) { currentActiveBinderPageIndex++; renderBinderSheetGridPage(currentActiveBinderPageIndex); } });
-        function clearBinderDisplayGridSlots() { renderBinderSheetGridPage(0); document.getElementById('binderPortfolioValuationSumDisplay').innerText = "£0.00"; }
-
-        // REMOVED RE-WOUND POPUPS: Direct deletion trigger directly attached inside grid nodes handles
-        async function triggerDirectCloudSlabPurge(docId, title, fUrl, bUrl) {
-            if(confirm(`Are you completely sure you want to delete "${title}" permanently from your showcase folder ledger?`)) {
-                try {
-                    await deleteDoc(doc(db, "card_scans", docId));
-                    if(fUrl) await deleteObject(ref(storage, fUrl)).catch(e=>{});
-                    if(bUrl) await deleteObject(ref(storage, bUrl)).catch(e=>{});
-                    alert("✓ Purged safely from database ledger grid.");
-                    syncMasterUserCloudBinderLedger();
-                } catch(e) { alert("Deletion failure."); }
-            }
-        }
+        document.getElementById('btnBinderPrevPage').addEventListener('click', () => { if(currentActiveBinderPageIndex > 0) { currentActiveBinderPageIndex--; processAndRenderBinderViewWithFilters(); } });
+        document.getElementById('btnBinderNextPage').addEventListener('click', () => { const max = Math.ceil(Math.max(18, globalBinderCollectionMemory.length) / 9); if(currentActiveBinderPageIndex < max - 1) { currentActiveBinderPageIndex++; processAndRenderBinderViewWithFilters(); } });
+        function clearBinderDisplayGridSlots() { binderGridSheet9SlotPage.innerHTML = ""; document.getElementById('binderPortfolioValuationSumDisplay').innerText = "£0.00"; }
     </script>
 </body>
 </html>
