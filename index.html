@@ -121,9 +121,11 @@
         .slab-pullout-frame { background-color: #151518; border: 2px solid var(--brand-orange); border-radius: 16px; padding: 18px; width: 335px; box-sizing: border-box; text-align: left; box-shadow: 0 25px 60px rgba(0,0,0,0.95); }
         .slab-pullout-title { font-size: 16px; font-weight: bold; border-bottom: 2px solid var(--brand-orange); padding-bottom: 6px; margin-bottom: 12px; text-transform: uppercase; color: white; letter-spacing: 0.5px; }
         .slab-pullout-workspace-mirror { position: relative; width: 100%; height: 320px; background: #000; border-radius: 8px; border: 1px solid #333; overflow: hidden; margin: 12px 0; }
-        .slab-pullout-input-edit-row { display: flex; gap: 8px; margin: 12px 0; }
-        .slab-pullout-edit-input { flex: 1; background-color: #050506; border: 1px solid #333; border-radius: 6px; padding: 10px; color: white; font-size: 13px; }
-        .slab-pullout-edit-save-btn { background-color: var(--success-green); border: none; color: black; font-weight: bold; padding: 0 14px; border-radius: 6px; cursor: pointer; font-size: 12px; text-transform: uppercase; }
+        
+        /* UPDATED LAYOUT FIXES FOR MODAL SAVE ROW */
+        .slab-pullout-input-edit-row { display: flex; gap: 8px; margin: 12px 0; width: 100%; box-sizing: border-box; align-items: center; }
+        .slab-pullout-edit-input { flex: 1; min-width: 0; background-color: #050506; border: 1px solid #333; border-radius: 6px; padding: 10px; color: white; font-size: 13px; box-sizing: border-box; }
+        .slab-pullout-edit-save-btn { flex: 0 0 auto; background-color: var(--success-green); border: none; color: black; font-weight: bold; padding: 10px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; text-transform: uppercase; box-sizing: border-box; }
 
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
         .modal-overlay.active { opacity: 1 !important; pointer-events: auto !important; }
@@ -515,6 +517,7 @@
             catch(e) { console.error("Sync issue:", e); }
         }
 
+        // UPDATED SORTING ALGORITHM
         function processAndRenderBinderViewWithFilters() {
             let processedCards = [...globalBinderCollectionMemory];
             const queryText = document.getElementById('binderInternalLiveSearchInput').value.toLowerCase().trim(); if(queryText) { processedCards = processedCards.filter(c => c.cardTitle.toLowerCase().includes(queryText)); }
@@ -522,7 +525,19 @@
             const pricingMode = document.getElementById('pricingModeSelectToggle').value;
             let sum = 0; processedCards.forEach(c => { let basePrice = parseFloat(c.cashValue || 0); if(pricingMode === 'graded') { if(c.gradeBadge.includes('10')) basePrice *= 4.5; else if(c.gradeBadge.includes('9')) basePrice *= 1.8; else if(c.gradeBadge.includes('8')) basePrice *= 1.3; } c.derivedFinalPrice = parseFloat(basePrice.toFixed(2)); sum += c.derivedFinalPrice; });
             document.getElementById('binderPortfolioValuationSumDisplay').innerText = `£${sum.toFixed(2)}`;
-            const sortMode = document.getElementById('binderSortDirectionSelectToggle').value; if(sortMode === 'dateAsc') processedCards.reverse(); else if(sortMode === 'valDesc') processedCards.sort((a,b) => b.derivedFinalPrice - a.derivedFinalPrice); else if(sortMode === 'valAsc') processedCards.sort((a,b) => a.derivedFinalPrice - b.derivedFinalPrice);
+            
+            const sortMode = document.getElementById('binderSortDirectionSelectToggle').value; 
+            if (sortMode === 'dateAsc') {
+                processedCards.sort((a, b) => {
+                    const timeA = a.scannedAt?.toMillis ? a.scannedAt.toMillis() : 0;
+                    const timeB = b.scannedAt?.toMillis ? b.scannedAt.toMillis() : 0;
+                    return timeA - timeB; 
+                });
+            } else if (sortMode === 'valDesc') {
+                processedCards.sort((a, b) => (b.derivedFinalPrice || 0) - (a.derivedFinalPrice || 0));
+            } else if (sortMode === 'valAsc') {
+                processedCards.sort((a, b) => (a.derivedFinalPrice || 0) - (b.derivedFinalPrice || 0));
+            }
 
             binderGridSheet9SlotPage.innerHTML = ""; const startIndex = currentActiveBinderPageIndex * 9; const totalCount = processedCards.length; const totalSlotsToRender = Math.max(18, Math.ceil(totalCount / 9) * 9); const totalPages = Math.ceil(totalSlotsToRender / 9); document.getElementById('binderPagePaginationTicker').innerText = `Page ${currentActiveBinderPageIndex + 1} of ${totalPages}`;
 
