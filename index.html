@@ -527,6 +527,8 @@
             document.getElementById('binderPortfolioValuationSumDisplay').innerText = `£${sum.toFixed(2)}`;
             
             const sortMode = document.getElementById('binderSortDirectionSelectToggle').value; 
+if (sortMode === 'dateAsc') {
+// ... new code ...; 
             if (sortMode === 'dateAsc') {
                 processedCards.sort((a, b) => {
                     const timeA = a.scannedAt?.toMillis ? a.scannedAt.toMillis() : 0;
