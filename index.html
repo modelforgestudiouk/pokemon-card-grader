@@ -391,12 +391,14 @@
         const db = getFirestore(app);
         const storage = getStorage(app);
 
+        // FATAL FIX: Added compiledFinalLedgerPayloadBlock here so saving works perfectly.
         let currentUser = null;
         let globalBinderCollectionMemory = [];
         let currentActiveBinderPageIndex = 0;
         let activeSelectedSlabDocId = null;
         let localPlacedDamageDotsArray = []; 
         let cacheLiveEstimatedValueGBP = 0.00;
+        let compiledFinalLedgerPayloadBlock = null; 
 
         const navBtnScanner = document.getElementById('navBtnScanner'); const navBtnBinder = document.getElementById('navBtnBinder');
         const viewScanner = document.getElementById('viewScanner'); const viewBinder = document.getElementById('viewBinder');
@@ -562,9 +564,14 @@
         }
 
         async function triggerAutomatedPriceSearch(queryText) {
+            const searchBtn = document.getElementById('searchPriceBtn');
+            searchBtn.innerText = "Searching...";
+            searchBtn.disabled = true;
+
             try {
+                // FIXED: Hyphen-safe regex for cards like "Ho-Oh"
                 const sanitizedQuery = queryText.replace(/['"“”‘’]/g, "").trim();
-                const cleanNameQuery = sanitizedQuery.split(' ')[0].replace(/[^a-zA-Z]/g, "");
+                const cleanNameQuery = sanitizedQuery.split(' ')[0].replace(/[^a-zA-Z-]/g, "");
                 
                 const response = await fetch(`https://api.pokemontcg.io/v2/cards?q=name:"${encodeURIComponent(cleanNameQuery)}"`);
                 const data = await response.json();
@@ -592,6 +599,10 @@
                 document.getElementById('cardTargetName').innerText = "❌ No registry match found. Baseline foreign valuation engaged.";
                 document.getElementById('priceMarket').innerText = "£1.25"; document.getElementById('priceLow').innerText = "£0.50";
                 document.getElementById('priceResultBox').style.display = "block";
+            } finally {
+                // FIXED: Reset button state
+                searchBtn.innerText = "Find";
+                searchBtn.disabled = false;
             }
         }
 
@@ -600,7 +611,6 @@
             if(val) { triggerAutomatedPriceSearch(val); document.getElementById('customCardSaveTitleField').value = val; }
         });
 
-        // FIXED CHANNELS CORES: STRIP VARIABLE CHECK COLLISIONS COMPILING CHECKS (GRADES DISPATCH LINK FIXED)
         calculateButton.addEventListener('click', () => {
             const fWorstLR = calculateSideMaxSplitPercentage(cardData.front.ol || 10, cardData.front.or || 90, cardData.front.il || 20, cardData.front.ir || 80);
             const fWorstTB = calculateSideMaxSplitPercentage(cardData.front.ot || 10, cardData.front.ob || 90, cardData.front.it || 20, cardData.front.ib || 80);
@@ -616,7 +626,6 @@
                 document.getElementById('ratioDisplayHUD').innerText = `📐 Front face split: ${fWorstLR.toFixed(0)}%:${(100-fWorstLR).toFixed(0)}% (Back Omitted)`;
             }
 
-            // SAFE ACCESSIBLE CHECKS INSTEAD OF PARENT CHECKS (FIXED)
             let conditionCap = 10; let reportedDefects = [];
             const check1 = document.getElementById('defectHeavy'); if(check1 && check1.checked) { conditionCap = Math.min(conditionCap, 5); reportedDefects.push("Heavy Whitening"); }
             const check2 = document.getElementById('defectScratch'); if(check2 && check2.checked) { conditionCap = Math.min(conditionCap, 7); reportedDefects.push("Surface Scratches"); }
@@ -635,6 +644,7 @@
             let targetCardPrice = cacheLiveEstimatedValueGBP;
             if(document.getElementById('cardTargetName').innerText === "Card Found") { targetCardPrice = 0.00; }
 
+            // Because this is now properly declared at the top, it will no longer crash in strict mode.
             compiledFinalLedgerPayloadBlock = {
                 gradeBadge: verdicts.psa, lrRatio: `${finalWorstLR}:${100-finalWorstLR}`, tbRatio: `${finalWorstTB}:${100-finalWorstTB}`, defects: reportedDefects, cashValue: targetCardPrice, markers: localPlacedDamageDotsArray
             };
@@ -660,7 +670,6 @@
         document.getElementById('btnUnlockFilingForm').addEventListener('click', () => { document.getElementById('save-ledger-form-block').style.display = "block"; document.getElementById('btnUnlockFilingForm').style.display = "none"; });
         function resetFilingFormBlocksHUD() { document.getElementById('save-ledger-form-block').style.display = "none"; document.getElementById('btnUnlockFilingForm').style.display = "block"; compiledFinalLedgerPayloadBlock = null; }
 
-        // FIXED SAVE FLOW: Enforce sync calls return cleanly on submit (FIXED VAULT LINK)
         document.getElementById('btnExecuteBinderFilingCloud').addEventListener('click', async () => {
             if(!currentUser || !compiledFinalLedgerPayloadBlock) return alert("Verify authentication login.");
             const verifiedFinalTitle = document.getElementById('customCardSaveTitleField').value.trim() || "Unindexed Custom Entry Shell";
@@ -685,7 +694,7 @@
                 localPlacedDamageDotsArray = []; resetFilingFormBlocksHUD();
                 cacheLiveEstimatedValueGBP = 0.00; document.getElementById('cardTargetName').innerText = "Card Found"; document.getElementById('priceResultBox').style.display = "none";
                 
-                await syncMasterUserCloudBinderLedger(); // Force immediate update
+                await syncMasterUserCloudBinderLedger(); 
             } catch(e) { alert("Filing exception context."); } finally { fireButton.innerText = "☁ Finalize Vault Archive Sequence"; fireButton.disabled = false; }
         });
 
