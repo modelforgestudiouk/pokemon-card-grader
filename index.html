@@ -5,159 +5,170 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Model Forge Studio - Elite Pre-Grader</title>
     <style>
-        :root { --bg-dark: #0A0A0C; --panel-dark: #141417; --brand-orange: #FF5500; --brand-white: #FFFFFF; --text-gray: #A6A6A6; --success-green: #00FFCC; --alert-red: #FF3333; --binder-color: #1A365D; --gold-glow: 0 0 25px rgba(255, 215, 0, 0.9), inset 0 0 15px rgba(255, 215, 0, 0.5); }
-        body { margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; background-color: var(--bg-dark); min-height: 100vh; color: var(--brand-white); font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+        :root { --bg-dark: #070709; --panel-dark: #121215; --brand-orange: #FF5500; --brand-orange-hover: #E64D00; --brand-white: #F0F0F0; --text-gray: #A0A0A5; --success-green: #00FFCC; --alert-red: #FF3333; --binder-color: #1A365D; --gold-glow: 0 0 25px rgba(255, 215, 0, 0.9), inset 0 0 15px rgba(255, 215, 0, 0.5); }
+        body { margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; background-color: var(--bg-dark); min-height: 100vh; color: var(--brand-white); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
         
-        .header-container { display: flex; align-items: center; justify-content: space-between; width: 350px; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #222; }
-        .logo-badge { background-color: var(--brand-orange); color: var(--bg-dark); font-weight: 900; font-size: 20px; padding: 5px 12px; border-radius: 8px; margin-right: 12px; }
+        /* Smooth Global Transitions */
+        button, .pocket-slot, .file-label, .binder-color-dot { transition: all 0.2s ease-in-out; }
+
+        .header-container { display: flex; align-items: center; justify-content: space-between; width: 350px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        
         .logo-flex { display: flex; align-items: center; }
-        .logo-text { font-size: 20px; font-weight: 900; letter-spacing: 1px; color: var(--brand-orange); margin: 0; text-transform: uppercase; }
-        .logo-sub { font-size: 11px; color: var(--brand-white); font-weight: 300; letter-spacing: 2px; text-transform: uppercase; margin-top: -2px; }
+        .logo-badge { width: 40px; height: 40px; background-color: #111; border-radius: 8px; margin-right: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 1px solid rgba(255,85,0,0.3); }
+        .logo-img { width: 100%; height: 100%; object-fit: contain; }
+        .logo-text { font-size: 21px; font-weight: 900; letter-spacing: 0.5px; color: var(--brand-orange); margin: 0; text-transform: uppercase; text-shadow: 0 2px 10px rgba(255,85,0,0.2); }
+        .logo-sub { font-size: 10px; color: var(--text-gray); font-weight: 500; letter-spacing: 2px; text-transform: uppercase; margin-top: -2px; }
         
         .utility-box { display: flex; gap: 8px; align-items: center; }
-        .help-btn { background: none; border: 2px solid var(--brand-orange); color: var(--brand-orange); width: 28px; height: 28px; border-radius: 50%; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .discord-btn-link { text-decoration: none; border: 2px solid #5865F2; color: #5865F2; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; }
+        .help-btn { background: rgba(255,85,0,0.1); border: 1px solid var(--brand-orange); color: var(--brand-orange); width: 32px; height: 32px; border-radius: 50%; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .help-btn:hover { background: var(--brand-orange); color: var(--bg-dark); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255,85,0,0.3); }
 
-        .app-mode-bar { display: flex; width: 350px; gap: 10px; margin-bottom: 15px; }
-        .mode-btn { flex: 1; padding: 12px; background-color: #111; border: 1px solid #222; color: var(--text-gray); font-weight: bold; font-size: 13px; border-radius: 8px; cursor: pointer; text-transform: uppercase; }
-        .mode-btn.active { background-color: var(--panel-dark); border-color: var(--brand-orange); color: var(--brand-orange); }
+        .app-mode-bar { display: flex; width: 350px; gap: 10px; margin-bottom: 20px; background: #0c0c0e; padding: 6px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); box-sizing: border-box; }
+        .mode-btn { flex: 1; padding: 12px; background-color: transparent; border: none; color: var(--text-gray); font-weight: 700; font-size: 12px; border-radius: 8px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; }
+        .mode-btn.active { background-color: var(--brand-orange); color: var(--bg-dark); box-shadow: 0 4px 15px rgba(255,85,0,0.25); }
 
-        .view-section { width: 350px; display: none; }
+        .view-section { width: 350px; display: none; animation: fadeIn 0.3s ease; }
         .view-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        .auth-panel { width: 350px; background-color: #0c0c0c; padding: 12px; border-radius: 10px; border: 1px solid #222; margin-bottom: 20px; box-sizing: border-box; font-size: 13px; text-align: center; }
-        .auth-inputs { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
-        .auth-row { display: flex; gap: 8px; }
-        .auth-btn { background-color: #222; border: 1px solid #444; color: white; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 12px; flex: 1; text-transform: uppercase; }
-        .auth-btn.primary { background-color: var(--brand-orange); border-color: var(--brand-orange); }
+        .auth-panel { width: 350px; background-color: var(--panel-dark); padding: 15px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; box-sizing: border-box; font-size: 13px; text-align: center; box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+        .auth-inputs { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+        .auth-row { display: flex; gap: 10px; }
+        .auth-btn { background-color: #222; border: 1px solid #333; color: white; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 12px; flex: 1; text-transform: uppercase; letter-spacing: 0.5px; }
+        .auth-btn:hover { background-color: #333; }
+        .auth-btn.primary { background-color: var(--brand-orange); border-color: var(--brand-orange); color: var(--bg-dark); }
+        .auth-btn.primary:hover { background-color: var(--brand-orange-hover); box-shadow: 0 4px 12px rgba(255,85,0,0.3); }
 
-        .upload-container { width: 100%; background-color: var(--panel-dark); padding: 15px; border-radius: 15px; box-sizing: border-box; text-align: center; border: 1px solid #2B2B2B; margin-bottom: 20px; }
-        .upload-row { display: flex; gap: 10px; }
-        .file-label { flex: 1; background: #222; border: 1px dashed #444; padding: 10px; border-radius: 6px; font-size: 12px; color: var(--text-gray); cursor: pointer; display: inline-block; font-weight: bold; text-transform: uppercase; }
-        .file-label.has-file { border-color: var(--success-green); color: var(--brand-white); }
+        .upload-container, .info-panel { width: 100%; background-color: var(--panel-dark); padding: 18px; border-radius: 16px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+        .upload-row { display: flex; gap: 10px; margin-bottom: 15px; }
+        .file-label { flex: 1; background: #18181c; border: 1px dashed #444; padding: 14px 10px; border-radius: 10px; font-size: 11px; color: var(--text-gray); cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; text-align: center; }
+        .file-label:hover { background: #222; border-color: var(--brand-orange); color: var(--brand-white); }
+        .file-label.has-file { border: 1px solid var(--success-green); color: var(--brand-white); background: rgba(0, 255, 204, 0.05); }
         .hidden-file-input { display: none !important; }
         
-        .side-tabs { display: flex; gap: 10px; margin-bottom: 15px; width: 100%; }
-        .tab-btn { flex: 1; padding: 10px; background: #222; border: 1px solid #333; color: var(--text-gray); font-weight: bold; border-radius: 6px; cursor: pointer; text-transform: uppercase; font-size: 13px; }
-        .tab-btn.active { background: var(--brand-orange); color: white; border-color: var(--brand-orange); }
+        .side-tabs { display: flex; gap: 8px; margin-bottom: 15px; width: 100%; background: #0c0c0e; padding: 4px; border-radius: 8px; box-sizing: border-box; }
+        .tab-btn { flex: 1; padding: 8px; background: transparent; border: none; color: var(--text-gray); font-weight: bold; border-radius: 6px; cursor: pointer; text-transform: uppercase; font-size: 11px; }
+        .tab-btn.active { background: #222; color: white; box-shadow: 0 2px 8px rgba(0,0,0,0.5); }
         
-        #controlDock { display: none; justify-content: space-between; margin-top: 10px; background: #1a1a1c; padding: 10px; border-radius: 8px; flex-wrap: wrap; gap: 6px; width: 100%; box-sizing: border-box; border: 1px solid #2d2d30; }
-        .dock-btn { background: #111; border: 1px solid var(--brand-orange); color: var(--brand-white); padding: 8px 10px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
-        .dock-btn.active { background: var(--brand-orange); color: black; }
+        #controlDock { display: none; justify-content: space-between; margin-bottom: 15px; background: #0c0c0e; padding: 12px; border-radius: 12px; flex-wrap: wrap; gap: 8px; width: 100%; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.03); }
+        .dock-btn { background: #1a1a20; border: 1px solid #333; color: var(--brand-white); padding: 8px 12px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+        .dock-btn:hover { background: #2a2a35; border-color: var(--brand-orange); }
+        .dock-btn.active { background: var(--brand-orange); color: var(--bg-dark); border-color: var(--brand-orange); }
 
-        #workspace { position: relative; width: 310px; height: 430px; margin: 15px auto; display: none; background-color: #030304; border-radius: 8px; overflow: hidden; border: 1px solid #333; perspective: 1000px; }
+        #workspace { position: relative; width: 310px; height: 430px; margin: 0 auto 15px auto; display: none; background-color: #030304; border-radius: 12px; overflow: hidden; border: 1px solid #222; perspective: 1000px; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); }
         #imageContainer { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transform-origin: center center; position: absolute; top: 0; left: 0; cursor: move; }
         #previewImage { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
         
+        /* Guides & Dots styling remains unchanged */
         .guide-line { position: absolute; z-index: 10; opacity: 0.9; }
         .vertical { width: 3px; height: 100%; top: 0; cursor: ew-resize; }
         .horizontal { height: 3px; width: 100%; left: 0; cursor: ns-resize; }
         .outer-line { background-color: #FF2222; }
-        .outer-line::after { content: ''; position: absolute; width: 24px; height: 24px; background: #FF2222; border: 2px solid #FFF; border-radius: 50%; }
+        .outer-line::after { content: ''; position: absolute; width: 24px; height: 24px; background: #FF2222; border: 2px solid #FFF; border-radius: 50%; box-shadow: 0 0 10px rgba(255,0,0,0.5); }
         .vertical.outer-line::after { top: 50%; left: -11px; transform: translateY(-50%); }
         .horizontal.outer-line::after { left: 50%; top: -11px; transform: translateX(-50%); }
         .inner-line { background-color: var(--success-green); }
-        .inner-line::after { content: ''; position: absolute; width: 24px; height: 24px; background: var(--success-green); border: 2px solid #FFF; border-radius: 50%; }
+        .inner-line::after { content: ''; position: absolute; width: 24px; height: 24px; background: var(--success-green); border: 2px solid #FFF; border-radius: 50%; box-shadow: 0 0 10px rgba(0,255,204,0.3); }
         .vertical.inner-line::after { top: 35%; left: -11px; transform: translateY(-50%); }
         .horizontal.inner-line::after { left: 35%; top: -11px; transform: translateX(-50%); }
+        .damage-dot-marker { position: absolute; width: 16px; height: 16px; background-color: #FF1111; border: 2px solid #FFF; border-radius: 50%; z-index: 22; transform: translate(-50%, -50%); pointer-events: auto; cursor: pointer; box-shadow: 0 0 12px #FF0000; transition: transform 0.1s; }
+        .damage-dot-marker:hover { transform: translate(-50%, -50%) scale(1.3); }
 
-        .damage-dot-marker { position: absolute; width: 16px; height: 16px; background-color: #FF1111; border: 2px solid #FFF; border-radius: 50%; z-index: 22; transform: translate(-50%, -50%); pointer-events: auto; cursor: pointer; box-shadow: 0 0 12px #FF0000; }
-
-        .info-panel { width: 100%; background-color: var(--panel-dark); padding: 15px; border-radius: 15px; box-sizing: border-box; border: 1px solid #2B2B2B; margin-bottom: 20px; }
-        .panel-title { font-size: 16px; color: var(--brand-orange); font-weight: bold; margin: 0 0 12px 0; border-bottom: 1px solid #333; padding-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .panel-title { font-size: 14px; color: var(--brand-orange); font-weight: 800; margin: 0 0 15px 0; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
         
-        .company-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #1c1c1e; font-size: 13px; text-align: left; }
-        .company-name { color: var(--text-gray); }
-        .company-verdict { font-weight: bold; }
-        .perfect { color: #FFD700 !important; text-shadow: 0 0 8px rgba(255,215,0,0.4); }
-        .gold-slab-glow { border: 1px solid #FFD700 !important; box-shadow: var(--gold-glow) !important; }
+        .company-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 13px; text-align: left; align-items: center; }
+        .company-name { color: var(--text-gray); font-weight: 500; }
+        .company-verdict { font-weight: 800; background: #1a1a20; padding: 4px 10px; border-radius: 6px; }
+        .perfect { color: #FFD700 !important; text-shadow: 0 0 12px rgba(255,215,0,0.6); background: rgba(255,215,0,0.1); }
+        .gold-slab-glow { border: 1px solid rgba(255,215,0,0.8) !important; box-shadow: var(--gold-glow) !important; }
 
         .search-box { display: flex; gap: 8px; margin-top: 5px; width: 100%; box-sizing: border-box; }
-        .search-input { flex: 1; background-color: #0D0D0D; border: 1px solid #333; border-radius: 6px; padding: 10px; color: #FFF; font-size: 14px; }
-        .search-btn { background-color: var(--brand-orange); border: none; color: #FFF; font-weight: bold; padding: 0 15px; border-radius: 6px; cursor: pointer; text-transform: uppercase; font-size: 11px; }
-        #priceResultBox { display: none; margin-top: 15px; background: #222; padding: 12px; border-radius: 8px; text-align: left; }
-        .price-line { font-size: 14px; margin: 6px 0; color: var(--brand-white); }
-        .price-val { font-weight: bold; color: var(--success-green); }
-        #ebayLink { background-color: #0056B3; color: white; font-size: 13px; margin-top: 15px; display: inline-block; }
-
-        .damage-toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; margin-bottom: 12px; }
-        .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .3s; border-radius: 24px; }
-        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; }
-        input:checked + .slider { background-color: var(--brand-orange); }
-        input:checked + .slider:before { transform: translateX(22px); }
-        #damageLogBox { background-color: #050505; border: 1px solid #222; border-radius: 8px; padding: 12px; text-align: left; font-family: monospace; font-size: 12px; color: var(--text-gray); line-height: 1.4; margin-bottom: 15px; }
-        .select-dropdown { width: 100%; background-color: #050506; border: 1px solid #333; border-radius: 6px; padding: 10px; color: white; font-size: 13px; margin-top: 5px; }
-
-        #save-ledger-form-block { display: none; background: #0c0c0d; border: 1px solid #222; border-radius: 8px; padding: 12px; margin-top: 12px; text-align: left; }
-        .custom-button { background-color: var(--brand-orange); color: var(--brand-white); border: none; padding: 12px 25px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; display: inline-block; width: 100%; box-sizing: border-box; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; text-align: center; }
-
-        /* BINDER SYSTEM */
-        #binder-customizer-dropdown-drawer { display: none; background: #111; padding: 15px; border-radius: 10px; border: 1px solid #222; margin-bottom: 15px; text-align: left; }
-        .binder-color-dot { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; display: inline-block; margin-right: 8px; }
-        .binder-color-dot.active { border-color: white; }
-
-        .binder-wrapper-scroller { position: relative; width: 100%; display: flex; justify-content: center; padding: 10px 0; }
-        .binder-outer-skin { position: relative; width: 340px; background-color: var(--binder-color); border-radius: 12px; padding: 12px 12px 12px 24px; box-sizing: border-box; box-shadow: 0 15px 35px rgba(0,0,0,0.6), inset -10px 0 20px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.05); display: flex; }
-        .binder-spine-rings { position: absolute; left: 6px; top: 0; width: 12px; height: 100%; display: flex; flex-direction: column; justify-content: space-around; padding: 25px 0; box-sizing: border-box; z-index: 30; }
-        .binder-ring-metal { width: 10px; height: 24px; border: 3px solid #b0b0b5; border-right: none; border-radius: 12px 0 0 12px; background: transparent; box-shadow: -2px 2px 4px rgba(0,0,0,0.5), inset 1px 1px 2px white; margin-bottom: 30px; }
-
-        .binder-sheet-9-pocket { position: relative; width: 100%; background: #0c0c0e; border-radius: 6px; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 6px; padding: 8px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.1); height: 420px; }
-        .binder-sheet-9-pocket::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 30%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.03) 80%, rgba(255,255,255,0) 100%); pointer-events: none; z-index: 25; border-radius: 6px; }
-
-        .pocket-slot { position: relative; width: 100%; height: 100%; background: #040405; border: 1px dashed rgba(255,255,255,0.04); border-radius: 4px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,0.8); }
-        .pocket-slot.filled { border: 1px solid rgba(255,255,255,0.15); background: #141416; box-shadow: 0 4px 8px rgba(0,0,0,0.5); cursor: pointer; }
-        .pocket-img-render { width: 100%; height: 100%; object-fit: cover; display: block; position: absolute; top:0; left:0; z-index: 5; }
-        .pocket-grade-tab { position: absolute; bottom: 3px; right: 3px; background: var(--brand-orange); color: black; font-weight: 900; font-size: 8px; padding: 1px 3px; border-radius: 2px; z-index: 10; }
+        .search-input { flex: 1; background-color: #0c0c0e; border: 1px solid #333; border-radius: 8px; padding: 12px; color: #FFF; font-size: 13px; outline: none; transition: border-color 0.2s; }
+        .search-input:focus { border-color: var(--brand-orange); }
+        .search-btn { background-color: var(--brand-orange); border: none; color: var(--bg-dark); font-weight: 800; padding: 0 18px; border-radius: 8px; cursor: pointer; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+        .search-btn:hover { background-color: var(--brand-orange-hover); transform: translateY(-1px); }
         
-        .fav-btn { position: absolute; top: 3px; left: 3px; z-index: 15; font-size: 14px; text-shadow: 0 0 2px rgba(0,0,0,0.8); pointer-events: none; }
-        .empty-pocket-cross { font-size: 14px; color: rgba(255,255,255,0.03); font-weight: bold; }
+        #priceResultBox { display: none; margin-top: 15px; background: #0c0c0e; padding: 15px; border-radius: 10px; text-align: left; border: 1px solid rgba(255,255,255,0.03); }
+        .price-line { font-size: 13px; margin: 8px 0; color: var(--text-gray); font-weight: 500; }
+        .price-val { font-weight: 800; color: var(--success-green); float: right; }
+        
+        .custom-button { background-color: var(--brand-orange); color: var(--bg-dark); border: none; padding: 14px 20px; border-radius: 10px; font-size: 13px; font-weight: 800; cursor: pointer; display: inline-block; width: 100%; box-sizing: border-box; text-transform: uppercase; letter-spacing: 0.5px; text-align: center; margin-top: 10px; }
+        .custom-button:hover { background-color: var(--brand-orange-hover); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(255,85,0,0.25); }
+        .custom-button.secondary-btn { background-color: #222; color: var(--brand-white); border: 1px solid #444; }
+        .custom-button.secondary-btn:hover { background-color: #333; border-color: var(--brand-orange); color: var(--brand-orange); }
 
-        .binder-pagination-dock { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 10px; font-size: 11px; color: var(--text-gray); }
-        .page-arrow-btn { background: #111; border: 1px solid #222; color: white; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+        .select-dropdown { width: 100%; background-color: #0c0c0e; border: 1px solid #333; border-radius: 8px; padding: 12px; color: white; font-size: 13px; margin-top: 5px; outline: none; cursor: pointer; }
+        .select-dropdown:focus { border-color: var(--brand-orange); }
+
+        /* BINDER UI OVERHAUL */
+        #binder-customizer-dropdown-drawer { display: none; background: #0c0c0e; padding: 20px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; text-align: left; box-shadow: inset 0 0 20px rgba(0,0,0,0.5); }
+        .binder-color-dot { width: 28px; height: 28px; border-radius: 50%; cursor: pointer; border: 3px solid transparent; display: inline-block; margin-right: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.4); }
+        .binder-color-dot:hover { transform: scale(1.1); }
+        .binder-color-dot.active { border-color: var(--brand-white); box-shadow: 0 0 15px rgba(255,255,255,0.3); }
+
+        .binder-wrapper-scroller { position: relative; width: 100%; display: flex; justify-content: center; padding: 15px 0; perspective: 1200px; }
+        .binder-outer-skin { position: relative; width: 340px; background-color: var(--binder-color); border-radius: 12px 18px 18px 12px; padding: 15px 15px 15px 28px; box-sizing: border-box; box-shadow: 20px 20px 40px rgba(0,0,0,0.8), inset -10px 0 30px rgba(0,0,0,0.5), inset 2px 0 5px rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.05); display: flex; transition: background-color 0.5s ease; }
+        
+        .binder-spine-rings { position: absolute; left: 8px; top: 0; width: 12px; height: 100%; display: flex; flex-direction: column; justify-content: space-around; padding: 25px 0; box-sizing: border-box; z-index: 30; }
+        .binder-ring-metal { width: 14px; height: 28px; border: 4px solid #b0b0b5; border-right: none; border-radius: 14px 0 0 14px; background: linear-gradient(90deg, #666, #ccc); box-shadow: -3px 3px 6px rgba(0,0,0,0.7), inset 1px 1px 3px white; margin-bottom: 30px; }
+
+        .binder-sheet-9-pocket { position: relative; width: 100%; background: rgba(20,20,22,0.95); border-radius: 8px; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 8px; padding: 10px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.1); height: 430px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); backdrop-filter: blur(5px); }
+        
+        .pocket-slot { position: relative; width: 100%; height: 100%; background: #08080a; border: 1px dashed rgba(255,255,255,0.08); border-radius: 6px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: inset 0 2px 6px rgba(0,0,0,0.8); }
+        .pocket-slot.filled { border: 1px solid rgba(255,255,255,0.2); background: #111; cursor: pointer; }
+        .pocket-slot.filled:hover { transform: scale(1.08); z-index: 50; box-shadow: 0 12px 25px rgba(0,0,0,0.9), 0 0 15px rgba(255,85,0,0.3); border-color: var(--brand-orange); }
+        
+        .pocket-img-render { width: 100%; height: 100%; object-fit: cover; display: block; position: absolute; top:0; left:0; z-index: 5; }
+        .pocket-grade-tab { position: absolute; bottom: 4px; right: 4px; background: var(--brand-orange); color: var(--bg-dark); font-weight: 900; font-size: 9px; padding: 2px 4px; border-radius: 4px; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.8); }
+        
+        .binder-pagination-dock { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 15px; font-size: 12px; color: var(--text-gray); font-weight: bold; background: var(--panel-dark); padding: 10px; border-radius: 10px; box-sizing: border-box; }
+        .page-arrow-btn { background: #222; border: 1px solid #333; color: white; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .page-arrow-btn:hover { background: var(--brand-orange); color: var(--bg-dark); border-color: var(--brand-orange); }
 
         /* MODALS */
-        .slab-pullout-frame { background-color: #151518; border: 2px solid var(--brand-orange); border-radius: 16px; padding: 18px; width: 335px; box-sizing: border-box; text-align: left; box-shadow: 0 25px 60px rgba(0,0,0,0.95); }
-        .slab-pullout-title { font-size: 16px; font-weight: bold; border-bottom: 2px solid var(--brand-orange); padding-bottom: 6px; margin-bottom: 12px; text-transform: uppercase; color: white; letter-spacing: 0.5px; }
-        .slab-pullout-workspace-mirror { position: relative; width: 100%; height: 320px; background: #000; border-radius: 8px; border: 1px solid #333; overflow: hidden; margin: 12px 0; }
+        .slab-pullout-frame { background-color: #151518; border: 2px solid var(--brand-orange); border-radius: 16px; padding: 20px; width: 335px; box-sizing: border-box; text-align: left; box-shadow: 0 25px 60px rgba(0,0,0,0.95), 0 0 30px rgba(255,85,0,0.15); }
+        .slab-pullout-title { font-size: 18px; font-weight: 900; border-bottom: 2px solid rgba(255,255,255,0.05); padding-bottom: 10px; margin-bottom: 15px; text-transform: uppercase; color: white; letter-spacing: 0.5px; }
         
-        /* UPDATED LAYOUT FIXES FOR MODAL SAVE ROW */
-        .slab-pullout-input-edit-row { display: flex; gap: 8px; margin: 12px 0; width: 100%; box-sizing: border-box; align-items: center; }
-        .slab-pullout-edit-input { flex: 1; min-width: 0; background-color: #050506; border: 1px solid #333; border-radius: 6px; padding: 10px; color: white; font-size: 13px; box-sizing: border-box; }
-        .slab-pullout-edit-save-btn { flex: 0 0 auto; background-color: var(--success-green); border: none; color: black; font-weight: bold; padding: 10px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; text-transform: uppercase; box-sizing: border-box; }
+        .slab-pullout-input-edit-row { display: flex; gap: 8px; margin: 15px 0; width: 100%; box-sizing: border-box; align-items: center; }
+        .slab-pullout-edit-input { flex: 1; min-width: 0; background-color: #0c0c0e; border: 1px solid #333; border-radius: 8px; padding: 12px; color: white; font-size: 13px; box-sizing: border-box; outline: none; }
+        .slab-pullout-edit-input:focus { border-color: var(--brand-orange); }
+        .slab-pullout-edit-save-btn { flex: 0 0 auto; background-color: var(--success-green); border: none; color: var(--bg-dark); font-weight: 900; padding: 12px 16px; border-radius: 8px; cursor: pointer; font-size: 12px; text-transform: uppercase; box-sizing: border-box; }
+        .slab-pullout-edit-save-btn:hover { background-color: #00e6b8; transform: translateY(-1px); }
 
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; backdrop-filter: blur(4px); }
         .modal-overlay.active { opacity: 1 !important; pointer-events: auto !important; }
-        .modal-card { background-color: var(--panel-dark); border: 2px solid var(--brand-orange); padding: 25px; border-radius: 18px; width: 320px; color: var(--brand-white); max-height: 85vh; overflow-y: auto; }
-        .modal-card h3 { color: var(--brand-orange); margin-top: 0; text-transform: uppercase; font-weight: 900; }
-        .close-modal-x-btn { background-color: var(--brand-orange); color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 11px; width: 100%; margin-top: 10px; text-align: center; }
-        
-        .legal-disclaimer-footer { width: 350px; font-size: 10px; color: #666; text-align: center; line-height: 1.4; margin: 15px 0; padding-top: 10px; border-top: 1px solid #111; }
+        .modal-card { background-color: var(--panel-dark); border: 2px solid var(--brand-orange); padding: 25px; border-radius: 16px; width: 330px; color: var(--brand-white); box-sizing: border-box; box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
+        .modal-card h3 { color: var(--brand-orange); margin-top: 0; text-transform: uppercase; font-weight: 900; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        .modal-card p { font-size: 13px; line-height: 1.5; color: #ccc; }
+        .close-modal-x-btn { background-color: #222; color: white; border: 1px solid #444; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 12px; width: 100%; margin-top: 15px; transition: 0.2s; }
+        .close-modal-x-btn:hover { background-color: var(--alert-red); border-color: var(--alert-red); }
+
     </style>
 </head>
 <body>
 
     <div class="header-container">
         <div class="logo-flex">
-            <div class="logo-badge">MF</div>
+            <div class="logo-badge">
+                <img src="YOUR_LOGO_URL_HERE.png" alt="MF" class="logo-img" onerror="this.style.display='none'; this.parentNode.innerHTML='<span style=\'color:#FF5500; font-weight:900;\'>MF</span>';">
+            </div>
             <div>
                 <div class="logo-text">Model Forge</div>
                 <div class="logo-sub">Studio Pre-Grader</div>
             </div>
         </div>
         <div class="utility-box">
-            <a href="https://discord.gg/2Ym5g64rf" id="discordBtn" target="_blank" class="discord-btn-link">💬</a>
+            <a href="https://discord.gg/2Ym5g64rf" id="discordBtn" target="_blank" class="discord-btn-link" style="border-radius:8px;">💬</a>
             <button class="help-btn" id="openHelp">?</button>
         </div>
     </div>
 
     <div class="auth-panel" id="authPanel">
         <div id="authLoggedOut">
-            <span style="color:var(--brand-orange); font-weight:bold; font-size:11px; text-transform:uppercase; letter-spacing:0.5px;">Unlock Profile Database Vault Binder</span>
+            <span style="color:var(--brand-orange); font-weight:800; font-size:12px; text-transform:uppercase; letter-spacing:0.5px;">Unlock Profile Database Vault Binder</span>
             <div class="auth-inputs">
-                <input type="email" id="authEmail" class="search-input" placeholder="Account Email" style="padding:8px;">
-                <input type="password" id="authPassword" class="search-input" placeholder="Password" style="padding:8px;">
+                <input type="email" id="authEmail" class="search-input" placeholder="Account Email">
+                <input type="password" id="authPassword" class="search-input" placeholder="Password">
                 <div class="auth-row">
                     <button id="btnSignIn" class="auth-btn primary">Login</button>
                     <button id="btnSignUp" class="auth-btn">Register</button>
@@ -166,22 +177,22 @@
         </div>
         <div id="authLoggedIn" style="display:none;">
             Vault Profile: <span id="userDisplayEmail" style="color:var(--success-green); font-weight:bold;">--</span>
-            <button id="btnSignOut" class="auth-btn" style="padding:2px 8px; margin-left:10px; display:inline-block; width:auto;">Logout</button>
+            <button id="btnSignOut" class="auth-btn" style="padding:6px 12px; margin-left:10px; display:inline-block; width:auto; border-radius:6px;">Logout</button>
         </div>
     </div>
 
     <div class="app-mode-bar">
-        <button class="mode-btn active" id="navBtnScanner">Card Lab Scanner</button>
-        <button class="mode-btn" id="navBtnBinder">My Showcase Binder</button>
+        <button class="mode-btn active" id="navBtnScanner">📸 Lab Scanner</button>
+        <button class="mode-btn" id="navBtnBinder">📖 My Binder</button>
     </div>
 
     <div id="viewScanner" class="view-section active">
         <div class="upload-container">
             <div class="upload-row">
                 <label for="frontFile" id="frontLabel" class="file-label">📸 Add Front Photo</label>
-                <input type="file" id="frontFile" class="hidden-file-input">
-                <label for="backFile" id="backLabel" class="file-label">📸 Add Back Photo (Optional)</label>
-                <input type="file" id="backFile" class="hidden-file-input">
+                <input type="file" id="frontFile" class="hidden-file-input" accept="image/*">
+                <label for="backFile" id="backLabel" class="file-label">📸 Add Back Photo</label>
+                <input type="file" id="backFile" class="hidden-file-input" accept="image/*">
             </div>
 
             <div class="side-tabs" id="sideTabs" style="display:none;">
@@ -190,96 +201,85 @@
             </div>
 
             <div id="controlDock">
-                <button class="dock-btn" id="zoomIn">🔍 Zoom +</button>
-                <button class="dock-btn" id="zoomOut">🔍 Zoom -</button>
-                <button class="dock-btn" id="rotateLeft">🔄 Rotate L</button>
-                <button class="dock-btn" id="rotateRight">🔄 Rotate R</button>
+                <button class="dock-btn" id="zoomIn">🔍 Z +</button>
+                <button class="dock-btn" id="zoomOut">🔍 Z -</button>
+                <button class="dock-btn" id="rotateLeft">🔄 L</button>
+                <button class="dock-btn" id="rotateRight">🔄 R</button>
                 <button class="dock-btn" id="leanForward">📐 Lean Fwd</button>
                 <button class="dock-btn" id="leanBackward">📐 Lean Back</button>
-                <button class="dock-btn" id="panModeBtn" style="border-color:var(--success-green)">✋ Pan Mode</button>
+                <button class="dock-btn" id="panModeBtn" style="border-color:var(--success-green); width:100%;">✋ Toggle Pan Mode</button>
             </div>
 
             <div id="workspace">
-                <div id="imageContainer">
-                    <img id="previewImage" alt="Lab Workspace Alignment Face">
-                </div>
+                <div id="imageContainer"><img id="previewImage" alt="Lab Workspace Alignment Face"></div>
                 <div id="outLeft" class="guide-line vertical outer-line" style="left: 8%;"></div>
                 <div id="outRight" class="guide-line vertical outer-line" style="left: 92%;"></div>
                 <div id="outTop" class="guide-line horizontal outer-line" style="top: 8%;"></div>
                 <div id="outBottom" class="guide-line horizontal outer-line" style="top: 92%;"></div>
-                
                 <div id="inLeft" class="guide-line vertical inner-line" style="left: 18%;"></div>
                 <div id="inRight" class="guide-line vertical inner-line" style="left: 82%;"></div>
                 <div id="inTop" class="guide-line horizontal inner-line" style="top: 18%;"></div>
                 <div id="inBottom" class="guide-line horizontal inner-line" style="top: 82%;"></div>
             </div>
 
-            <button id="calculateButton" class="custom-button" style="background:#FFF; color:#000;">📊 Show Potential Grades</button>
+            <button id="calculateButton" class="custom-button" style="background:var(--brand-white); color:var(--bg-dark); display:none;">📊 Show Potential Grades</button>
         </div>
 
         <div class="info-panel">
-            <div class="panel-title">🔍 Surface Condition Mapping Suite</div>
-            <select id="surfaceDropdownMenuController" class="select-dropdown" style="margin-bottom:10px; padding:12px;">
+            <div class="panel-title">🔍 Surface Condition Mapping</div>
+            <select id="surfaceDropdownMenuController" class="select-dropdown" style="margin-bottom:10px;">
                 <option value="hide">🎛️ Standard Centering Alignment Mode</option>
                 <option value="show">🔴 High-Pass White Dot Mapping Mode</option>
             </select>
 
             <div id="damageToggleWorkspaceBlock" style="display:none; margin-top:10px;">
-                <div class="damage-toggle-row">
-                    <span style="font-size: 13px; color: var(--text-gray);">Contrast High-Pass Scanner Mode</span>
-                    <label class="switch">
-                        <input type="checkbox" id="damageToggle">
-                        <span class="slider"></span>
-                    </label>
+                <div style="background-color: #08080a; border: 1px solid #222; border-radius: 8px; padding: 12px; font-size: 12px; color: #ccc; line-height: 1.4; margin-bottom: 15px;">
+                    <span style="color:var(--brand-orange); font-weight:bold;">🔴 SURFACE POINT MATRIX:</span> Tap any wear mark on the photo above to drop damage markers. Tap a red dot again to remove it.
                 </div>
-                <div id="damageLogBox">
-                    <span style="color:var(--brand-orange)">🔴 SURFACE POINT MATRIX:</span> Tap any wear mark on the photo box above to drop damage markers. Tap a red dot again to remove it if dropped by mistake!
-                </div>
-                
-                <div class="defect-checklist">
-                    <div style="font-size:11px; color:var(--brand-orange); font-weight:bold; margin-bottom:8px; text-transform:uppercase;">Condition Limit Adjusters:</div>
-                    <label class="check-item"><input type="checkbox" id="defectDot1"> <span>1 Tiny White Speck / Corner Chip (Max 9)</span></label>
-                    <label class="check-item"><input type="checkbox" id="defectDot3"> <span>2-3 White Dots or Edge Silvering (Max 8)</span></label>
-                    <label class="check-item"><input type="checkbox" id="defectScratch"> <span>Visible Surface Scratches or Scuffs (Max 7)</span></label>
-                    <label class="check-item"><input type="checkbox" id="defectHeavy"> <span>Heavy Whitening / Corner Fraying (Max 5)</span></label>
+                <div style="font-size:11px; color:var(--brand-orange); font-weight:bold; margin-bottom:8px; text-transform:uppercase;">Condition Limit Adjusters:</div>
+                <div style="display:flex; flex-direction:column; gap:8px; font-size:13px; color:#ddd;">
+                    <label><input type="checkbox" id="defectDot1"> 1 Tiny White Speck / Corner Chip (Max 9)</label>
+                    <label><input type="checkbox" id="defectDot3"> 2-3 White Dots or Edge Silvering (Max 8)</label>
+                    <label><input type="checkbox" id="defectScratch"> Visible Surface Scratches or Scuffs (Max 7)</label>
+                    <label><input type="checkbox" id="defectHeavy"> Heavy Whitening / Corner Fraying (Max 5)</label>
                 </div>
             </div>
         </div>
 
         <div class="info-panel" id="resultsPanel" style="display: none;">
             <div class="panel-title">Calculated Centering Metrics</div>
-            <div class="company-row" style="justify-content:center; padding:0 0 8px 0;"><span id="ratioDisplayHUD" style="font-family:monospace; font-size:13px; font-weight:bold; color:white;">--</span></div>
+            <div class="company-row" style="justify-content:center; padding:0 0 10px 0;"><span id="ratioDisplayHUD" style="font-family:monospace; font-size:14px; font-weight:bold; color:var(--success-green);">--</span></div>
             <div class="company-row"><span class="company-name">PSA Predicted Standard:</span><span id="psaVerdict" class="company-verdict">Evaluating...</span></div>
             <div class="company-row"><span class="company-name">ACE Technical Scale:</span><span id="aceVerdict" class="company-verdict">Evaluating...</span></div>
             <div class="company-row"><span class="company-name">TAG Analytics Engine:</span><span id="tagVerdict" class="company-verdict">Evaluating...</span></div>
             <div class="company-row"><span class="company-name">BGS Subgrade Matrix:</span><span id="bgsVerdict" class="company-verdict">Evaluating...</span></div>
             
-            <button id="btnUnlockFilingForm" class="custom-button" style="margin-top:15px;">➕ Lock Straight Into My Binder Ledger</button>
-            <div id="save-ledger-form-block">
-                <div style="font-size:11px; color:var(--brand-orange); font-weight:bold; margin:10px 0 6px 0; text-transform:uppercase;">Name & Custom Value:</div>
-                <input type="text" id="customCardSaveTitleField" class="search-input" placeholder="e.g. Charizard Base Set 4/102">
+            <button id="btnUnlockFilingForm" class="custom-button" style="margin-top:20px;">➕ Lock Straight Into My Binder Ledger</button>
+            <div id="save-ledger-form-block" style="display:none; background: #0c0c0e; border: 1px solid #333; border-radius: 12px; padding: 15px; margin-top: 15px;">
+                <div style="font-size:11px; color:var(--brand-orange); font-weight:bold; margin-bottom:8px; text-transform:uppercase;">Name & Custom Value:</div>
+                <input type="text" id="customCardSaveTitleField" class="search-input" placeholder="e.g. Charizard Base Set 4/102" style="margin-bottom:8px;">
                 <input type="number" id="customCardValueField" class="search-input" placeholder="Custom Value (£) - Leave blank for Auto" step="0.01">
-                <button id="btnExecuteBinderFilingCloud" class="custom-button" style="background:#0056B3; margin-top:10px;">☁️ Finalize Vault Archive Sequence</button>
+                <button id="btnExecuteBinderFilingCloud" class="custom-button" style="background:#0056B3; margin-top:15px;">☁️ Finalize Vault Archive Sequence</button>
             </div>
         </div>
 
         <div class="info-panel">
-            <div class="panel-title">TCG Card Price Index</div>
+            <div class="panel-title">TCG Live Price Engine</div>
             <div class="search-box">
                 <input type="text" id="cardSearchInput" class="search-input" placeholder="e.g. Charizard 4/102">
-                <button id="searchPriceBtn" class="search-btn">Find</button>
+                <button id="searchPriceBtn" class="search-btn">Pull Data</button>
             </div>
             <div id="priceResultBox">
-                <div style="font-weight: bold; color: var(--brand-orange); margin-bottom: 8px;" id="cardTargetName">Card Found</div>
+                <div style="font-weight: 800; color: var(--brand-orange); margin-bottom: 10px; font-size:14px;" id="cardTargetName">Card Found</div>
                 <div class="price-line">Avg Market Value: <span id="priceMarket" class="price-val">£--.--</span></div>
                 <div class="price-line">Low Range Estimate: <span id="priceLow" class="price-val">£--.--</span></div>
-                <a id="ebayLink" class="custom-button" target="_blank" href="#">Open Price Link</a>
+                <a id="ebayLink" class="custom-button" style="background:#0056B3; text-decoration:none;" target="_blank" href="#">Open eBay Sold Comps</a>
             </div>
         </div>
     </div>
 
     <div id="viewBinder" class="view-section">
-        <button class="custom-button secondary-btn" id="btnToggleBinderCustomizerMenu" style="margin-bottom:10px;">⚙️ Customise Album View & Settings</button>
+        <button class="custom-button secondary-btn" id="btnToggleBinderCustomizerMenu" style="margin-bottom:15px;">⚙️ Customise Album View & Settings</button>
         
         <div id="binder-customizer-dropdown-drawer">
             <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin-bottom:6px;">Portfolio Valuation Metric Mode:</div>
@@ -288,33 +288,40 @@
                 <option value="graded">Graded Multiplier Model (Slab Premium Scale)</option>
             </select>
             
-            <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin:12px 0 6px 0;">Binder Display Filter:</div>
+            <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin:15px 0 6px 0;">Binder Display Filter:</div>
             <select id="binderFavoriteFilterToggle" class="select-dropdown">
                 <option value="all">Show All Cards</option>
                 <option value="favorites">⭐ Show Favorites Only</option>
             </select>
 
-            <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin:12px 0 6px 0;">Live Binder Search Filter:</div>
+            <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin:15px 0 6px 0;">Live Binder Search Filter:</div>
             <input type="text" id="binderInternalLiveSearchInput" class="search-input" placeholder="Search card in binder instantly...">
-            <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin:12px 0 6px 0;">Sort Binder Pockets Rows:</div>
+            
+            <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin:15px 0 6px 0;">Sort Binder Pockets Rows:</div>
             <select id="binderSortDirectionSelectToggle" class="select-dropdown">
                 <option value="dateDesc">Scanned Date: Newest First</option>
                 <option value="dateAsc">Scanned Date: Oldest First</option>
                 <option value="valDesc">Portfolio Value: Highest First</option>
                 <option value="valAsc">Portfolio Value: Lowest First</option>
             </select>
-            <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin:12px 0 6px 0;">Choose Cover Color Theme:</div>
-            <div class="binder-color-dot active" style="background:#1A365D;" data-hex="#1A365D"></div>
-            <div class="binder-color-dot" style="background:#7A1C1C;" data-hex="#7A1C1C"></div>
-            <div class="binder-color-dot" style="background:#1C5A35;" data-hex="#1C5A35"></div>
-            <div class="binder-color-dot" style="background:#222222;" data-hex="#222222"></div>
-            <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin:12px 0 6px 0;">Rename Portfolio Album:</div>
-            <input type="text" id="customBinderNameBannerInput" class="search-input" placeholder="Name My Album Binder" style="padding:6px; font-size:12px;">
+            
+            <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin:15px 0 6px 0;">Choose Cover Color Theme:</div>
+            <div style="display:flex; gap:10px;">
+                <div class="binder-color-dot active" style="background:#1A365D;" data-hex="#1A365D"></div>
+                <div class="binder-color-dot" style="background:#7A1C1C;" data-hex="#7A1C1C"></div>
+                <div class="binder-color-dot" style="background:#1C5A35;" data-hex="#1C5A35"></div>
+                <div class="binder-color-dot" style="background:#222222;" data-hex="#222222"></div>
+            </div>
+            
+            <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin:15px 0 6px 0;">Rename Portfolio Album:</div>
+            <input type="text" id="customBinderNameBannerInput" class="search-input" placeholder="Name My Album Binder">
+            
+            <button id="btnSaveBinderSettings" class="custom-button" style="background:var(--success-green); color:var(--bg-dark); margin-top:20px;">💾 Save Album Settings</button>
         </div>
 
-        <div class="main-panel" style="padding:10px 6px;">
-            <div style="font-size:14px; font-weight:bold; color:var(--brand-orange); margin-bottom:4px;" id="renderBinderTitleHeaderDisplay">Showcase Portfolio Album</div>
-            <div style="font-size:11px; color:var(--text-gray); margin-bottom:12px;">Net Portfolio Album Value worth: <span id="binderPortfolioValuationSumDisplay" style="color:var(--success-green); font-weight:bold;">£0.00</span></div>
+        <div class="info-panel" style="padding:15px 10px;">
+            <div style="font-size:16px; font-weight:900; color:var(--brand-orange); margin-bottom:6px; text-transform:uppercase;" id="renderBinderTitleHeaderDisplay">Showcase Portfolio Album</div>
+            <div style="font-size:12px; color:var(--text-gray); margin-bottom:15px; font-weight:bold;">Net Portfolio Value: <span id="binderPortfolioValuationSumDisplay" style="color:var(--success-green); font-size:14px;">£0.00</span></div>
             
             <div class="binder-wrapper-scroller">
                 <div class="binder-outer-skin" id="binderOuterSkinHull">
@@ -328,7 +335,7 @@
             </div>
 
             <div class="binder-pagination-dock">
-                <button class="page-arrow-btn" id="btnBinderPrevPage">◀ Previous</button>
+                <button class="page-arrow-btn" id="btnBinderPrevPage">◀ Prev</button>
                 <span id="binderPagePaginationTicker">Page 1 of 2</span>
                 <button class="page-arrow-btn" id="btnBinderNextPage">Next ▶</button>
             </div>
@@ -338,42 +345,40 @@
     <div class="modal-overlay" id="slabDetailModal">
         <div class="slab-pullout-frame" id="slabPulloutCardNodeBox">
             <div class="slab-pullout-title" id="modalSlabTitle">Showcase Slab Deck</div>
-            <div style="font-size:12px; color:var(--text-gray); line-height:1.5;" id="modalSlabMetrics">Metrics loading ledger breakdown...</div>
+            <div style="font-size:13px; color:#ddd; line-height:1.6;" id="modalSlabMetrics">Metrics loading...</div>
             
-            <div class="slab-pullout-workspace-mirror" id="modalSlabVisualCanvasMirror">
+            <div class="slab-pullout-workspace-mirror" id="modalSlabVisualCanvasMirror" style="position:relative; height:320px; background:#000; border-radius:10px; margin:15px 0; overflow:hidden; border:1px solid #333;">
                 <img id="modalSlabPrimaryImageRenderPath" style="width:100%; height:100%; object-fit:contain;">
             </div>
 
             <div class="slab-pullout-input-edit-row">
                 <input type="text" id="editSlabCardTitleInlineInputField" class="slab-pullout-edit-input" placeholder="Change Name">
-                <input type="number" id="editSlabCardValueInlineInputField" class="slab-pullout-edit-input" placeholder="£ Value" style="width: 70px; flex: none;" step="0.01">
+                <input type="number" id="editSlabCardValueInlineInputField" class="slab-pullout-edit-input" placeholder="£ Value" style="width: 75px; flex: none;" step="0.01">
                 <button id="btnSaveSlabTitleEditInline" class="slab-pullout-edit-save-btn">Save</button>
             </div>
             
             <button id="btnToggleFavoriteInModal" class="custom-button" style="background:#FFD700; color:black; margin-top:0px; margin-bottom:10px;">⭐ Add to Favorites</button>
-
-            <button class="custom-button" id="btnPurgeCardDocumentFromBinder" style="background:none; border:1px solid var(--alert-red); color:var(--alert-red); font-size:12px; padding:8px;">🗑️ Remove Card From Vault</button>
+            <button class="custom-button" id="btnPurgeCardDocumentFromBinder" style="background:none; border:1px solid var(--alert-red); color:var(--alert-red); padding:10px;">🗑️ Remove Card From Vault</button>
             <button class="close-modal-x-btn" id="closeSlabDetailModal">Return to Binder</button>
         </div>
     </div>
 
     <div class="modal-overlay" id="helpModal">
         <div class="modal-card">
-            <h3>MFS Pre-Grader Manual Guide</h3>
-            <p><strong>1. Vault Profiles:</strong> Sign up at the top bar box to active ledger records.</p>
-            <p><strong>2. 3D Distortion Straighteners:</strong> Use the Lean buttons inside your control dock to warp and flatten crooked edges.</p>
-            <button class="close-modal-x-btn" id="closeHelp">Got It</button>
+            <h3>MFS Pre-Grader Vault Guide</h3>
+            <p><strong>1. Vault Profiles:</strong> Register to securely sync your card ledger to the cloud.</p>
+            <p><strong>2. Lab Scanner:</strong> Upload photos. Use the <strong>High-Pass Mapping</strong> drop-down to filter damage, and tap the photo to drop red wear markers.</p>
+            <p><strong>3. 3D Straightening:</strong> Use the Lean/Rotate controls in the dock to digitally flatten warped card angles before calculating splits.</p>
+            <p><strong>4. Pricing Engine:</strong> Search a card name to pull live TCG market data.</p>
+            <p><strong>5. Custom Binder:</strong> Save cards directly to your digital portfolio. Set custom album names and cover colors via the Customise Menu, and click Save Album Settings to remember them.</p>
+            <button class="close-modal-x-btn" id="closeHelp">Understood</button>
         </div>
-    </div>
-
-    <div class="legal-disclaimer-footer">
-        <strong>Disclaimer:</strong> This application is intended as a visual guide and simulation matrix only. Model Forge Studio is not responsible for any financial decisions, purchases, or official grading results based on these approximations.
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, serverTimestamp, query, where, getDocs, orderBy, doc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, serverTimestamp, query, where, getDocs, orderBy, doc, deleteDoc, updateDoc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
         import { getStorage, ref, uploadString, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
         const firebaseConfig = { apiKey: "AIzaSyCu7kienn-NNwpaLCo7E3L54jhtXAhVwYg", authDomain: "model-forge-studio.firebaseapp.com", projectId: "model-forge-studio", storageBucket: "model-forge-studio.firebasestorage.app", messagingSenderId: "7475805296", appId: "1:7475805296:web:6d954026c68bcb055148b5" };
@@ -391,31 +396,68 @@
         navBtnScanner.addEventListener('click', () => { navBtnScanner.classList.add('active'); navBtnBinder.classList.remove('active'); viewScanner.classList.add('active'); viewBinder.classList.remove('active'); });
         navBtnBinder.addEventListener('click', () => { navBtnBinder.classList.add('active'); navBtnScanner.classList.remove('active'); viewBinder.classList.add('active'); viewScanner.classList.remove('active'); syncMasterUserCloudBinderLedger(); });
 
-        onAuthStateChanged(auth, (user) => {
-            if (user) { currentUser = user; document.getElementById('userDisplayEmail').innerText = user.email; document.getElementById('authLoggedOut').style.display = 'none'; document.getElementById('authLoggedIn').style.display = 'block'; syncMasterUserCloudBinderLedger(); } 
-            else { currentUser = null; document.getElementById('authLoggedOut').style.display = 'block'; document.getElementById('authLoggedIn').style.display = 'none'; clearBinderDisplayGridSlots(); }
+        onAuthStateChanged(auth, async (user) => {
+            if (user) { 
+                currentUser = user; document.getElementById('userDisplayEmail').innerText = user.email; document.getElementById('authLoggedOut').style.display = 'none'; document.getElementById('authLoggedIn').style.display = 'block'; 
+                await loadBinderSettingsFromCloud();
+                syncMasterUserCloudBinderLedger(); 
+            } else { 
+                currentUser = null; document.getElementById('authLoggedOut').style.display = 'block'; document.getElementById('authLoggedIn').style.display = 'none'; clearBinderDisplayGridSlots(); 
+            }
+        });
+
+        // BINDER SETTINGS SAVING SYSTEM
+        async function loadBinderSettingsFromCloud() {
+            if(!currentUser) return;
+            try {
+                const userDocRef = doc(db, "user_settings", currentUser.uid);
+                const docSnap = await getDoc(userDocRef);
+                if(docSnap.exists()) {
+                    const data = docSnap.data();
+                    if(data.binderName) { document.getElementById('customBinderNameBannerInput').value = data.binderName; document.getElementById('renderBinderTitleHeaderDisplay').innerText = data.binderName; }
+                    if(data.binderColor) { 
+                        document.querySelectorAll('.binder-color-dot').forEach(d => d.classList.remove('active'));
+                        const targetDot = document.querySelector(`.binder-color-dot[data-hex="${data.binderColor}"]`);
+                        if(targetDot) targetDot.classList.add('active');
+                        document.getElementById('binderOuterSkinHull').style.setProperty('--binder-color', data.binderColor);
+                    }
+                }
+            } catch(e) { console.error("Could not load settings", e); }
+        }
+
+        document.getElementById('btnSaveBinderSettings').addEventListener('click', async () => {
+            if(!currentUser) return alert("Must log in to save settings.");
+            const saveBtn = document.getElementById('btnSaveBinderSettings'); saveBtn.innerText = "Saving..."; saveBtn.disabled = true;
+            try {
+                const bName = document.getElementById('customBinderNameBannerInput').value.trim();
+                const activeColorDot = document.querySelector('.binder-color-dot.active');
+                const bColor = activeColorDot ? activeColorDot.getAttribute('data-hex') : '#1A365D';
+                await setDoc(doc(db, "user_settings", currentUser.uid), { binderName: bName, binderColor: bColor }, {merge: true});
+                document.getElementById('renderBinderTitleHeaderDisplay').innerText = bName || "Showcase Portfolio Album";
+                alert("✓ Settings permanently saved.");
+            } catch(e) { alert("Error saving settings."); } finally { saveBtn.innerText = "💾 Save Album Settings"; saveBtn.disabled = false; }
         });
 
         document.getElementById('btnSignUp').addEventListener('click', async () => { const email = document.getElementById('authEmail').value.trim(); const pass = document.getElementById('authPassword').value.trim(); if(!email || !pass) return alert("Fill in fields."); try { await createUserWithEmailAndPassword(auth, email, pass); alert("Profile deployed!"); } catch(e) { alert("Error: " + e.message); } });
         document.getElementById('btnSignIn').addEventListener('click', async () => { const email = document.getElementById('authEmail').value.trim(); const pass = document.getElementById('authPassword').value.trim(); if(!email || !pass) return alert("Fill in fields."); try { await signInWithEmailAndPassword(auth, email, pass); } catch(e) { alert("Error: " + e.message); } });
         document.getElementById('btnSignOut').addEventListener('click', () => signOut(auth));
 
-        const frontFile = document.getElementById('frontFile'); const backFile = document.getElementById('backFile'); const frontLabel = document.getElementById('frontLabel'); const backLabel = document.getElementById('backLabel'); const sideTabs = document.getElementById('sideTabs'); const tabFront = document.getElementById('tabFront'); const tabBack = document.getElementById('tabBack'); const previewImage = document.getElementById('previewImage'); const calculateButton = document.getElementById('calculateButton'); const resultsPanel = document.getElementById('resultsPanel'); const controlDock = document.getElementById('controlDock'); const damageToggle = document.getElementById('damageToggle'); const damageLogBox = document.getElementById('damageLogBox'); const panModeBtn = document.getElementById('panModeBtn'); const workspace = document.getElementById('workspace'); const imageContainer = document.getElementById('imageContainer'); const surfaceDropdownMenuController = document.getElementById('surfaceDropdownMenuController'); const damageToggleWorkspaceBlock = document.getElementById('damageToggleWorkspaceBlock');
+        const frontFile = document.getElementById('frontFile'); const backFile = document.getElementById('backFile'); const frontLabel = document.getElementById('frontLabel'); const backLabel = document.getElementById('backLabel'); const sideTabs = document.getElementById('sideTabs'); const tabFront = document.getElementById('tabFront'); const tabBack = document.getElementById('tabBack'); const previewImage = document.getElementById('previewImage'); const calculateButton = document.getElementById('calculateButton'); const resultsPanel = document.getElementById('resultsPanel'); const controlDock = document.getElementById('controlDock'); const damageToggle = document.getElementById('damageToggle'); const panModeBtn = document.getElementById('panModeBtn'); const workspace = document.getElementById('workspace'); const imageContainer = document.getElementById('imageContainer'); const surfaceDropdownMenuController = document.getElementById('surfaceDropdownMenuController'); const damageToggleWorkspaceBlock = document.getElementById('damageToggleWorkspaceBlock');
 
         let isPanMode = false; let currentSide = 'front';
         let cardData = { front: { src: null, zoom: 1.0, rotate: 0, tiltX: 0, x: 0, y: 0, ol: 10, or: 90, ot: 10, ob: 90, il: 20, ir: 80, it: 20, ib: 80 }, back: { src: null, zoom: 1.0, rotate: 0, tiltX: 0, x: 0, y: 0, ol: 10, or: 90, ot: 10, ob: 90, il: 20, ir: 80, it: 20, ib: 80 } };
         let isDraggingImage = false; let startX, startY; let activeLine = null;
 
-        surfaceDropdownMenuController.addEventListener('change', () => { if(surfaceDropdownMenuController.value === 'show') { damageToggleWorkspaceBlock.style.display = 'block'; document.querySelectorAll('.guide-line').forEach(l => l.style.setProperty('display', 'none', 'important')); } else { damageToggleWorkspaceBlock.style.display = 'none'; document.querySelectorAll('.guide-line').forEach(l => l.style.setProperty('display', 'block', 'important')); damageToggle.checked = false; previewImage.style.filter = "none"; } });
+        surfaceDropdownMenuController.addEventListener('change', () => { if(surfaceDropdownMenuController.value === 'show') { damageToggleWorkspaceBlock.style.display = 'block'; document.querySelectorAll('.guide-line').forEach(l => l.style.setProperty('display', 'none', 'important')); previewImage.style.filter = "contrast(280%) brightness(90%) saturate(30%) grayscale(40%)"; } else { damageToggleWorkspaceBlock.style.display = 'none'; document.querySelectorAll('.guide-line').forEach(l => l.style.setProperty('display', 'block', 'important')); previewImage.style.filter = "none"; } });
         workspace.addEventListener('click', (e) => { if(surfaceDropdownMenuController.value !== 'show' || isPanMode || !cardData[currentSide].src) return; if(e.target.classList.contains('damage-dot-marker')) { const targetDotIndex = parseInt(e.target.getAttribute('data-idx')); localPlacedDamageDotsArray.splice(targetDotIndex, 1); renderLocalDamageDotsOnWorkspaceCanvas(); return; } const rect = workspace.getBoundingClientRect(); localPlacedDamageDotsArray.push({ x: ((e.clientX - rect.left) / rect.width) * 100, y: ((e.clientY - rect.top) / rect.height) * 100, face: currentSide }); renderLocalDamageDotsOnWorkspaceCanvas(); });
         function renderLocalDamageDotsOnWorkspaceCanvas() { workspace.querySelectorAll('.damage-dot-marker').forEach(d => d.remove()); localPlacedDamageDotsArray.forEach((dot, index) => { if(dot.face === currentSide) { const node = document.createElement('div'); node.className = 'damage-dot-marker'; node.style.left = dot.x + '%'; node.style.top = dot.y + '%'; node.setAttribute('data-idx', index); workspace.appendChild(node); } }); }
-        function handleLocalImageUpload(file, side, labelObj) { if (!file) return; const reader = new FileReader(); reader.readAsDataURL(file); reader.onload = (e) => { cardData[side].src = e.target.result; labelObj.innerText = side === 'front' ? "✓ Front Saved" : "✓ Back Saved"; labelObj.classList.add('has-file'); sideTabs.style.display = "flex"; workspace.style.display = 'block'; controlDock.style.display = 'flex'; calculateButton.style.display = 'block'; switchSide(side); }; }
+        function handleLocalImageUpload(file, side, labelObj) { if (!file) return; const reader = new FileReader(); reader.readAsDataURL(file); reader.onload = (e) => { cardData[side].src = e.target.result; labelObj.innerText = side === 'front' ? "✓ Front Ready" : "✓ Back Ready"; labelObj.classList.add('has-file'); sideTabs.style.display = "flex"; workspace.style.display = 'block'; controlDock.style.display = 'flex'; calculateButton.style.display = 'block'; switchSide(side); }; }
         frontFile.addEventListener('change', (e) => handleLocalImageUpload(e.target.files[0], 'front', frontLabel)); backFile.addEventListener('change', (e) => handleLocalImageUpload(e.target.files[0], 'back', backLabel));
         function switchSide(side) { currentSide = side; if (side === 'front') { tabFront.classList.add('active'); tabBack.classList.remove('active'); } else { tabBack.classList.add('active'); tabFront.classList.remove('active'); } previewImage.src = cardData[side].src || ""; updateImageTransform(); restoreGuideLinesPositionsPercentage(); renderLocalDamageDotsOnWorkspaceCanvas(); }
         tabFront.addEventListener('click', () => { if(cardData.front.src) switchSide('front'); }); tabBack.addEventListener('click', () => { if(cardData.back.src) switchSide('back'); });
 
         document.getElementById('zoomIn').addEventListener('click', () => { cardData[currentSide].zoom += 0.08; updateImageTransform(); }); document.getElementById('zoomOut').addEventListener('click', () => { if (cardData[currentSide].zoom > 0.3) cardData[currentSide].zoom -= 0.08; updateImageTransform(); }); document.getElementById('rotateLeft').addEventListener('click', () => { cardData[currentSide].rotate -= 1.2; updateImageTransform(); }); document.getElementById('rotateRight').addEventListener('click', () => { cardData[currentSide].rotate += 1.2; updateImageTransform(); }); document.getElementById('leanForward').addEventListener('click', () => { cardData[currentSide].tiltX += 1.5; updateImageTransform(); }); document.getElementById('leanBackward').addEventListener('click', () => { cardData[currentSide].tiltX -= 1.5; updateImageTransform(); });
-        panModeBtn.addEventListener('click', () => { isPanMode = !isPanMode; panModeBtn.classList.toggle('active', isPanMode); panModeBtn.innerText = isPanMode ? "✋ Adjusting Image" : "✋ Pan Mode"; });
+        panModeBtn.addEventListener('click', () => { isPanMode = !isPanMode; panModeBtn.classList.toggle('active', isPanMode); panModeBtn.innerText = isPanMode ? "✋ Adjusting Image Position" : "✋ Toggle Pan Mode"; });
         function updateImageTransform() { const side = cardData[currentSide]; imageContainer.style.transform = `translate(${side.x}px, ${side.y}px) scale(${side.zoom}) rotate(${side.rotate}deg) rotateX(${side.tiltX}deg)`; }
         imageContainer.addEventListener('mousedown', startPan); imageContainer.addEventListener('touchstart', startPan, {passive: true});
         function startPan(e) { if(!isPanMode) return; isDraggingImage = true; const clientX = e.touches ? e.touches[0].clientX : e.clientX; const clientY = e.touches ? e.touches[0].clientY : e.clientY; startX = clientX - cardData[currentSide].x; startY = clientY - cardData[currentSide].y; }
@@ -427,7 +469,6 @@
         function handleLineMove(e) { const rect = workspace.getBoundingClientRect(); const clientX = e.touches ? e.touches[0].clientX : e.clientX; const clientY = e.touches ? e.touches[0].clientY : e.clientY; if (activeLine.classList.contains('vertical')) { let posX = ((clientX - rect.left) / rect.width) * 100; if (posX >= 0 && posX <= 100) { activeLine.style.left = posX + '%'; saveLinePosition(activeLine.id, posX); } } else { let posY = ((clientY - rect.top) / rect.height) * 100; if (posY >= 0 && posY <= 100) { activeLine.style.top = posY + '%'; saveLinePosition(activeLine.id, posY); } } }
         function saveLinePosition(id, val) { if(id === 'outLeft') cardData[currentSide].ol = val; if(id === 'outRight') cardData[currentSide].or = val; if(id === 'outTop') cardData[currentSide].ot = val; if(id === 'outBottom') cardData[currentSide].ob = val; if(id === 'inLeft') cardData[currentSide].il = val; if(id === 'inRight') cardData[currentSide].ir = val; if(id === 'inTop') cardData[currentSide].it = val; if(id === 'inBottom') cardData[currentSide].ib = val; }
         function restoreGuideLinesPositionsPercentage() { const side = cardData[currentSide]; outL.style.left = side.ol + '%'; outR.style.left = side.or + '%'; outT.style.top = side.ot + '%'; outB.style.top = side.ob + '%'; inL.style.left = side.il + '%'; inR.style.left = side.ir + '%'; inT.style.top = side.it + '%'; inB.style.top = side.ib + '%'; }
-        damageToggle.addEventListener('change', () => { if(damageToggle.checked) { previewImage.style.filter = "contrast(280%) brightness(90%) saturate(30%) grayscale(40%)"; } else { previewImage.style.filter = "none"; } });
 
         async function triggerAutomatedPriceSearch(queryText) {
             const searchBtn = document.getElementById('searchPriceBtn'); searchBtn.innerText = "Searching..."; searchBtn.disabled = true;
@@ -444,16 +485,16 @@
                     }
                     document.getElementById('cardTargetName').innerText = `${cardName} (${cardSetNum}) - ${matchedCard.set.name}`; document.getElementById('priceMarket').innerText = marketPrice; document.getElementById('priceLow').innerText = lowPrice;
                     const ebayQuery = encodeURIComponent(`${cardName} ${matchedCard.number} ${matchedCard.set.name}`); 
-                    document.getElementById('ebayLink').href = `https://www.ebay.co.uk/sch/i.html?_nkw=${ebayQuery}&LH_Sold=1&LH_Complete=1`; document.getElementById('ebayLink').innerText = "Open eBay Sold Comps";
+                    document.getElementById('ebayLink').href = `https://www.ebay.co.uk/sch/i.html?_nkw=${ebayQuery}&LH_Sold=1&LH_Complete=1`; 
                     document.getElementById('priceResultBox').style.display = "block";
                 } else { throw new Error(); }
             } catch (err) { 
                 cacheLiveEstimatedValueGBP = 1.25; 
-                document.getElementById('cardTargetName').innerText = "❌ No exact match found in database."; document.getElementById('priceMarket').innerText = "£1.25 (Baseline)"; document.getElementById('priceLow').innerText = "£0.50";
+                document.getElementById('cardTargetName').innerText = "❌ No exact match found."; document.getElementById('priceMarket').innerText = "£1.25 (Baseline)"; document.getElementById('priceLow').innerText = "£0.50";
                 const externalSearch = encodeURIComponent(queryText);
-                document.getElementById('ebayLink').href = `https://www.pricecharting.com/search-products?q=${externalSearch}&type=prices`; document.getElementById('ebayLink').innerText = "Search Externally on PriceCharting";
+                document.getElementById('ebayLink').href = `https://www.pricecharting.com/search-products?q=${externalSearch}&type=prices`;
                 document.getElementById('priceResultBox').style.display = "block";
-            } finally { searchBtn.innerText = "Find"; searchBtn.disabled = false; }
+            } finally { searchBtn.innerText = "Pull Data"; searchBtn.disabled = false; }
         }
 
         document.getElementById('searchPriceBtn').addEventListener('click', () => { const val = document.getElementById('cardSearchInput').value.trim(); if(val) { triggerAutomatedPriceSearch(val); document.getElementById('customCardSaveTitleField').value = val; } });
@@ -464,10 +505,10 @@
             else { document.getElementById('ratioDisplayHUD').innerText = `📐 Front face split: ${fWorstLR.toFixed(0)}%:${(100-fWorstLR).toFixed(0)}% (Back Omitted)`; }
 
             let conditionCap = 10; let reportedDefects = [];
-            const check1 = document.getElementById('defectHeavy'); if(check1 && check1.checked) { conditionCap = Math.min(conditionCap, 5); reportedDefects.push("Heavy Whitening"); }
-            const check2 = document.getElementById('defectScratch'); if(check2 && check2.checked) { conditionCap = Math.min(conditionCap, 7); reportedDefects.push("Surface Scratches"); }
-            const check3 = document.getElementById('defectDot3'); if(check3 && check3.checked) { conditionCap = Math.min(conditionCap, 8); reportedDefects.push("2-3 White Dots"); }
-            const check4 = document.getElementById('defectDot1'); if(check4 && check4.checked) { conditionCap = Math.min(conditionCap, 9); reportedDefects.push("1 White Speck"); }
+            if(document.getElementById('defectHeavy') && document.getElementById('defectHeavy').checked) { conditionCap = Math.min(conditionCap, 5); reportedDefects.push("Heavy Whitening"); }
+            if(document.getElementById('defectScratch') && document.getElementById('defectScratch').checked) { conditionCap = Math.min(conditionCap, 7); reportedDefects.push("Surface Scratches"); }
+            if(document.getElementById('defectDot3') && document.getElementById('defectDot3').checked) { conditionCap = Math.min(conditionCap, 8); reportedDefects.push("2-3 White Dots"); }
+            if(document.getElementById('defectDot1') && document.getElementById('defectDot1').checked) { conditionCap = Math.min(conditionCap, 9); reportedDefects.push("1 White Speck"); }
 
             const verdicts = evaluateExpandedGrades(finalWorstLR, finalWorstTB, conditionCap);
             document.getElementById('psaVerdict').innerText = verdicts.psa; document.getElementById('aceVerdict').innerText = verdicts.ace; document.getElementById('tagVerdict').innerText = verdicts.tag; document.getElementById('bgsVerdict').innerText = verdicts.bgs;
@@ -504,17 +545,29 @@
                 await addDoc(collection(db, "card_scans"), { userId: currentUser.uid, userEmail: currentUser.email, scannedAt: serverTimestamp(), cardTitle: verifiedFinalTitle, frontImage: fUrl, backImage: bUrl, ...compiledFinalLedgerPayloadBlock });
                 alert("✓ Slab locked directly to binder layout ledger!");
                 document.getElementById('resultsPanel').style.display = "none"; document.getElementById('calculateButton').style.display = "none";
-                frontLabel.innerText = "📸 Add Front Photo"; frontLabel.classList.remove('has-file'); backLabel.innerText = "📸 Add Back Photo (Optional)"; backLabel.classList.remove('has-file');
+                frontLabel.innerText = "📸 Add Front Photo"; frontLabel.classList.remove('has-file'); backLabel.innerText = "📸 Add Back Photo"; backLabel.classList.remove('has-file');
                 cardData = { front: { src: null, zoom:1, rotate:0, tiltX:0, x:0, y:0, ol:10, or:90, ot:10, ob:90, il:20, ir:80, it:20, ib:80 }, back: { src: null, zoom:1, rotate:0, tiltX:0, x:0, y:0, ol:10, or:90, ot:10, ob:90, il:20, ir:80, it:20, ib:80 } }; 
                 localPlacedDamageDotsArray = []; resetFilingFormBlocksHUD(); cacheLiveEstimatedValueGBP = 0.00; document.getElementById('cardTargetName').innerText = "Card Found"; document.getElementById('priceResultBox').style.display = "none";
                 await syncMasterUserCloudBinderLedger(); 
             } catch(e) { alert("Filing exception context."); } finally { fireButton.innerText = "☁ Finalize Vault Archive Sequence"; fireButton.disabled = false; }
         });
 
+        // BULLETPROOF DATE SORTING FIX
         async function syncMasterUserCloudBinderLedger() {
             if(!currentUser) return; binderGridSheet9SlotPage.innerHTML = "";
-            try { const qDocs = query(collection(db, "card_scans"), where("userId", "==", currentUser.uid), orderBy("scannedAt", "desc")); const snap = await getDocs(qDocs); globalBinderCollectionMemory = []; snap.forEach(d => globalBinderCollectionMemory.push({ docId: d.id, ...d.data() })); processAndRenderBinderViewWithFilters(); } 
-            catch(e) { console.error("Sync issue:", e); }
+            try { 
+                const qDocs = query(collection(db, "card_scans"), where("userId", "==", currentUser.uid), orderBy("scannedAt", "desc")); 
+                const snap = await getDocs(qDocs); 
+                globalBinderCollectionMemory = []; 
+                snap.forEach(d => {
+                    const data = d.data();
+                    // Hard conversion of Firebase Timestamp into a pure number so the browser never crashes when sorting
+                    let safeTimestamp = 0;
+                    if (data.scannedAt) { safeTimestamp = data.scannedAt.toMillis ? data.scannedAt.toMillis() : (data.scannedAt.seconds * 1000); }
+                    globalBinderCollectionMemory.push({ docId: d.id, sortableDate: safeTimestamp, ...data });
+                }); 
+                processAndRenderBinderViewWithFilters(); 
+            } catch(e) { console.error("Sync issue:", e); }
         }
 
         function processAndRenderBinderViewWithFilters() {
@@ -522,28 +575,25 @@
             const queryText = document.getElementById('binderInternalLiveSearchInput').value.toLowerCase().trim(); if(queryText) { processedCards = processedCards.filter(c => c.cardTitle.toLowerCase().includes(queryText)); }
             const favFilter = document.getElementById('binderFavoriteFilterToggle').value; if(favFilter === 'favorites') { processedCards = processedCards.filter(c => c.isFavorite === true); }
             const pricingMode = document.getElementById('pricingModeSelectToggle').value;
-            let sum = 0; processedCards.forEach(c => { let basePrice = parseFloat(c.cashValue || 0); if(pricingMode === 'graded') { if(c.gradeBadge.includes('10')) basePrice *= 4.5; else if(c.gradeBadge.includes('9')) basePrice *= 1.8; else if(c.gradeBadge.includes('8')) basePrice *= 1.3; } c.derivedFinalPrice = parseFloat(basePrice.toFixed(2)); sum += c.derivedFinalPrice; });
+            
+            let sum = 0; 
+            processedCards.forEach(c => { 
+                let basePrice = parseFloat(c.cashValue || 0); 
+                if(pricingMode === 'graded') { if(c.gradeBadge.includes('10')) basePrice *= 4.5; else if(c.gradeBadge.includes('9')) basePrice *= 1.8; else if(c.gradeBadge.includes('8')) basePrice *= 1.3; } 
+                c.derivedFinalPrice = parseFloat(basePrice.toFixed(2)); 
+                sum += c.derivedFinalPrice; 
+            });
             document.getElementById('binderPortfolioValuationSumDisplay').innerText = `£${sum.toFixed(2)}`;
             
             const sortMode = document.getElementById('binderSortDirectionSelectToggle').value; 
             if (sortMode === 'dateAsc') {
-                processedCards.sort((a, b) => {
-                    const timeA = (a.scannedAt && a.scannedAt.seconds) ? a.scannedAt.seconds : 0;
-                    const timeB = (b.scannedAt && b.scannedAt.seconds) ? b.scannedAt.seconds : 0;
-                    return timeA - timeB;
-                });
+                processedCards.sort((a, b) => a.sortableDate - b.sortableDate);
+            } else if (sortMode === 'dateDesc') {
+                processedCards.sort((a, b) => b.sortableDate - a.sortableDate);
             } else if (sortMode === 'valDesc') {
-                processedCards.sort((a, b) => {
-                    const valA = parseFloat(a.derivedFinalPrice) || 0;
-                    const valB = parseFloat(b.derivedFinalPrice) || 0;
-                    return valB - valA;
-                });
+                processedCards.sort((a, b) => b.derivedFinalPrice - a.derivedFinalPrice);
             } else if (sortMode === 'valAsc') {
-                processedCards.sort((a, b) => {
-                    const valA = parseFloat(a.derivedFinalPrice) || 0;
-                    const valB = parseFloat(b.derivedFinalPrice) || 0;
-                    return valA - valB;
-                });
+                processedCards.sort((a, b) => a.derivedFinalPrice - b.derivedFinalPrice);
             }
 
             binderGridSheet9SlotPage.innerHTML = ""; const startIndex = currentActiveBinderPageIndex * 9; const totalCount = processedCards.length; const totalSlotsToRender = Math.max(18, Math.ceil(totalCount / 9) * 9); const totalPages = Math.ceil(totalSlotsToRender / 9); document.getElementById('binderPagePaginationTicker').innerText = `Page ${currentActiveBinderPageIndex + 1} of ${totalPages}`;
@@ -558,7 +608,7 @@
                         <img src="${card.frontImage || card.backImage}" class="pocket-img-render" alt="Showcase Slab Card">
                     `;
                     slot.addEventListener('click', () => triggerPremiumSlabPulloutInspectionModal(card.docId, card.derivedFinalPrice, processedCards));
-                } else { slot.className = 'pocket-slot'; slot.innerHTML = `<span class="empty-pocket-cross">×</span>`; }
+                } else { slot.className = 'pocket-slot'; slot.innerHTML = `<span class="empty-pocket-cross" style="font-size:24px;">+</span>`; }
                 binderGridSheet9SlotPage.appendChild(slot);
             }
         }
@@ -567,9 +617,9 @@
             activeSelectedSlabDocId = docId; const card = activeCardsArray.find(c => c.docId === docId); if(!card) return;
             document.getElementById('modalSlabTitle').innerText = card.cardTitle; document.getElementById('editSlabCardTitleInlineInputField').value = card.cardTitle; document.getElementById('editSlabCardValueInlineInputField').value = card.cashValue || 0; 
             document.getElementById('modalSlabMetrics').innerHTML = `
-                • 🏆 <strong>Predicted Grade:</strong> <span style="color:var(--success-green); font-weight:bold; font-size:14px;">${card.gradeBadge}</span><br>
-                • 🔍 <strong>Condition Wear Marks:</strong> ${card.defects && card.defects.length > 0 ? card.defects.join(', ') : 'None marked'}<br>
-                • 💰 <strong>Portfolio Valuation Asset worth:</strong> £${calculatedPrice.toFixed(2)}
+                • 🏆 <strong style="color:#FFF;">Predicted Grade:</strong> <span style="color:var(--success-green); font-weight:900; font-size:15px; letter-spacing:0.5px;">${card.gradeBadge}</span><br>
+                • 🔍 <strong style="color:#FFF;">Condition Wear Marks:</strong> ${card.defects && card.defects.length > 0 ? card.defects.join(', ') : 'None marked'}<br>
+                • 💰 <strong style="color:#FFF;">Portfolio Valuation Asset worth:</strong> £${calculatedPrice.toFixed(2)}
             `;
             const favBtn = document.getElementById('btnToggleFavoriteInModal'); favBtn.innerText = card.isFavorite ? '⭐ Remove from Favorites' : '⭐ Add to Favorites'; favBtn.style.background = card.isFavorite ? '#444' : '#FFD700'; favBtn.style.color = card.isFavorite ? '#FFF' : '#000';
             const mirrorFrameCanvas = document.getElementById('modalSlabVisualCanvasMirror'); document.getElementById('modalSlabPrimaryImageRenderPath').src = card.frontImage || card.backImage || ""; mirrorFrameCanvas.querySelectorAll('.damage-dot-marker').forEach(d => d.remove());
