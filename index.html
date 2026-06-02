@@ -662,7 +662,8 @@ async function triggerAutomatedPriceSearch(queryText) {
                 let fUrl = ""; let bUrl = ""; const stampId = Date.now();
                 if(cardData.front.src) { const fRef = ref(storage, `scans/${currentUser.uid}/${stampId}_f.jpg`); await uploadString(fRef, cardData.front.src, 'data_url'); fUrl = await getDownloadURL(fRef); }
                 if(cardData.back.src) { const bRef = ref(storage, `scans/${currentUser.uid}/${stampId}_b.jpg`); await uploadString(bRef, cardData.back.src, 'data_url'); bUrl = await getDownloadURL(bRef); }
-                await addDoc(collection(db, "card_scans"), { userId: currentUser.uid, userEmail: currentUser.email, scannedAt: serverTimestamp(), cardTitle: verifiedFinalTitle, frontImage: fUrl, backImage: bUrl, ...compiledFinalLedgerPayloadBlock });
+                await addDoc(collection(db, "card_scans"), { userId: currentUser.uid, userEmail: currentUser.email, scannedAt: serverTimestamp(), cardTitle: verifiedFinalTitle,
+                    centeringDisplayData: document.getElementById('ratioDisplayHUD').innerText, frontImage: fUrl, backImage: bUrl, ...compiledFinalLedgerPayloadBlock });
                 alert("✓ Slab locked directly to binder layout ledger!");
                 document.getElementById('resultsPanel').style.display = "none"; document.getElementById('calculateButton').style.display = "none";
                 frontLabel.innerText = "📸 Add Front Photo"; frontLabel.classList.remove('has-file'); backLabel.innerText = "📸 Add Back Photo"; backLabel.classList.remove('has-file');
@@ -769,6 +770,7 @@ async function triggerAutomatedPriceSearch(queryText) {
             document.getElementById('modalSlabMetrics').innerHTML = `
                 • 🏆 <strong style="color:#FFF;">Predicted Grade:</strong> <span style="color:var(--success-green); font-weight:900; font-size:15px; letter-spacing:0.5px;">${card.gradeBadge}</span><br>
                 • 🔍 <strong style="color:#FFF;">Condition Wear Marks:</strong> ${card.defects && card.defects.length > 0 ? card.defects.join(', ') : 'None marked'}<br>
+                <li><strong style="color:#FFF;">Centering Layout:</strong> ${card.centeringDisplayData || 'Not recorded'}<br>
                 • 💰 <strong style="color:#FFF;">Portfolio Valuation Asset worth:</strong> £${calculatedPrice.toFixed(2)}
             `;
             const favBtn = document.getElementById('btnToggleFavoriteInModal'); favBtn.innerText = card.isFavorite ? '⭐ Remove from Favorites' : '⭐ Add to Favorites'; favBtn.style.background = card.isFavorite ? '#444' : '#FFD700'; favBtn.style.color = card.isFavorite ? '#FFF' : '#000';
