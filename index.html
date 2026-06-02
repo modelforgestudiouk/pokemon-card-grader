@@ -507,6 +507,12 @@ async function triggerAutomatedPriceSearch(queryText) {
     searchBtn.innerText = "Searching...";
     searchBtn.disabled = true;
 
+    // NEW FIX: Wipe the old dropdown menu completely clean before starting a new search
+    const existingSelector = document.getElementById('cardSelectorContainer');
+    if (existingSelector) {
+        existingSelector.innerHTML = '';
+    }
+
     try {
         const sanitizedQuery = queryText.replace(/['"“”‘’]/g, "").trim();
         const numberMatch = sanitizedQuery.match(/\b([0-9]+)(\/[0-9]+)?\b/);
@@ -533,14 +539,11 @@ async function triggerAutomatedPriceSearch(queryText) {
         }
 
         if (data.data && data.data.length > 0) {
-            // Save the array to a temporary global window variable for the selector dropdown to access
             window.currentSearchResults = data.data;
 
-            // Find the index of the best match
             let bestMatchIndex = data.data.findIndex(c => sanitizedQuery.includes(c.number));
             if (bestMatchIndex === -1) bestMatchIndex = 0;
             
-            // Handle or inject the manual selector container dropdown
             let selectorContainer = document.getElementById('cardSelectorContainer');
             if (!selectorContainer) {
                 selectorContainer = document.createElement('div');
@@ -551,7 +554,6 @@ async function triggerAutomatedPriceSearch(queryText) {
                 targetNameEl.parentNode.insertBefore(selectorContainer, targetNameEl.nextSibling);
             }
 
-            // Populate the selector if there are multiple options available
             if (data.data.length > 1) {
                 let html = `<label style="display:block; font-size:12px; margin-bottom:4px; font-weight:bold; color:#555;">Not the right print? Choose variant:</label>`;
                 html += `<select id="cardMatchSelect" style="width:100%; padding:8px; border-radius:6px; border:1px solid #ccc; background:#fff; font-size:14px; font-family:inherit;">`;
@@ -562,16 +564,14 @@ async function triggerAutomatedPriceSearch(queryText) {
                 html += `</select>`;
                 selectorContainer.innerHTML = html;
 
-                // Watch for user changing selection manually
                 document.getElementById('cardMatchSelect').addEventListener('change', (e) => {
                     const selectedIdx = e.target.value;
                     renderCardData(window.currentSearchResults[selectedIdx]);
                 });
             } else {
-                selectorContainer.innerHTML = ''; // Hide selector if only one result exists
+                selectorContainer.innerHTML = ''; 
             }
 
-            // Render the initial choice automatically
             renderCardData(data.data[bestMatchIndex]);
             document.getElementById('priceResultBox').style.display = "block";
         } else {
