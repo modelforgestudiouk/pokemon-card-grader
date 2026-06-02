@@ -471,32 +471,130 @@
         function saveLinePosition(id, val) { if(id === 'outLeft') cardData[currentSide].ol = val; if(id === 'outRight') cardData[currentSide].or = val; if(id === 'outTop') cardData[currentSide].ot = val; if(id === 'outBottom') cardData[currentSide].ob = val; if(id === 'inLeft') cardData[currentSide].il = val; if(id === 'inRight') cardData[currentSide].ir = val; if(id === 'inTop') cardData[currentSide].it = val; if(id === 'inBottom') cardData[currentSide].ib = val; }
         function restoreGuideLinesPositionsPercentage() { const side = cardData[currentSide]; outL.style.left = side.ol + '%'; outR.style.left = side.or + '%'; outT.style.top = side.ot + '%'; outB.style.top = side.ob + '%'; inL.style.left = side.il + '%'; inR.style.left = side.ir + '%'; inT.style.top = side.it + '%'; inB.style.top = side.ib + '%'; }
 
-        async function triggerAutomatedPriceSearch(queryText) {
-            const searchBtn = document.getElementById('searchPriceBtn'); searchBtn.innerText = "Searching..."; searchBtn.disabled = true;
-            try {
-                const sanitizedQuery = queryText.replace(/['"“”‘’]/g, "").trim(); const cleanNameQuery = sanitizedQuery.replace(/[0-9/]/g, '').trim();
-                const response = await fetch(`https://api.pokemontcg.io/v2/cards?q=name:"${encodeURIComponent(cleanNameQuery)}"`); const data = await response.json();
-                if (data.data && data.data.length > 0) {
-                    let matchedCard = data.data.find(c => sanitizedQuery.includes(c.number)) || data.data[0];
-                    const cardName = matchedCard.name; const cardSetNum = `${matchedCard.number}/${matchedCard.set.printedTotal}`;
-                    const prices = matchedCard.tcgplayer ? matchedCard.tcgplayer.prices : null; let marketPrice = "N/A"; let lowPrice = "N/A";
-                    if (prices) {
-                        const priceType = prices.holofoil || prices.normal || prices.reverseHolofoil || Object.values(prices)[0];
-                        if (priceType && priceType.market) { marketPrice = `£${(priceType.market * 0.78).toFixed(2)}`; lowPrice = `£${(priceType.low * 0.78).toFixed(2)}`; cacheLiveEstimatedValueGBP = parseFloat((priceType.market * 0.78).toFixed(2)); }
-                    }
-                    document.getElementById('cardTargetName').innerText = `${cardName} (${cardSetNum}) - ${matchedCard.set.name}`; document.getElementById('priceMarket').innerText = marketPrice; document.getElementById('priceLow').innerText = lowPrice;
-                    const ebayQuery = encodeURIComponent(`${cardName} ${matchedCard.number} ${matchedCard.set.name}`); 
-                    document.getElementById('ebayLink').href = `https://www.ebay.co.uk/sch/i.html?_nkw=${ebayQuery}&LH_Sold=1&LH_Complete=1`; 
-                    document.getElementById('priceResultBox').style.display = "block";
-                } else { throw new Error(); }
-            } catch (err) { 
-                cacheLiveEstimatedValueGBP = 1.25; 
-                document.getElementById('cardTargetName').innerText = "❌ No exact match found."; document.getElementById('priceMarket').innerText = "£1.25 (Baseline)"; document.getElementById('priceLow').innerText = "£0.50";
-                const externalSearch = encodeURIComponent(queryText);
-                document.getElementById('ebayLink').href = `https://www.pricecharting.com/search-products?q=${externalSearch}&type=prices`;
-                document.getElementById('priceResultBox').style.display = "block";
-            } finally { searchBtn.innerText = "Find Card"; searchBtn.disabled = false; }
+        // Helper function to render a selected card's specific data, price, and PriceCharting link
+function renderCardData(matchedCard) {
+    const cardName = matchedCard.name;
+    const cardSetNum = `${matchedCard.number}/${matchedCard.set.printedTotal}`;
+    const prices = matchedCard.tcgplayer ? matchedCard.tcgplayer.prices : null;
+    
+    let marketPrice = "N/A";
+    let lowPrice = "N/A";
+    
+    if (prices) {
+        const priceType = prices.holofoil || prices.normal || prices.reverseHolofoil || Object.values(prices)[0];
+        if (priceType && priceType.market) {
+            marketPrice = `£${(priceType.market * 0.78).toFixed(2)}`;
+            lowPrice = `£${(priceType.low * 0.78).toFixed(2)}`;
+            cacheLiveEstimatedValueGBP = parseFloat((priceType.market * 0.78).toFixed(2));
         }
+    }
+    
+    document.getElementById('cardTargetName').innerText = `${cardName} (${cardSetNum}) - ${matchedCard.set.name}`;
+    document.getElementById('priceMarket').innerText = marketPrice;
+    document.getElementById('priceLow').innerText = lowPrice;
+    
+    // Updates the old eBay button to point to PriceCharting and re-labels it
+    const priceCheckBtn = document.getElementById('ebayLink');
+    if (priceCheckBtn) {
+        priceCheckBtn.innerText = "Price Check";
+        const pcQuery = encodeURIComponent(`${cardName} ${matchedCard.number} ${matchedCard.set.name}`);
+        priceCheckBtn.href = `https://www.pricecharting.com/search-products?q=${pcQuery}&type=prices`;
+    }
+}
+
+async function triggerAutomatedPriceSearch(queryText) {
+    const searchBtn = document.getElementById('searchPriceBtn');
+    searchBtn.innerText = "Searching...";
+    searchBtn.disabled = true;
+
+    try {
+        const sanitizedQuery = queryText.replace(/['"“”‘’]/g, "").trim();
+        const numberMatch = sanitizedQuery.match(/\b([0-9]+)(\/[0-9]+)?\b/);
+        let cleanNameQuery = sanitizedQuery;
+        let cardNumber = "";
+
+        if (numberMatch) {
+            cardNumber = numberMatch[1];
+            cleanNameQuery = sanitizedQuery.replace(numberMatch[0], "").replace(/\s+/g, " ").trim();
+        }
+
+        let apiUrl = `https://api.pokemontcg.io/v2/cards?q=name:"${encodeURIComponent(cleanNameQuery)}"`;
+        if (cardNumber) {
+            apiUrl += ` number:"${encodeURIComponent(cardNumber)}"`;
+        }
+
+        let response = await fetch(apiUrl);
+        let data = await response.json();
+
+        if ((!data.data || data.data.length === 0) && cardNumber) {
+            const fallbackUrl = `https://api.pokemontcg.io/v2/cards?q=name:"${encodeURIComponent(cleanNameQuery)}"`;
+            const fallbackResponse = await fetch(fallbackUrl);
+            data = await fallbackResponse.json();
+        }
+
+        if (data.data && data.data.length > 0) {
+            // Save the array to a temporary global window variable for the selector dropdown to access
+            window.currentSearchResults = data.data;
+
+            // Find the index of the best match
+            let bestMatchIndex = data.data.findIndex(c => sanitizedQuery.includes(c.number));
+            if (bestMatchIndex === -1) bestMatchIndex = 0;
+            
+            // Handle or inject the manual selector container dropdown
+            let selectorContainer = document.getElementById('cardSelectorContainer');
+            if (!selectorContainer) {
+                selectorContainer = document.createElement('div');
+                selectorContainer.id = 'cardSelectorContainer';
+                selectorContainer.style.marginTop = '12px';
+                selectorContainer.style.marginBottom = '12px';
+                const targetNameEl = document.getElementById('cardTargetName');
+                targetNameEl.parentNode.insertBefore(selectorContainer, targetNameEl.nextSibling);
+            }
+
+            // Populate the selector if there are multiple options available
+            if (data.data.length > 1) {
+                let html = `<label style="display:block; font-size:12px; margin-bottom:4px; font-weight:bold; color:#555;">Not the right print? Choose variant:</label>`;
+                html += `<select id="cardMatchSelect" style="width:100%; padding:8px; border-radius:6px; border:1px solid #ccc; background:#fff; font-size:14px; font-family:inherit;">`;
+                data.data.forEach((card, idx) => {
+                    const selectedAttr = idx === bestMatchIndex ? 'selected' : '';
+                    html += `<option value="${idx}" ${selectedAttr}>${card.name} (${card.number}/${card.set.printedTotal}) - ${card.set.name}</option>`;
+                });
+                html += `</select>`;
+                selectorContainer.innerHTML = html;
+
+                // Watch for user changing selection manually
+                document.getElementById('cardMatchSelect').addEventListener('change', (e) => {
+                    const selectedIdx = e.target.value;
+                    renderCardData(window.currentSearchResults[selectedIdx]);
+                });
+            } else {
+                selectorContainer.innerHTML = ''; // Hide selector if only one result exists
+            }
+
+            // Render the initial choice automatically
+            renderCardData(data.data[bestMatchIndex]);
+            document.getElementById('priceResultBox').style.display = "block";
+        } else {
+            throw new Error();
+        }
+    } catch (err) {
+        cacheLiveEstimatedValueGBP = 1.25;
+        document.getElementById('cardTargetName').innerText = "❌ No exact match found.";
+        document.getElementById('priceMarket').innerText = "£1.25 (Baseline)";
+        document.getElementById('priceLow').innerText = "£0.50";
+        
+        const priceCheckBtn = document.getElementById('ebayLink');
+        if (priceCheckBtn) {
+            priceCheckBtn.innerText = "Price Check";
+            const externalSearch = encodeURIComponent(queryText);
+            priceCheckBtn.href = `https://www.pricecharting.com/search-products?q=${externalSearch}&type=prices`;
+        }
+        document.getElementById('priceResultBox').style.display = "block";
+    } finally {
+        searchBtn.innerText = "Find Card";
+        searchBtn.disabled = false;
+    }
+}
 
         document.getElementById('searchPriceBtn').addEventListener('click', () => { const val = document.getElementById('cardSearchInput').value.trim(); if(val) { triggerAutomatedPriceSearch(val); document.getElementById('customCardSaveTitleField').value = val; } });
 
