@@ -599,9 +599,24 @@ async function triggerAutomatedPriceSearch(queryText) {
         document.getElementById('searchPriceBtn').addEventListener('click', () => { const val = document.getElementById('cardSearchInput').value.trim(); if(val) { triggerAutomatedPriceSearch(val); document.getElementById('customCardSaveTitleField').value = val; } });
 
         calculateButton.addEventListener('click', () => {
-            const fWorstLR = calculateSideMaxSplitPercentage(cardData.front.ol || 10, cardData.front.or || 90, cardData.front.il || 20, cardData.front.ir || 80); const fWorstTB = calculateSideMaxSplitPercentage(cardData.front.ot || 10, cardData.front.ob || 90, cardData.front.it || 20, cardData.front.ib || 80); let finalWorstLR = fWorstLR; let finalWorstTB = fWorstTB;
-            if(cardData.back.src) { const bWorstLR = calculateSideMaxSplitPercentage(cardData.back.ol || 10, cardData.back.or || 90, cardData.back.il || 20, cardData.back.ir || 80); const bWorstTB = calculateSideMaxSplitPercentage(cardData.back.ot || 10, cardData.back.ob || 90, cardData.back.it || 20, cardData.back.ib || 80); finalWorstLR = Math.round((fWorstLR * 0.6) + (bWorstLR * 0.4)); finalWorstTB = Math.round((fWorstTB * 0.6) + (bWorstTB * 0.4)); document.getElementById('ratioDisplayHUD').innerText = `📐 Front split: ${fWorstLR.toFixed(0)}% | Back split: ${bWorstLR.toFixed(0)}%`; } 
-            else { document.getElementById('ratioDisplayHUD').innerText = `📐 Front face split: ${fWorstLR.toFixed(0)}%:${(100-fWorstLR).toFixed(0)}% (Back Omitted)`; }
+      const fWorstLR = calculateSideMaxSplitPercentage(cardData.front.ol || 10, cardData.front.or || 90, cardData.front.il || 20, cardData.front.ir || 80);
+        const fWorstTB = calculateSideMaxSplitPercentage(cardData.front.ot || 10, cardData.front.ob || 90, cardData.front.it || 20, cardData.front.ib || 80);
+        
+        let finalWorstLR = fWorstLR;
+        let finalWorstTB = fWorstTB;
+
+        if (cardData.back.src) {
+            const bWorstLR = calculateSideMaxSplitPercentage(cardData.back.ol || 10, cardData.back.or || 90, cardData.back.il || 20, cardData.back.ir || 80);
+            const bWorstTB = calculateSideMaxSplitPercentage(cardData.back.ot || 10, cardData.back.ob || 90, cardData.back.it || 20, cardData.back.ib || 80);
+            
+            finalWorstLR = fWorstLR > bWorstLR ? fWorstLR : bWorstLR;
+            finalWorstTB = fWorstTB > bWorstTB ? fWorstTB : bWorstTB;
+
+            // FIX: Displays both Front and Back percentages side-by-side perfectly
+            document.getElementById('ratioDisplayHUD').innerText = `Front face split: ${fWorstLR.toFixed(0)}%:${(100-fWorstLR).toFixed(0)}% | Back face split: ${bWorstLR.toFixed(0)}%:${(100-bWorstLR).toFixed(0)}%`;
+        } else {
+            document.getElementById('ratioDisplayHUD').innerText = `Front face split: ${fWorstLR.toFixed(0)}%:${(100-fWorstLR).toFixed(0)}% (Back Omitted)`;
+        }
 
             let conditionCap = 10; let reportedDefects = [];
             if(document.getElementById('defectHeavy') && document.getElementById('defectHeavy').checked) { conditionCap = Math.min(conditionCap, 5); reportedDefects.push("Heavy Whitening"); }
