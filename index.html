@@ -596,22 +596,41 @@
                 processedCards.sort((a, b) => a.derivedFinalPrice - b.derivedFinalPrice);
             }
 
-            binderGridSheet9SlotPage.innerHTML = ""; const startIndex = currentActiveBinderPageIndex * 9; const totalCount = processedCards.length; const totalSlotsToRender = Math.max(18, Math.ceil(totalCount / 9) * 9); const totalPages = Math.ceil(totalSlotsToRender / 9); document.getElementById('binderPagePaginationTicker').innerText = `Page ${currentActiveBinderPageIndex + 1} of ${totalPages}`;
+            binderGridSheet9SlotPage.innerHTML = ""; 
+            
+            // Force pagination bounds to prevent blank pages when sorting changes
+            const totalCount = processedCards.length; 
+            const totalSlotsToRender = Math.max(18, Math.ceil(totalCount / 9) * 9); 
+            const totalPages = Math.ceil(totalSlotsToRender / 9) || 1; 
+            
+            // If sorting pushed us to an empty page, snap back to page 1
+            if (currentActiveBinderPageIndex >= totalPages) {
+                currentActiveBinderPageIndex = 0;
+            }
+            
+            const startIndex = currentActiveBinderPageIndex * 9;
+            document.getElementById('binderPagePaginationTicker').innerText = `Page ${currentActiveBinderPageIndex + 1} of ${totalPages}`;
 
             for(let i = 0; i < 9; i++) {
-                const targetIdx = startIndex + i; const slot = document.createElement('div');
-                if(targetIdx < totalCount) {
-                    const card = processedCards[targetIdx]; slot.className = 'pocket-slot filled'; if(card.gradeBadge.includes('10')) slot.classList.add('gold-slab-glow');
+                const targetIdx = startIndex + i; 
+                const slot = document.createElement('div');
+                if(targetIdx >= 0 && targetIdx < totalCount) {
+                    const card = processedCards[targetIdx]; 
+                    slot.className = 'pocket-slot filled'; 
+                    if(card.gradeBadge && card.gradeBadge.includes('10')) slot.classList.add('gold-slab-glow');
+                    
                     slot.innerHTML = `
                         <div class="fav-btn" style="color:${card.isFavorite ? '#FFD700' : 'rgba(255,255,255,0.4)'}; cursor:default; pointer-events:none;">${card.isFavorite ? '⭐' : '☆'}</div>
-                        <span class="pocket-grade-tab">${card.gradeBadge.split(' ')[0]} ${card.gradeBadge.match(/\d+/) ? card.gradeBadge.match(/\d+/)[0] : ''}</span>
-                        <img src="${card.frontImage || card.backImage}" class="pocket-img-render" alt="Showcase Slab Card">
+                        <span class="pocket-grade-tab">${card.gradeBadge ? card.gradeBadge.split(' ')[0] : 'N/A'} ${card.gradeBadge && card.gradeBadge.match(/\d+/) ? card.gradeBadge.match(/\d+/)[0] : ''}</span>
+                        <img src="${card.frontImage || card.backImage || ''}" class="pocket-img-render" alt="Showcase Slab Card">
                     `;
                     slot.addEventListener('click', () => triggerPremiumSlabPulloutInspectionModal(card.docId, card.derivedFinalPrice, processedCards));
-                } else { slot.className = 'pocket-slot'; slot.innerHTML = `<span class="empty-pocket-cross" style="font-size:24px;">+</span>`; }
+                } else { 
+                    slot.className = 'pocket-slot'; 
+                    slot.innerHTML = `<span class="empty-pocket-cross" style="font-size:24px; color: rgba(255,255,255,0.05);">+</span>`; 
+                }
                 binderGridSheet9SlotPage.appendChild(slot);
             }
-        }
 
         function triggerPremiumSlabPulloutInspectionModal(docId, calculatedPrice, activeCardsArray) {
             activeSelectedSlabDocId = docId; const card = activeCardsArray.find(c => c.docId === docId); if(!card) return;
