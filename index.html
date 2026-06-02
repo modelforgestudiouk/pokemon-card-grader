@@ -83,7 +83,7 @@
         .gold-slab-glow { border: 1px solid rgba(255,215,0,0.8) !important; box-shadow: var(--gold-glow) !important; }
 
         .search-box { display: flex; gap: 8px; margin-top: 5px; width: 100%; box-sizing: border-box; }
-        .search-input { flex: 1; background-color: #0c0c0e; border: 1px solid #333; border-radius: 8px; padding: 12px; color: #FFF; font-size: 13px; outline: none; transition: border-color 0.2s; }
+        .search-input { flex: 1; background-color: #0c0c0e; border: 1px solid #333; border-radius: 8px; padding: 12px; color: #FFF; font-size: 13px; outline: none; transition: border-color 0.2s; box-sizing: border-box; width: 100%; }
         .search-input:focus { border-color: var(--brand-orange); }
         .search-btn { background-color: var(--brand-orange); border: none; color: var(--bg-dark); font-weight: 800; padding: 0 18px; border-radius: 8px; cursor: pointer; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
         .search-btn:hover { background-color: var(--brand-orange-hover); transform: translateY(-1px); }
@@ -132,7 +132,7 @@
         .slab-pullout-input-edit-row { display: flex; gap: 8px; margin: 15px 0; width: 100%; box-sizing: border-box; align-items: center; }
         .slab-pullout-edit-input { flex: 1; min-width: 0; background-color: #0c0c0e; border: 1px solid #333; border-radius: 8px; padding: 12px; color: white; font-size: 13px; box-sizing: border-box; outline: none; }
         .slab-pullout-edit-input:focus { border-color: var(--brand-orange); }
-        .slab-pullout-edit-save-btn { flex: 0 0 auto; background-color: var(--success-green); border: none; color: var(--bg-dark); font-weight: 900; padding: 12px 16px; border-radius: 8px; cursor: pointer; font-size: 12px; text-transform: uppercase; box-sizing: border-box; }
+        .slab-pullout-edit-save-btn { flex: 0 0 auto; background-color: var(--success-green); border: none; color: var(--bg-dark); font-weight: 900; padding: 12px 14px; border-radius: 8px; cursor: pointer; font-size: 12px; text-transform: uppercase; box-sizing: border-box; }
         .slab-pullout-edit-save-btn:hover { background-color: #00e6b8; transform: translateY(-1px); }
 
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; backdrop-filter: blur(4px); }
@@ -258,7 +258,8 @@
             <div id="save-ledger-form-block" style="display:none; background: #0c0c0e; border: 1px solid #333; border-radius: 12px; padding: 15px; margin-top: 15px;">
                 <div style="font-size:11px; color:var(--brand-orange); font-weight:bold; margin-bottom:8px; text-transform:uppercase;">Name & Custom Value:</div>
                 <input type="text" id="customCardSaveTitleField" class="search-input" placeholder="e.g. Charizard Base Set 4/102" style="margin-bottom:8px;">
-                <input type="number" id="customCardValueField" class="search-input" placeholder="Custom Value (£) - Leave blank for Auto" step="0.01">
+                <input type="number" id="customCardValueField" class="search-input" placeholder="Raw Value (£) - Blank for Auto" step="0.01" style="margin-bottom:8px;">
+                <input type="number" id="customCardGem10ValueField" class="search-input" placeholder="Gem 10 Value (£) - Optional" step="0.01">
                 <button id="btnExecuteBinderFilingCloud" class="custom-button" style="background:#0056B3; margin-top:15px;">☁️ Finalize Vault Archive Sequence</button>
             </div>
         </div>
@@ -267,7 +268,7 @@
             <div class="panel-title">TCG Live Price Engine</div>
             <div class="search-box">
                 <input type="text" id="cardSearchInput" class="search-input" placeholder="e.g. Charizard 4/102">
-                <button id="searchPriceBtn" class="search-btn">Pull Data</button>
+                <button id="searchPriceBtn" class="search-btn">Find Card</button>
             </div>
             <div id="priceResultBox">
                 <div style="font-weight: 800; color: var(--brand-orange); margin-bottom: 10px; font-size:14px;" id="cardTargetName">Card Found</div>
@@ -284,8 +285,8 @@
         <div id="binder-customizer-dropdown-drawer">
             <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin-bottom:6px;">Portfolio Valuation Metric Mode:</div>
             <select id="pricingModeSelectToggle" class="select-dropdown">
-                <option value="raw">Raw Base Value Index (Ungraded Market)</option>
-                <option value="graded">Graded Multiplier Model (Slab Premium Scale)</option>
+                <option value="raw">Sort by Ungraded Price (Raw Base Value)</option>
+                <option value="graded">Sort by Graded Price (Slab Premium / Gem 10)</option>
             </select>
             
             <div style="font-size:11px; font-weight:bold; color:var(--text-gray); text-transform:uppercase; margin:15px 0 6px 0;">Binder Display Filter:</div>
@@ -352,8 +353,9 @@
             </div>
 
             <div class="slab-pullout-input-edit-row">
-                <input type="text" id="editSlabCardTitleInlineInputField" class="slab-pullout-edit-input" placeholder="Change Name">
-                <input type="number" id="editSlabCardValueInlineInputField" class="slab-pullout-edit-input" placeholder="£ Value" style="width: 75px; flex: none;" step="0.01">
+                <input type="text" id="editSlabCardTitleInlineInputField" class="slab-pullout-edit-input" placeholder="Name">
+                <input type="number" id="editSlabCardValueInlineInputField" class="slab-pullout-edit-input" placeholder="Raw £" style="width: 60px; flex: none;" step="0.01">
+                <input type="number" id="editSlabCardGem10ValueInlineInputField" class="slab-pullout-edit-input" placeholder="Gem10 £" style="width: 70px; flex: none;" step="0.01">
                 <button id="btnSaveSlabTitleEditInline" class="slab-pullout-edit-save-btn">Save</button>
             </div>
             
@@ -406,7 +408,6 @@
             }
         });
 
-        // BINDER SETTINGS SAVING SYSTEM
         async function loadBinderSettingsFromCloud() {
             if(!currentUser) return;
             try {
@@ -494,7 +495,7 @@
                 const externalSearch = encodeURIComponent(queryText);
                 document.getElementById('ebayLink').href = `https://www.pricecharting.com/search-products?q=${externalSearch}&type=prices`;
                 document.getElementById('priceResultBox').style.display = "block";
-            } finally { searchBtn.innerText = "Pull Data"; searchBtn.disabled = false; }
+            } finally { searchBtn.innerText = "Find Card"; searchBtn.disabled = false; }
         }
 
         document.getElementById('searchPriceBtn').addEventListener('click', () => { const val = document.getElementById('cardSearchInput').value.trim(); if(val) { triggerAutomatedPriceSearch(val); document.getElementById('customCardSaveTitleField').value = val; } });
@@ -530,12 +531,18 @@
         function applyConditionCap(currentVerdict, cap) { if (cap === 9 && currentVerdict.includes('10')) return 'Mint 9 (Drop)'; if (cap === 8 && (currentVerdict.includes('10') || currentVerdict.includes('9'))) return 'NM-MT 8 (Drop)'; if (cap === 7 && (currentVerdict.includes('10') || currentVerdict.includes('9') || currentVerdict.includes('8'))) return 'NM 7 (Drop)'; if (cap === 5 && !currentVerdict.includes('5')) return 'VG-EX 5 (Drop)'; return currentVerdict; }
 
         document.getElementById('btnUnlockFilingForm').addEventListener('click', () => { document.getElementById('save-ledger-form-block').style.display = "block"; document.getElementById('btnUnlockFilingForm').style.display = "none"; });
-        function resetFilingFormBlocksHUD() { document.getElementById('save-ledger-form-block').style.display = "none"; document.getElementById('btnUnlockFilingForm').style.display = "block"; document.getElementById('customCardValueField').value = ""; compiledFinalLedgerPayloadBlock = null; }
+        function resetFilingFormBlocksHUD() { document.getElementById('save-ledger-form-block').style.display = "none"; document.getElementById('btnUnlockFilingForm').style.display = "block"; document.getElementById('customCardValueField').value = ""; document.getElementById('customCardGem10ValueField').value = ""; compiledFinalLedgerPayloadBlock = null; }
 
         document.getElementById('btnExecuteBinderFilingCloud').addEventListener('click', async () => {
             if(!currentUser || !compiledFinalLedgerPayloadBlock) return alert("Verify authentication login.");
             const verifiedFinalTitle = document.getElementById('customCardSaveTitleField').value.trim() || "Unindexed Custom Entry Shell";
-            let customVal = parseFloat(document.getElementById('customCardValueField').value); if (!isNaN(customVal)) { compiledFinalLedgerPayloadBlock.cashValue = customVal; }
+            
+            let customVal = parseFloat(document.getElementById('customCardValueField').value); 
+            if (!isNaN(customVal)) { compiledFinalLedgerPayloadBlock.cashValue = customVal; }
+            
+            let customGem10Val = parseFloat(document.getElementById('customCardGem10ValueField').value);
+            if (!isNaN(customGem10Val)) { compiledFinalLedgerPayloadBlock.gem10Value = customGem10Val; } else { compiledFinalLedgerPayloadBlock.gem10Value = null; }
+
             const fireButton = document.getElementById('btnExecuteBinderFilingCloud'); fireButton.innerText = "☁ SECURING CORES..."; fireButton.disabled = true;
 
             try {
@@ -575,9 +582,19 @@
             const pricingMode = document.getElementById('pricingModeSelectToggle').value;
             
             let sum = 0; 
+            // UPDATED GRADING VALUE LOGIC TO INCORPORATE CUSTOM GEM 10 INPUT
             processedCards.forEach(c => { 
                 let basePrice = parseFloat(c.cashValue || 0); 
-                if(pricingMode === 'graded') { if(c.gradeBadge.includes('10')) basePrice *= 4.5; else if(c.gradeBadge.includes('9')) basePrice *= 1.8; else if(c.gradeBadge.includes('8')) basePrice *= 1.3; } 
+                if(pricingMode === 'graded') { 
+                    if(c.gradeBadge.includes('10')) {
+                        // Use exact Gem 10 value if provided, otherwise fallback to 4.5x multiplier
+                        basePrice = (c.gem10Value !== undefined && c.gem10Value !== null) ? parseFloat(c.gem10Value) : (basePrice * 4.5);
+                    } else if(c.gradeBadge.includes('9')) {
+                        basePrice *= 1.8; 
+                    } else if(c.gradeBadge.includes('8')) {
+                        basePrice *= 1.3; 
+                    } 
+                } 
                 c.derivedFinalPrice = parseFloat(basePrice.toFixed(2)); 
                 sum += c.derivedFinalPrice; 
             });
@@ -596,7 +613,6 @@
 
             binderGridSheet9SlotPage.innerHTML = ""; 
             
-            // BOUNDARY LOCK: Prevents sorting from pushing the page to a blank screen
             const totalCount = processedCards.length; 
             const totalSlotsToRender = Math.max(18, Math.ceil(totalCount / 9) * 9); 
             const totalPages = Math.ceil(totalSlotsToRender / 9) || 1; 
@@ -632,7 +648,11 @@
 
         function triggerPremiumSlabPulloutInspectionModal(docId, calculatedPrice, activeCardsArray) {
             activeSelectedSlabDocId = docId; const card = activeCardsArray.find(c => c.docId === docId); if(!card) return;
-            document.getElementById('modalSlabTitle').innerText = card.cardTitle; document.getElementById('editSlabCardTitleInlineInputField').value = card.cardTitle; document.getElementById('editSlabCardValueInlineInputField').value = card.cashValue || 0; 
+            document.getElementById('modalSlabTitle').innerText = card.cardTitle; 
+            document.getElementById('editSlabCardTitleInlineInputField').value = card.cardTitle; 
+            document.getElementById('editSlabCardValueInlineInputField').value = card.cashValue || 0; 
+            document.getElementById('editSlabCardGem10ValueInlineInputField').value = card.gem10Value || ""; 
+
             document.getElementById('modalSlabMetrics').innerHTML = `
                 • 🏆 <strong style="color:#FFF;">Predicted Grade:</strong> <span style="color:var(--success-green); font-weight:900; font-size:15px; letter-spacing:0.5px;">${card.gradeBadge}</span><br>
                 • 🔍 <strong style="color:#FFF;">Condition Wear Marks:</strong> ${card.defects && card.defects.length > 0 ? card.defects.join(', ') : 'None marked'}<br>
@@ -651,10 +671,29 @@
             processAndRenderBinderViewWithFilters();
         });
 
+        // UPDATED MODAL SAVE LOGIC TO INCLUDE GEM 10 EDITS
         document.getElementById('btnSaveSlabTitleEditInline').addEventListener('click', async () => {
-            if(!activeSelectedSlabDocId || !currentUser) return; const freshNameString = document.getElementById('editSlabCardTitleInlineInputField').value.trim(); const freshValue = parseFloat(document.getElementById('editSlabCardValueInlineInputField').value) || 0;
+            if(!activeSelectedSlabDocId || !currentUser) return; 
+            const freshNameString = document.getElementById('editSlabCardTitleInlineInputField').value.trim(); 
+            const freshValue = parseFloat(document.getElementById('editSlabCardValueInlineInputField').value) || 0;
+            const freshGem10ValueRaw = document.getElementById('editSlabCardGem10ValueInlineInputField').value;
+            const freshGem10Value = freshGem10ValueRaw ? parseFloat(freshGem10ValueRaw) : null;
+            
             if(!freshNameString) return alert("Type a valid entry name.");
-            try { const cardRef = doc(db, "card_scans", activeSelectedSlabDocId); await updateDoc(cardRef, { cardTitle: freshNameString, cashValue: freshValue }); const card = globalBinderCollectionMemory.find(c => c.docId === activeSelectedSlabDocId); if(card) { card.cardTitle = freshNameString; card.cashValue = freshValue; } document.getElementById('modalSlabTitle').innerText = freshNameString; alert(`✓ Updated: "${freshNameString}" at £${freshValue.toFixed(2)}`); syncMasterUserCloudBinderLedger(); } 
+            
+            try { 
+                const cardRef = doc(db, "card_scans", activeSelectedSlabDocId); 
+                await updateDoc(cardRef, { cardTitle: freshNameString, cashValue: freshValue, gem10Value: freshGem10Value }); 
+                const card = globalBinderCollectionMemory.find(c => c.docId === activeSelectedSlabDocId); 
+                if(card) { 
+                    card.cardTitle = freshNameString; 
+                    card.cashValue = freshValue; 
+                    card.gem10Value = freshGem10Value; 
+                } 
+                document.getElementById('modalSlabTitle').innerText = freshNameString; 
+                alert(`✓ Updated: "${freshNameString}"`); 
+                syncMasterUserCloudBinderLedger(); 
+            } 
             catch(e) { alert("Error saving updates."); }
         });
 
